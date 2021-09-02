@@ -1,0 +1,41 @@
+name: Deploy Docs
+on:
+  push:
+    branches:
+      - main
+jobs:
+  docs:
+    name: Deploy Docs
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Install Node v14
+        uses: actions/setup-node@v1
+        with:
+          node-version: 14
+
+      - name: Install Main Dependencies
+        run: npm i
+
+      - name: Install Sub Dependencies
+        run: npm run bootstrap
+
+      - name: Run TypeScript compiler
+        run: npm run build
+
+      - name: Build the docs
+        run: npm run docs
+        
+      - name: Commit the Docs
+        uses: cpina/github-action-push-to-another-repository@main
+        env:
+          API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
+        with:
+          source-directory: 'docs'
+          destination-github-username: 'github-actions[bot]'
+          destination-repository-username: "guildedjs"
+          destination-repository-name: 'guildedjs.github.io'
+          target-branch: 'master'
+          user-email: 41898282+github-actions[bot]@users.noreply.github.com

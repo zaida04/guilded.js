@@ -1,0 +1,13 @@
+node_modules/
+dist/
+types/
+coverage/
+
+.npmrc
+*.tsbuildinfo
+*.log
+
+.vscode/
+.idea/
+*.env
+docs/

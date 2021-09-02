@@ -1,0 +1,15 @@
+{
+	"env": {
+        "node": true
+    },
+	"extends": "@sapphire",
+	"parser": "@typescript-eslint/parser",
+    "parserOptions": {
+        "ecmaVersion": 2021
+    },
+	"root": true,
+	"rules": {
+		"@typescript-eslint/no-var-requires": "off",
+		"@typescript-eslint/unbound-method": "off"
+	}
+}

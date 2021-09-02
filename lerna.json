@@ -1,0 +1,15 @@
+{
+    "$schema": "https://json.schemastore.org/lerna.json",
+    "command": {
+        "publish": {
+            "message": "chore: release"
+        }
+    },
+    "publishConfig": {
+        "access": "public"
+    },
+    "packages": [
+        "packages/*"
+    ],
+    "version": "independent"
+}
