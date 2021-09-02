@@ -1,5 +1,5 @@
 <div align="center">
-    <img src="https://raw.githubusercontent.com/guildedjs/guilded.js/main/static/readme-header.png" width="546" alt="guildedjs"/>
+    <img src="https://raw.githubusercontent.com/guildedjs/guilded.js/main/static/readme-header.png?token=AEUKDFXMMP5EVBPSLIT6VLLBGAX34" width="546" alt="guildedjs"/>
     <p><b>Tools for interacting with the official <a href="https://www.guilded.gg/">Guilded.gg</a> API.</b></p>  
     <br />
     <p>
