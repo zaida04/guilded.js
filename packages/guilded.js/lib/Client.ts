@@ -7,7 +7,7 @@ interface ClientOptions {
 
 export class Client extends EventEmitter {
     /** The time in milliseconds the Client connected */
-    readyTimestamp: number;
+    readyTimestamp = 0;
 
     /** The options used to create this client */
     options: ClientOptions;
@@ -23,7 +23,6 @@ export class Client extends EventEmitter {
     constructor(options: ClientOptions) {
         super();
 
-        this.readyTimestamp = 0;
         this.options = options;
 
         // TODO: Enable the manager once it is built
