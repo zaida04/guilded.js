@@ -20,10 +20,8 @@ export class Client extends EventEmitter {
     /** The gateway manager for the bot to manage all gateway connections through websockets. */
     // gateway: GatewayManager;
 
-    constructor(options: ClientOptions) {
+    constructor(public options: ClientOptions) {
         super();
-
-        this.options = options;
 
         // TODO: Enable the manager once it is built
         // this.gateway = new GatewayManager();
