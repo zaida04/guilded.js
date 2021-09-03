@@ -15,8 +15,7 @@
     "test:build": "npm run build && npx jest",
     "prepublishOnly": "npm run lint && npx lerna run prepublishOnly",
     "prepare": "husky install",
-    "reset": "cd scripts && node refresh.js",
-    "commit": "npm run build && npm run lint && npm run test"
+    "reset": "cd scripts && node refresh.js"
   },
   "devDependencies": {
     "@babel/core": "^7.12.17",
