@@ -8,10 +8,7 @@ interface ClientOptions {
 export class Client extends EventEmitter {
     /** The time in milliseconds the Client connected */
     readyTimestamp = 0;
-
-    /** The options used to create this client */
-    options: ClientOptions;
-
+    
     // TODO: Enable the manager once it is built.
     /** The manager for the bot to make requests to the REST api. */
     // rest: RestManager;
@@ -22,7 +19,6 @@ export class Client extends EventEmitter {
 
     constructor(public options: ClientOptions) {
         super();
-
         // TODO: Enable the manager once it is built
         // this.gateway = new GatewayManager();
         // this.rest = new RestManager();
