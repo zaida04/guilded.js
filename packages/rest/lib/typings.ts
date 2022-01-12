@@ -133,3 +133,19 @@ export interface DocPayload {
 }
 
 export interface UpdateDocOptions extends CreateDocOptions {}
+
+export interface ContentReactionPayload {
+    /** The id of the content reaction */
+    id: number;
+    /** The ISO 8601 timestamp that the emote was created at */
+    createdAt: string;
+    /** The ID of the user who created this list item (Note: If this event has createdByWebhookId present, this field will still be populated, but can be ignored. In this case, the value of this field will always be Ann6LewA) */
+    createdBy: string;
+    /** The ID of the webhook who created this list item, if it was created by a webhook */
+    createdByWebhookId?: string;
+}
+
+export interface MemberXPPayload {
+    /** The total XP after this operation */
+    total: number;
+}

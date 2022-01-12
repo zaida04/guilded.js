@@ -13,6 +13,7 @@ import {
     CreateDocOptions,
     DocPayload,
     UpdateDocOptions,
+    MemberXPPayload,
 } from "./typings";
 
 export class RestManager {
@@ -53,8 +54,8 @@ export class RestManager {
     }
 
     /** Make a PUT request to the API. */
-    async put<T>(url: string, body: Record<string, unknown>): Promise<T> {
-        return this.sendRequest("PUT", url, body);
+    async put<T>(url: string, body?: Record<string, unknown>): Promise<T> {
+        return this.sendRequest("PUT", url, body ?? {});
     }
 
     /** Make a DELETE request to the API. */
@@ -168,6 +169,21 @@ export class RestManager {
     deleteDoc(channelId: string, docId: number) {
         return this.delete(this.getFinalURL(ENDPOINTS.channelDoc(channelId, docId)));
     }
+
+    /** Add a reaction emote */
+    addReactionEmote(channelId: string, contentId: string, emoteId: number) {
+        return this.put(this.getFinalURL(ENDPOINTS.channelReaction(channelId, contentId, emoteId)));
+    }
+
+    /** Award XP to a member */
+    awardMemberXP(userId: string, amount: number) {
+        return this.post<MemberXPPayload>(this.getFinalURL(ENDPOINTS.memberXP(userId)), { amount });
+    }
+
+    /** Award XP to a role */
+    awardRoleXP(roleId: string, amount: number) {
+        return this.post<undefined>(this.getFinalURL(ENDPOINTS.roleXP(roleId)), { amount });
+    }
 }
 
 export const ENDPOINTS = {
@@ -188,4 +204,11 @@ export const ENDPOINTS = {
     // Docs Endpoints
     channelDocs: (channelId: string) => `/channels/${channelId}/docs`,
     channelDoc: (channelId: string, docId: number) => `/channels/${channelId}/docs/${docId}`,
+
+    // Reactions Endpoints
+    channelReaction: (channelId: string, contentId: string, emoteId: number) => `/channels/${channelId}/content/${contentId}/emotes/${emoteId}`,
+
+    // Team XP Endpoints
+    memberXP: (userId: string) => `/members/${userId}/xp`,
+    roleXP: (userId: string) => `/roles/${userId}/xp`,
 };
