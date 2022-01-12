@@ -1,5 +1,14 @@
 import fetch from "node-fetch";
-import { RestOptions, RequestMethods, MessageContent, MessagePayload, GetChannelMessagesOptions, UpdateChannelMessageOptions } from "./typings";
+import {
+    RestOptions,
+    RequestMethods,
+    MessageContent,
+    MessagePayload,
+    GetChannelMessagesOptions,
+    UpdateChannelMessageOptions,
+    CreateForumThreadOptions,
+    ForumThreadPayload,
+} from "./typings";
 
 export class RestManager {
     /** The bot token to be used for making requests. */
@@ -115,6 +124,12 @@ export class RestManager {
     deleteMemberNickname(userId: string) {
         return this.delete(this.getFinalURL(ENDPOINTS.memberNickname(userId)));
     }
+
+    /** Create a thread in a forum */
+    createForumThread(channelId: string, options: CreateForumThreadOptions) {
+        // @ts-ignore ts odd error fix TODO:
+        return this.post<ForumThreadPayload>(this.getFinalURL(ENDPOINTS.createForumThread(channelId)), options);
+    }
 }
 
 export const ENDPOINTS = {
@@ -125,4 +140,7 @@ export const ENDPOINTS = {
     // Member Endpoints
     memberNickname: (userId: string) => `/members/${userId}/nickname`,
     memberRoles: (userId: string) => `/members/${userId}/roles`,
+
+    // Forum Endpoints
+    createForumThread: (channelId: string) => `/channels/${channelId}/forum`,
 };
