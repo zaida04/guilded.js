@@ -8,6 +8,8 @@ import {
     UpdateChannelMessageOptions,
     CreateForumThreadOptions,
     ForumThreadPayload,
+    ListItemPayload,
+    CreateListItemOptions,
 } from "./typings";
 
 export class RestManager {
@@ -130,6 +132,12 @@ export class RestManager {
         // @ts-ignore ts odd error fix TODO:
         return this.post<ForumThreadPayload>(this.getFinalURL(ENDPOINTS.createForumThread(channelId)), options);
     }
+
+    /** Create a list item. */
+    createListItem(channelId: string, options: CreateListItemOptions) {
+        // @ts-ignore ts odd error fix TODO:
+        return this.post<ListItemPayload>(this.getFinalURL(ENDPOINTS.createListItem(channelId)), options);
+    }
 }
 
 export const ENDPOINTS = {
@@ -143,4 +151,7 @@ export const ENDPOINTS = {
 
     // Forum Endpoints
     createForumThread: (channelId: string) => `/channels/${channelId}/forum`,
+
+    // List Endpoints
+    createListItem: (channelId: string) => `/channels/${channelId}/list`,
 };
