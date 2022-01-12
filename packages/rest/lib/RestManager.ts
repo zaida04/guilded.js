@@ -190,6 +190,16 @@ export class RestManager {
     getMemberSocialLinks(userId: string, type: SocialLinkType) {
         return this.get(this.getFinalURL(ENDPOINTS.getMemberSocialLinks(userId, type)));
     }
+
+    /** Add member to group */
+    addMemberToGroup(groupId: string, userId: string) {
+        return this.put(this.getFinalURL(ENDPOINTS.groupMember(groupId, userId)));
+    }
+
+    /** Remove member from group */
+    removeMemberFromGroup(groupId: string, userId: string) {
+        return this.delete(this.getFinalURL(ENDPOINTS.groupMember(groupId, userId)));
+    }
 }
 
 export const ENDPOINTS = {
@@ -220,4 +230,7 @@ export const ENDPOINTS = {
 
     // Social Links Endpoints
     getMemberSocialLinks: (userId: string, type: SocialLinkType) => `/members/${userId}/social-links/${type}`,
+
+    // Group Memberships Endpoints
+    groupMember: (groupId: string, userId: string) => `/groups/${groupId}/members/${userId}`,
 };
