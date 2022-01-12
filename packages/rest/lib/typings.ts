@@ -149,3 +149,17 @@ export interface MemberXPPayload {
     /** The total XP after this operation */
     total: number;
 }
+
+export type SocialLinkType =
+    | "twitch"
+    | "bnet"
+    | "psn"
+    | "xbox"
+    | "steam"
+    | "origin"
+    | "youtube"
+    | "twitter"
+    | "facebook"
+    | "switch"
+    | "patreon"
+    | "roblox";

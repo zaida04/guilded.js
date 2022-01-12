@@ -14,6 +14,7 @@ import {
     DocPayload,
     UpdateDocOptions,
     MemberXPPayload,
+    SocialLinkType,
 } from "./typings";
 
 export class RestManager {
@@ -184,6 +185,11 @@ export class RestManager {
     awardRoleXP(roleId: string, amount: number) {
         return this.post<undefined>(this.getFinalURL(ENDPOINTS.roleXP(roleId)), { amount });
     }
+
+    /** Retrieves a member's public social links */
+    getMemberSocialLinks(userId: string, type: SocialLinkType) {
+        return this.get(this.getFinalURL(ENDPOINTS.getMemberSocialLinks(userId, type)));
+    }
 }
 
 export const ENDPOINTS = {
@@ -211,4 +217,7 @@ export const ENDPOINTS = {
     // Team XP Endpoints
     memberXP: (userId: string) => `/members/${userId}/xp`,
     roleXP: (userId: string) => `/roles/${userId}/xp`,
+
+    // Social Links Endpoints
+    getMemberSocialLinks: (userId: string, type: SocialLinkType) => `/members/${userId}/social-links/${type}`,
 };
