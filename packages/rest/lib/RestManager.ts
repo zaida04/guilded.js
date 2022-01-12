@@ -200,6 +200,16 @@ export class RestManager {
     removeMemberFromGroup(groupId: string, userId: string) {
         return this.delete(this.getFinalURL(ENDPOINTS.groupMember(groupId, userId)));
     }
+
+    /** Assign role to member */
+    assignRoleToMember(userId: string, roleId: number) {
+        return this.put(this.getFinalURL(ENDPOINTS.memberRole(userId, roleId)));
+    }
+
+    /** Remove role to member */
+    removeRoleToMember(userId: string, roleId: number) {
+        return this.put(this.getFinalURL(ENDPOINTS.memberRole(userId, roleId)));
+    }
 }
 
 export const ENDPOINTS = {
@@ -233,4 +243,7 @@ export const ENDPOINTS = {
 
     // Group Memberships Endpoints
     groupMember: (groupId: string, userId: string) => `/groups/${groupId}/members/${userId}`,
+
+    // Role Memberships Endpoints
+    memberRole: (memberId: string, roleId: number) => `/members/${memberId}/roles/${roleId}`,
 };
