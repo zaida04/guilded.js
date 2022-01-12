@@ -10,6 +10,9 @@ import {
     ForumThreadPayload,
     ListItemPayload,
     CreateListItemOptions,
+    CreateDocOptions,
+    DocPayload,
+    UpdateDocOptions,
 } from "./typings";
 
 export class RestManager {
@@ -138,6 +141,33 @@ export class RestManager {
         // @ts-ignore ts odd error fix TODO:
         return this.post<ListItemPayload>(this.getFinalURL(ENDPOINTS.createListItem(channelId)), options);
     }
+
+    /** Create a doc. */
+    createDoc(channelId: string, options: CreateDocOptions) {
+        // @ts-ignore ts odd error fix TODO:
+        return this.post<DocPayload>(this.getFinalURL(ENDPOINTS.channelDocs(channelId)), options);
+    }
+
+    /** Get the docs from a channel. */
+    getDocs(channelId: string) {
+        return this.get<DocPayload[]>(this.getFinalURL(ENDPOINTS.channelDocs(channelId)));
+    }
+
+    /** Get a doc from a channel. */
+    getDoc(channelId: string, docId: number) {
+        return this.get<DocPayload>(this.getFinalURL(ENDPOINTS.channelDoc(channelId, docId)));
+    }
+
+    /** Update a doc */
+    updateDoc(channelId: string, docId: number, options: UpdateDocOptions) {
+        // @ts-ignore ts odd error fix TODO:
+        return this.put<DocPayload>(this.getFinalURL(ENDPOINTS.channelDoc(channelId, docId)), options);
+    }
+
+    /** Delete a doc from a channel. */
+    deleteDoc(channelId: string, docId: number) {
+        return this.delete(this.getFinalURL(ENDPOINTS.channelDoc(channelId, docId)));
+    }
 }
 
 export const ENDPOINTS = {
@@ -154,4 +184,8 @@ export const ENDPOINTS = {
 
     // List Endpoints
     createListItem: (channelId: string) => `/channels/${channelId}/list`,
+
+    // Docs Endpoints
+    channelDocs: (channelId: string) => `/channels/${channelId}/docs`,
+    channelDoc: (channelId: string, docId: number) => `/channels/${channelId}/docs/${docId}`,
 };
