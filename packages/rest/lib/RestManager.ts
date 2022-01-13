@@ -50,8 +50,8 @@ export class RestManager {
     }
 
     /** Make a GET request to the API. */
-    async get<T>(url: string): Promise<T> {
-        return this.sendRequest("GET", `${url}/${new URLSearchParams(body).toString()}`);
+    async get<T>(url: string, query?: Record<string, unknown>): Promise<T> {
+        return this.sendRequest("GET", `${url}/${new URLSearchParams(query).toString()}`);
     }
 
     /** Make a PUT request to the API. */
