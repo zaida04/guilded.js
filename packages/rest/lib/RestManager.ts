@@ -50,18 +50,18 @@ export class RestManager {
     }
 
     /** Make a GET request to the API. */
-    async get<T>(url: string, body?: Record<string, string>): Promise<T> {
-        return this.sendRequest("GET", `${url}/${new URLSearchParams(body).toString()}`, {});
+    async get<T>(url: string): Promise<T> {
+        return this.sendRequest("GET", `${url}/${new URLSearchParams(body).toString()}`);
     }
 
     /** Make a PUT request to the API. */
     async put<T>(url: string, body?: Record<string, unknown>): Promise<T> {
-        return this.sendRequest("PUT", url, body ?? {});
+        return this.sendRequest("PUT", url, body);
     }
 
     /** Make a DELETE request to the API. */
     async delete<T>(url: string, body?: Record<string, unknown>): Promise<T> {
-        return this.sendRequest("DELETE", url, body || {});
+        return this.sendRequest("DELETE", url, body);
     }
 
     /** Make a PATCH request to the API. */
@@ -70,10 +70,10 @@ export class RestManager {
     }
 
     /** Send a request to the api with all the data provided. */
-    async sendRequest<T>(method: RequestMethods, url: string, body: Record<string, unknown>): Promise<T> {
+    async sendRequest<T>(method: RequestMethods, url: string, body?: Record<string, unknown>): Promise<T> {
         return fetch(url, {
             method,
-            body: JSON.stringify(body),
+            body: body && JSON.stringify(body),
             headers: {
                 Authorization: `Bearer ${this.token}`,
             },
