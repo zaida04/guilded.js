@@ -41,7 +41,7 @@ export class RestManager {
 
     /** The full url to send the request to. */
     get url() {
-        return this.proxyURL || `${this.baseURL}/v${this.version}`;
+        return this.proxyURL ?? `${this.baseURL}/v${this.version}`;
     }
 
     /** Make a POST request to the API. */
