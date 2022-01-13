@@ -207,7 +207,7 @@ export class RestManager {
     }
 
     /** Remove role to member */
-    removeRoleToMember(userId: string, roleId: number) {
+    removeRoleFromMember(userId: string, roleId: number) {
         return this.put(this.getFinalURL(ENDPOINTS.memberRole(userId, roleId)));
     }
 }
