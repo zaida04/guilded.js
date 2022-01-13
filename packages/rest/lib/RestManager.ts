@@ -24,15 +24,14 @@ export class RestManager {
     /** The version of the API to be used for making requests. By default, this will use the latest version that the library supports. */
     version: number;
     /** The base of the URL that this will send this request to. By default, this will use guilded's api URL. */
-    baseURL: string;
+    baseURL = "https://www.guilded.gg/api";
     /** The proxy url if it was set. */
-    proxyURL: string;
+    proxyURL?: string;
 
     constructor(options: RestOptions) {
         this.token = options.token;
-        this.version = options.version || 1;
-        this.baseURL = "https://www.guilded.gg/api";
-        this.proxyURL = options.proxyURL || "";
+        this.version = options.version ?? 1;
+        this.proxyURL = options.proxyURL;
     }
 
     /** Combine the base url and the query to get the final url to send to. */
