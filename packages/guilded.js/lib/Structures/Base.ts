@@ -1,6 +1,6 @@
 import Client from "../Client";
 
-export class Base {
+export default class Base {
     /** The client itself. */
     client: Client;
 
