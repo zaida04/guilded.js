@@ -1,11 +1,11 @@
 import Client from "../Client";
-import { Base } from "./Base";
+import Base from "./Base";
 import { User } from "./User";
 
 export interface MemberPayload {
     user: {
         id: string;
-    }
+    };
 }
 
 export default class Member extends Base {

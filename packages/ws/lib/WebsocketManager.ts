@@ -115,6 +115,9 @@ export default class WebSocketManager {
             // Auto handled by ws lib
             case WebsocketOpCodes.Welcome:
                 break;
+            default:
+                console.log("[Websocket] UNKNOWN OP CODE", packet);
+                break;
         }
     }
 

@@ -1,6 +1,6 @@
 import { SocialLinkType } from "@guildedjs/rest";
 import Client from "../Client";
-import { Base } from "./Base";
+import Base from "./Base";
 
 export interface UserPayload {
     id: string;
