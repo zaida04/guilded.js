@@ -1,7 +1,7 @@
 import Collection from "@discordjs/collection";
 import { CreateDocOptions, UpdateDocOptions } from "@guildedjs/rest";
 import Client from "../Client";
-import { Base } from "./Base";
+import Base from "./Base";
 
 export interface DocChannelPayload {
     id: string;

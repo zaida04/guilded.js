@@ -1,6 +1,6 @@
 import { GetChannelMessagesOptions, MessageContent, UpdateChannelMessageOptions } from "@guildedjs/rest";
 import Client from "../Client";
-import { Base } from "./Base";
+import Base from "./Base";
 
 export interface ChannelPayload {
     id: string;

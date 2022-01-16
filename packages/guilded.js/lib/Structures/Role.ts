@@ -1,5 +1,5 @@
 import Client from "../Client";
-import { Base } from "./Base";
+import Base from "./Base";
 
 export interface RolePayload {
     id: number;

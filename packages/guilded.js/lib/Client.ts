@@ -10,7 +10,10 @@ import {
     UpdateChannelMessageOptions,
     UpdateDocOptions,
 } from "@guildedjs/rest";
+import WebsocketManager from "@guildedjs/ws";
 import { EventEmitter } from "events";
+import { ClientGatewayHandler, TeamMemberUpdatedUserInfo, TeamRolesUpdatedPayload } from "./Structures/ClientGatewayHandler";
+import Message from "./Structures/Message";
 import { User } from "./Structures/User";
 
 interface ClientOptions {
@@ -32,17 +35,26 @@ export class Client extends EventEmitter {
     /** The manager for the bot to make requests to the REST api. */
     rest: RestManager;
 
-    // TODO: Enable the manager once it is built
     /** The gateway manager for the bot to manage all gateway connections through websockets. */
-    // gateway: GatewayManager;
+    gateway: WebsocketManager;
 
     /** The users that have been cached for this connection. */
     users = new Collection<string, User>();
 
+    /** The gateway event handlers will be processed by this manager. */
+    eventHandler = new ClientGatewayHandler(this);
+
     constructor(public options: ClientOptions) {
         super();
-        // TODO: Enable the manager once it is built
-        // this.gateway = new GatewayManager();
+
+        this.gateway = new WebsocketManager({
+            token: options.token,
+            handleEventPacket: (packet) => {
+                if (packet.t) this.eventHandler[packet.t]?.(packet.d as any);
+            },
+            autoConnect: true,
+        });
+
         this.rest = new RestManager({
             ...options.rest,
             token: options.token,
@@ -183,6 +195,31 @@ export class Client extends EventEmitter {
     /** Remove role to member */
     removeRoleFromMember(userId: string, roleId: number) {
         return this.rest.removeRoleFromMember(userId, roleId);
+    }
+
+    /** Add a event listener to the client */
+    on(event: "messageCreated", listener: (message: Message) => unknown): this;
+    on(event: "messageUpdated", listener: (message: Message) => unknown): this;
+    on(
+        event: "messageDeleted",
+        listener: (
+            payload: {
+                /** The ID of the message */
+                id: string;
+                /** The ID of the channel */
+                channelId: string;
+                /** The timestamp that the message was deleted at */
+                deletedAt: number;
+            },
+            message?: Message,
+        ) => unknown,
+    ): this;
+    on(event: "memberUpdated", listener: (payload: TeamMemberUpdatedUserInfo) => unknown): this;
+    on(event: "teamRolesUpdated", listener: (message: TeamRolesUpdatedPayload) => unknown): this;
+    on(event: string | symbol, listener: (...args: any[]) => void): this;
+    on(event: string | symbol, listener: (...args: any[]) => void): this {
+        super.on(event, listener);
+        return this;
     }
 }
 
