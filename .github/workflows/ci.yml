@@ -36,8 +36,8 @@ jobs:
                 - name: Install dependencies
                   run: yarn install
 
-                - name: Run linter
-                  run: yarn lint
+                - name: Run TypeScript Compiler
+                  run: yarn build
 
         tests:
             name: Jest tests
