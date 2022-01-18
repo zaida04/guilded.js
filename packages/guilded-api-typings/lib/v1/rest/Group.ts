@@ -9,4 +9,3 @@ export type RESTPutGroupMemberResult = never;
  * /groups/:groupId/members/:userId
  */
 export type RESTDeleteGroupMemberResult = never;
-
