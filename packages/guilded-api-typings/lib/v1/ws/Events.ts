@@ -5,24 +5,25 @@ export enum WSOpCodes {
     WELCOME,
     RESUME,
     ERROR = 8,
-    PING = 9,
-    PONG = 10,
+    PING,
+    PONG,
 }
 
-export const WSEvents = {
+export const WebSocketEvents = {
     ChatMessageCreated: "ChatMessageCreated",
     ChatMessageUpdated: "ChatMessageUpdated",
     ChatMessageDeleted: "ChatMessageDeleted",
     TeamMemberUpdated: "TeamMemberUpdated",
-    TeamRolesUpdated: "TeamRolesUpdated",
+    // This is intentional. Legacy change on Guilded's end.
+    teamRolesUpdated: "teamRolesUpdated",
 } as const;
-type WSEvent = typeof WSEvents;
+type WSEvent = typeof WebSocketEvents;
 
 export interface SkeletonWSPayload {
     d: unknown;
     s?: string;
     op: WSOpCodes;
-    t: keyof typeof WSEvents;
+    t: keyof WSEvent;
 }
 
 export interface WSWelcomePayload extends SkeletonWSPayload {
@@ -67,9 +68,9 @@ export interface WSTeamMemberUpdatedPayload extends SkeletonWSPayload {
     t: WSEvent["TeamMemberUpdated"];
 }
 
-export interface WSTeamRolesUPdatedPayload extends SkeletonWSPayload {
+export interface WSTeamRolesUpdatedPayload extends SkeletonWSPayload {
     d: {
         memberRoleIds: unknown[];
     };
-    t: WSEvent["TeamRolesUpdated"];
+    t: WSEvent["teamRolesUpdated"];
 }
