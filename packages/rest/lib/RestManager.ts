@@ -2,6 +2,7 @@ import fetch, { Request, Response } from "node-fetch";
 import { RestOptions, RequestMethods } from "./typings";
 import { ROUTES } from "@guildedjs/common";
 import { GuildedAPIError } from "./GuildedAPIError";
+import { Router } from "./Router";
 
 export class RestManager {
     /** The bot token to be used for making requests. */
@@ -10,11 +11,14 @@ export class RestManager {
     version: number;
     /** The proxy url if it was set. */
     proxyURL?: string;
+    /** The router with all the helper methods. */
+    router: Router;
 
     constructor(public readonly options: RestOptions) {
         this.token = options.token;
         this.version = options.version ?? 1;
         this.proxyURL = options.proxyURL;
+        this.router = new Router(this);
     }
 
     /** The base url to send the request to. */
