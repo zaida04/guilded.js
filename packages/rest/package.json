@@ -7,9 +7,9 @@
     "main": "dist/index.js",
     "types": "types/index.d.ts",
     "scripts": {
-        "test": "npm run build && node ./__tests__/index.js",
+        "test": "yarn build && node ./__tests__/index.js",
         "build": "tsc",
-        "prepublishOnly": "npx rimraf dist/ && npx rimraf types/ && npm run build"
+        "prepublishOnly": "npx rimraf dist/ && npx rimraf types/ && yarn build"
     },
     "devDependencies": {
         "@guildedjs/guilded-api-typings": "^2.0.0",

@@ -8,7 +8,7 @@
     "main": "dist/index.js",
     "scripts": {
         "build": "tsc",
-        "prepublishOnly": "npx rimraf dist/ && npm run build"
+        "prepublishOnly": "npx rimraf dist/ && yarn build"
     },
     "devDependencies": {
         "typescript": "^4.4.2"
