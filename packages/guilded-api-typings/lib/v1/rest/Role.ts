@@ -8,4 +8,4 @@ export type RESTPutMemberRoleResult = never;
  * DELETE
  * /members/:userId/roles/:roleId
  */
- export type RESTDeleteMemberRoleResult = never;
+export type RESTDeleteMemberRoleResult = never;
