@@ -1,41 +1,41 @@
 {
-  "name": "@guildedjs/guilded-api-typings",
-  "version": "2.0.0",
-  "description": "Typings for the guilded API",
-  "author": "Zaid \"Nico\"",
-  "license": "MIT",
-  "types": "dist/index.d.ts",
-  "main": "dist/index.js",
-  "scripts": {
-    "build": "tsc",
-    "prepublishOnly": "npx rimraf dist/ && npm run build"
-  },
-  "devDependencies": {
-    "typescript": "^4.4.2"
-  },
-  "directories": {
-    "lib": "lib",
-    "test": "__tests__"
-  },
-  "keywords": [
-    "guilded",
-    "guildedjs",
-    "guilded.js",
-    "guilded-api",
-    "guilded-api-wrapper",
-    "guilded-wrapper",
-    "guilded-api-typings"
-  ],
-  "files": [
-    "dist"
-  ],
-  "homepage": "https://github.com/guildedjs/guilded.js/tree/main/packages/guilded-api-typings#readme",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/guildedjs/guilded.js.git"
-  },
-  "bugs": {
-    "url": "https://github.com/guildedjs/guilded.js/issues"
-  },
-  "gitHead": "0719b880becce0aa4bccaf5eb5b210ecb08b0547"
+    "name": "@guildedjs/guilded-api-typings",
+    "version": "2.0.0",
+    "description": "Typings for the guilded API",
+    "author": "Zaid \"Nico\"",
+    "license": "MIT",
+    "types": "dist/index.d.ts",
+    "main": "dist/index.js",
+    "scripts": {
+        "build": "tsc",
+        "prepublishOnly": "npx rimraf dist/ && npm run build"
+    },
+    "devDependencies": {
+        "typescript": "^4.4.2"
+    },
+    "directories": {
+        "lib": "lib",
+        "test": "__tests__"
+    },
+    "keywords": [
+        "guilded",
+        "guildedjs",
+        "guilded.js",
+        "guilded-api",
+        "guilded-api-wrapper",
+        "guilded-wrapper",
+        "guilded-api-typings"
+    ],
+    "files": [
+        "dist"
+    ],
+    "homepage": "https://github.com/guildedjs/guilded.js/tree/main/packages/guilded-api-typings#readme",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/guildedjs/guilded.js.git"
+    },
+    "bugs": {
+        "url": "https://github.com/guildedjs/guilded.js/issues"
+    },
+    "gitHead": "0719b880becce0aa4bccaf5eb5b210ecb08b0547"
 }

@@ -1,6 +1,6 @@
 {
-  "name": "@guildedjs/guilded.js",
-  "version": "3.0.0",
+  "name": "guilded.js",
+  "version": "0.0.1-dev",
   "description": "A Node.js library for the Guilded.gg (https://www.guilded.gg/) API written in TypeScript, usable in either JavaScript or TypeScript projects.",
   "types": "types/index.d.ts",
   "main": "dist/index.js",

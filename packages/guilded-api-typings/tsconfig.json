@@ -5,7 +5,5 @@
         "target": "ES2020",
         "removeComments": false
     },
-    "include": [
-        "./lib/**/*.ts"
-    ]
+    "include": ["./lib/**/*.ts"]
 }
