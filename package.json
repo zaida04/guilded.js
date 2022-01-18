@@ -9,11 +9,11 @@
         "build": "npx lerna run build",
         "bootstrap": "npx lerna bootstrap",
         "lint": "npx eslint packages/ scripts/ --ext .ts,.js",
-        "lint:fix": "npm run lint -- --fix",
+        "lint:fix": "yarn lint --fix",
         "docs": "npx rimraf docs && npx typedoc --options typedoc.json packages && node scripts/post-docs.js",
         "test": "npx jest",
-        "test:build": "npm run build && npx jest",
-        "prepublishOnly": "npm run lint && npx lerna run prepublishOnly",
+        "test:build": "yarn build && npx jest",
+        "prepublishOnly": "yarn lint && npx lerna run prepublishOnly",
         "prepare": "husky install",
         "prettier": "prettier --write **/*.{ts,js,json,yml,yaml}",
         "reset": "cd scripts && node refresh.js"
@@ -48,5 +48,13 @@
         "typedoc": "^0.19.2",
         "typedoc-plugin-remove-references": "0.0.5",
         "typescript": "^4.0.5"
-    }
+    },
+    "workspaces": [
+        "packages/*"
+    ],
+    "engines": {
+        "npm": "please-use-yarn",
+        "yarn": ">= 1.22.10",
+        "node": ">= 16.0.0"
+     }
 }
