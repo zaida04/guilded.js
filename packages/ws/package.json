@@ -1,31 +1,32 @@
 {
-  "name": "@guildedjs/ws",
-  "version": "0.0.1",
-  "description": "Module of guilded.js that handles WS connections",
-  "main": "dist/index.js",
-  "types": "types/index.d.ts",
-  "scripts": {
-    "test": "npm run build && node ./__tests__/index.js",
-    "build": "tsc",
-    "prepublishOnly": "npx rimraf dist/ && npx rimraf types/ && npm run build"
-  },
-  "devDependencies": {
-    "@types/ws": "^7.4.0",
-    "typescript": "^4.4.2"
-  },
-  "dependencies": {
-    "ws": "^7.4.0"
-  },
-  "files": [
-    "dist",
-    "types"
-  ],
-  "homepage": "https://github.com/guildedjs/guilded.js/tree/main/packages/rest#readme",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/guildedjs/guilded.js.git"
-  },
-  "bugs": {
-    "url": "https://github.com/guildedjs/guilded.js/issues"
-  }
+    "name": "@guildedjs/ws",
+    "version": "0.0.1",
+    "description": "Module of guilded.js that handles WS connections",
+    "main": "dist/index.js",
+    "types": "types/index.d.ts",
+    "scripts": {
+        "test": "yarn build && node ./__tests__/index.js",
+        "build": "tsc",
+        "prepublishOnly": "npx rimraf dist/ && npx rimraf types/ && yarn build"
+    },
+    "devDependencies": {
+        "@guildedjs/guilded-api-typings": "^2.0.0",
+        "@types/ws": "^7.4.0",
+        "typescript": "^4.4.2"
+    },
+    "dependencies": {
+        "ws": "^7.4.0"
+    },
+    "files": [
+        "dist",
+        "types"
+    ],
+    "homepage": "https://github.com/guildedjs/guilded.js/tree/main/packages/rest#readme",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/guildedjs/guilded.js.git"
+    },
+    "bugs": {
+        "url": "https://github.com/guildedjs/guilded.js/issues"
+    }
 }

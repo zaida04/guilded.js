@@ -1,89 +1,59 @@
 name: CI workflows
 on: [push, pull_request]
+
 jobs:
-  lint:
-    name: ESLint
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
+    lint:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Clone repo
+              uses: actions/checkout@v2
 
-      - name: Install Node v14
-        uses: actions/setup-node@v1
-        with:
-          node-version: 14
+            - name: Set up Node v16
+              uses: actions/setup-node@v2
+              with:
+                  node-version: "16"
+                  cache: "yarn"
 
-      - name: Use node_modules cache
-        uses: actions/cache@v2
-        with:
-          path: '**/node_modules'
-          key: ${{ runner.os }}-node-modules-${{ hashFiles('**/package-lock.json') }}
+            - name: Install dependencies
+              run: yarn install
 
-      - name: Install Main Dependencies
-        if: ${{ !steps.cache-restore.outputs.cache-hit }}
-        run: npm i
+            - name: Run linter
+              run: yarn lint
 
-      - name: Install Sub Dependencies
-        run: npm run bootstrap
+        typescript:
+            name: TypeScript Build
+            runs-on: ubuntu-latest
+            steps:
+                - name: Checkout repository
+                  uses: actions/checkout@v2
 
-      - name: Run ESLint
-        run: npm run lint
+                - name: Install Node v14
+                  uses: actions/setup-node@v2
+                  with:
+                      node-version: "16"
+                      cache: "yarn"
 
-  typescript:
-    name: TypeScript Build
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
+                - name: Install dependencies
+                  run: yarn install
 
-      - name: Install Node v14
-        uses: actions/setup-node@v1
-        with:
-          node-version: 14
+                - name: Run TypeScript Compiler
+                  run: yarn build
 
-      - name: Use node_modules cache
-        uses: actions/cache@v2
-        with:
-          path: '**/node_modules'
-          key: ${{ runner.os }}-node-modules-${{ hashFiles('**/package-lock.json') }}
+        tests:
+            name: Jest tests
+            runs-on: ubuntu-latest
+            steps:
+                - name: Checkout repository
+                  uses: actions/checkout@v2
 
-      - name: Install Main Dependencies
-        if: ${{ !steps.cache-restore.outputs.cache-hit }}
-        run: npm i
+                - name: Install Node v14
+                  uses: actions/setup-node@v2
+                  with:
+                      node-version: "16"
+                      cache: "yarn"
 
-      - name: Install Sub Dependencies
-        run: npm run bootstrap
+                - name: Install dependencies
+                  run: yarn install
 
-      - name: Run TSC
-        run: npm run build
-
-  # tests:
-  #   name: Jest tests
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: Checkout repository
-  #       uses: actions/checkout@v2
-
-  #     - name: Install Node v14
-  #       uses: actions/setup-node@v1
-  #       with:
-  #         node-version: 14
-
-  #     - name: Use node_modules cache
-  #       uses: actions/cache@v2
-  #       with:
-  #         path: '**/node_modules'
-  #         key: ${{ runner.os }}-node-modules-${{ hashFiles('**/package-lock.json') }}
-
-  #     - name: Install Main Dependencies
-  #       if: ${{ !steps.cache-restore.outputs.cache-hit }}
-  #       run: npm i
-
-  #     - name: Install Sub Dependencies
-  #       run: npm run bootstrap
-
-  #     - name: Run TSC
-  #       run: npm run build
-
-  #     - name: Run Jest
-  #       run: npm run test
+                - name: Run tests
+                  run: yarn test
