@@ -1,10 +1,28 @@
 import { ChatMessagePayload } from "../structs/Message";
 
+export enum WSOpCodes {
+    SUCCESS,
+    WELCOME,
+    RESUME,
+    ERROR = 8,
+    PING = 9,
+    PONG = 10,
+}
+
+export const WSEvents = {
+    ChatMessageCreated: "ChatMessageCreated",
+    ChatMessageUpdated: "ChatMessageUpdated",
+    ChatMessageDeleted: "ChatMessageDeleted",
+    TeamMemberUpdated: "TeamMemberUpdated",
+    TeamRolesUpdated: "TeamRolesUpdated",
+} as const;
+type WSEvent = typeof WSEvents;
+
 export interface SkeletonWSPayload {
     d: unknown;
     s?: string;
-    op: 0 | 1 | 2 | 8 | 9;
-    t: string;
+    op: WSOpCodes;
+    t: keyof typeof WSEvents;
 }
 
 export interface WSWelcomePayload extends SkeletonWSPayload {
@@ -18,14 +36,14 @@ export interface WSChatMessageCreatedPayload extends SkeletonWSPayload {
     d: {
         message: ChatMessagePayload;
     };
-    t: "ChatMessageCreated";
+    t: WSEvent["ChatMessageCreated"];
 }
 
 export interface WSChatMessageUpdatedPayload extends SkeletonWSPayload {
     d: {
         message: ChatMessagePayload;
     };
-    t: "ChatMessageUpdated";
+    t: WSEvent["ChatMessageUpdated"];
 }
 
 export interface WSChatMessageDeletedPayload extends SkeletonWSPayload {
@@ -36,7 +54,7 @@ export interface WSChatMessageDeletedPayload extends SkeletonWSPayload {
             deletedAt: string;
         };
     };
-    t: "ChatMessageDeleted";
+    t: WSEvent["ChatMessageDeleted"];
 }
 
 export interface WSTeamMemberUpdatedPayload extends SkeletonWSPayload {
@@ -46,12 +64,12 @@ export interface WSTeamMemberUpdatedPayload extends SkeletonWSPayload {
             nickname: string;
         };
     };
-    t: "TeamMemberUpdated";
+    t: WSEvent["TeamMemberUpdated"];
 }
 
 export interface WSTeamRolesUPdatedPayload extends SkeletonWSPayload {
     d: {
         memberRoleIds: unknown[];
     };
-    t: "TeamRolesUpdated";
+    t: WSEvent["TeamRolesUpdated"];
 }
