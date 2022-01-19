@@ -6,14 +6,14 @@
     "license": "MIT",
     "private": true,
     "scripts": {
-        "build": "npx lerna run build",
+        "build": "yarn workspaces run build",
         "bootstrap": "npx lerna bootstrap",
         "lint": "npx eslint packages/ scripts/ --ext .ts,.js",
         "lint:fix": "yarn lint --fix",
         "docs": "npx rimraf docs && npx typedoc --options typedoc.json packages && node scripts/post-docs.js",
         "test": "npx jest",
         "test:build": "yarn build && npx jest",
-        "prepublishOnly": "yarn lint && npx lerna run prepublishOnly",
+        "prepublishOnly": "yarn lint && yarn workspaces run prepublishOnly",
         "prepare": "husky install",
         "prettier": "prettier --write **/*.{ts,js,json,yml,yaml}",
         "reset": "cd scripts && node refresh.js"
