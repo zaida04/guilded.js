@@ -52,8 +52,11 @@ jobs:
                   node-version: "16"
                   cache: "yarn"
 
-            - name: Install dependencies
+            - name: I-nstall dependencies
               run: yarn install
+
+            - name: Run TypeScript Compiler
+              run: yarn build
 
             - name: Run tests
               run: yarn test
