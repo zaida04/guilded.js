@@ -20,40 +20,40 @@ jobs:
             - name: Run linter
               run: yarn lint
 
-        typescript:
-            name: TypeScript Build
-            runs-on: ubuntu-latest
-            steps:
-                - name: Checkout repository
-                  uses: actions/checkout@v2
+    typescript:
+        name: TypeScript Build
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout repository
+              uses: actions/checkout@v2
 
-                - name: Install Node v14
-                  uses: actions/setup-node@v2
-                  with:
-                      node-version: "16"
-                      cache: "yarn"
+            - name: Install Node v14
+              uses: actions/setup-node@v2
+              with:
+                  node-version: "16"
+                  cache: "yarn"
 
-                - name: Install dependencies
-                  run: yarn install
+            - name: Install dependencies
+              run: yarn install
 
-                - name: Run TypeScript Compiler
-                  run: yarn build
+            - name: Run TypeScript Compiler
+              run: yarn build
 
-        tests:
-            name: Jest tests
-            runs-on: ubuntu-latest
-            steps:
-                - name: Checkout repository
-                  uses: actions/checkout@v2
+    tests:
+        name: Jest tests
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout repository
+              uses: actions/checkout@v2
 
-                - name: Install Node v14
-                  uses: actions/setup-node@v2
-                  with:
-                      node-version: "16"
-                      cache: "yarn"
+            - name: Install Node v14
+              uses: actions/setup-node@v2
+              with:
+                  node-version: "16"
+                  cache: "yarn"
 
-                - name: Install dependencies
-                  run: yarn install
+            - name: Install dependencies
+              run: yarn install
 
-                - name: Run tests
-                  run: yarn test
+            - name: Run tests
+              run: yarn test
