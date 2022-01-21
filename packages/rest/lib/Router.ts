@@ -67,18 +67,18 @@ export class Router {
     }
 
     /** Get a list of the roles assigned to a member using the id of the member. */
-    getMemberRoles(userId: string) {
-        return this.rest.get<RESTGetMemberRolesResult>(ROUTES.memberRoles(userId));
+    getMemberRoles(serverId: string, userId: string) {
+        return this.rest.get<RESTGetMemberRolesResult>(ROUTES.memberRoles(serverId, userId));
     }
 
     /** Update a member's nickname. */
-    updateMemberNickname(userId: string, nickname: string) {
-        return this.rest.put<RESTPutChannelMessageResult, RESTPutMemberNicknameBody>(ROUTES.memberNickname(userId), { nickname });
+    updateMemberNickname(serverId: string, userId: string, nickname: string) {
+        return this.rest.put<RESTPutChannelMessageResult, RESTPutMemberNicknameBody>(ROUTES.memberNickname(serverId, userId), { nickname });
     }
 
     /** Delete a member's nickname */
-    deleteMemberNickname(userId: string) {
-        return this.rest.delete<RESTDeleteMemberNicknameResult>(ROUTES.memberNickname(userId));
+    deleteMemberNickname(serverId: string, userId: string) {
+        return this.rest.delete<RESTDeleteMemberNicknameResult>(ROUTES.memberNickname(serverId, userId));
     }
 
     /** Create a thread in a forum */
@@ -123,18 +123,18 @@ export class Router {
     }
 
     /** Award XP to a member */
-    awardMemberXP(userId: string, amount: number) {
-        return this.rest.post<RESTPostUserXpResult, RESTPostUserXPBody>(ROUTES.memberXP(userId), { amount });
+    awardMemberXP(serverId: string, userId: string, amount: number) {
+        return this.rest.post<RESTPostUserXpResult, RESTPostUserXPBody>(ROUTES.memberXP(serverId, userId), { amount });
     }
 
     /** Award XP to a role */
-    awardRoleXP(roleId: string, amount: number) {
-        return this.rest.post<RESTPostRoleXpResult, RESTPostUserXPBody>(ROUTES.roleXP(roleId), { amount });
+    awardRoleXP(serverId: string, roleId: string, amount: number) {
+        return this.rest.post<RESTPostRoleXpResult, RESTPostUserXPBody>(ROUTES.roleXP(serverId, roleId), { amount });
     }
 
     /** Retrieves a member's public social links */
-    getMemberSocialLinks(userId: string, type: UserSocialLink) {
-        return this.rest.get<RESTGetMemberSocialLink>(ROUTES.getMemberSocialLinks(userId, type));
+    getMemberSocialLinks(serverId: string, userId: string, type: UserSocialLink) {
+        return this.rest.get<RESTGetMemberSocialLink>(ROUTES.getMemberSocialLinks(serverId, userId, type));
     }
 
     /** Add member to group */

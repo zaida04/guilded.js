@@ -1,6 +1,6 @@
 /**
  * GET
- * /members/:userId/roles
+ * /servers/:serverId/members/:userId/roles
  */
 export interface RESTGetMemberRolesResult {
     roleIds: number[];
@@ -8,7 +8,7 @@ export interface RESTGetMemberRolesResult {
 
 /**
  * PUT
- * /members/:userId/nickname
+ * /servers/:serverId/members/:userId/nickname
  */
 export interface RESTPutMemberNicknameResult {
     nickname: string;
@@ -19,6 +19,6 @@ export interface RESTPutMemberNicknameBody {
 
 /**
  * DELETE
- * /members/:userId/nickname
+ * /servers/:serverId/members/:userId/nickname
  */
 export type RESTDeleteMemberNicknameResult = never;

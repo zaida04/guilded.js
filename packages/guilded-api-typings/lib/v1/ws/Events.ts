@@ -35,6 +35,7 @@ export interface WSWelcomePayload extends SkeletonWSPayload {
 
 export interface WSChatMessageCreatedPayload extends SkeletonWSPayload {
     d: {
+        serverId: string;
         message: ChatMessagePayload;
     };
     t: WSEvent["ChatMessageCreated"];
@@ -42,6 +43,7 @@ export interface WSChatMessageCreatedPayload extends SkeletonWSPayload {
 
 export interface WSChatMessageUpdatedPayload extends SkeletonWSPayload {
     d: {
+        serverId: string;
         message: ChatMessagePayload;
     };
     t: WSEvent["ChatMessageUpdated"];
@@ -49,6 +51,7 @@ export interface WSChatMessageUpdatedPayload extends SkeletonWSPayload {
 
 export interface WSChatMessageDeletedPayload extends SkeletonWSPayload {
     d: {
+        serverId: string;
         message: {
             id: string;
             channelId: string;
@@ -60,6 +63,7 @@ export interface WSChatMessageDeletedPayload extends SkeletonWSPayload {
 
 export interface WSTeamMemberUpdatedPayload extends SkeletonWSPayload {
     d: {
+        serverId: string;
         userInfo: {
             id: string;
             nickname: string;
@@ -70,6 +74,7 @@ export interface WSTeamMemberUpdatedPayload extends SkeletonWSPayload {
 
 export interface WSTeamRolesUpdatedPayload extends SkeletonWSPayload {
     d: {
+        serverId: string;
         memberRoleIds: unknown[];
     };
     t: WSEvent["teamRolesUpdated"];
