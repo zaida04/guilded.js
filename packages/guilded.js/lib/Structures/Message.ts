@@ -1,6 +1,6 @@
 import Client from "../Client";
 import Base from "./Base";
-import { GatewayMessagePayload } from "./ClientGatewayHandler";
+import { GatewayMessagePayload } from "../gateway/ClientGatewayHandler";
 
 export enum MessageType {
     Default,

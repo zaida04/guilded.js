@@ -8,7 +8,7 @@
     "scripts": {
         "build": "yarn workspaces run build",
         "bootstrap": "npx lerna bootstrap",
-        "lint": "npx eslint packages/ scripts/ --ext .ts,.js",
+        "lint": "npx eslint packages/**/* scripts/**/* --ext .ts,.js",
         "lint:fix": "yarn lint --fix",
         "docs": "npx rimraf docs && npx typedoc --options typedoc.json packages && node scripts/post-docs.js",
         "test": "npx jest",
