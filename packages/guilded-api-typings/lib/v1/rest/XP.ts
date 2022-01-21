@@ -1,6 +1,6 @@
 /**
  * POST
- * /members/:userId/xp
+ * /servers/:serverId/members/:userId/xp
  */
 export interface RESTPostUserXpResult {
     total: number;
@@ -11,7 +11,7 @@ export interface RESTPostUserXPBody {
 
 /**
  * POST
- * /roles/:roleId/xp
+ * /servers/:serverId/roles/:roleId/xp
  */
 export interface RESTPostRoleXpResult {
     total: number;

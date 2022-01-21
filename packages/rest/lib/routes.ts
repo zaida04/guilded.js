@@ -6,8 +6,8 @@ export const ROUTES = {
     channelMessage: (channelId: string, messageId: string) => `/channels/${channelId}/messages/${messageId}`,
 
     // Member Endpoints
-    memberNickname: (userId: string) => `/members/${userId}/nickname`,
-    memberRoles: (userId: string) => `/members/${userId}/roles`,
+    memberNickname: (serverId: string, userId: string) => `/servers/${serverId}/members/${userId}/nickname`,
+    memberRoles: (serverId: string, userId: string) => `/servers/${serverId}/members/${userId}/roles`,
 
     // Forum Endpoints
     createForumThread: (channelId: string) => `/channels/${channelId}/forum`,
@@ -23,11 +23,11 @@ export const ROUTES = {
     channelReaction: (channelId: string, contentId: string, emoteId: number) => `/channels/${channelId}/content/${contentId}/emotes/${emoteId}`,
 
     // Team XP Endpoints
-    memberXP: (userId: string) => `/members/${userId}/xp`,
-    roleXP: (userId: string) => `/roles/${userId}/xp`,
+    memberXP: (serverId: string, userId: string) => `/servers/${serverId}/members/${userId}/xp`,
+    roleXP: (serverId: string, userId: string) => `/servers/${serverId}/roles/${userId}/xp`,
 
     // Social Links Endpoints
-    getMemberSocialLinks: (userId: string, type: UserSocialLink) => `/members/${userId}/social-links/${type}`,
+    getMemberSocialLinks: (serverId: string, userId: string, type: UserSocialLink) => `/servers/${serverId}/members/${userId}/social-links/${type}`,
 
     // Group Memberships Endpoints
     groupMember: (groupId: string, userId: string) => `/groups/${groupId}/members/${userId}`,
