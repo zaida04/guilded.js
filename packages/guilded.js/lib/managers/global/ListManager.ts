@@ -3,7 +3,7 @@ import GlobalManager from "./GlobalManager";
 
 export default class ListManager extends GlobalManager {
     /** Create a list item. */
-    createListItem(channelId: string, options: RESTPostListItemBody) {
+    createItem(channelId: string, options: RESTPostListItemBody) {
         return this.client.rest.router.createListItem(channelId, options);
     }
 }

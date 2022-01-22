@@ -13,6 +13,7 @@ import type Message from "./structures/Message";
 import type TypedEmitter from "typed-emitter";
 import type { WSChatMessageDeletedPayload, WSTeamMemberUpdatedPayload } from "@guildedjs/guilded-api-typings";
 import type Member from "./structures/Member";
+import ChannelManager from "./managers/global/ChannelManager";
 
 export class Client extends (EventEmitter as unknown as new () => TypedEmitter<ClientEvents>) {
     /** The time in milliseconds the Client connected */
@@ -27,9 +28,8 @@ export class Client extends (EventEmitter as unknown as new () => TypedEmitter<C
     /** The gateway manager for the bot to manage all gateway connections through websockets. */
     readonly gateway = new WebsocketManager({
         token: this.options.token,
-        handleEventPacket: (packet) => {
-            if (packet.t) this.eventHandler[packet.t]?.(packet.d as any);
-        },
+        // todo: redo in ws refactor
+        handleEventPacket: (packet) => {},
         autoConnect: true,
     });
 
@@ -37,6 +37,7 @@ export class Client extends (EventEmitter as unknown as new () => TypedEmitter<C
     readonly eventHandler = new ClientGatewayHandler(this);
 
     /** Managers for structures */
+    readonly channels = new ChannelManager(this);
     readonly docs = new DocManager(this);
     readonly forums = new ForumManager(this);
     readonly groups = new GroupManager(this);

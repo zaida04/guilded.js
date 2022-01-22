@@ -3,27 +3,27 @@ import GlobalManager from "./GlobalManager";
 
 export default class MemberManager  extends GlobalManager {
     /** Get a list of the roles assigned to a member using the id of the member. */
-    getMemberRoles(userId: string) {
-        return this.client.rest.router.getMemberRoles(userId);
+    getRoles(serverId: string, memberId: string) {
+        return this.client.rest.router.getMemberRoles(serverId, memberId);
     }
 
     /** Update a member's nickname. */
-    updateMemberNickname(userId: string, newNickname: string) {
-        return this.client.rest.router.updateMemberNickname(userId, newNickname);
+    updateNicknames(serverId: string, memberId: string, newNickname: string) {
+        return this.client.rest.router.updateMemberNickname(serverId, memberId, newNickname);
     }
 
     /** Delete a member's nickname */
-    deleteMemberNickname(userId: string) {
-        return this.client.rest.router.deleteMemberNickname(userId);
+    resetNickname(serverId: string, memberId: string) {
+        return this.client.rest.router.deleteMemberNickname(serverId, memberId);
     }
 
     /** Award XP to a member */
-    awardMemberXP(userId: string, amount: number) {
-        return this.client.rest.router.awardMemberXP(userId, amount);
+    giveXP(serverId: string, memberId: string, amount: number) {
+        return this.client.rest.router.awardMemberXP(serverId, memberId, amount);
     }
 
     /** Retrieves a member's public social links */
-    getMemberSocialLinks(userId: string, type: UserSocialLink) {
-        return this.client.rest.router.getMemberSocialLinks(userId, type);
+    getSocialLinks(serverId: string, memberId: string, type: UserSocialLink) {
+        return this.client.rest.router.getMemberSocialLinks(serverId, memberId, type);
     }
 }

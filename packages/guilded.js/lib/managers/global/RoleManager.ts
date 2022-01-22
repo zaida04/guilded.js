@@ -2,18 +2,18 @@ import GlobalManager from "./GlobalManager";
 
 export default class RoleManager extends GlobalManager {
     /** Award XP to a role */
-    awardRoleXP(roleId: number, amount: number) {
+    giveXP(serverId: string, roleId: number, amount: number) {
         // TODO: fix in rest by changing to number
-        return this.client.rest.router.awardRoleXP(roleId.toString(), amount);
+        return this.client.rest.router.awardRoleXP(serverId, roleId.toString(), amount);
     }
 
     /** Assign role to member */
-    assignRoleToMember(userId: string, roleId: number) {
-        return this.client.rest.router.assignRoleToMember(userId, roleId);
+    addRole(memberId: string, roleId: number) {
+        return this.client.rest.router.assignRoleToMember(memberId, roleId);
     }
 
-    /** Remove role to member */
-    removeRoleFromMember(userId: string, roleId: number) {
-        return this.client.rest.router.removeRoleFromMember(userId, roleId);
+    /** Remove role from member */
+    removeRole(memberId: string, roleId: number) {
+        return this.client.rest.router.removeRoleFromMember(memberId, roleId);
     }
 }
