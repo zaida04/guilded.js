@@ -5,6 +5,7 @@ export default class Base<T = { id: string }, R = string> {
     public id: R;
     // Bare data of this structure
     public raw: T;
+    
     constructor(public readonly client: Client, data: { id: R } & T) {
         this.id = data.id;
         this.raw = data;

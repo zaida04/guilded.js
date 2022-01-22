@@ -2,6 +2,7 @@ import RestManager from "@guildedjs/rest";
 import WebsocketManager from "@guildedjs/ws";
 import { EventEmitter } from "node:events";
 import { ClientGatewayHandler } from "./gateway/ClientGatewayHandler";
+import ChannelManager from "./managers/global/ChannelManager";
 import DocManager from "./managers/global/DocManager";
 import ForumManager from "./managers/global/ForumManager";
 import GroupManager from "./managers/global/GroupManager";
@@ -13,38 +14,37 @@ import type Message from "./structures/Message";
 import type TypedEmitter from "typed-emitter";
 import type { WSChatMessageDeletedPayload, WSTeamMemberUpdatedPayload } from "@guildedjs/guilded-api-typings";
 import type Member from "./structures/Member";
-import ChannelManager from "./managers/global/ChannelManager";
+import type Role from "./structures/Role";
 
 export class Client extends (EventEmitter as unknown as new () => TypedEmitter<ClientEvents>) {
     /** The time in milliseconds the Client connected */
     readyTimestamp = 0;
 
     /** The manager for the bot to make requests to the REST api. */
-    readonly rest = new RestManager({
+    rest = new RestManager({
         ...this.options.rest,
         token: this.options.token,
     });
 
     /** The gateway manager for the bot to manage all gateway connections through websockets. */
-    readonly gateway = new WebsocketManager({
+    gateway = new WebsocketManager({
         token: this.options.token,
         // todo: redo in ws refactor
         handleEventPacket: (packet) => {},
-        autoConnect: true,
     });
 
     /** The gateway event handlers will be processed by this manager. */
-    readonly eventHandler = new ClientGatewayHandler(this);
+    eventHandler = new ClientGatewayHandler(this);
 
     /** Managers for structures */
-    readonly channels = new ChannelManager(this);
-    readonly docs = new DocManager(this);
-    readonly forums = new ForumManager(this);
-    readonly groups = new GroupManager(this);
-    readonly lists = new ListManager(this);
-    readonly members = new MemberManager(this);
-    readonly messages = new MessageManager(this);
-    readonly roles = new RoleManager(this);
+    channels = new ChannelManager(this);
+    docs = new DocManager(this);
+    forums = new ForumManager(this);
+    groups = new GroupManager(this);
+    lists = new ListManager(this);
+    members = new MemberManager(this);
+    messages = new MessageManager(this);
+    roles = new RoleManager(this);
 
     constructor(public options: ClientOptions) {
         super();
@@ -87,9 +87,10 @@ interface ClientOptions {
 
 type ClientEvents = {
     messageCreated: (message: Message) => unknown,
-    messageUpdated: (oldMessage: Message | null, newMessage: Message) => unknown,
+    messageUpdated: (message: Message, oldMessage: Message | null) => unknown,
     messageDeleted: (message: Message | WSChatMessageDeletedPayload) => unknown,
-    memberUpdated: (oldMember: Member | null, newMember: Member | WSTeamMemberUpdatedPayload["d"]) => unknown
+    memberUpdated: (member: Member | WSTeamMemberUpdatedPayload["d"], oldMember: Member | null) => unknown
+    teamRolesUpdated: (roleIds: Role[] | number[]) => unknown
 }
 
 export default Client;

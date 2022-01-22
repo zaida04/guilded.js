@@ -2,7 +2,7 @@ import { WSChatMessageCreatedPayload, WSChatMessageDeletedPayload, WSChatMessage
 import GatewayEventHandler from "./GatewayEventHandler";
 
 export default class MessageEventHandler extends GatewayEventHandler {
-    messageCreate(data: WSChatMessageCreatedPayload) {}
+    messageCreated(data: WSChatMessageCreatedPayload) {}
     messageUpdated(data: WSChatMessageUpdatedPayload) {}
-    messageDelete(data: WSChatMessageDeletedPayload) {}
+    messageDeleted(data: WSChatMessageDeletedPayload) {}
 }

@@ -1,10 +1,11 @@
 import type Client from "../Client";
-import type { BareStructureBaseData } from "../typings";
 import Base from "./Base";
 
 export default class Role extends Base<{ id: number, serverId: string }, number> {
+    /** The ID of the server this role belongs to */
     serverId: string;
-    constructor(client: Client, data: { id: number,serverId: string }) {
+
+    constructor(client: Client, data: { id: number, serverId: string }) {
         super(client, data);
         this.serverId = data.serverId;
     }
