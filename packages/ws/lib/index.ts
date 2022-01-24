@@ -1,4 +1,4 @@
-import WebsocketManager from "./WebsocketManager";
+import WebsocketManager from "./WebSocketManager";
 
-export * from "./WebsocketManager";
+export * from "./WebSocketManager";
 export default WebsocketManager;

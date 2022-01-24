@@ -1,4 +1,141 @@
-import WebSocket from "ws";
+import WebSocket, { EventEmitter } from "ws";
+import { ROUTES } from "@guildedjs/common";
+import type TypedEmitter from "typed-emitter";
+import { SkeletonWSPayload, WSOpCodes } from "@guildedjs/guilded-api-typings";
+
+export default class WebSocketManager {
+    /** The version of the websocket to connect to. */
+    version = this.options.version ?? 1;
+
+    /** Token used to authenticate requests. */
+    token = this.options.token;
+
+    /** The websocket connected to guilded. */
+    socket: WebSocket | null = null;
+
+    /** Whether or not this connection is connected and heartbeating. */
+    isAlive = false;
+
+    /** The amount of milliseconds the websocket took to respond to the last ping request. */
+    ping: number | null = null;
+
+    /** The timestamp in milliseconds of the last ping request. */
+    lastPingedAt = 0;
+
+    /** The last message id received. Used in the event of resuming connections. */
+    messageId: string | null = null;
+
+    /** The date since the last initial connection was established. */
+    connectedAt: Date | null = null;
+
+    /** Emitter in charge of emitting ws gateway related events */
+    emitter = new EventEmitter() as TypedEmitter<WebsocketManagerEvents>;
+
+    /** Count of how many times a reconnect has been attempted */
+    reconnectAttemptAmount = 0;
+
+    constructor(public readonly options: WebSocketOptions) {
+        if (this.options.autoConnect) this.connect();
+    }
+
+    /** The url that will be used to connect. Prioritizes proxy url and if not available uses the default base url for guidled. */
+    get wsURL() {
+        return this.options.proxyURL ?? `wss://${ROUTES.WS_DOMAIN}/v${this.version}/websocket`;
+    }
+
+    get reconnectAttemptExceeded() {
+        return this.reconnectAttemptAmount >= (this.options.reconnectAttemptLimit ?? Infinity);
+    }
+
+    connect() {
+        this.socket = new WebSocket(this.wsURL, {
+            headers: {
+                Authorization: `Bearer ${this.token}`,
+            },
+        });
+
+        this.socket.on("open", this.onSocketOpen.bind(this));
+
+        this.socket.on("message", (data) => {
+            this.emitter.emit("debug", data);
+            this.onSocketMessage(data);
+        });
+
+        this.socket.on("error", (err) => {
+            this.emitter.emit("debug", "Gateway connection errored.");
+            this.emitter.emit("error", "Gateway Error", err);
+            if (!(this.options.autoConnectOnErr ?? true) || this.reconnectAttemptExceeded) {
+                this.reconnectAttemptAmount++;
+                return this.connect();
+            }
+            this.destroy();
+            this.emitter.emit("exit", "Gateway connection permanently closed due to error.");
+        });
+
+        this.socket.on("close", (code: number, reason: string) => {
+            this.emitter.emit("debug", `Gateway connection terminated with code ${code} for reason: ${reason}`);
+            if (!(this.options.autoConnect ?? true) || this.reconnectAttemptExceeded) {
+                this.reconnectAttemptAmount++;
+                return this.connect();
+            }
+            this.destroy();
+            this.emitter.emit("exit", "Gateway connection permanently closed.");
+        });
+
+        this.socket.on("pong", this.onSocketPong.bind(this));
+    }
+
+    destroy() {
+        if (!this.socket) throw new Error("There is no active connection to destroy.");
+        this.socket.removeAllListeners();
+        if (this.socket.OPEN) this.socket.close();
+    }
+
+    onSocketMessage(packet: WebSocket.Data) {
+        this.emitter.emit("raw", packet);
+        if (typeof packet !== "string") {
+            this.emitter.emit("error", "packet was not typeof string", null);
+            return void 0;
+        }
+
+        let EVENT_NAME;
+        let EVENT_DATA;
+
+        try {
+            const data = JSON.parse(packet) as SkeletonWSPayload;
+            EVENT_NAME = data.t;
+            EVENT_DATA = data;
+        } catch (error) {
+            this.emitter.emit("error", "ERROR PARSING WS EVENT", error as Error, packet);
+            return void 0;
+        }
+
+        // SAVE THE ID IF AVAILABLE. USED FOR RESUMING CONNECTIONS.
+        if (EVENT_DATA.s) this.messageId = EVENT_DATA.s;
+
+        switch (EVENT_DATA.op) {
+            // Normal event based packets
+            case WSOpCodes.SUCCESS:
+                this.emitter.emit("gatewayEvent", EVENT_NAME, EVENT_DATA);
+                break;
+            // Auto handled by ws lib
+            case WSOpCodes.WELCOME:
+                break;
+            default:
+                this.emitter.emit("unknown", "unknown opcode", packet);
+                break;
+        }
+    }
+
+    onSocketOpen() {
+        this.isAlive = true;
+        this.connectedAt = new Date();
+    }
+
+    onSocketPong() {
+        this.ping = Date.now() - this.lastPingedAt;
+    }
+}
 
 export interface WebSocketOptions {
     /** The bot's token. */
@@ -9,155 +146,19 @@ export interface WebSocketOptions {
     version?: 1;
     /** Whether to connect automatically on instantiation. */
     autoConnect?: boolean;
-    /** The callback handler that will run when a event packet is received. */
-    handleEventPacket: (packet: WebsocketPayload) => any;
+    /** Whether to try to re-establish connection on error */
+    autoConnectOnErr?: boolean;
+    /** Limit of how many times a reconnection should be attempted */
+    reconnectAttemptLimit?: number;
 }
 
-export enum WebsocketOpCodes {
-    Dispatch,
-    Welcome,
-    Eight = 8,
-    Nine,
-}
-
-export type WebsocketEventNames = "ChatMessageCreated" | "ChatMessageUpdated" | "ChatMessageDeleted" | "TeamMemberUpdated" | "teamRolesUpdated";
-
-export interface WebsocketPayload {
-    /** An operation code corresponding to the nature of the sent message (for example, success, failure, etc.) */
-    op: WebsocketOpCodes;
-    /** Data of any form depending on the underlying event */
-    d?: Record<string, unknown>;
-    /** Message ID used for replaying events after a disconnect */
-    s?: string;
-    /** Event name for the given message */
-    t?: WebsocketEventNames;
-}
-
-export default class WebSocketManager {
-    /** The options used to instantiate the WebSocket manager. */
-    options: WebSocketOptions;
-
-    /** The base url that the websocket will connect to. */
-    baseURL = "wss://api.guilded.gg/";
-
-    /** The version of the websocket to connect to. */
-    version = 1;
-
-    /** The websocket connected to guilded. */
-    socket!: WebSocket;
-
-    /** Whether or not this connection is connected and heartbeating. */
-    isAlive = false;
-
-    /** The amount of milliseconds the websocket took to respond to the last ping request. */
-    ping = 0;
-
-    /** The timestamp in milliseconds of the last ping request. */
-    lastPingedAt = 0;
-
-    /** The last message id received. Used in the event of resuming connections. */
-    messageId = "";
-
-    constructor(options: WebSocketOptions) {
-        this.options = options;
-
-        this.onPacket = this.onPacket.bind(this);
-        this.onSocketOpen = this.onSocketOpen.bind(this);
-        this.onSocketMessage = this.onSocketMessage.bind(this);
-        this.onSocketError = this.onSocketError.bind(this);
-        this.onSocketClose = this.onSocketClose.bind(this);
-        this.onSocketPong = this.onSocketPong.bind(this);
-
-        if (options.autoConnect) this.connect();
-    }
-
-    /** The bot's token. */
-    get token() {
-        return this.options.token;
-    }
-
-    /** The proxy url that the websocket will connect to if provided. */
-    get proxyURL() {
-        return this.options.proxyURL;
-    }
-
-    /** The url that will be used to connect. Prioritizes proxy url and if not available uses the default base url for guidled. */
-    get wsURL() {
-        return this.proxyURL ?? `${this.baseURL}v${this.version}/websocket`;
-    }
-
-    connect() {
-        this.socket = new WebSocket("wss://api.guilded.gg/v1/websocket", {
-            headers: {
-                Authorization: `Bearer ${this.token}`,
-            },
-        });
-
-        this.socket.on("open", this.onSocketOpen);
-        this.socket.on("message", this.onSocketMessage);
-        this.socket.on("error", this.onSocketError);
-        this.socket.on("close", this.onSocketClose);
-        this.socket.on("pong", this.onSocketPong);
-    }
-
-    onPacket(packet: WebsocketPayload) {
-        // TODO: raw event here somehow
-        // console.log("RAW", packet);
-
-        // SAVE THE ID IF AVAILABLE. USED FOR RESUMING CONNECTIONS.
-        if (packet.s) this.messageId = packet.s;
-
-        switch (packet.op) {
-            // Normal event based packets
-            case WebsocketOpCodes.Dispatch:
-                this.options.handleEventPacket(packet);
-                break;
-            // Auto handled by ws lib
-            case WebsocketOpCodes.Welcome:
-                break;
-            default:
-                console.log("[Websocket] UNKNOWN OP CODE", packet);
-                break;
-        }
-    }
-
-    onSocketClose(code: number, reason: string) {
-        console.log(`[Websocket] Closed with code: ${code} for reason: ${reason}`);
-        // RECONNECT WHEN CONNECTION IS CLOSED
-        this.connect();
-    }
-
-    onSocketError(error: Error) {
-        console.log(error);
-        // RECONNECT WHEN CONNECTION ERRORS
-        this.connect();
-    }
-
-    onSocketMessage(data: WebSocket.Data) {
-        if (typeof data !== "string") return console.log("data from websocket was not of type string");
-
-        try {
-            const payload = JSON.parse(data);
-            this.onPacket(payload);
-        } catch (error) {
-            console.log(error);
-        }
-    }
-
-    onSocketOpen() {
-        this.isAlive = true;
-    }
-
-    onSocketPong() {
-        this.isAlive = true;
-        this.ping = Date.now() - this.lastPingedAt;
-    }
-}
-
-export interface WelcomePayload {
-    op: 1;
-    d: {
-        heartbeatIntervalMs: number;
-        lastMessageId: string;
-    };
-}
+// eslint-disable-next-line @typescript-eslint/consistent-type-definitions
+type WebsocketManagerEvents = {
+    debug: (data: any) => unknown;
+    raw: (data: any) => unknown;
+    error: (reason: string, err: Error | null, data?: any) => unknown;
+    exit: (info: string) => unknown;
+    unknown: (reason: string, data: any) => unknown;
+    reconnect: () => unknown;
+    gatewayEvent: (event: string, data: Record<string, any>) => unknown;
+};
