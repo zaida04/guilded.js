@@ -57,12 +57,12 @@ export default class WebSocketManager {
         this.socket.on("open", this.onSocketOpen.bind(this));
 
         this.socket.on("message", (data) => {
-            this.emitter.emit("debug", data);
+            this._debug(data);
             this.onSocketMessage(data);
         });
 
         this.socket.on("error", (err) => {
-            this.emitter.emit("debug", "Gateway connection errored.");
+            this._debug("Gateway connection errored.");
             this.emitter.emit("error", "Gateway Error", err);
             if (!(this.options.autoConnectOnErr ?? true) || this.reconnectAttemptExceeded) {
                 this.reconnectAttemptAmount++;
@@ -73,7 +73,7 @@ export default class WebSocketManager {
         });
 
         this.socket.on("close", (code: number, reason: string) => {
-            this.emitter.emit("debug", `Gateway connection terminated with code ${code} for reason: ${reason}`);
+            this._debug(`Gateway connection terminated with code ${code} for reason: ${reason}`);
             if (!(this.options.autoConnect ?? true) || this.reconnectAttemptExceeded) {
                 this.reconnectAttemptAmount++;
                 return this.connect();
@@ -134,6 +134,10 @@ export default class WebSocketManager {
 
     onSocketPong() {
         this.ping = Date.now() - this.lastPingedAt;
+    }
+
+    _debug(str: any) {
+        return this.emitter.emit("debug", str);
     }
 }
 
