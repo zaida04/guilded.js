@@ -2,7 +2,24 @@
     "name": "@guildedjs/common",
     "version": "2.0.0",
     "description": "Common structures and utilities used in various @guildedjs packages",
-    "author": "Zaid \"Nico\" <nico.03727@gmail.com>",
+    "author": "Zaid \"Nico\" <contact@nico.engineer>",
+    "contributors": [
+        {
+            "name": "Zaid \"Nico\"",
+            "email": "contact@nico.engineer",
+            "url": "https://github.com/zaida04"
+        },
+        {
+            "name": "Skillz4Killz",
+            "email": "guildedjs@drskillz.33mail.com",
+            "url": "https://github.com/Skillz4Killz"
+        },
+        {
+            "name": "Uhuh \"Dylan\"",
+            "email": "dylan@panku.io",
+            "url": "https://github.com/uhuh"
+        }
+    ],
     "homepage": "https://github.com/guildedjs/guilded.js/tree/main/packages/common#readme",
     "license": "MIT",
     "types": "types/index.d.ts",

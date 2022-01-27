@@ -2,7 +2,24 @@
     "name": "@guildedjs/rest",
     "version": "2.0.0",
     "description": "Rest structure for @guildedjs/guilded.js",
-    "author": "Zaid \"Nico\"",
+    "author": "Zaid \"Nico\" <contact@nico.engineer>",
+    "contributors": [
+        {
+            "name": "Zaid \"Nico\"",
+            "email": "contact@nico.engineer",
+            "url": "https://github.com/zaida04"
+        },
+        {
+            "name": "Skillz4Killz",
+            "email": "guildedjs@drskillz.33mail.com",
+            "url": "https://github.com/Skillz4Killz"
+        },
+        {
+            "name": "Uhuh \"Dylan\"",
+            "email": "dylan@panku.io",
+            "url": "https://github.com/uhuh"
+        }
+    ],
     "license": "MIT",
     "main": "dist/index.js",
     "types": "types/index.d.ts",
