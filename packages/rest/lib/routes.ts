@@ -24,7 +24,7 @@ export const ROUTES = {
 
     // Team XP Endpoints
     memberXP: (serverId: string, userId: string) => `/servers/${serverId}/members/${userId}/xp`,
-    roleXP: (serverId: string, userId: string) => `/servers/${serverId}/roles/${userId}/xp`,
+    roleXP: (serverId: string, roleId: string) => `/servers/${serverId}/roles/${roleId}/xp`,
 
     // Social Links Endpoints
     getMemberSocialLinks: (serverId: string, userId: string, type: UserSocialLink) => `/servers/${serverId}/members/${userId}/social-links/${type}`,

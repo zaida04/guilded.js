@@ -6,20 +6,15 @@ import { Router } from "./Router";
 
 export class RestManager {
     /** The bot token to be used for making requests. */
-    token: string;
+    token = this.options.token;
     /** The version of the API to be used for making requests. By default, this will use the latest version that the library supports. */
-    version: number;
+    version = this.options.version ?? 1;
     /** The proxy url if it was set. */
-    proxyURL?: string;
+    proxyURL = this.options.proxyURL;
     /** The router with all the helper methods. */
-    router: Router;
+    readonly router = new Router(this);
 
-    constructor(public readonly options: RestOptions) {
-        this.token = options.token;
-        this.version = options.version ?? 1;
-        this.proxyURL = options.proxyURL;
-        this.router = new Router(this);
-    }
+    constructor(public readonly options: RestOptions) {}
 
     /** The base url to send the request to. */
     get baseURL() {
