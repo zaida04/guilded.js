@@ -12,6 +12,11 @@ export default class Member extends Base<BareStructureBaseData> {
         this.serverId = data.serverId;
     }
 
+    get user() {
+        // TODO: wait for user structure from Guilded
+        return void 0;
+    }
+
     /** Get a list of the roles assigned to a member using the id of the member. */
     getRoles() {
         return this.client.members.getRoles(this.serverId, this.id);
