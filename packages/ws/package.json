@@ -1,6 +1,12 @@
 {
     "name": "@guildedjs/ws",
     "version": "0.0.1",
+    "author": "Zaid \"Nico\" <contact@nico.engineer>",
+    "contributors": [
+        "Zaid \"Nico\" <contact@nico.engineer>",
+        "Skillz4Killz <guildedjs@drskillz.33mail.com>",
+        "Uhuh <dylan@panku.io>"
+    ],
     "description": "Module of guilded.js that handles WS connections",
     "main": "dist/index.js",
     "types": "types/index.d.ts",

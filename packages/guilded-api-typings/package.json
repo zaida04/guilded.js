@@ -2,7 +2,12 @@
     "name": "@guildedjs/guilded-api-typings",
     "version": "2.0.0",
     "description": "Typings for the guilded API",
-    "author": "Zaid \"Nico\"",
+    "author": "Zaid \"Nico\" <contact@nico.engineer>",
+    "contributors": [
+        "Zaid \"Nico\" <contact@nico.engineer>",
+        "Skillz4Killz <guildedjs@drskillz.33mail.com>",
+        "Uhuh <dylan@panku.io>"
+    ],
     "license": "MIT",
     "types": "dist/index.d.ts",
     "main": "dist/index.js",

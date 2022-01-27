@@ -4,7 +4,12 @@
     "description": "A Node.js library for the Guilded.gg (https://www.guilded.gg/) API written in TypeScript, usable in either JavaScript or TypeScript projects.",
     "types": "types/index.d.ts",
     "main": "dist/index.js",
-    "author": "Zaid \"Nico\"",
+    "author": "Zaid \"Nico\" <contact@nico.engineer>",
+    "contributors": [
+        "Zaid \"Nico\" <contact@nico.engineer>",
+        "Skillz4Killz <guildedjs@drskillz.33mail.com>",
+        "Uhuh <dylan@panku.io>"
+    ],
     "license": "MIT",
     "scripts": {
         "test": "cd ../../ && yarn build && cd packages/guilded.js && node ./__tests__/index.js",

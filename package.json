@@ -2,7 +2,12 @@
     "name": "@guildedjs/main",
     "version": "0.0.0",
     "description": "Overarching repository for the Guilded.JS repository",
-    "author": "Zaid \"Nico\"",
+    "author": "Zaid \"Nico\" <contact@nico.engineer>",
+    "contributors": [
+        "Zaid \"Nico\" <contact@nico.engineer>",
+        "Skillz4Killz <guildedjs@drskillz.33mail.com>",
+        "Uhuh <dylan@panku.io>"
+    ],
     "license": "MIT",
     "private": true,
     "scripts": {
@@ -61,5 +66,5 @@
         "npm": "please-use-yarn",
         "yarn": ">= 1.22.10",
         "node": ">= 16.0.0"
-     }
+    }
 }
