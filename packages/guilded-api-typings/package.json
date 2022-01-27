@@ -4,9 +4,21 @@
     "description": "Typings for the guilded API",
     "author": "Zaid \"Nico\" <contact@nico.engineer>",
     "contributors": [
-        "Zaid \"Nico\" <contact@nico.engineer>",
-        "Skillz4Killz <guildedjs@drskillz.33mail.com>",
-        "Uhuh <dylan@panku.io>"
+        {
+            "name": "Zaid \"Nico\"",
+            "email": "contact@nico.engineer",
+            "url": "https://github.com/zaida04"
+        },
+        {
+            "name": "Skillz4Killz",
+            "email": "guildedjs@drskillz.33mail.com",
+            "url": "https://github.com/Skillz4Killz"
+        },
+        {
+            "name": "Uhuh \"Dylan\"",
+            "email": "contact@nico.engineer",
+            "url": "https://github.com/uhuh"
+        }
     ],
     "license": "MIT",
     "types": "dist/index.d.ts",
