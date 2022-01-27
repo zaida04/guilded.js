@@ -28,9 +28,7 @@ export class Client extends (EventEmitter as unknown as new () => TypedEmitter<C
 
     /** The gateway manager for the bot to manage all gateway connections through websockets. */
     gateway = new WebsocketManager({
-        token: this.options.token,
-        // todo: redo in ws refactor
-        handleEventPacket: (packet) => {},
+        token: this.options.token
     });
 
     /** The gateway event handlers will be processed by this manager. */
