@@ -82,7 +82,6 @@ interface ClientOptions {
         /** The base url of the API you want to send requests to. By default, this will send it to guilded's rest API. This is meant for big bot developers who want to use a proxy rest system. */
         proxyURL?: string;
     };
-    partials?: string[];
 }
 
 type ClientEvents = {
