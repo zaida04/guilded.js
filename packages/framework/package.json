@@ -1,0 +1,32 @@
+{
+    "name": "@guildedjs/gil",
+    "version": "0.0.1",
+    "description": "Command framework for @guildedjs/guilded.js",
+    "author": "Zaid \"Nico\"",
+    "license": "MIT",
+    "main": "dist/index.js",
+    "types": "types/index.d.ts",
+    "scripts": {
+        "test": "yarn build && node ./__tests__/index.js",
+        "build": "tsc",
+        "prepublishOnly": "npx rimraf dist/ && npx rimraf types/ && yarn build"
+    },
+    "devDependencies": {
+        "typescript": "^4.4.2"
+    },
+    "dependencies": {
+        "@discordjs/collection": "^0.1.6"
+    },
+    "files": [
+        "dist",
+        "types"
+    ],
+    "homepage": "https://github.com/guildedjs/guilded.js/tree/main/packages/framework#readme",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/guildedjs/guilded.js.git"
+    },
+    "bugs": {
+        "url": "https://github.com/guildedjs/guilded.js/issues"
+    }
+}
