@@ -1,3 +1,4 @@
+import Message from "guilded.js/types/structures/Message";
 import BotClient from "../BotClient";
 
 export class Monitor {
@@ -21,8 +22,7 @@ export class Monitor {
         this.client.monitors.set(name, this);
     }
 
-    // @ts-ignore FIX when the lerna package is fixed. Switch to Message
-    async execute(message: any) {
+    async execute(message: Message) {
         // Placeholder for the execution handler for this task.
     }
 

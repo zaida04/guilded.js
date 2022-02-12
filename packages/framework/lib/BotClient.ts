@@ -2,10 +2,10 @@ import path from "path";
 import Collection from "@discordjs/collection";
 import { walk } from "./utils/walk";
 import { Monitor } from "./Structures/Monitor";
+import { Client } from "guilded.js";
+import Message from "guilded.js/types/structures/Message";
 
-// @ts-ignore import Client properly
-// export default class BotClient extends Client {
-export default class BotClient {
+export default class BotClient extends Client {
     /** The options used to configure the bot. */
     options: BotClientOptions;
     /** All your bot's monitors will be available here */
@@ -16,7 +16,7 @@ export default class BotClient {
     sourceFolderPath: string;
 
     constructor(options: BotClientOptions) {
-        // super(options);
+        super(options);
 
         this.options = options;
         this.sourceFolderPath = options.sourceFolderPath || path.join(process.cwd(), "src/");
@@ -76,13 +76,11 @@ export default class BotClient {
 
     /** Allows users to override and customize the addition of a event listener */
     initializeMessageListener() {
-        // @ts-ignore Fix when the Client is imported
         this.on("messageCreated", (message) => this.processMonitors(message));
     }
 
     /** Handler that is run on messages and can  */
-    // @ts-ignore Switch to Message when possible
-    processMonitors(message: any) {
+    processMonitors(message: Message) {
         this.monitors.forEach((monitor) => {
             if (monitor.ignoreBots && message.createdByBotId) return;
             // @ts-ignore FIX THE ID PROPERTY FOR CLIENT.id
@@ -96,11 +94,13 @@ export default class BotClient {
     }
 }
 
-// @ts-ignore Fix when the lib is imported
 // export interface BotClientOptions extends ClientOptions {
 export interface BotClientOptions {
     /** The prefix that will be used to determine if a message is executing a command. */
     prefix: string;
     /** The path that the end users commands,monitors, inhibitors and others will be located. */
     sourceFolderPath?: string;
+
+    // TODO: THESE ARE REMOVED WHEN EXTENDS IS fixed
+    token: string;
 }
