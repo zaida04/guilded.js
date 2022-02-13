@@ -34,7 +34,7 @@ export default class BotClient extends Client {
         await Promise.allSettled(
             [["monitors", this.monitors] as const].map(async ([dir, collection]) => {
                 try {
-                    for await (const result of walk(path.join(__dirname, `./internal/${dir}/`))) {
+                    for await (const result of walk(path.join(this.sourceFolderPath, dir))) {
                         if (!result) return;
 
                         const [filename, file] = result;

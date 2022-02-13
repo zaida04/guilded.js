@@ -24,7 +24,7 @@
     ],
     "license": "MIT",
     "scripts": {
-        "test": "yarn build && node ./__tests__/index.js",
+        "test": "npx ts-node test/index.ts",
         "build": "tsc",
         "prepublishOnly": "npx rimraf dist/ && npx rimraf types/ && yarn build"
     },

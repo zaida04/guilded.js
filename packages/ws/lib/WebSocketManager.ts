@@ -1,4 +1,5 @@
-import WebSocket, { EventEmitter } from "ws";
+import WebSocket from "ws";
+import { EventEmitter } from "events";
 import { ROUTES } from "@guildedjs/common";
 import type TypedEmitter from "typed-emitter";
 import { SkeletonWSPayload, WSOpCodes } from "@guildedjs/guilded-api-typings";
