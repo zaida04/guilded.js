@@ -32,7 +32,7 @@
         "typescript": "^4.4.2"
     },
     "dependencies": {
-        "guilded.js": "^2.0.0"
+        "guilded.js": "^0.0.1-dev"
     },
     "files": [
         "dist",
