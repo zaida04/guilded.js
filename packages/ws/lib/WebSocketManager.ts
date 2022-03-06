@@ -122,6 +122,7 @@ export default class WebSocketManager {
             // Auto handled by ws lib
             case WSOpCodes.WELCOME:
                 this.emitter.emit("ready");
+                break;
             default:
                 this.emitter.emit("unknown", "unknown opcode", packet);
                 break;
