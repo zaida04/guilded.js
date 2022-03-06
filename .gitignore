@@ -2,6 +2,7 @@ node_modules/
 dist/
 types/
 coverage/
+.nyc_output/
 
 .npmrc
 *.tsbuildinfo

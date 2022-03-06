@@ -6,7 +6,7 @@ import { User } from "./User";
 export default class Member extends Base<BareStructureBaseData> {
     /** The ID of the server this role belongs to */
     serverId: string;
-    
+
     constructor(client: Client, data: BareStructureBaseData & { serverId: string }) {
         super(client, data);
         this.serverId = data.serverId;

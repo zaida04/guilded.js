@@ -2,7 +2,6 @@ import { ChatMessageContent, RESTGetChannelMessagesQuery, RESTPutChannelMessageB
 import Client from "../../Client";
 import Base from "../Base";
 
-
 export default class Channel extends Base {
     /** Send a message to this channel. */
     createMessage(content: ChatMessageContent | string) {

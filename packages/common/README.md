@@ -6,7 +6,7 @@
 
 Common structures and utilities used in various @guildedjs packages
 
-> ⚠️ If you intend to use `@guildedjs/guilded.js` you won't need to install this, as it's already a dependency of that package.
+> ⚠️ If you intend to use `guilded.js` you won't need to install this, as it's already a dependency of that package.
 
 ## Installation
 

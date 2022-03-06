@@ -1,4 +1,9 @@
-import { ChatMessageContent, RESTPostChannelMessagesBody ,RESTGetChannelMessagesQuery, RESTPutChannelMessageBody } from "@guildedjs/guilded-api-typings";
+import {
+    ChatMessageContent,
+    RESTPostChannelMessagesBody,
+    RESTGetChannelMessagesQuery,
+    RESTPutChannelMessageBody,
+} from "@guildedjs/guilded-api-typings";
 import GlobalManager from "./GlobalManager";
 
 export default class MessageManager extends GlobalManager {

@@ -1,7 +1,4 @@
 {
-    "env": {
-        "node": true
-    },
     "extends": "@sapphire",
     "parser": "@typescript-eslint/parser",
     "parserOptions": {
