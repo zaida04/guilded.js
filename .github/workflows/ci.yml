@@ -40,7 +40,7 @@ jobs:
               run: yarn build
 
     tests:
-        name: Jest tests
+        name: Mocha tests
         runs-on: ubuntu-latest
         steps:
             - name: Checkout repository
@@ -52,7 +52,7 @@ jobs:
                   node-version: "16"
                   cache: "yarn"
 
-            - name: I-nstall dependencies
+            - name: Install dependencies
               run: yarn install
 
             - name: Run TypeScript Compiler

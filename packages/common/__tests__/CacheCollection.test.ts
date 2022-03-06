@@ -1,20 +1,21 @@
 import { CacheCollection } from "..";
+import { expect } from "chai";
 const zeroOrNegativeErrorMessage = "Cannot pass 0 or negative value as maxSize.";
 
-test("Successful construction with default cache maxSize", () => {
-    expect(new CacheCollection().maxSize).toStrictEqual(Infinity);
-    expect(() => new CacheCollection({ maxSize: undefined })).not.toThrow();
+it("Successful construction with default cache maxSize", () => {
+    expect(new CacheCollection().maxSize).to.equal(Infinity);
+    expect(() => new CacheCollection({ maxSize: undefined })).not.throw;
 });
 
-test("Abiding by cache maxSize", () => {
+it("Abiding by cache maxSize", () => {
     const cache = new CacheCollection({ maxSize: 500 });
     for (let i = 0; i < 505; i++) {
         cache.set(`test-${i}`, i);
     }
-    expect(cache.size).toStrictEqual(500);
+    expect(cache.size).to.equal(500);
 });
 
-test("Properly error on invalid maxSize being passed", () => {
-    expect(() => new CacheCollection({ maxSize: 0 })).toThrow(new TypeError(zeroOrNegativeErrorMessage));
-    expect(() => new CacheCollection({ maxSize: -1 })).toThrow(new TypeError(zeroOrNegativeErrorMessage));
+it("Properly error on invalid maxSize being passed", () => {
+    expect(() => new CacheCollection({ maxSize: 0 })).to.throw(TypeError, zeroOrNegativeErrorMessage);
+    expect(() => new CacheCollection({ maxSize: -1 })).to.throw(TypeError, zeroOrNegativeErrorMessage);
 });

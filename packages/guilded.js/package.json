@@ -2,27 +2,10 @@
     "name": "guilded.js",
     "version": "0.0.1-dev",
     "description": "A Node.js library for the Guilded.gg (https://www.guilded.gg/) API written in TypeScript, usable in either JavaScript or TypeScript projects.",
+    "author": "Zaid \"Nico\" <contact@nico.engineer>",
+    "license": "MIT",
     "types": "types/index.d.ts",
     "main": "dist/index.js",
-    "author": "Zaid \"Nico\" <contact@nico.engineer>",
-    "contributors": [
-        {
-            "name": "Zaid \"Nico\"",
-            "email": "contact@nico.engineer",
-            "url": "https://github.com/zaida04"
-        },
-        {
-            "name": "Skillz4Killz",
-            "email": "guildedjs@drskillz.33mail.com",
-            "url": "https://github.com/Skillz4Killz"
-        },
-        {
-            "name": "Uhuh \"Dylan\"",
-            "email": "dylan@panku.io",
-            "url": "https://github.com/uhuh"
-        }
-    ],
-    "license": "MIT",
     "scripts": {
         "test": "cd ../../ && yarn build && cd packages/guilded.js && node ./__tests__/index.js",
         "test:local": "yarn build && cd __tests__ && node index.js",
@@ -40,9 +23,22 @@
         "@guildedjs/rest": "^2.0.0",
         "@guildedjs/ws": "^0.0.1"
     },
-    "files": [
-        "dist",
-        "types"
+    "contributors": [
+        {
+            "name": "Zaid \"Nico\"",
+            "email": "contact@nico.engineer",
+            "url": "https://github.com/zaida04"
+        },
+        {
+            "name": "Skillz4Killz",
+            "email": "guildedjs@drskillz.33mail.com",
+            "url": "https://github.com/Skillz4Killz"
+        },
+        {
+            "name": "Uhuh \"Dylan\"",
+            "email": "dylan@panku.io",
+            "url": "https://github.com/uhuh"
+        }
     ],
     "keywords": [
         "guildedjs",
@@ -51,10 +47,10 @@
         "guilded-api",
         "guilded"
     ],
-    "directories": {
-        "lib": "lib",
-        "test": "__tests__"
-    },
+    "files": [
+        "dist",
+        "types"
+    ],
     "homepage": "https://github.com/guildedjs/guilded.js/tree/main/packages/guilded.js#readme",
     "repository": {
         "type": "git",
