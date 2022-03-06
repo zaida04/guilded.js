@@ -1,7 +1,7 @@
 import { UserSocialLink } from "@guildedjs/guilded-api-typings";
 import GlobalManager from "./GlobalManager";
 
-export default class MemberManager  extends GlobalManager {
+export default class MemberManager extends GlobalManager {
     /** Get a list of the roles assigned to a member using the id of the member. */
     getRoles(serverId: string, memberId: string) {
         return this.client.rest.router.getMemberRoles(serverId, memberId);

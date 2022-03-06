@@ -28,7 +28,7 @@ export class Client extends (EventEmitter as unknown as new () => TypedEmitter<C
 
     /** The gateway manager for the bot to manage all gateway connections through websockets. */
     gateway = new WebsocketManager({
-        token: this.options.token
+        token: this.options.token,
     });
 
     /** The gateway event handlers will be processed by this manager. */
@@ -67,7 +67,6 @@ export class Client extends (EventEmitter as unknown as new () => TypedEmitter<C
     async disconnect() {
         return;
     }
-
 }
 
 interface ClientOptions {
@@ -83,11 +82,11 @@ interface ClientOptions {
 }
 
 type ClientEvents = {
-    messageCreated: (message: Message) => unknown,
-    messageUpdated: (message: Message, oldMessage: Message | null) => unknown,
-    messageDeleted: (message: Message | WSChatMessageDeletedPayload) => unknown,
-    memberUpdated: (member: Member | WSTeamMemberUpdatedPayload["d"], oldMember: Member | null) => unknown
-    teamRolesUpdated: (roleIds: Role[] | number[]) => unknown
-}
+    messageCreated: (message: Message) => unknown;
+    messageUpdated: (message: Message, oldMessage: Message | null) => unknown;
+    messageDeleted: (message: Message | WSChatMessageDeletedPayload) => unknown;
+    memberUpdated: (member: Member | WSTeamMemberUpdatedPayload["d"], oldMember: Member | null) => unknown;
+    teamRolesUpdated: (roleIds: Role[] | number[]) => unknown;
+};
 
 export default Client;

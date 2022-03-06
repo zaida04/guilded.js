@@ -1,4 +1,5 @@
 {
+    "$schema": "https://typedoc.org/schema.json",
     "exclude": ["**/node_modules/**", "**/dist/**", "**/types/**", "**/@types/**"],
     "excludeExternals": true,
     "excludeNotExported": true,
@@ -12,5 +13,5 @@
     "readme": "README.md",
     "stripInternal": true,
     "theme": "minimal",
-    "tsconfig": "tsconfig.base.json"
+    "tsconfig": "tsconfig.json"
 }
