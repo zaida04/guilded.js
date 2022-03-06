@@ -1,4 +1,5 @@
-import WebSocket, { EventEmitter } from "ws";
+import WebSocket from "ws";
+import { EventEmitter } from "events";
 import { ROUTES } from "@guildedjs/common";
 import type TypedEmitter from "typed-emitter";
 import { SkeletonWSPayload, WSOpCodes } from "@guildedjs/guilded-api-typings";
@@ -120,7 +121,7 @@ export default class WebSocketManager {
                 break;
             // Auto handled by ws lib
             case WSOpCodes.WELCOME:
-                break;
+                this.emitter.emit("ready");
             default:
                 this.emitter.emit("unknown", "unknown opcode", packet);
                 break;
@@ -165,4 +166,5 @@ type WebsocketManagerEvents = {
     unknown: (reason: string, data: any) => unknown;
     reconnect: () => unknown;
     gatewayEvent: (event: string, data: Record<string, any>) => unknown;
+    ready: () => unknown;
 };
