@@ -9,44 +9,53 @@
 </div>
 
 ```ts
-const { Client } = require("@guildedjs/guilded.js");
-// import { Client } from "@guildedjs/guilded.js";
+const { Client } = require("guilded.js");
+// import { Client } from "guilded.js";
 const client = new Client();
 
-client.on('ready', () => console.log(`Bot is successfully logged in`));
-client.on("messageCreate", message => {
-    if(message.content === "poggers") {
+client.on("ready", () => console.log(`Bot is successfully logged in`));
+client.on("messageCreate", (message) => {
+    if (message.content === "poggers") {
         return message.channel.send("poggers indeed");
     }
-})
+});
 
 client.login("TOKEN_HERE");
 ```
+
 ## 📝 About
-`@guildedjs/guilded.js` is a library written in TypeScript usable in either TypeScript or JavaScript projects. It provides structures, abstraction, and utilities for interaction between the guilded API and your userbot. It includes the other various pieces that make up the Guilded.JS collection of packages.
+
+`guilded.js` is a library written in TypeScript usable in either TypeScript or JavaScript projects. It provides structures, abstraction, and utilities for interaction between the guilded API and your userbot. It includes the other various pieces that make up the Guilded.JS collection of packages.
 
 ## 📥 Installation
-<a href="https://npmjs.org/package/@guildedjs/guilded.js"><img src="https://nodei.co/npm/@guildedjs/guilded.js.png" alt="NPM"></a>
+
+<a href="https://npmjs.org/package/guilded.js"><img src="https://nodei.co/npm/guilded.js.png" alt="NPM"></a>
 
 **Recommended that you use node v12+**
-- `npm install @guildedjs/guilded.js`  
-- `yarn add @guildedjs/guilded.js`
+
+-   `npm install guilded.js`
+-   `yarn add guilded.js`
 
 ## 📃 Documentation
+
 Documentation is located [here](https://guilded.js.org)
 
 ## 📦 Dependencies
-- [`@guildedjs/guilded-api-typings`](https://github.com/guildedjs/guilded.js/tree/main/packages/guilded-api-typings) (dev dep): used for typing the REST and WS payloads
-- [`@guildedjs/rest`](https://github.com/guildedjs/guilded.js/tree/main/packages/rest): Rest util for `@guildedjs` packages
-- [`@guildedjs/ws`](https://github.com/guildedjs/guilded.js/tree/main/packages/rest): Rest structure for `@guildedjs` packages
-- `@discordjs/collection`: Map utility
-- `uuid` - Generate IDs for structures such as Messages
+
+-   [`@guildedjs/guilded-api-typings`](https://github.com/guildedjs/guilded.js/tree/main/packages/guilded-api-typings) (dev dep): used for typing the REST and WS payloads
+-   [`@guildedjs/rest`](https://github.com/guildedjs/guilded.js/tree/main/packages/rest): Rest util for `@guildedjs` packages
+-   [`@guildedjs/ws`](https://github.com/guildedjs/guilded.js/tree/main/packages/rest): Rest structure for `@guildedjs` packages
+-   `@discordjs/collection`: Map utility
+-   `uuid` - Generate IDs for structures such as Messages
 
 ## ✋ Contributing
+
 Please see the main [README.md](https://github.com/guildedjs/guilded.js) for info on how to contribute to this package or the other `@guildedjs` packages.
 
 ## 🤝 Acknowledgements
-- [`Discord.js`](https://discord.js.org/#/) - Inspiration and caching strategy
-  
+
+-   [`Discord.js`](https://discord.js.org/#/) - Inspiration and caching strategy
+
 ## ⚖️ LICENSING
-Licensed under the [MIT License](https://github.com/guildedjs/guilded.js/blob/main/LICENSE)  
+
+Licensed under the [MIT License](https://github.com/guildedjs/guilded.js/blob/main/LICENSE)

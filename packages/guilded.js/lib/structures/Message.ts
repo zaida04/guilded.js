@@ -34,7 +34,7 @@ export default class Message extends Base<ChatMessagePayload> {
     constructor(client: Client, data: ChatMessagePayload & { serverId: string | null }) {
         super(client, data);
 
-        this.id = data.id
+        this.id = data.id;
         this.channelId = data.channelId;
         this.content = data.content ?? null;
         this.replyMessageIds = data.replyMessageIds ?? [];
@@ -45,7 +45,7 @@ export default class Message extends Base<ChatMessagePayload> {
         this.updatedAt = null;
         if (data.isPrivate) this.isPrivate = data.isPrivate;
         if (data.type === "system") this.type = MessageType.System;
-        
+
         this._update(data);
     }
 
@@ -54,7 +54,7 @@ export default class Message extends Base<ChatMessagePayload> {
         if ("content" in data && typeof data.content !== "undefined") {
             this.content = data.content;
         }
-        
+
         if ("updatedAt" in data) {
             this.updatedAt = data.updatedAt ? Date.parse(data.updatedAt) : null;
         }
@@ -64,8 +64,8 @@ export default class Message extends Base<ChatMessagePayload> {
 
     /* Update message content */
     update(newContent: string) {
-        return this.client.messages.updateMessage(this.channelId, this.id, newContent).then(x => {
+        return this.client.messages.updateMessage(this.channelId, this.id, newContent).then((x) => {
             return this._update(x.message);
-        })
+        });
     }
 }

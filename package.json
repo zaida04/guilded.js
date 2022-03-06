@@ -3,7 +3,6 @@
     "private": true,
     "version": "0.0.0",
     "description": "Overarching repository for the Guilded.JS repository",
-    "license": "MIT",
     "author": "Zaid \"Nico\" <contact@nico.engineer>",
     "scripts": {
         "build": "yarn workspaces run build",
@@ -15,7 +14,7 @@
         "test:build": "yarn build && yarn test",
         "prepublishOnly": "yarn lint && yarn workspaces run prepublishOnly",
         "prepare": "husky install",
-        "prettier": "prettier --write **/*.{ts,js,json,yml,yaml}",
+        "prettier": "prettier --write **/*.{ts,js,json,yml,yaml,md}",
         "reset": "cd scripts && ts-node refresh.ts"
     },
     "devDependencies": {
