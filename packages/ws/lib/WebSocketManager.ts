@@ -2,7 +2,7 @@ import WebSocket from "ws";
 import { EventEmitter } from "events";
 import { ROUTES } from "@guildedjs/common";
 import type TypedEmitter from "typed-emitter";
-import { SkeletonWSPayload, WSOpCodes } from "@guildedjs/guilded-api-typings";
+import { SkeletonWSPayload, WSOpCodes, WSEvent } from "@guildedjs/guilded-api-typings";
 
 export default class WebSocketManager {
     /** The version of the websocket to connect to. */
@@ -92,7 +92,11 @@ export default class WebSocketManager {
         if (this.socket.OPEN) this.socket.close();
     }
 
-    onSocketMessage(packet: WebSocket.Data) {
+    _debug(str: any) {
+        return this.emitter.emit("debug", str);
+    }
+
+    private onSocketMessage(packet: WebSocket.Data) {
         this.emitter.emit("raw", packet);
         if (typeof packet !== "string") {
             this.emitter.emit("error", "packet was not typeof string", null);
@@ -117,7 +121,7 @@ export default class WebSocketManager {
         switch (EVENT_DATA.op) {
             // Normal event based packets
             case WSOpCodes.SUCCESS:
-                this.emitter.emit("gatewayEvent", EVENT_NAME, EVENT_DATA);
+                this.emitter.emit("gatewayEvent", EVENT_NAME as keyof WSEvent, EVENT_DATA);
                 break;
             // Auto handled by ws lib
             case WSOpCodes.WELCOME:
@@ -129,17 +133,13 @@ export default class WebSocketManager {
         }
     }
 
-    onSocketOpen() {
+    private onSocketOpen() {
         this.isAlive = true;
         this.connectedAt = new Date();
     }
 
-    onSocketPong() {
+    private onSocketPong() {
         this.ping = Date.now() - this.lastPingedAt;
-    }
-
-    _debug(str: any) {
-        return this.emitter.emit("debug", str);
     }
 }
 
@@ -166,6 +166,6 @@ type WebsocketManagerEvents = {
     exit: (info: string) => unknown;
     unknown: (reason: string, data: any) => unknown;
     reconnect: () => unknown;
-    gatewayEvent: (event: string, data: Record<string, any>) => unknown;
+    gatewayEvent: (event: keyof WSEvent, data: Record<string, any>) => unknown;
     ready: () => unknown;
 };

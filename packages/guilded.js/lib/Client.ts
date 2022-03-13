@@ -15,6 +15,7 @@ import type TypedEmitter from "typed-emitter";
 import type { WSChatMessageDeletedPayload, WSTeamMemberUpdatedPayload } from "@guildedjs/guilded-api-typings";
 import type Member from "./structures/Member";
 import type Role from "./structures/Role";
+import { CacheStructure } from "./cache";
 
 export class Client extends (EventEmitter as unknown as new () => TypedEmitter<ClientEvents>) {
     /** The time in milliseconds the Client connected */
@@ -43,6 +44,8 @@ export class Client extends (EventEmitter as unknown as new () => TypedEmitter<C
     members = new MemberManager(this);
     messages = new MessageManager(this);
     roles = new RoleManager(this);
+
+    cacheStructureBuilder = this.options;
 
     constructor(public options: ClientOptions) {
         super();
@@ -79,14 +82,20 @@ interface ClientOptions {
         /** The base url of the API you want to send requests to. By default, this will send it to guilded's rest API. This is meant for big bot developers who want to use a proxy rest system. */
         proxyURL?: string;
     };
+    cache?: {
+        structureBuilder: <K, V>() => CacheStructure<K, V>;
+    };
 }
 
 type ClientEvents = {
+    ready: () => unknown;
+    exit: () => unknown;
     messageCreated: (message: Message) => unknown;
     messageUpdated: (message: Message, oldMessage: Message | null) => unknown;
     messageDeleted: (message: Message | WSChatMessageDeletedPayload) => unknown;
     memberUpdated: (member: Member | WSTeamMemberUpdatedPayload["d"], oldMember: Member | null) => unknown;
     teamRolesUpdated: (roleIds: Role[] | number[]) => unknown;
+    unknownGatewayEvent: (data: any) => unknown;
 };
 
 export default Client;

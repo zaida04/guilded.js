@@ -17,7 +17,7 @@ export const WebSocketEvents = {
     // This is intentional. Legacy change on Guilded's end.
     teamRolesUpdated: "teamRolesUpdated",
 } as const;
-type WSEvent = typeof WebSocketEvents;
+export type WSEvent = typeof WebSocketEvents;
 
 export interface SkeletonWSPayload {
     d: unknown;
