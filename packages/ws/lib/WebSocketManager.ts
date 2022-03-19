@@ -1,8 +1,8 @@
 import WebSocket from "ws";
 import { EventEmitter } from "events";
 import { ROUTES } from "@guildedjs/common";
-import type TypedEmitter from "typed-emitter";
 import { SkeletonWSPayload, WSOpCodes, WSEvent } from "@guildedjs/guilded-api-typings";
+import type TypedEmitter from "typed-emitter";
 
 export default class WebSocketManager {
     /** The version of the websocket to connect to. */
@@ -35,9 +35,7 @@ export default class WebSocketManager {
     /** Count of how many times a reconnect has been attempted */
     reconnectAttemptAmount = 0;
 
-    constructor(public readonly options: WebSocketOptions) {
-        if (this.options.autoConnect) this.connect();
-    }
+    constructor(public readonly options: WebSocketOptions) {}
 
     /** The url that will be used to connect. Prioritizes proxy url and if not available uses the default base url for guidled. */
     get wsURL() {
@@ -56,7 +54,7 @@ export default class WebSocketManager {
         });
 
         this.socket.on("open", this.onSocketOpen.bind(this));
-
+        this.socket.on("pong", this.onSocketPong.bind(this));
         this.socket.on("message", (data) => {
             this._debug(data);
             this.onSocketMessage(data);
@@ -75,21 +73,20 @@ export default class WebSocketManager {
 
         this.socket.on("close", (code: number, reason: string) => {
             this._debug(`Gateway connection terminated with code ${code} for reason: ${reason}`);
-            if (!(this.options.autoConnect ?? true) || this.reconnectAttemptExceeded) {
+            if (!(this.options.autoConnectOnErr ?? true) || this.reconnectAttemptExceeded) {
                 this.reconnectAttemptAmount++;
                 return this.connect();
             }
             this.destroy();
             this.emitter.emit("exit", "Gateway connection permanently closed.");
         });
-
-        this.socket.on("pong", this.onSocketPong.bind(this));
     }
 
     destroy() {
         if (!this.socket) throw new Error("There is no active connection to destroy.");
         this.socket.removeAllListeners();
         if (this.socket.OPEN) this.socket.close();
+        this.isAlive = false;
     }
 
     _debug(str: any) {
@@ -134,11 +131,13 @@ export default class WebSocketManager {
     }
 
     private onSocketOpen() {
+        this._debug("Socket connection opened.");
         this.isAlive = true;
         this.connectedAt = new Date();
     }
 
     private onSocketPong() {
+        this._debug("Pong received.");
         this.ping = Date.now() - this.lastPingedAt;
     }
 }
@@ -150,8 +149,6 @@ export interface WebSocketOptions {
     proxyURL?: string;
     /** The version of the websocket to connect to. */
     version?: 1;
-    /** Whether to connect automatically on instantiation. */
-    autoConnect?: boolean;
     /** Whether to try to re-establish connection on error */
     autoConnectOnErr?: boolean;
     /** Limit of how many times a reconnection should be attempted */

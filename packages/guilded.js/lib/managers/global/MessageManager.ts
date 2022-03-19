@@ -2,7 +2,7 @@ import {
     RESTPostChannelMessagesBody,
     RESTGetChannelMessagesQuery,
 } from "@guildedjs/guilded-api-typings";
-import type Message from "../../structures/Message";
+import type { Message } from "../../structures/Message";
 import CacheableStructManager from "./CacheableStructManager";
 
 export default class MessageManager extends CacheableStructManager<string, Message> {

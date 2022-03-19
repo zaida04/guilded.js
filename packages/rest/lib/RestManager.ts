@@ -114,11 +114,6 @@ export class RestManager {
             authenticated,
         ).then((x) => x[1]);
     }
-
-    /** Handle the error when a request is made. By default this simply logs it to the console. Useful if you want to implement Sentry or some custom handling of Rest errors. */
-    handleError(error: Error) {
-        console.error(error);
-    }
 }
 
 export interface MakeOptions<B = Record<string, any>> {

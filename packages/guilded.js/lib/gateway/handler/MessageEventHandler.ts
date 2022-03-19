@@ -1,11 +1,12 @@
 import { WSChatMessageCreatedPayload, WSChatMessageDeletedPayload, WSChatMessageUpdatedPayload } from "@guildedjs/guilded-api-typings";
-import Message from "../../structures/Message";
+import { Message } from "../../structures/Message";
 import GatewayEventHandler from "./GatewayEventHandler";
 
 export default class MessageEventHandler extends GatewayEventHandler {
     messageCreated(data: WSChatMessageCreatedPayload) {
         const newMessage = new Message(this.client, { ...data.d.message, serverId: data.d.serverId });
-        return this.client.messages.cache.set(newMessage.id, newMessage);
+        this.client.messages.cache.set(newMessage.id, newMessage);
+        return this.client.emit("messageCreated", newMessage);
     }
     messageUpdated(data: WSChatMessageUpdatedPayload) {
         const getCachedMessage = this.client.messages.cache.get(data.d.message.id);

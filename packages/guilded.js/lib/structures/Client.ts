@@ -1,21 +1,21 @@
 import RestManager from "@guildedjs/rest";
 import WebsocketManager from "@guildedjs/ws";
 import { EventEmitter } from "node:events";
-import { ClientGatewayHandler } from "./gateway/ClientGatewayHandler";
-import ChannelManager from "./managers/global/ChannelManager";
-import DocManager from "./managers/global/DocManager";
-import ForumManager from "./managers/global/ForumManager";
-import GroupManager from "./managers/global/GroupManager";
-import ListManager from "./managers/global/ListManager";
-import MemberManager from "./managers/global/MemberManager";
-import MessageManager from "./managers/global/MessageManager";
-import RoleManager from "./managers/global/RoleManager";
-import type Message from "./structures/Message";
+import { ClientGatewayHandler } from "../gateway/ClientGatewayHandler";
+import ChannelManager from "../managers/global/ChannelManager";
+import DocManager from "../managers/global/DocManager";
+import ForumManager from "../managers/global/ForumManager";
+import GroupManager from "../managers/global/GroupManager";
+import ListManager from "../managers/global/ListManager";
+import MemberManager from "../managers/global/MemberManager";
+import MessageManager from "../managers/global/MessageManager";
+import RoleManager from "../managers/global/RoleManager";
+import type { Message } from "./Message";
 import type TypedEmitter from "typed-emitter";
 import type { WSChatMessageDeletedPayload, WSTeamMemberUpdatedPayload } from "@guildedjs/guilded-api-typings";
-import type Member from "./structures/Member";
-import type Role from "./structures/Role";
-import { CacheStructure } from "./cache";
+import type { Member } from "./Member";
+import type { Role } from "./Role";
+import { CacheStructure } from "../cache";
 
 export class Client extends (EventEmitter as unknown as new () => TypedEmitter<ClientEvents>) {
     /** The time in milliseconds the Client connected */
@@ -27,13 +27,11 @@ export class Client extends (EventEmitter as unknown as new () => TypedEmitter<C
         token: this.options.token,
     });
 
-    /** The gateway manager for the bot to manage all gateway connections through websockets. */
-    gateway = new WebsocketManager({
-        token: this.options.token,
-    });
+    /** The websocket connection */
+    wsManager = new WebsocketManager({ token: this.options.token });
 
     /** The gateway event handlers will be processed by this manager. */
-    eventHandler = new ClientGatewayHandler(this);
+    gatewayHandler = new ClientGatewayHandler(this);
 
     /** Managers for structures */
     channels = new ChannelManager(this);
@@ -45,10 +43,9 @@ export class Client extends (EventEmitter as unknown as new () => TypedEmitter<C
     messages = new MessageManager(this);
     roles = new RoleManager(this);
 
-    cacheStructureBuilder = this.options;
-
     constructor(public options: ClientOptions) {
         super();
+        if(!options.token) throw new Error("No token provided.");
     }
 
     /** The amount of time the bot has been online in milliseconds. */
@@ -62,13 +59,22 @@ export class Client extends (EventEmitter as unknown as new () => TypedEmitter<C
     }
 
     /** Connects the bot to the api. */
-    async connect() {
-        return;
+    login(opts?: { fresh?: boolean }) {
+        if(opts?.fresh) this.wsManager = new WebsocketManager({ token: this.options.token });
+        this.wsManager.emitter
+            .on("error", (reason, err) => this.emit('error', `[WS] ${reason}`, err))
+            .on("ready", () => this.emit("ready"))
+            .on("gatewayEvent", (event, data) => this.gatewayHandler.handleWSMessage(event, data))
+            .on("debug", (data) => this.emit("debug", data))
+            .on("exit", () => this.emit("exit"))
+        this.wsManager.connect();
     }
 
     /** Disconnects the bot. */
-    async disconnect() {
-        return;
+    disconnect() {
+        if(!this.wsManager.isAlive) throw new Error("There is no active connection to disconnect.");
+        this.wsManager.destroy();
+        this.emit("exit");
     }
 }
 
@@ -89,7 +95,9 @@ interface ClientOptions {
 
 type ClientEvents = {
     ready: () => unknown;
+    debug: (data: any) => unknown;
     exit: () => unknown;
+    error: (reason: string, err: Error | null) => unknown;
     messageCreated: (message: Message) => unknown;
     messageUpdated: (message: Message, oldMessage: Message | null) => unknown;
     messageDeleted: (message: Message | WSChatMessageDeletedPayload["d"]) => unknown;

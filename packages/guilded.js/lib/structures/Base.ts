@@ -1,6 +1,6 @@
-import Client from "../Client";
+import Client from "./Client";
 
-export default class Base<T = { id: string }, R = string> {
+export class Base<T = { id: string }, R = string> {
     // Identifier of this structrure
     public id: R;
     // Bare data of this structure

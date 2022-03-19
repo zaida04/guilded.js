@@ -1,9 +1,9 @@
-import Client from "../Client";
+import Client from "./Client";
 import { BareStructureBaseData } from "../typings";
-import Base from "./Base";
+import { Base }  from "./Base";
 import { User } from "./User";
 
-export default class Member extends Base<BareStructureBaseData> {
+export class Member extends Base<BareStructureBaseData> {
     /** The ID of the server this role belongs to */
     serverId: string;
 

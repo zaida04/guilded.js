@@ -9,7 +9,7 @@
     "scripts": {
         "test": "cd ../../ && yarn build && cd packages/guilded.js && node ./__tests__/index.js",
         "test:local": "yarn build && cd __tests__ && node index.js",
-        "build": "tsc",
+        "build": "tsc && npx gen-esm-wrapper . ./dist/index.mjs",
         "prepublishOnly": "npx rimraf dist/ && npx rimraf types/ && yarn build"
     },
     "devDependencies": {
@@ -41,6 +41,13 @@
             "url": "https://github.com/uhuh"
         }
     ],
+    "exports": {
+        ".": {
+          "require": "./dist/index.js",
+          "import": "./dist/index.mjs"
+        },
+        "./": "./"
+    },
     "keywords": [
         "guildedjs",
         "guilded.js",

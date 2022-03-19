@@ -1,6 +1,6 @@
 import { ChatMessageContent, RESTGetChannelMessagesQuery, RESTPutChannelMessageBody } from "@guildedjs/guilded-api-typings";
-import Client from "../../Client";
-import Base from "../Base";
+import Client from "../Client";
+import { Base }  from "../Base";
 
 export default class Channel extends Base {
     /** Send a message to this channel. */

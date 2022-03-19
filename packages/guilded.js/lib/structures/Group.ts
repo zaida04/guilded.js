@@ -1,6 +1,6 @@
-import Base from "./Base";
+import { Base }  from "./Base";
 
-export default class Group extends Base {
+export class Group extends Base {
     /** Add member to group */
     addMember(memberId: string) {
         return this.client.groups.addMember(this.id, memberId);

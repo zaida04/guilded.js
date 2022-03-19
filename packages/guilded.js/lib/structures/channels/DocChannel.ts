@@ -1,6 +1,6 @@
 import Collection from "@discordjs/collection";
 import { RESTPostDocsBody, RESTPutDocBody } from "@guildedjs/guilded-api-typings";
-import Base from "../Base";
+import { Base }  from "../Base";
 
 export interface Doc {}
 

@@ -8,7 +8,7 @@
     "main": "dist/index.js",
     "scripts": {
         "build": "tsc",
-        "prepublishOnly": "npx rimraf dist/ && npx rimraf types/ && yarn build"
+        "prepublishOnly": "npx rimraf dist/ && npx rimraf types/ && yarn build && npx gen-esm-wrapper . ./dist/index.mjs"
     },
     "devDependencies": {
         "@guildedjs/guilded-api-typings": "^1.3.1",

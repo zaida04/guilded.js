@@ -1,5 +1,5 @@
 import Collection from "@discordjs/collection";
-import Base from "../Base";
+import { Base }  from "../Base";
 
 export interface ForumThread {}
 
