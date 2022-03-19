@@ -8,6 +8,7 @@
     "publishConfig": {
         "access": "public"
     },
+    "npmClient": "yarn",
     "packages": ["packages/*"],
     "version": "independent"
 }
