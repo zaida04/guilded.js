@@ -13,7 +13,7 @@
     },
     "devDependencies": {
         "@guildedjs/guilded-api-typings": "^2.0.0",
-        "@types/node-fetch": "2.5.12",
+        "@types/node-fetch": "2.6.1",
         "typescript": "4.5.4"
     },
     "dependencies": {
