@@ -6,6 +6,7 @@
     "license": "MIT",
     "types": "types/index.d.ts",
     "main": "dist/index.js",
+    "typedocMain": "lib/index.ts",
     "scripts": {
         "build": "npx tsc",
         "prepublishOnly": "npx rimraf dist/ && npx rimraf types/ && yarn build && npx gen-esm-wrapper . ./dist/index.mjs"

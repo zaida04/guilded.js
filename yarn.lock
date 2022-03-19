@@ -1240,13 +1240,6 @@
     prettier "^2.4.1"
     typescript "^4.4.3"
 
-"@strictsoftware/typedoc-plugin-monorepo@^0.3.1":
-  version "0.3.1"
-  resolved "https://registry.yarnpkg.com/@strictsoftware/typedoc-plugin-monorepo/-/typedoc-plugin-monorepo-0.3.1.tgz#83a704bad2cf90a05f62f1c2587b0be09693a9a0"
-  integrity sha512-b7oolCeKZ40jyEfQrDd/Z216M5ZE4tRML0B0bV35tUIALoQsBBA7dz3Kr+X6DtbZA7FQmaqNGS6WAt7zxLL7wg==
-  dependencies:
-    highlight.js "^9.15.6"
-
 "@tsconfig/node10@^1.0.7":
   version "1.0.8"
   resolved "https://registry.yarnpkg.com/@tsconfig/node10/-/node10-1.0.8.tgz#c1e4e80d6f964fbecb3359c43bd48b40f7cadad9"
@@ -3762,11 +3755,6 @@ he@1.2.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/he/-/he-1.2.0.tgz#84ae65fa7eafb165fddb61566ae14baf05664f0f"
   integrity sha512-F/1DnUGPopORZi0ni+CvrCgHQ5FyEAHRLSApuYWMmrbSwoN2Mn/7k+Gl38gJnR7yyDZk6WLXwiGod1JOWNDKGw==
-
-highlight.js@^9.15.6:
-  version "9.18.5"
-  resolved "https://registry.yarnpkg.com/highlight.js/-/highlight.js-9.18.5.tgz#d18a359867f378c138d6819edfc2a8acd5f29825"
-  integrity sha512-a5bFyofd/BHCX52/8i8uJkjr9DYwXIPnM/plwI6W7ezItLGqzt7X2G2nXuYSfsIJdkwwj/g9DG1LkcGJI/dDoA==
 
 hosted-git-info@^2.1.4, hosted-git-info@^2.7.1:
   version "2.8.9"
@@ -7208,10 +7196,10 @@ typedarray@^0.0.6:
   resolved "https://registry.yarnpkg.com/typedarray/-/typedarray-0.0.6.tgz#867ac74e3864187b1d3d47d996a78ec5c8830777"
   integrity sha1-hnrHTjhkGHsdPUfZlqeOxciDB3c=
 
-typedoc-plugin-remove-references@0.0.5:
-  version "0.0.5"
-  resolved "https://registry.yarnpkg.com/typedoc-plugin-remove-references/-/typedoc-plugin-remove-references-0.0.5.tgz#08b129d2697e50208c807e06c3662fd2fc86a925"
-  integrity sha512-DSZ7kM/Y90CgZUKt8MiDsoi4fvrJyleHydj3ncGyqDqMdhuMes2E/4I6mSmXBrVdTjYhVH6BeoOFSbj2pQ821g==
+typedoc-plugin-remove-references@0.0.6:
+  version "0.0.6"
+  resolved "https://registry.yarnpkg.com/typedoc-plugin-remove-references/-/typedoc-plugin-remove-references-0.0.6.tgz#6568615e5857531a497676b5536bc1ff41117443"
+  integrity sha512-QoyHpopznnJbWW/9JT2NHSK+eTmyShkPYebwe5ZnO8aohPLc5okk4puWUDXnNh2Tn7cJU8U3t1tEMO6ghbwE8Q==
 
 typedoc@^0.22.13:
   version "0.22.13"
