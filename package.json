@@ -8,7 +8,7 @@
         "build": "yarn workspaces run build",
         "lint": "npx eslint packages/ scripts/",
         "lint:fix": "yarn lint --fix",
-        "docs": "npx rimraf docs && npx typedoc --options typedoc.json packages && node scripts/post-docs.ts",
+        "docs": "npx rimraf docs && npx typedoc --options typedoc.json packages && npx ts-node scripts/post-docs.ts",
         "test": "npx nyc mocha -r ts-node/register ./packages/**/__tests__/*.test.ts",
         "test:build": "yarn build && yarn test",
         "prepublishOnly": "yarn lint && yarn workspaces run prepublishOnly",
