@@ -61,7 +61,11 @@
         }
     ],
     "workspaces": [
-        "packages/*"
+        "packages/*",
+        "packages/ws",
+        "packages/rest",
+        "packages/guilded-api-types",
+        "packages/common"
     ],
     "engines": {
         "npm": "please-use-yarn",

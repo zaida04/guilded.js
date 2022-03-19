@@ -27,9 +27,13 @@ export default class Message extends Base<ChatMessagePayload> {
     /** The ID of the webhook who created this message, if it was created by a webhook */
     createdByWebhookId: string | null;
     /** The timestamp that the message was created at. */
-    createdAt: number;
+    createdAt: Date;
     /** The timestamp that the message was updated at, if relevant */
-    updatedAt: number | null;
+    updatedAt: Date | null;
+    /** Whether the message has been deleted */
+    deleted = false;
+    /** When the message was deleted, if it was */
+    deletedAt: Date | null = null;
 
     constructor(client: Client, data: ChatMessagePayload & { serverId: string | null }) {
         super(client, data);
@@ -41,7 +45,7 @@ export default class Message extends Base<ChatMessagePayload> {
         this.createdBy = data.createdBy;
         this.createdByBotId = data.createdByBotId ?? null;
         this.createdByWebhookId = data.createdByWebhookId ?? null;
-        this.createdAt = Date.parse(data.createdAt);
+        this.createdAt = new Date(data.createdAt);
         this.updatedAt = null;
         if (data.isPrivate) this.isPrivate = data.isPrivate;
         if (data.type === "system") this.type = MessageType.System;
@@ -50,13 +54,18 @@ export default class Message extends Base<ChatMessagePayload> {
     }
 
     /** Update details of this structure */
-    _update(data: Partial<ChatMessagePayload>) {
+    _update(data: Partial<ChatMessagePayload> | { deletedAt: string }) {
         if ("content" in data && typeof data.content !== "undefined") {
             this.content = data.content;
         }
 
         if ("updatedAt" in data) {
-            this.updatedAt = data.updatedAt ? Date.parse(data.updatedAt) : null;
+            this.updatedAt = data.updatedAt ? new Date(data.updatedAt) : null;
+        }
+
+        if ("deletedAt" in data) {
+            this.deleted = true;
+            this.deletedAt = new Date(data.deletedAt);
         }
 
         return this;
