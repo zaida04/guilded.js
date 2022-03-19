@@ -73,6 +73,7 @@ export class Client extends (EventEmitter as unknown as new () => TypedEmitter<C
     /** Disconnects the bot. */
     disconnect() {
         if(!this.wsManager.isAlive) throw new Error("There is no active connection to disconnect.");
+        this.wsManager.emitter.removeAllListeners();
         this.wsManager.destroy();
         this.emit("exit");
     }
