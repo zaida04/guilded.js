@@ -45,6 +45,7 @@ Documentation is located [here](https://guilded.js.org)
 -   [`@guildedjs/guilded-api-typings`](https://github.com/guildedjs/guilded.js/tree/main/packages/guilded-api-typings) (dev dep): used for typing the REST and WS payloads
 -   [`@guildedjs/rest`](https://github.com/guildedjs/guilded.js/tree/main/packages/rest): Rest util for `@guildedjs` packages
 -   [`@guildedjs/ws`](https://github.com/guildedjs/guilded.js/tree/main/packages/rest): Rest structure for `@guildedjs` packages
+-   [`@guildedjs/common`](https://github.com/guildedjs/guilded.js/tree/main/packages/common): Shared utilities across `@guildedjs` packages
 -   `@discordjs/collection`: Map utility
 -   `uuid` - Generate IDs for structures such as Messages
 

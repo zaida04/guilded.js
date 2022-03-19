@@ -1,6 +1,6 @@
 # `@guildedjs/guilded-api-typings`
 
-[![GitHub](https://img.shields.io/github/license/guildedjs/guilded.js)](https://github.com/guildedjs/guilded.js/blob/main/LICENSE)
+[![GitHub](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/guildedjs/guilded.js/blob/main/LICENSE)
 [![npm](https://img.shields.io/npm/v/@guildedjs/guilded-api-typings?color=crimson&logo=npm)](https://www.npmjs.com/package/@guildedjs/guilded-api-typings)
 [![CI workflows](https://github.com/guildedjs/guilded.js/actions/workflows/ci.yml/badge.svg)](https://github.com/guildedjs/guilded.js/actions/workflows/ci.yml)
 
