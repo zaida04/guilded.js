@@ -21,7 +21,7 @@
         "@discordjs/collection": "^0.1.6",
         "@guildedjs/common": "^2.0.0",
         "@guildedjs/rest": "^2.0.0",
-        "@guildedjs/ws": "^1.0.0"
+        "@guildedjs/ws": "^1.0.1"
     },
     "contributors": [
         {
