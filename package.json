@@ -6,16 +6,15 @@
     "author": "Zaid \"Nico\" <contact@nico.engineer>",
     "scripts": {
         "build": "yarn workspaces run build",
-        "bootstrap": "npx lerna bootstrap",
         "lint": "npx eslint packages/ scripts/",
         "lint:fix": "yarn lint --fix",
         "docs": "npx rimraf docs && npx typedoc --options typedoc.json packages && node scripts/post-docs.ts",
         "test": "npx nyc mocha -r ts-node/register ./packages/**/__tests__/*.test.ts",
         "test:build": "yarn build && yarn test",
         "prepublishOnly": "yarn lint && yarn workspaces run prepublishOnly",
-        "prepare": "husky install",
-        "prettier": "prettier --write **/*.{ts,js,json,yml,yaml,md}",
-        "refresh": "cd scripts && ts-node refresh.ts"
+        "prepare": "npx husky install",
+        "prettier": "npx prettier --write **/*.{ts,js,json,yml,yaml,md}",
+        "refresh": "npx ts-node scripts/refresh.ts"
     },
     "devDependencies": {
         "@sapphire/eslint-config": "^3.2.3",

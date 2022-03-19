@@ -7,7 +7,7 @@
     "types": "dist/index.d.ts",
     "main": "dist/index.js",
     "scripts": {
-        "build": "tsc",
+        "build": "npx tsc",
         "prepublishOnly": "npx rimraf dist/ && yarn build"
     },
     "devDependencies": {

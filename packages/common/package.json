@@ -7,7 +7,7 @@
     "types": "types/index.d.ts",
     "main": "dist/index.js",
     "scripts": {
-        "build": "tsc",
+        "build": "npx tsc",
         "prepublishOnly": "npx rimraf dist/ && npx rimraf types/ && yarn build && npx gen-esm-wrapper . ./dist/index.mjs"
     },
     "devDependencies": {
