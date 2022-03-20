@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-base-to-string */
 import WebSocket from "ws";
 import { EventEmitter } from "events";
 import { ROUTES } from "@guildedjs/common";
@@ -56,8 +57,9 @@ export default class WebSocketManager {
         this.socket.on("open", this.onSocketOpen.bind(this));
         this.socket.on("pong", this.onSocketPong.bind(this));
         this.socket.on("message", (data) => {
-            this._debug(data);
-            this.onSocketMessage(data);
+            this.emitter.emit("raw", data);
+            this._debug(data.toString());
+            this.onSocketMessage(data.toString());
         });
 
         this.socket.on("error", (err) => {
@@ -71,8 +73,8 @@ export default class WebSocketManager {
             this.emitter.emit("exit", "Gateway connection permanently closed due to error.");
         });
 
-        this.socket.on("close", (code: number, reason: string) => {
-            this._debug(`Gateway connection terminated with code ${code} for reason: ${reason}`);
+        this.socket.on("close", (code, reason) => {
+            this._debug(`Gateway connection terminated with code ${code} for reason: ${reason.toString()}`);
             if (!(this.options.autoConnectOnErr ?? true) || this.reconnectAttemptExceeded) {
                 this.reconnectAttemptAmount++;
                 return this.connect();
@@ -93,13 +95,7 @@ export default class WebSocketManager {
         return this.emitter.emit("debug", str);
     }
 
-    private onSocketMessage(packet: WebSocket.Data) {
-        this.emitter.emit("raw", packet);
-        if (typeof packet !== "string") {
-            this.emitter.emit("error", "packet was not typeof string", null);
-            return void 0;
-        }
-
+    private onSocketMessage(packet: string) {
         let EVENT_NAME;
         let EVENT_DATA;
 
