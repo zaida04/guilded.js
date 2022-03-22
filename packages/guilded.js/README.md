@@ -16,7 +16,7 @@ const client = new Client({ token: "TOKEN_HERE" });
 client.on("ready", () => console.log(`Bot is successfully logged in`));
 client.on("messageCreated", (message) => {
     if (message.content === "poggers") {
-        return message.channel.send("poggers indeed");
+       return client.messages.sendMessage(message.channelId, "test indeed");
     }
 });
 
