@@ -1,4 +1,4 @@
-import { UserPayload, UserSummary } from "./User";
+import type { UserPayload, UserSummary } from "./User";
 
 export interface TeamMemberPayload {
     user: UserPayload;

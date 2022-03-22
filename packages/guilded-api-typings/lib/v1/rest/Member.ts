@@ -1,4 +1,4 @@
-import { TeamMemberPayload, TeamMemberSummary } from "../structs";
+import type { TeamMemberPayload, TeamMemberSummary } from "../structs";
 
 /**
  * GET

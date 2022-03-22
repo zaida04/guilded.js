@@ -1,4 +1,4 @@
-import { WSTeamMemberUpdatedPayload, WSTeamMemberJoinedPayload, WSTeamMemberRemovedPayload } from "@guildedjs/guilded-api-typings";
+import type { WSTeamMemberUpdatedPayload, WSTeamMemberJoinedPayload, WSTeamMemberRemovedPayload } from "@guildedjs/guilded-api-typings";
 import { Member, User } from "../../structures";
 import GatewayEventHandler from "./GatewayEventHandler";
 
