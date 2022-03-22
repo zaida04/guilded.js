@@ -2,20 +2,21 @@ import RestManager from "@guildedjs/rest";
 import WebsocketManager from "@guildedjs/ws";
 import { EventEmitter } from "node:events";
 import { ClientGatewayHandler } from "../gateway/ClientGatewayHandler";
-import ChannelManager from "../managers/global/ChannelManager";
-import DocManager from "../managers/global/DocManager";
-import ForumManager from "../managers/global/ForumManager";
-import GroupManager from "../managers/global/GroupManager";
-import ListManager from "../managers/global/ListManager";
-import MemberManager from "../managers/global/MemberManager";
-import MessageManager from "../managers/global/MessageManager";
-import RoleManager from "../managers/global/RoleManager";
+import GlobalChannelManager from "../managers/global/ChannelManager";
+import GlobalDocManager from "../managers/global/DocManager";
+import GlobalForumManager from "../managers/global/ForumManager";
+import GlobalGroupManager from "../managers/global/GroupManager";
+import GlobalListManager from "../managers/global/ListManager";
+import GlobalMemberManager from "../managers/global/MemberManager";
+import GlobalMessageManager from "../managers/global/MessageManager";
+import GlobalRoleManager from "../managers/global/RoleManager";
 import type { Message } from "./Message";
 import type TypedEmitter from "typed-emitter";
 import type { WSChatMessageDeletedPayload, WSTeamMemberJoinedPayload, WSTeamMemberRemovedPayload, WSTeamMemberUpdatedPayload } from "@guildedjs/guilded-api-typings";
 import type { Member } from "./Member";
 import type { Role } from "./Role";
 import { CacheStructure } from "../cache";
+import GlobalUserManager from "../managers/global/UserManager";
 
 export class Client extends (EventEmitter as unknown as new () => TypedEmitter<ClientEvents>) {
     /** The time in milliseconds the Client connected */
@@ -34,14 +35,15 @@ export class Client extends (EventEmitter as unknown as new () => TypedEmitter<C
     gatewayHandler = new ClientGatewayHandler(this);
 
     /** Managers for structures */
-    channels = new ChannelManager(this);
-    docs = new DocManager(this);
-    forums = new ForumManager(this);
-    groups = new GroupManager(this);
-    lists = new ListManager(this);
-    members = new MemberManager(this);
-    messages = new MessageManager(this);
-    roles = new RoleManager(this);
+    channels = new GlobalChannelManager(this);
+    docs = new GlobalDocManager(this);
+    forums = new GlobalForumManager(this);
+    groups = new GlobalGroupManager(this);
+    lists = new GlobalListManager(this);
+    members = new GlobalMemberManager(this);
+    messages = new GlobalMessageManager(this);
+    roles = new GlobalRoleManager(this);
+    users = new GlobalUserManager(this);
 
     constructor(public options: ClientOptions) {
         if(typeof options !== "object") throw new Error("Must provide options in client constructor in the form of an object.")
@@ -92,6 +94,7 @@ interface ClientOptions {
     };
     cache?: {
         structureBuilder: <K, V>() => CacheStructure<K, V>;
+        removeMemberOnLeave: boolean;
     };
 }
 
@@ -103,7 +106,7 @@ type ClientEvents = {
     messageCreated: (message: Message) => unknown;
     messageUpdated: (message: Message, oldMessage: Message | null) => unknown;
     messageDeleted: (message: Message | WSChatMessageDeletedPayload["d"]) => unknown;
-    memberJoined: (member: Member | WSTeamMemberJoinedPayload["d"]) => unknown;
+    memberJoined: (member: Member) => unknown;
     memberRemoved: (member: Member | WSTeamMemberRemovedPayload["d"]) => unknown;
     memberUpdated: (member: Member | WSTeamMemberUpdatedPayload["d"], oldMember: Member | null) => unknown;
     teamRolesUpdated: (roleIds: Role[] | number[]) => unknown;

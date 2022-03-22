@@ -1,11 +1,11 @@
-import {
+import type {
     RESTPostChannelMessagesBody,
     RESTGetChannelMessagesQuery,
 } from "@guildedjs/guilded-api-typings";
 import type { Message } from "../../structures/Message";
 import CacheableStructManager from "./CacheableStructManager";
 
-export default class MessageManager extends CacheableStructManager<string, Message> {
+export default class GlobalMessageManager extends CacheableStructManager<string, Message> {
     /** Get a list of the latest 50 messages from a channel. */
     getMessages(channelId: string, options: RESTGetChannelMessagesQuery) {
         return this.client.rest.router.getChannelMessages(channelId, options);

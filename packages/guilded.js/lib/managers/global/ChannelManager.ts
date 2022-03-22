@@ -1,3 +1,3 @@
 import GlobalManager from "./GlobalManager";
 
-export default class ChannelManager extends GlobalManager {}
+export default class GlobalChannelManager extends GlobalManager {}

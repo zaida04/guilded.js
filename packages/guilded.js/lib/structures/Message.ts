@@ -40,7 +40,7 @@ export class Message extends Base<ChatMessagePayload> {
 
         this.id = data.id;
         this.channelId = data.channelId;
-        this.content = data.content ?? null;
+        this.content = data.content;
         this.replyMessageIds = data.replyMessageIds ?? [];
         this.createdBy = data.createdBy;
         this.createdByBotId = data.createdByBotId ?? null;

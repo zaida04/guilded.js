@@ -1,7 +1,7 @@
-import { User, UserSummary } from "./User";
+import { UserPayload, UserSummary } from "./User";
 
 export interface TeamMemberPayload {
-    user: User;
+    user: UserPayload;
     roleIds: number[];
     nickname?: string;
     joinedAt: string;

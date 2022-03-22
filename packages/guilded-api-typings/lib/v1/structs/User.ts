@@ -1,6 +1,6 @@
-export interface User {
+export interface UserPayload {
     id: string;
-    type?: string;
+    type?: "bot" | "user";
     name: string;
     createdAt: string;
 }

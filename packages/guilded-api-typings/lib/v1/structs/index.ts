@@ -5,3 +5,4 @@ export * from "./Message";
 export * from "./Reaction";
 export * from "./SocialLink";
 export * from "./Member";
+export * from "./User";

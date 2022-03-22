@@ -3,6 +3,10 @@ import "dotenv/config";
 const client = new Client({ token: process.env.TOKEN! });
 const prefix = process.env.PREFIX!;
 
+client.on("memberJoined", console.log);
+client.on("memberRemoved", console.log);
+client.on("memberUpdated", console.log);
+
 client.on("messageCreated", async (m) => {
     if (m.createdByBotId || !m.content.startsWith(prefix)) return;
     const [commandName, ...args] = m.content.slice(prefix.length).split(" ");

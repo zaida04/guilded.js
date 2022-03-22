@@ -1,6 +1,6 @@
 import GlobalManager from "./GlobalManager";
 
-export default class RoleManager extends GlobalManager {
+export default class GlobalRoleManager extends GlobalManager {
     /** Award XP to a role */
     giveXP(serverId: string, roleId: number, amount: number) {
         // TODO: fix in rest by changing to number
