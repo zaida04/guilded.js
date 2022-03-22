@@ -44,8 +44,9 @@ export class Client extends (EventEmitter as unknown as new () => TypedEmitter<C
     roles = new RoleManager(this);
 
     constructor(public options: ClientOptions) {
+        if(typeof options !== "object") throw new Error("Must provide options in client constructor in the form of an object.")
+        if(typeof options?.token === "undefined") throw new Error("No token provided.");
         super();
-        if(!options.token) throw new Error("No token provided.");
     }
 
     /** The amount of time the bot has been online in milliseconds. */

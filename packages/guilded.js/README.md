@@ -11,7 +11,7 @@
 ```ts
 const { Client } = require("guilded.js");
 // import { Client } from "guilded.js";
-const client = new Client();
+const client = new Client({ token: "TOKEN_HERE" });
 
 client.on("ready", () => console.log(`Bot is successfully logged in`));
 client.on("messageCreate", (message) => {
@@ -20,7 +20,7 @@ client.on("messageCreate", (message) => {
     }
 });
 
-client.login("TOKEN_HERE");
+client.login();
 ```
 
 ## 📝 About
