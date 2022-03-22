@@ -12,7 +12,7 @@ import MessageManager from "../managers/global/MessageManager";
 import RoleManager from "../managers/global/RoleManager";
 import type { Message } from "./Message";
 import type TypedEmitter from "typed-emitter";
-import type { WSChatMessageDeletedPayload, WSTeamMemberUpdatedPayload } from "@guildedjs/guilded-api-typings";
+import type { WSChatMessageDeletedPayload, WSTeamMemberJoinedPayload, WSTeamMemberRemovedPayload, WSTeamMemberUpdatedPayload } from "@guildedjs/guilded-api-typings";
 import type { Member } from "./Member";
 import type { Role } from "./Role";
 import { CacheStructure } from "../cache";
@@ -103,6 +103,8 @@ type ClientEvents = {
     messageCreated: (message: Message) => unknown;
     messageUpdated: (message: Message, oldMessage: Message | null) => unknown;
     messageDeleted: (message: Message | WSChatMessageDeletedPayload["d"]) => unknown;
+    memberJoined: (member: Member | WSTeamMemberJoinedPayload["d"]) => unknown;
+    memberRemoved: (member: Member | WSTeamMemberRemovedPayload["d"]) => unknown;
     memberUpdated: (member: Member | WSTeamMemberUpdatedPayload["d"], oldMember: Member | null) => unknown;
     teamRolesUpdated: (roleIds: Role[] | number[]) => unknown;
     unknownGatewayEvent: (data: any) => unknown;
