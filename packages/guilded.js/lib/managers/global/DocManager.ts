@@ -1,7 +1,7 @@
-import { RESTPostDocsBody, RESTPutDocBody } from "@guildedjs/guilded-api-typings";
+import type { RESTPostDocsBody, RESTPutDocBody } from "@guildedjs/guilded-api-typings";
 import GlobalManager from "./GlobalManager";
 
-export default class DocManager extends GlobalManager {
+export default class GlobalDocManager extends GlobalManager {
     /** Create a doc. */
     createDoc(channelId: string, options: RESTPostDocsBody) {
         return this.client.rest.router.createDoc(channelId, options);

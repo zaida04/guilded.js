@@ -4,14 +4,17 @@ import {
     RESTDeleteDocResult,
     RESTDeleteGroupMemberResult,
     RESTDeleteMemberNicknameResult,
+    RESTDeleteMemberResult,
     RESTDeleteMemberRoleResult,
     RESTGetChannelMessageResult,
     RESTGetChannelMessagesQuery,
     RESTGetChannelMessagesResult,
     RESTGetDocResult,
     RESTGetDocsResult,
+    RESTGetMemberResult,
     RESTGetMemberRolesResult,
-    RESTGetMemberSocialLink,
+    RESTGetMemberSocialLinkResult,
+    RESTGetMembersResult,
     RESTPostChannelMessagesBody,
     RESTPostChannelMessagesResult,
     RESTPostDocsBody,
@@ -134,7 +137,19 @@ export class Router {
 
     /** Retrieves a member's public social links */
     getMemberSocialLinks(serverId: string, userId: string, type: UserSocialLink) {
-        return this.rest.get<RESTGetMemberSocialLink>(ROUTES.getMemberSocialLinks(serverId, userId, type));
+        return this.rest.get<RESTGetMemberSocialLinkResult>(ROUTES.memberSocialLinks(serverId, userId, type));
+    }
+
+    getMember(serverId: string, userId: string) {
+        return this.rest.get<RESTGetMemberResult>(ROUTES.member(serverId, userId));
+    }
+
+    getMembers(serverId: string) {
+        return this.rest.get<RESTGetMembersResult>(ROUTES.members(serverId));
+    }
+
+    kickMember(serverId: string, userId: string) {
+        return this.rest.get<RESTDeleteMemberResult>(ROUTES.member(serverId, userId));
     }
 
     /** Add member to group */

@@ -8,6 +8,8 @@ export const ROUTES = {
     // Member Endpoints
     memberNickname: (serverId: string, userId: string) => `/servers/${serverId}/members/${userId}/nickname`,
     memberRoles: (serverId: string, userId: string) => `/servers/${serverId}/members/${userId}/roles`,
+    member: (serverId: string, userId: string) => `/servers/${serverId}/members/${userId}`,
+    members: (serverId: string) => `/servers/${serverId}/members`,
 
     // Forum Endpoints
     createForumThread: (channelId: string) => `/channels/${channelId}/forum`,
@@ -27,7 +29,7 @@ export const ROUTES = {
     roleXP: (serverId: string, roleId: string) => `/servers/${serverId}/roles/${roleId}/xp`,
 
     // Social Links Endpoints
-    getMemberSocialLinks: (serverId: string, userId: string, type: UserSocialLink) => `/servers/${serverId}/members/${userId}/social-links/${type}`,
+    memberSocialLinks: (serverId: string, userId: string, type: UserSocialLink) => `/servers/${serverId}/members/${userId}/social-links/${type}`,
 
     // Group Memberships Endpoints
     groupMember: (groupId: string, userId: string) => `/groups/${groupId}/members/${userId}`,
