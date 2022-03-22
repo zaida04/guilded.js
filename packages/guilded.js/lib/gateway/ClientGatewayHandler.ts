@@ -7,6 +7,8 @@ import {
     WSChatMessageDeletedPayload,
     WSChatMessageUpdatedPayload,
     WSEvent,
+    WSTeamMemberJoinedPayload,
+    WSTeamMemberRemovedPayload,
     WSTeamMemberUpdatedPayload,
     WSTeamRolesUpdatedPayload,
 } from "@guildedjs/guilded-api-typings";
@@ -29,6 +31,14 @@ export class ClientGatewayHandler {
             }
             case "ChatMessageUpdated": {
                 this.messageHandler.messageUpdated(data as WSChatMessageUpdatedPayload);
+                break;
+            }
+            case "TeamMemberJoined": {
+                this.teamMemberHandler.teamMemberJoined(data as WSTeamMemberJoinedPayload);
+                break;
+            }
+            case "TeamMemberRemoved": {
+                this.teamMemberHandler.teamMemberRemoved(data as WSTeamMemberRemovedPayload);
                 break;
             }
             case "TeamMemberUpdated": {
