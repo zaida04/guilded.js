@@ -14,7 +14,7 @@ const { Client } = require("guilded.js");
 const client = new Client({ token: "TOKEN_HERE" });
 
 client.on("ready", () => console.log(`Bot is successfully logged in`));
-client.on("messageCreate", (message) => {
+client.on("messageCreated", (message) => {
     if (message.content === "poggers") {
         return message.channel.send("poggers indeed");
     }
