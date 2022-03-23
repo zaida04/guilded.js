@@ -12,7 +12,7 @@
         "prepublishOnly": "npx rimraf dist/ && npx rimraf types/ && yarn build"
     },
     "devDependencies": {
-        "@guildedjs/guilded-api-typings": "^2.0.0",
+        "@guildedjs/guilded-api-typings": "^2.0.1",
         "@types/node": "16.11.26",
         "typed-emitter": "2.1.0",
         "typescript": "4.6.2"
@@ -20,7 +20,7 @@
     "dependencies": {
         "@discordjs/collection": "^0.5.0",
         "@guildedjs/common": "^2.0.0",
-        "@guildedjs/rest": "^2.0.0",
+        "@guildedjs/rest": "^2.0.1",
         "@guildedjs/ws": "^1.0.2"
     },
     "contributors": [
