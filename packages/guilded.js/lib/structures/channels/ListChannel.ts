@@ -9,6 +9,6 @@ export default class ListChannel extends Base {
 
     /** Create a list item. */
     createItem(message: string, note?: string) {
-        return this.client.lists.createItem(this.id, { message, note });
+        return this.client.lists.create(this.id, { message, note });
     }
 }

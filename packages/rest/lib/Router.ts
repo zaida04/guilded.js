@@ -3,6 +3,7 @@ import {
     RESTDeleteChannelMessageResult,
     RESTDeleteDocResult,
     RESTDeleteGroupMemberResult,
+    RESTDeleteListItemResult,
     RESTDeleteMemberNicknameResult,
     RESTDeleteMemberResult,
     RESTDeleteMemberRoleResult,
@@ -11,6 +12,8 @@ import {
     RESTGetChannelMessagesResult,
     RESTGetDocResult,
     RESTGetDocsResult,
+    RESTGetListItemResult,
+    RESTGetListItemsResult,
     RESTGetMemberResult,
     RESTGetMemberRolesResult,
     RESTGetMemberSocialLinkResult,
@@ -31,6 +34,8 @@ import {
     RESTPutDocBody,
     RESTPutDocResult,
     RESTPutGroupMemberResult,
+    RESTPutListItemBody,
+    RESTPutListItemResult,
     RESTPutMemberNicknameBody,
     RESTPutMemberRoleResult,
     RestPutReactionResult,
@@ -86,12 +91,32 @@ export class Router {
 
     /** Create a thread in a forum */
     createForumThread(channelId: string, options: RESTPostForumThreadBody) {
-        return this.rest.post<RESTPostForumThreadResult, RESTPostForumThreadBody>(ROUTES.createForumThread(channelId), options);
+        return this.rest.post<RESTPostForumThreadResult, RESTPostForumThreadBody>(ROUTES.forumThread(channelId), options);
     }
 
     /** Create a list item. */
     createListItem(channelId: string, options: RESTPostListItemBody) {
-        return this.rest.post<RESTPostListItemResult, RESTPostListItemBody>(ROUTES.createListItem(channelId), options);
+        return this.rest.post<RESTPostListItemResult, RESTPostListItemBody>(ROUTES.listItems(channelId), options);
+    }
+
+    /** Get list items */
+    getListItems(channelId: string) {
+        return this.rest.get<RESTGetListItemsResult>(ROUTES.listItems(channelId));
+    }
+
+    /** Get list item */
+    getListItem(channelId: string, itemId: string) {
+        return this.rest.get<RESTGetListItemResult>(ROUTES.listItem(channelId, itemId));
+    }
+
+    /** Update list item */
+    updateListItem(channelId: string, itemId: string, options: RESTPutListItemBody) {
+        return this.rest.put<RESTPutListItemResult, RESTPostListItemBody>(ROUTES.listItem(channelId, itemId), options);
+    }
+
+    /** Delete list item */
+    deleteListItem(channelId: string, itemId: string) {
+        return this.rest.delete<RESTDeleteListItemResult>(ROUTES.listItem(channelId, itemId));
     }
 
     /** Create a doc. */
