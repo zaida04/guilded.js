@@ -17,11 +17,11 @@ export class Role extends Base<{ id: number; serverId: string }, number> {
 
     /** Assign role to member */
     assignToMember(memberId: string) {
-        return this.client.roles.addRole(memberId, this.id);
+        return this.client.roles.addRoleToMember(memberId, this.id);
     }
 
     /** Remove role to member */
     removeFromMember(memberId: string) {
-        return this.client.roles.removeRole(memberId, this.id);
+        return this.client.roles.removeRoleFromMember(memberId, this.id);
     }
 }

@@ -4,28 +4,28 @@ import { Base }  from "../Base";
 
 export default class Channel extends Base {
     /** Send a message to this channel. */
-    createMessage(content: ChatMessageContent | string) {
-        return this.client.messages.sendMessage(this.id, content);
+    sendMessage(content: ChatMessageContent | string) {
+        return this.client.messages.send(this.id, content);
     }
 
     /** Get a list of the latest 100 messages from a channel. */
-    getMessages(options?: RESTGetChannelMessagesQuery) {
-        return this.client.messages.getMessages(this.id, options ?? {});
+    fetchMessages(options?: RESTGetChannelMessagesQuery) {
+        return this.client.messages.fetchMany(this.id, options ?? {});
     }
 
     /** Get details for a specific chat message from a chat channel. */
-    getMessage(messageId: string) {
-        return this.client.messages.getMessage(this.id, messageId);
+    fetchMessage(messageId: string) {
+        return this.client.messages.fetch(this.id, messageId);
     }
 
     /** Update a channel message. */
     updateMessage(messageId: string, content: string) {
-        return this.client.messages.updateMessage(this.id, messageId, content);
+        return this.client.messages.update(this.id, messageId, content);
     }
 
     /** Delete a channel message. */
     deleteMessage(messageId: string) {
-        return this.client.messages.deleteMessage(this.id, messageId);
+        return this.client.messages.delete(this.id, messageId);
     }
 
     /** Add a reaction emote */

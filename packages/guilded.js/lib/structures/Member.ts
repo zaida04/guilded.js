@@ -43,7 +43,7 @@ export class Member extends Base<UpgradedTeamMemberPayload> {
 
     /** Update this member's nickname. */
     updateNickname(nickname: string) {
-        return this.client.members.updateNicknames(this.serverId, this.id, nickname);
+        return this.client.members.updateNickname(this.serverId, this.id, nickname);
     }
 
     /** Reset this member's nickname */
@@ -58,12 +58,12 @@ export class Member extends Base<UpgradedTeamMemberPayload> {
 
     /** Add role to this member */
     addRole(roleId: number) {
-        return this.client.roles.addRole(this.id, roleId);
+        return this.client.roles.addRoleToMember(this.id, roleId);
     }
 
     /** Remove role from this member */
     removeRole(roleId: number) {
-        return this.client.roles.removeRole(this.id, roleId);
+        return this.client.roles.removeRoleFromMember(this.id, roleId);
     }
 
     /** Kick this user */

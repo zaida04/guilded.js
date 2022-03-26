@@ -10,26 +10,26 @@ export default class DocChannel extends Base {
 
     /** Create a doc. */
     createDoc(options: RESTPostDocsBody) {
-        return this.client.docs.createDoc(this.id, options);
+        return this.client.docs.create(this.id, options);
     }
 
     /** Get the docs from this channel. */
     getDocs() {
-        return this.client.docs.getDocs(this.id);
+        return this.client.docs.fetchMany(this.id);
     }
 
     /** Get a doc from this channel. */
     getDoc(docId: number) {
-        return this.client.docs.getDoc(this.id, docId);
+        return this.client.docs.fetch(this.id, docId);
     }
 
     /** Update a doc in this channel. */
     updateDoc(docId: number, title: string, content: string) {
-        return this.client.docs.updateDoc(this.id, docId, { title, content });
+        return this.client.docs.update(this.id, docId, { title, content });
     }
 
     /** Delete a doc from this channel. */
     deleteDoc(docId: number) {
-        return this.client.docs.deleteDoc(this.id, docId);
+        return this.client.docs.delete(this.id, docId);
     }
 }
