@@ -12,10 +12,11 @@ export const ROUTES = {
     members: (serverId: string) => `/servers/${serverId}/members`,
 
     // Forum Endpoints
-    createForumThread: (channelId: string) => `/channels/${channelId}/forum`,
+    forumThread: (channelId: string) => `/channels/${channelId}/forum`,
 
     // List Endpoints
-    createListItem: (channelId: string) => `/channels/${channelId}/list`,
+    listItems: (channelId: string) => `/channels/${channelId}/items`,
+    listItem: (channelId: string, itemId: string) => `/channels/${channelId}/items/${itemId}`,
 
     // Docs Endpoints
     channelDocs: (channelId: string) => `/channels/${channelId}/docs`,
