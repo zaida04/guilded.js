@@ -1,6 +1,6 @@
 import type { ChatMessagePayload } from "@guildedjs/guilded-api-typings";
 import type Client from "./Client";
-import { Base }  from "./Base";
+import { Base } from "./Base";
 
 export enum MessageType {
     Default,

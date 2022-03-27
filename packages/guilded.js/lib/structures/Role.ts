@@ -1,5 +1,5 @@
 import type Client from "./Client";
-import { Base }  from "./Base";
+import { Base } from "./Base";
 
 export class Role extends Base<{ id: number; serverId: string }, number> {
     /** The ID of the server this role belongs to */

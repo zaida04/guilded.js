@@ -1,6 +1,6 @@
 import type Collection from "@discordjs/collection";
 import type { ChatMessageContent, RESTGetChannelMessagesQuery } from "@guildedjs/guilded-api-typings";
-import { Base }  from "../Base";
+import { Base } from "../Base";
 import type { Message } from "../Message";
 
 export default class Channel extends Base {

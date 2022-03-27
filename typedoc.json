@@ -1,22 +1,15 @@
 {
-	"cleanOutputDir": true,
-	"emit": true,
-	"entryPointStrategy": "packages",
-	"entryPoints": ["."],
-	"exclude": [
-		"**/node_modules/**",
-		"**/dist/**",
-		"**/*.test.ts",
-		"packages/**/tests/**",
-		"**/*.js",
-		"**/*.d.ts"
-	],
-	"excludeExternals": true,
-	"hideGenerator": true,
-	"lightHighlightTheme": "github-light",
-	"darkHighlightTheme": "github-dark",
-	"name": "Guilded.JS",
-	"out": "./docs/",
-	"readme": "./README.md",
-	"tsconfig": "./tsconfig.json"
+    "cleanOutputDir": true,
+    "emit": true,
+    "entryPointStrategy": "packages",
+    "entryPoints": ["."],
+    "exclude": ["**/node_modules/**", "**/dist/**", "**/*.test.ts", "packages/**/tests/**", "**/*.js", "**/*.d.ts"],
+    "excludeExternals": true,
+    "hideGenerator": true,
+    "lightHighlightTheme": "github-light",
+    "darkHighlightTheme": "github-dark",
+    "name": "Guilded.JS",
+    "out": "./docs/",
+    "readme": "./README.md",
+    "tsconfig": "./tsconfig.json"
 }

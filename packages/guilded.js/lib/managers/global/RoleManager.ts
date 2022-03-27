@@ -3,7 +3,7 @@ import GlobalManager from "./GlobalManager";
 export default class GlobalRoleManager extends GlobalManager {
     /** Award XP to a role */
     giveXP(serverId: string, roleId: number, amount: number): Promise<number> {
-        return this.client.rest.router.awardRoleXP(serverId, roleId.toString(), amount).then(data => data.total);
+        return this.client.rest.router.awardRoleXP(serverId, roleId.toString(), amount).then((data) => data.total);
     }
 
     /** Assign role to member */

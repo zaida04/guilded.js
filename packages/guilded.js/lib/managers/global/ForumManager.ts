@@ -4,6 +4,6 @@ import GlobalManager from "./GlobalManager";
 export default class GlobalForumManager extends GlobalManager {
     /** Create a thread in a forum */
     createThread(channelId: string, options: RESTPostForumThreadBody): Promise<ForumThreadPayload> {
-        return this.client.rest.router.createForumThread(channelId, options).then(data => data.forumThread);
+        return this.client.rest.router.createForumThread(channelId, options).then((data) => data.forumThread);
     }
 }

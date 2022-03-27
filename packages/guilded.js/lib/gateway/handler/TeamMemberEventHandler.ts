@@ -6,7 +6,7 @@ import GatewayEventHandler from "./GatewayEventHandler";
 export default class TeamMemberEventHandler extends GatewayEventHandler {
     teamMemberUpdated(data: WSTeamMemberUpdatedPayload): boolean {
         const existingMember = this.client.members.cache.get(`${data.d.serverId}:${data.d.userInfo.id}`);
-        if(!existingMember) return this.client.emit(constants.clientEvents.TEAM_MEMBER_UPDATED, data.d, null);
+        if (!existingMember) return this.client.emit(constants.clientEvents.TEAM_MEMBER_UPDATED, data.d, null);
 
         const cloneExistingMember = existingMember._clone();
         cloneExistingMember._update({ nickname: data.d.userInfo.nickname });
@@ -21,7 +21,7 @@ export default class TeamMemberEventHandler extends GatewayEventHandler {
         return this.client.emit(constants.clientEvents.TEAM_MEMBER_JOINED, newMember);
     }
     teamMemberRemoved(data: WSTeamMemberRemovedPayload): boolean {
-        if(this.client.options.cache?.removeMemberOnLeave) this.client.members.cache.delete(data.d.userId);
+        if (this.client.options.cache?.removeMemberOnLeave) this.client.members.cache.delete(data.d.userId);
         const existingMember = this.client.members.cache.get(`${data.d.serverId}:${data.d.userId}`);
         return this.client.emit(constants.clientEvents.TEAM_MEMBER_REMOVED, existingMember ?? data.d);
     }

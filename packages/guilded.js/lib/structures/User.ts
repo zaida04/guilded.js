@@ -1,4 +1,4 @@
-import { Base }  from "./Base";
+import { Base } from "./Base";
 import type { UserPayload } from "@guildedjs/guilded-api-typings";
 import type Client from "./Client";
 
@@ -20,5 +20,5 @@ export class User extends Base<UserPayload> {
 
 export enum UserType {
     Bot,
-    User
+    User,
 }

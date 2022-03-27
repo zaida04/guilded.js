@@ -1,6 +1,6 @@
 import Collection from "@discordjs/collection";
 import type { ListItemPayload } from "@guildedjs/guilded-api-typings";
-import { Base }  from "../Base";
+import { Base } from "../Base";
 
 export default class ListChannel extends Base {
     /** The items in this channel. */

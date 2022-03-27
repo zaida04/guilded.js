@@ -4,4 +4,4 @@ export interface BareStructureBaseData {
     id: string;
 }
 
-export type UpgradedTeamMemberPayload = TeamMemberPayload & { serverId: string, id: string }
+export type UpgradedTeamMemberPayload = TeamMemberPayload & { serverId: string; id: string };
