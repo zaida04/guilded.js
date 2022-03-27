@@ -5,7 +5,7 @@ import GatewayEventHandler from "./GatewayEventHandler";
 
 export default class MessageEventHandler extends GatewayEventHandler {
     messageCreated(data: WSChatMessageCreatedPayload): boolean {
-        // This is in the case that the REST request beats us to adding the message in the cache.
+        // This is in the case that a REST request beats us to adding the message in the cache.
         const existingMessage = this.client.messages.cache.get(data.d.message.id);
         if (existingMessage) return this.client.emit(constants.clientEvents.MESSAGE_CREATED, existingMessage);
 
