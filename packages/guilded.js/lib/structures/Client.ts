@@ -17,6 +17,7 @@ import type { Member } from "./Member";
 import type { Role } from "./Role";
 import { CacheStructure } from "../cache";
 import GlobalUserManager from "../managers/global/UserManager";
+import GlobalMemberBanManager from "../managers/global/MemberBanManager";
 
 export class Client extends (EventEmitter as unknown as new () => TypedEmitter<ClientEvents>) {
     /** The time in milliseconds the Client connected */
@@ -44,6 +45,7 @@ export class Client extends (EventEmitter as unknown as new () => TypedEmitter<C
     messages = new GlobalMessageManager(this);
     roles = new GlobalRoleManager(this);
     users = new GlobalUserManager(this);
+    bans = new GlobalMemberBanManager(this);
 
     constructor(public options: ClientOptions) {
         if(typeof options !== "object") throw new Error("Must provide options in client constructor in the form of an object.")
@@ -94,7 +96,9 @@ interface ClientOptions {
     };
     cache?: {
         structureBuilder: <K, V>() => CacheStructure<K, V>;
-        removeMemberOnLeave: boolean;
+        removeMemberOnLeave?: boolean;
+        removeMemberBanOnUnban?: boolean;
+        cacheMemberBans?: boolean;
     };
 }
 

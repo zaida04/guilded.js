@@ -1,7 +1,7 @@
 import Client from "./Client";
 import { Base }  from "./Base";
-import type { UpgradedTeamMemberPayload } from "../typings";
-import type { TeamMemberPayload } from "@guildedjs/guilded-api-typings";
+import type { UpgradedTeamMemberBanPayload, UpgradedTeamMemberPayload } from "../typings";
+import type { TeamMemberPayload, UserSummaryPayload } from "@guildedjs/guilded-api-typings";
 
 export class Member extends Base<UpgradedTeamMemberPayload> {
     /** The ID of the server this role belongs to */
@@ -69,5 +69,38 @@ export class Member extends Base<UpgradedTeamMemberPayload> {
     /** Kick this user */
     kick() {
         return this.client.members.kick(this.serverId, this.id);
+    }
+}
+
+export class MemberBan extends Base<UpgradedTeamMemberBanPayload> {
+    /** Id this ban was created in */
+    serverId: string;
+    /** Date this ban was created */    
+    createdAt: Date;
+    /** The ID of user who banned this person */
+    createdById: string;
+    /** The reason this user was banned */
+    reason: string | null;
+    /** Information about the target user */
+    target: UserSummaryPayload;
+
+    constructor(client: Client, data: UpgradedTeamMemberBanPayload) {
+        const transformedBanId = `${data.serverId}:${data.user.id}`
+        super(client, { ...data, id: transformedBanId });
+        this.serverId = data.serverId;
+        this.createdAt = new Date(data.createdAt);
+        this.createdById = data.createdBy;
+        this.target = data.user;
+        this.reason = data.reason ?? null;
+    }
+
+    /** The author of the ban */
+    get author() {
+        return this.client.users.cache.get(this.createdById);
+    }
+    
+    /** Remove this ban */
+    unban() {
+        return this.client.bans.unban(this.serverId, this.target.id);
     }
 }

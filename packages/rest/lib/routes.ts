@@ -10,6 +10,8 @@ export const ROUTES = {
     memberRoles: (serverId: string, userId: string) => `/servers/${serverId}/members/${userId}/roles`,
     member: (serverId: string, userId: string) => `/servers/${serverId}/members/${userId}`,
     members: (serverId: string) => `/servers/${serverId}/members`,
+    memberBan: (serverId: string, userId: string) => `/servers/${serverId}/bans/${userId}`,
+    memberBans: (serverId: string) => `/servers/${serverId}/bans`,
 
     // Forum Endpoints
     forumThread: (channelId: string) => `/channels/${channelId}/forum`,
