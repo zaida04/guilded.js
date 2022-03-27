@@ -1,4 +1,4 @@
-import {
+import type {
     ChatMessageContent,
     RESTDeleteChannelMessageResult,
     RESTDeleteDocResult,
@@ -37,163 +37,165 @@ import {
     RESTPutListItemBody,
     RESTPutListItemResult,
     RESTPutMemberNicknameBody,
+    RESTPutMemberNicknameResult,
     RESTPutMemberRoleResult,
     RestPutReactionResult,
     UserSocialLink,
 } from "@guildedjs/guilded-api-typings";
-import { ROUTES } from "./routes";
+
 import type { RestManager } from "./RestManager";
+import { ROUTES } from "./routes";
 
 export class Router {
     constructor(public readonly rest: RestManager) {}
 
     /** Send a message to a channel */
-    createChannelMessage(channelId: string, content: ChatMessageContent | string) {
+    createChannelMessage(channelId: string, content: ChatMessageContent | string): Promise<RESTPostChannelMessagesResult> {
         if (typeof content === "string") content = { content };
 
         return this.rest.post<RESTPostChannelMessagesResult, RESTPostChannelMessagesBody>(ROUTES.channelMessages(channelId), content);
     }
 
     /** Get a list of the latest 50 messages from a channel. */
-    getChannelMessages(channelId: string, options: RESTGetChannelMessagesQuery) {
+    getChannelMessages(channelId: string, options: RESTGetChannelMessagesQuery): Promise<RESTGetChannelMessagesResult> {
         return this.rest.get<RESTGetChannelMessagesResult, RESTGetChannelMessagesQuery>(ROUTES.channelMessages(channelId), options);
     }
 
     /** Get details for a specific chat message from a chat channel. */
-    getChannelMessage(channelId: string, messageId: string) {
+    getChannelMessage(channelId: string, messageId: string): Promise<RESTGetChannelMessageResult> {
         return this.rest.get<RESTGetChannelMessageResult>(ROUTES.channelMessage(channelId, messageId));
     }
 
     /** Update a channel message. */
-    updateChannelMessage(channelId: string, messageId: string, options: RESTPutChannelMessageBody) {
+    updateChannelMessage(channelId: string, messageId: string, options: RESTPutChannelMessageBody): Promise<RESTPutChannelMessageResult> {
         return this.rest.put<RESTPutChannelMessageResult, RESTPutChannelMessageBody>(ROUTES.channelMessage(channelId, messageId), options);
     }
 
     /** Delete a channel message. */
-    deleteChannelMessage(channelId: string, messageId: string) {
+    deleteChannelMessage(channelId: string, messageId: string): Promise<RESTDeleteChannelMessageResult> {
         return this.rest.delete<RESTDeleteChannelMessageResult>(ROUTES.channelMessage(channelId, messageId));
     }
 
     /** Get a list of the roles assigned to a member using the id of the member. */
-    getMemberRoles(serverId: string, userId: string) {
+    getMemberRoles(serverId: string, userId: string): Promise<RESTGetMemberRolesResult> {
         return this.rest.get<RESTGetMemberRolesResult>(ROUTES.memberRoles(serverId, userId));
     }
 
     /** Update a member's nickname. */
-    updateMemberNickname(serverId: string, userId: string, nickname: string) {
-        return this.rest.put<RESTPutChannelMessageResult, RESTPutMemberNicknameBody>(ROUTES.memberNickname(serverId, userId), { nickname });
+    updateMemberNickname(serverId: string, userId: string, nickname: string): Promise<RESTPutMemberNicknameResult> {
+        return this.rest.put<RESTPutMemberNicknameResult, RESTPutMemberNicknameBody>(ROUTES.memberNickname(serverId, userId), { nickname });
     }
 
     /** Delete a member's nickname */
-    deleteMemberNickname(serverId: string, userId: string) {
+    deleteMemberNickname(serverId: string, userId: string): Promise<RESTDeleteMemberNicknameResult> {
         return this.rest.delete<RESTDeleteMemberNicknameResult>(ROUTES.memberNickname(serverId, userId));
     }
 
     /** Create a thread in a forum */
-    createForumThread(channelId: string, options: RESTPostForumThreadBody) {
+    createForumThread(channelId: string, options: RESTPostForumThreadBody): Promise<RESTPostForumThreadResult> {
         return this.rest.post<RESTPostForumThreadResult, RESTPostForumThreadBody>(ROUTES.forumThread(channelId), options);
     }
 
     /** Create a list item. */
-    createListItem(channelId: string, options: RESTPostListItemBody) {
+    createListItem(channelId: string, options: RESTPostListItemBody): Promise<RESTPostListItemResult> {
         return this.rest.post<RESTPostListItemResult, RESTPostListItemBody>(ROUTES.listItems(channelId), options);
     }
 
     /** Get list items */
-    getListItems(channelId: string) {
+    getListItems(channelId: string): Promise<RESTGetListItemsResult> {
         return this.rest.get<RESTGetListItemsResult>(ROUTES.listItems(channelId));
     }
 
     /** Get list item */
-    getListItem(channelId: string, itemId: string) {
+    getListItem(channelId: string, itemId: string): Promise<RESTGetListItemResult> {
         return this.rest.get<RESTGetListItemResult>(ROUTES.listItem(channelId, itemId));
     }
 
     /** Update list item */
-    updateListItem(channelId: string, itemId: string, options: RESTPutListItemBody) {
+    updateListItem(channelId: string, itemId: string, options: RESTPutListItemBody): Promise<RESTPutListItemResult> {
         return this.rest.put<RESTPutListItemResult, RESTPostListItemBody>(ROUTES.listItem(channelId, itemId), options);
     }
 
     /** Delete list item */
-    deleteListItem(channelId: string, itemId: string) {
+    deleteListItem(channelId: string, itemId: string): Promise<RESTDeleteListItemResult> {
         return this.rest.delete<RESTDeleteListItemResult>(ROUTES.listItem(channelId, itemId));
     }
 
     /** Create a doc. */
-    createDoc(channelId: string, options: RESTPostDocsBody) {
+    createDoc(channelId: string, options: RESTPostDocsBody): Promise<RESTPostDocsResult> {
         return this.rest.post<RESTPostDocsResult, RESTPostDocsBody>(ROUTES.channelDocs(channelId), options);
     }
 
     /** Get the docs from a channel. */
-    getDocs(channelId: string) {
+    getDocs(channelId: string): Promise<RESTGetDocsResult> {
         return this.rest.get<RESTGetDocsResult>(ROUTES.channelDocs(channelId));
     }
 
     /** Get a doc from a channel. */
-    getDoc(channelId: string, docId: number) {
+    getDoc(channelId: string, docId: number): Promise<RESTGetDocResult> {
         return this.rest.get<RESTGetDocResult>(ROUTES.channelDoc(channelId, docId));
     }
 
     /** Update a doc */
-    updateDoc(channelId: string, docId: number, options: RESTPutDocBody) {
+    updateDoc(channelId: string, docId: number, options: RESTPutDocBody): Promise<RESTPutDocResult> {
         // @ts-ignore ts odd error fix TODO:
         return this.rest.put<RESTPutDocResult, RESTPutDocBody>(ROUTES.channelDoc(channelId, docId), options);
     }
 
     /** Delete a doc from a channel. */
-    deleteDoc(channelId: string, docId: number) {
+    deleteDoc(channelId: string, docId: number): Promise<RESTDeleteDocResult> {
         return this.rest.delete<RESTDeleteDocResult>(ROUTES.channelDoc(channelId, docId));
     }
 
     /** Add a reaction emote */
-    addReactionEmote(channelId: string, contentId: string, emoteId: number) {
+    addReactionEmote(channelId: string, contentId: string, emoteId: number): Promise<RestPutReactionResult> {
         return this.rest.put<RestPutReactionResult>(ROUTES.channelReaction(channelId, contentId, emoteId));
     }
 
     /** Award XP to a member */
-    awardMemberXP(serverId: string, userId: string, amount: number) {
+    awardMemberXP(serverId: string, userId: string, amount: number): Promise<RESTPostUserXpResult> {
         return this.rest.post<RESTPostUserXpResult, RESTPostUserXPBody>(ROUTES.memberXP(serverId, userId), { amount });
     }
 
     /** Award XP to a role */
-    awardRoleXP(serverId: string, roleId: string, amount: number) {
+    awardRoleXP(serverId: string, roleId: string, amount: number): Promise<RESTPostRoleXpResult> {
         return this.rest.post<RESTPostRoleXpResult, RESTPostUserXPBody>(ROUTES.roleXP(serverId, roleId), { amount });
     }
 
     /** Retrieves a member's public social links */
-    getMemberSocialLinks(serverId: string, userId: string, type: UserSocialLink) {
+    getMemberSocialLinks(serverId: string, userId: string, type: UserSocialLink): Promise<RESTGetMemberSocialLinkResult> {
         return this.rest.get<RESTGetMemberSocialLinkResult>(ROUTES.memberSocialLinks(serverId, userId, type));
     }
 
-    getMember(serverId: string, userId: string) {
+    getMember(serverId: string, userId: string): Promise<RESTGetMemberResult> {
         return this.rest.get<RESTGetMemberResult>(ROUTES.member(serverId, userId));
     }
 
-    getMembers(serverId: string) {
+    getMembers(serverId: string): Promise<RESTGetMembersResult> {
         return this.rest.get<RESTGetMembersResult>(ROUTES.members(serverId));
     }
 
-    kickMember(serverId: string, userId: string) {
+    kickMember(serverId: string, userId: string): Promise<RESTDeleteMemberResult> {
         return this.rest.get<RESTDeleteMemberResult>(ROUTES.member(serverId, userId));
     }
 
     /** Add member to group */
-    addMemberToGroup(groupId: string, userId: string) {
+    addMemberToGroup(groupId: string, userId: string): Promise<RESTPutGroupMemberResult> {
         return this.rest.put<RESTPutGroupMemberResult>(ROUTES.groupMember(groupId, userId));
     }
 
     /** Remove member from group */
-    removeMemberFromGroup(groupId: string, userId: string) {
+    removeMemberFromGroup(groupId: string, userId: string): Promise<RESTDeleteGroupMemberResult> {
         return this.rest.delete<RESTDeleteGroupMemberResult>(ROUTES.groupMember(groupId, userId));
     }
 
     /** Assign role to member */
-    assignRoleToMember(userId: string, roleId: number) {
+    assignRoleToMember(userId: string, roleId: number): Promise<RESTPutMemberRoleResult> {
         return this.rest.put<RESTPutMemberRoleResult>(ROUTES.memberRole(userId, roleId));
     }
 
     /** Remove role to member */
-    removeRoleFromMember(userId: string, roleId: number) {
+    removeRoleFromMember(userId: string, roleId: number): Promise<RESTDeleteMemberRoleResult> {
         return this.rest.put<RESTDeleteMemberRoleResult>(ROUTES.memberRole(userId, roleId));
     }
 }

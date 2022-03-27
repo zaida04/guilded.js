@@ -1,4 +1,4 @@
-import type { TeamMemberPayload, TeamMemberSummary } from "../structs";
+import type { TeamMemberPayload, TeamMemberSummaryPayload } from "../structs";
 
 /**
  * GET
@@ -38,7 +38,7 @@ export interface RESTGetMemberResult {
  * /servers/:serverId/members
  */
 export interface RESTGetMembersResult {
-    members: TeamMemberSummary[];
+    members: TeamMemberSummaryPayload[];
 }
 
 /**

@@ -8,7 +8,7 @@ export enum IMG_EXTENSION {
 
 export type IMG_SIZE = "Small" | "Medium" | "Large";
 
-const formAssetURL = (route: string, hash: string, extension: string, width?: number, height?: number, size?: string) => {
+const formAssetURL = (route: string, hash: string, extension: string, width?: number, height?: number, size?: string): string => {
     const url = new URL(`https://${ROUTES.IMAGE_CDN_DOMAIN}/${route}/${hash}-${size}.${extension.toLowerCase()}`);
     if (width) url.searchParams.append("w", width.toString());
     if (height) url.searchParams.append("h", height.toString());

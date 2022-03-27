@@ -1,8 +1,10 @@
-import fetch, { Request, Response } from "node-fetch";
-import { RestOptions, RequestMethods } from "./typings";
 import { ROUTES } from "@guildedjs/common";
+import fetch, { Response } from "node-fetch";
+import { stringify } from "qs";
+
 import { GuildedAPIError } from "./GuildedAPIError";
 import { Router } from "./Router";
+import type { RestOptions } from "./typings";
 
 export class RestManager {
     /** The bot token to be used for making requests. */
@@ -17,12 +19,12 @@ export class RestManager {
     constructor(public readonly options: RestOptions) {}
 
     /** The base url to send the request to. */
-    get baseURL() {
+    get baseURL(): string {
         return this.proxyURL ?? `https://${ROUTES.BASE_DOMAIN}/api/v${this.version}`;
     }
 
     public async make<T extends JSONB, B = RequestBodyObject, Q = never>(
-        data: MakeOptions<B>,
+        data: MakeOptions<B, Q>,
         authenticated = true,
         retryCount = 0,
     ): Promise<[Response, Promise<T>]> {
@@ -37,9 +39,10 @@ export class RestManager {
             method: data.method,
         };
 
+        const queryAppendedURL = data.query ? `${data.path}?${stringify(data.query)}` : data.path;
         let request;
         try {
-            request = await fetch(this.baseURL + data.path, requestOptions);
+            request = await fetch(this.baseURL + queryAppendedURL, requestOptions);
         } catch (e: any) {
             throw new Error(`Error while making API call, ${e.message.toString()}`);
         }
@@ -50,7 +53,7 @@ export class RestManager {
                     throw new Error("MAX REQUEST RATELIMIT RETRY LIMIT REACHED.");
                 }
                 await sleep(this.options?.restOffset ?? 3500);
-                return this.make<T>(data, authenticated, retryCount++);
+                return this.make<T, B, Q>(data, authenticated, retryCount++);
             }
 
             const parsedRequest = await request.json().catch(() => ({ message: "Cannot parse JSON Error Response." }));
@@ -116,9 +119,9 @@ export class RestManager {
     }
 }
 
-export interface MakeOptions<B = Record<string, any>> {
+export interface MakeOptions<B = Record<string, any>, Q = RequestBodyObject> {
     method: string;
-    query?: RequestBodyObject;
+    query?: Q;
     path: string;
     body?: B;
 }

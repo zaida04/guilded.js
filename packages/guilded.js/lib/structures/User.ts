@@ -6,9 +6,9 @@ export class User extends Base<UserPayload> {
     /** The name for this user */
     name: string | null = null;
     /** The type of this user */
-    type: UserType;
+    readonly type: UserType;
     /** When this user was created */
-    createdAt: Date | null;
+    readonly createdAt: Date | null;
 
     constructor(client: Client, data: UserPayload) {
         super(client, data);

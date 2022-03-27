@@ -1,4 +1,4 @@
-import { ChatMessagePayload } from "../structs/Message";
+import type { ChatMessagePayload } from "../structs/Message";
 
 /**
  * POST
@@ -39,7 +39,7 @@ export interface RESTGetChannelMessageResult {
  * PUT
  * /channels/:channelId/messages/:messageId
  */
-export interface RESTPutChannelMessageResult extends RESTGetChannelMessageResult {}
+export type RESTPutChannelMessageResult = RESTGetChannelMessageResult;
 export interface RESTPutChannelMessageBody {
     /** Message content to update to. */
     content: string;

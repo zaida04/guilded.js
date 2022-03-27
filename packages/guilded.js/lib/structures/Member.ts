@@ -1,7 +1,8 @@
-import Client from "./Client";
+import type Client from "./Client";
 import { Base }  from "./Base";
 import type { UpgradedTeamMemberPayload } from "../typings";
-import type { TeamMemberPayload } from "@guildedjs/guilded-api-typings";
+import type { TeamMemberPayload, TeamMemberSummaryPayload, UserSummaryPayload } from "@guildedjs/guilded-api-typings";
+import type { User } from "./User";
 
 export class Member extends Base<UpgradedTeamMemberPayload> {
     /** The ID of the server this role belongs to */
@@ -21,7 +22,7 @@ export class Member extends Base<UpgradedTeamMemberPayload> {
         this._update(data);
     }
 
-    _update(data: Partial<TeamMemberPayload>) {
+    _update(data: Partial<TeamMemberPayload>): this {
         if ("nickname" in data) {
             this.nickname = data.nickname ?? null;
         }
@@ -29,45 +30,69 @@ export class Member extends Base<UpgradedTeamMemberPayload> {
         if("roleIds" in data && typeof data.roleIds !== "undefined") {
             this.roleIds = data.roleIds;
         }
+
+		return this;
     }
 
     /** Get the user associated with this member */
-    get user() {
-        return this.client.users.cache.get(this.id);
+    get user(): User | null {
+        return this.client.users.cache.get(this.id) ?? null;
     }
 
     /** Get a list of the roles assigned to this member. */
-    getRoles() {
+    getRoles(): Promise<number[]> {
         return this.client.members.getRoles(this.serverId, this.id);
     }
 
     /** Update this member's nickname. */
-    updateNickname(nickname: string) {
+    updateNickname(nickname: string): Promise<string> {
         return this.client.members.updateNickname(this.serverId, this.id, nickname);
     }
 
     /** Reset this member's nickname */
-    resetNickname() {
+    resetNickname(): Promise<void> {
         return this.client.members.resetNickname(this.serverId, this.id);
     }
 
     /** Award XP to this member */
-    awardXP(amount: number) {
+    awardXP(amount: number): Promise<number> {
         return this.client.members.giveXP(this.serverId, this.id, amount);
     }
 
     /** Add role to this member */
-    addRole(roleId: number) {
+    addRole(roleId: number): Promise<void> {
         return this.client.roles.addRoleToMember(this.id, roleId);
     }
 
     /** Remove role from this member */
-    removeRole(roleId: number) {
+    removeRole(roleId: number): Promise<void> {
         return this.client.roles.removeRoleFromMember(this.id, roleId);
     }
 
     /** Kick this user */
-    kick() {
+    kick(): Promise<Member | null> {
         return this.client.members.kick(this.serverId, this.id);
+    }
+}
+
+/** A partial summary representation of a member. Can fetch this member to get full data */
+export class PartialMember extends Base<TeamMemberSummaryPayload & { serverId: string, id: string }> {
+    /** The ID of the server this role belongs to */
+    readonly serverId: string;
+    /** The user information of this member */
+    readonly user: UserSummaryPayload;
+    /** Roles this member has by ID (TODO: role object when Guilded API has one) */
+    readonly roleIds: number[] = [];
+
+    constructor(client: Client, data: TeamMemberSummaryPayload & { serverId: string, id: string }) {
+        super(client, data);
+        this.serverId = data.serverId;
+        this.user = data.user;
+        this.roleIds = data.roleIds;
+    }
+
+    /** Fetch the full member object of this partial member */
+    fetch(): Promise<Member> {
+        return this.client.members.fetch(this.serverId, this.user.id);
     }
 }

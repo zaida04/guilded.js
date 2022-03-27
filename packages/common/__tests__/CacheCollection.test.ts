@@ -1,5 +1,6 @@
-import { CacheCollection } from "..";
 import { expect } from "chai";
+
+import { CacheCollection } from "..";
 const zeroOrNegativeErrorMessage = "Cannot pass 0 or negative value as maxSize.";
 
 it("Successful construction with default cache maxSize", () => {

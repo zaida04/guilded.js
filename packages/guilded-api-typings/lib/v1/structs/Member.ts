@@ -1,4 +1,4 @@
-import type { UserPayload, UserSummary } from "./User";
+import type { UserPayload, UserSummaryPayload } from "./User";
 
 export interface TeamMemberPayload {
     user: UserPayload;
@@ -7,7 +7,7 @@ export interface TeamMemberPayload {
     joinedAt: string;
 }
 
-export interface TeamMemberSummary {
-    user: UserSummary;
+export interface TeamMemberSummaryPayload {
+    user: UserSummaryPayload;
     roleIds: number[];
 }

@@ -1,8 +1,10 @@
-import { Client } from "../../../packages/guilded.js";
-import Collection from "@discordjs/collection";
-import { join } from "path";
-import { readdir } from "fs/promises";
 import "dotenv/config";
+
+import Collection from "@discordjs/collection";
+import { readdir } from "fs/promises";
+import { join } from "path";
+
+import { Client } from "../../../packages/guilded.js";
 import type { Command } from "./Command";
 const client = new Client({ token: process.env.TOKEN! });
 const prefix = process.env.PREFIX!;
@@ -19,7 +21,7 @@ client.on("messageCreated", async (msg) => {
     try {
         await command.execute(msg, args);
     } catch (e) {
-        void client.messages.sendMessage(msg.channelId, "There was an error executing that command!");
+        void client.messages.send(msg.channelId, "There was an error executing that command!");
         void console.error(e);
     }
 });
@@ -29,7 +31,7 @@ client.on("error", console.log);
 client.on("ready", () => console.log("Guilded bot is ready!"));
 client.on("exit", () => console.log("Disconnected!"));
 
-void (async () => {
+void (async (): Promise<void> => {
     // read the commands dir and have the file extensions.
     const commandDir = await readdir(join(__dirname, "commands"), { withFileTypes: true });
 

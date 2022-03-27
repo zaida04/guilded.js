@@ -1,6 +1,7 @@
-import WebSocketManager from "../../../packages/ws";
-import type { WSChatMessageCreatedPayload } from "../../../packages/guilded-api-typings";
 import "dotenv/config";
+
+import type { WSChatMessageCreatedPayload } from "../../../packages/guilded-api-typings";
+import WebSocketManager from "../../../packages/ws";
 
 if (!process.env.TOKEN) throw new Error("Missing token!");
 const ws = new WebSocketManager({ token: process.env.TOKEN });
