@@ -8,12 +8,12 @@ export default class GlobalRoleManager extends GlobalManager {
     }
 
     /** Assign role to member */
-    addRole(memberId: string, roleId: number) {
+    addRoleToMember(memberId: string, roleId: number) {
         return this.client.rest.router.assignRoleToMember(memberId, roleId);
     }
 
     /** Remove role from member */
-    removeRole(memberId: string, roleId: number) {
+    removeRoleFromMember(memberId: string, roleId: number) {
         return this.client.rest.router.removeRoleFromMember(memberId, roleId);
     }
 }

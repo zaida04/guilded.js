@@ -73,8 +73,8 @@ export class Message extends Base<ChatMessagePayload> {
 
     /* Update message content */
     update(newContent: string) {
-        return this.client.messages.updateMessage(this.channelId, this.id, newContent).then((x) => {
-            return this._update(x.message);
+        return this.client.messages.update(this.channelId, this.id, newContent).then((data) => {
+            return this._update(data.message);
         });
     }
 }

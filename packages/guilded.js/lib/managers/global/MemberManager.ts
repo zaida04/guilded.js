@@ -25,7 +25,7 @@ export default class GlobalMemberManager extends CacheableStructManager<string, 
     }
 
     /** Update a member's nickname. */
-    updateNicknames(serverId: string, memberId: string, newNickname: string) {
+    updateNickname(serverId: string, memberId: string, newNickname: string) {
         return this.client.rest.router.updateMemberNickname(serverId, memberId, newNickname);
     }
 
@@ -40,7 +40,7 @@ export default class GlobalMemberManager extends CacheableStructManager<string, 
     }
 
     /** Retrieves a member's public social links */
-    getSocialLinks(serverId: string, memberId: string, type: UserSocialLink) {
+    fetchSocialLinks(serverId: string, memberId: string, type: UserSocialLink) {
         return this.client.rest.router.getMemberSocialLinks(serverId, memberId, type);
     }
 }
