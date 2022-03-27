@@ -4,7 +4,7 @@ import type Client from "./Client";
 
 export class User extends Base<UserPayload> {
     /** The name for this user */
-    name: string | null = null;
+    name: string;
     /** The type of this user */
     readonly type: UserType;
     /** When this user was created */

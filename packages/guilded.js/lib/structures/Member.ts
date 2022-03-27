@@ -6,7 +6,7 @@ import type { User } from "./User";
 
 export class Member extends Base<UpgradedTeamMemberPayload> {
     /** The ID of the server this role belongs to */
-    serverId: string;
+    readonly serverId: string;
     /** The nickname for this member */
     nickname: string | null = null;
     /** Date this member joined */
