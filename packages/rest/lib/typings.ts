@@ -10,12 +10,3 @@ export interface RestOptions {
     /** How many times to retry a request that's been ratelimited before failing */
     maxRatelimitRetryLimit?: number;
 }
-
-export enum RequestMethods {
-    GET,
-    POST,
-    PUT,
-    DELETE,
-    PATCH,
-}
-export type RequestMethod = keyof typeof RequestMethods;

@@ -14,10 +14,14 @@ import GlobalUserManager from "../managers/global/UserManager";
 import GlobalMemberBanManager from "../managers/global/GuildBanManager";
 import type { Message } from "./Message";
 import type TypedEmitter from "typed-emitter";
-import type { WSChatMessageDeletedPayload, WSTeamMemberRemovedPayload, WSTeamMemberUpdatedPayload } from "@guildedjs/guilded-api-typings";
+import type {
+    WSChatMessageDeletedPayload,
+    WSTeamMemberRemovedPayload,
+    WSTeamMemberUpdatedPayload,
+} from "@guildedjs/guilded-api-typings";
 import type { Member } from "./Member";
 import type { Role } from "./Role";
-import { CacheStructure } from "../cache";
+import type { CacheStructure } from "../cache";
 
 export class Client extends (EventEmitter as unknown as new () => TypedEmitter<ClientEvents>) {
     /** The time in milliseconds the Client connected */
@@ -54,17 +58,17 @@ export class Client extends (EventEmitter as unknown as new () => TypedEmitter<C
     }
 
     /** The amount of time the bot has been online in milliseconds. */
-    get uptime() {
+    get uptime(): number {
         return this.readyTimestamp ? Date.now() - this.readyTimestamp : 0;
     }
 
     /** The bot's token. */
-    get token() {
+    get token(): string {
         return this.options.token;
     }
 
     /** Connects the bot to the api. */
-    login(opts?: { fresh?: boolean }) {
+    login(opts?: { fresh?: boolean }): void {
         if (opts?.fresh) this.wsManager = new WebsocketManager({ token: this.options.token });
         this.wsManager.emitter
             .on("error", (reason, err) => this.emit("error", `[WS] ${reason}`, err))
@@ -76,7 +80,7 @@ export class Client extends (EventEmitter as unknown as new () => TypedEmitter<C
     }
 
     /** Disconnects the bot. */
-    disconnect() {
+    disconnect(): void {
         if (!this.wsManager.isAlive) throw new Error("There is no active connection to disconnect.");
         this.wsManager.emitter.removeAllListeners();
         this.wsManager.destroy();

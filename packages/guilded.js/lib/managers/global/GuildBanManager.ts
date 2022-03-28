@@ -4,7 +4,7 @@ import CacheableStructManager from "./CacheableStructManager";
 
 export default class GlobalGuildBanManager extends CacheableStructManager<string, MemberBan> {
     /** Fetch a member ban in a server */
-    fetch(serverId: string, userId: string) {
+    fetch(serverId: string, userId: string): Promise<MemberBan> {
         return this.client.rest.router.getMemberBan(serverId, userId).then((data) => {
             const newMemberBan = new MemberBan(this.client, { ...data.serverMemberBan, serverId });
             if (this.client.options.cache?.cacheMemberBans !== false) this.client.bans.cache.set(newMemberBan.id, newMemberBan);
@@ -13,7 +13,7 @@ export default class GlobalGuildBanManager extends CacheableStructManager<string
     }
 
     /** Fetch all bans in a server */
-    fetchMany(serverId: string) {
+    fetchMany(serverId: string): Promise<Collection<string, MemberBan>> {
         return this.client.rest.router.getMemberBans(serverId).then((data) => {
             const newMemberBans = new Collection<string, MemberBan>();
             for (const ban of data.serverMemberBans) {
@@ -26,7 +26,7 @@ export default class GlobalGuildBanManager extends CacheableStructManager<string
     }
 
     /** Ban a user from a server */
-    ban(serverId: string, userId: string) {
+    ban(serverId: string, userId: string): Promise<MemberBan> {
         return this.client.rest.router.banMember(serverId, userId).then((data) => {
             const newMemberBan = new MemberBan(this.client, { serverId, ...data.serverMemberBan });
             if (this.client.options.cache?.cacheMemberBans !== false) this.client.bans.cache.set(newMemberBan.id, newMemberBan);
@@ -35,7 +35,7 @@ export default class GlobalGuildBanManager extends CacheableStructManager<string
     }
 
     /** Unban a user from a server. Returns existing ban if cached. */
-    unban(serverId: string, userId: string, removeBanIfCached = false) {
+    unban(serverId: string, userId: string, removeBanIfCached = false): Promise<MemberBan | null> {
         return this.client.rest.router.unbanMember(serverId, userId).then((data) => {
             const existingBan = this.client.bans.cache.get(`${serverId}:${userId}`);
             if (this.client.options.cache?.removeMemberOnLeave || removeBanIfCached) this.client.bans.cache.delete(`${serverId}:${userId}`);

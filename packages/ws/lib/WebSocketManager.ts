@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-base-to-string */
-import WebSocket from "ws";
-import { EventEmitter } from "events";
 import { ROUTES } from "@guildedjs/common";
-import { SkeletonWSPayload, WSOpCodes, WSEvent } from "@guildedjs/guilded-api-typings";
+import { SkeletonWSPayload, WSEvent, WSOpCodes } from "@guildedjs/guilded-api-typings";
+import { EventEmitter } from "events";
 import type TypedEmitter from "typed-emitter";
+import WebSocket from "ws";
 
 export default class WebSocketManager {
     /** The version of the websocket to connect to. */
@@ -39,15 +39,15 @@ export default class WebSocketManager {
     constructor(public readonly options: WebSocketOptions) {}
 
     /** The url that will be used to connect. Prioritizes proxy url and if not available uses the default base url for guidled. */
-    get wsURL() {
+    get wsURL(): string {
         return this.options.proxyURL ?? `wss://${ROUTES.WS_DOMAIN}/v${this.version}/websocket`;
     }
 
-    get reconnectAttemptExceeded() {
+    get reconnectAttemptExceeded(): boolean {
         return this.reconnectAttemptAmount >= (this.options.reconnectAttemptLimit ?? Infinity);
     }
 
-    connect() {
+    connect(): void {
         this.socket = new WebSocket(this.wsURL, {
             headers: {
                 Authorization: `Bearer ${this.token}`,
@@ -84,18 +84,18 @@ export default class WebSocketManager {
         });
     }
 
-    destroy() {
+    destroy(): void {
         if (!this.socket) throw new Error("There is no active connection to destroy.");
         this.socket.removeAllListeners();
         if (this.socket.OPEN) this.socket.close();
         this.isAlive = false;
     }
 
-    _debug(str: any) {
+    _debug(str: any): boolean {
         return this.emitter.emit("debug", str);
     }
 
-    private onSocketMessage(packet: string) {
+    private onSocketMessage(packet: string): void {
         let EVENT_NAME;
         let EVENT_DATA;
 
@@ -126,13 +126,13 @@ export default class WebSocketManager {
         }
     }
 
-    private onSocketOpen() {
+    private onSocketOpen(): void {
         this._debug("Socket connection opened.");
         this.isAlive = true;
         this.connectedAt = new Date();
     }
 
-    private onSocketPong() {
+    private onSocketPong(): void {
         this._debug("Pong received.");
         this.ping = Date.now() - this.lastPingedAt;
     }
@@ -159,6 +159,6 @@ type WebsocketManagerEvents = {
     exit: (info: string) => unknown;
     unknown: (reason: string, data: any) => unknown;
     reconnect: () => unknown;
-    gatewayEvent: (event: keyof WSEvent, data: Record<string, any>) => unknown;
+    gatewayEvent: (event: keyof WSEvent, data: SkeletonWSPayload) => unknown;
     ready: () => unknown;
 };

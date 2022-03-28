@@ -1,14 +1,14 @@
-import { Base }  from "./Base";
+import { Base } from "./Base";
 import type { UserPayload } from "@guildedjs/guilded-api-typings";
 import type Client from "./Client";
 
 export class User extends Base<UserPayload> {
     /** The name for this user */
-    name: string | null = null;
+    name: string;
     /** The type of this user */
-    type: UserType;
+    readonly type: UserType;
     /** When this user was created */
-    createdAt: Date | null;
+    readonly createdAt: Date | null;
 
     constructor(client: Client, data: UserPayload) {
         super(client, data);
@@ -20,5 +20,5 @@ export class User extends Base<UserPayload> {
 
 export enum UserType {
     Bot,
-    User
+    User,
 }

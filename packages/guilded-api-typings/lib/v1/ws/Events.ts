@@ -1,4 +1,4 @@
-import { ChatMessagePayload, TeamMemberPayload } from "../structs";
+import type { ChatMessagePayload, TeamMemberPayload } from "../structs";
 
 export enum WSOpCodes {
     SUCCESS,

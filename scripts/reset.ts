@@ -1,5 +1,5 @@
-import rimraf from "rimraf";
 import { join } from "path";
+import rimraf from "rimraf";
 const BASE_DIR = join(__dirname, "..");
 const packages = ["common", "guilded-api-typings", "guilded.js", "ws", "rest"];
 const subDirs = ["node_modules", "dist", "types"];

@@ -6,7 +6,7 @@
     "author": "Zaid \"Nico\" <contact@nico.engineer>",
     "scripts": {
         "build": "yarn workspaces run build",
-        "lint": "npx eslint packages/ scripts/",
+        "lint": "npx eslint packages/ scripts/ examples/",
         "lint:fix": "yarn lint --fix",
         "docs": "npx rimraf docs && npx typedoc && npx ts-node scripts/post-docs.ts",
         "test": "npx nyc mocha -r ts-node/register ./packages/**/__tests__/*.test.ts",
@@ -28,6 +28,8 @@
         "eslint": "8.12.0",
         "eslint-config-prettier": "8.5.0",
         "eslint-plugin-prettier": "4.0.0",
+        "eslint-plugin-simple-import-sort": "^7.0.0",
+        "eslint-plugin-unused-imports": "^2.0.0",
         "gen-esm-wrapper": "1.1.3",
         "husky": "7.0.4",
         "lerna": "4.0.0",

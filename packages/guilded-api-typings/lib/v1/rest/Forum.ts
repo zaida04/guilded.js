@@ -1,4 +1,4 @@
-import { ForumThreadPayload } from "../structs/Forum";
+import type { ForumThreadPayload } from "../structs/Forum";
 
 /**
  * POST

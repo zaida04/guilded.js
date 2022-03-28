@@ -1,5 +1,6 @@
-import { ROUTES } from "..";
 import { expect } from "chai";
+
+import { ROUTES } from "..";
 
 const TEST_DATA = {
     "chat-image": {
