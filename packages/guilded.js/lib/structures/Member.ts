@@ -1,7 +1,7 @@
 import type Client from "./Client";
 import { Base } from "./Base";
-import type { UpgradedTeamMemberBanPayload, UpgradedTeamMemberPayload } from "../typings";
-import type { TeamMemberPayload, TeamMemberSummaryPayload, UserSummaryPayload } from "@guildedjs/guilded-api-typings";
+import type { UpgradedTeamMemberBanPayload, UpgradedTeamMemberPayload, UpgradedTeamMemberSummaryPayload } from "../typings";
+import type { TeamMemberPayload, UserSummaryPayload } from "@guildedjs/guilded-api-typings";
 import type { User } from "./User";
 
 export class Member extends Base<UpgradedTeamMemberPayload> {
@@ -76,7 +76,7 @@ export class Member extends Base<UpgradedTeamMemberPayload> {
 }
 
 /** A partial summary representation of a member. Can fetch this member to get full data */
-export class PartialMember extends Base<TeamMemberSummaryPayload & { serverId: string; id: string }> {
+export class PartialMember extends Base<UpgradedTeamMemberSummaryPayload> {
     /** The ID of the server this role belongs to */
     readonly serverId: string;
     /** The user information of this member */
@@ -84,7 +84,7 @@ export class PartialMember extends Base<TeamMemberSummaryPayload & { serverId: s
     /** Roles this member has by ID (TODO: role object when Guilded API has one) */
     readonly roleIds: number[] = [];
 
-    constructor(client: Client, data: TeamMemberSummaryPayload & { serverId: string; id: string }) {
+    constructor(client: Client, data: UpgradedTeamMemberSummaryPayload) {
         super(client, data);
         this.serverId = data.serverId;
         this.user = data.user;
