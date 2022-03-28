@@ -1,4 +1,4 @@
-import type { TeamMemberPayload, TeamMemberSummaryPayload } from "../structs";
+import type { TeamMemberBanPayload, TeamMemberPayload, TeamMemberSummaryPayload } from "../structs";
 
 /**
  * GET
@@ -46,3 +46,36 @@ export interface RESTGetMembersResult {
  * /servers/:serverId/members/:userId
  */
 export type RESTDeleteMemberResult = never;
+
+/**
+ * GET
+ * /servers/:serverId/bans/:userId
+ */
+export interface RESTGetMemberBanResult {
+    serverMemberBan: TeamMemberBanPayload;
+}
+
+/**
+ * POST
+ * /servers/:serverId/bans/:userId
+ */
+export interface RESTPostMemberBanBody {
+    reason?: string;
+}
+export interface RESTPostMemberBanResult {
+    serverMemberBan: TeamMemberBanPayload;
+}
+
+/**
+ * DELETE
+ * /servers/:serverId/bans/:userId
+ */
+export type RESTDeleteMemberBanResult = never;
+
+/**
+ * GET
+ * /servers/:serverId/bans
+ */
+export interface RESTGetMemberBansResult {
+    serverMemberBans: TeamMemberBanPayload[];
+}

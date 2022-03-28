@@ -11,3 +11,10 @@ export interface TeamMemberSummaryPayload {
     user: UserSummaryPayload;
     roleIds: number[];
 }
+
+export interface TeamMemberBanPayload {
+    user: UserSummaryPayload;
+    reason?: string;
+    createdBy: string;
+    createdAt: string;
+}

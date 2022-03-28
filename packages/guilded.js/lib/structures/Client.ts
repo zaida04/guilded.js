@@ -10,18 +10,18 @@ import GlobalListManager from "../managers/global/ListManager";
 import GlobalMemberManager from "../managers/global/MemberManager";
 import GlobalMessageManager from "../managers/global/MessageManager";
 import GlobalRoleManager from "../managers/global/RoleManager";
+import GlobalUserManager from "../managers/global/UserManager";
+import GlobalMemberBanManager from "../managers/global/GuildBanManager";
 import type { Message } from "./Message";
 import type TypedEmitter from "typed-emitter";
 import type {
     WSChatMessageDeletedPayload,
-    WSTeamMemberJoinedPayload,
     WSTeamMemberRemovedPayload,
     WSTeamMemberUpdatedPayload,
 } from "@guildedjs/guilded-api-typings";
 import type { Member } from "./Member";
 import type { Role } from "./Role";
 import type { CacheStructure } from "../cache";
-import GlobalUserManager from "../managers/global/UserManager";
 
 export class Client extends (EventEmitter as unknown as new () => TypedEmitter<ClientEvents>) {
     /** The time in milliseconds the Client connected */
@@ -49,6 +49,7 @@ export class Client extends (EventEmitter as unknown as new () => TypedEmitter<C
     messages = new GlobalMessageManager(this);
     roles = new GlobalRoleManager(this);
     users = new GlobalUserManager(this);
+    bans = new GlobalMemberBanManager(this);
 
     constructor(public options: ClientOptions) {
         if (typeof options !== "object") throw new Error("Must provide options in client constructor in the form of an object.");
@@ -99,7 +100,9 @@ interface ClientOptions {
     };
     cache?: {
         structureBuilder: <K, V>() => CacheStructure<K, V>;
-        removeMemberOnLeave: boolean;
+        removeMemberOnLeave?: boolean;
+        removeMemberBanOnUnban?: boolean;
+        cacheMemberBans?: boolean;
     };
 }
 

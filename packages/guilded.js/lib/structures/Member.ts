@@ -96,3 +96,35 @@ export class PartialMember extends Base<TeamMemberSummaryPayload & { serverId: s
         return this.client.members.fetch(this.serverId, this.user.id);
     }
 }
+export class MemberBan extends Base<UpgradedTeamMemberBanPayload> {
+    /** Id this ban was created in */
+    serverId: string;
+    /** Date this ban was created */    
+    createdAt: Date;
+    /** The ID of user who banned this person */
+    createdById: string;
+    /** The reason this user was banned */
+    reason: string | null;
+    /** Information about the target user */
+    target: UserSummaryPayload;
+
+    constructor(client: Client, data: UpgradedTeamMemberBanPayload) {
+        const transformedBanId = `${data.serverId}:${data.user.id}`
+        super(client, { ...data, id: transformedBanId });
+        this.serverId = data.serverId;
+        this.createdAt = new Date(data.createdAt);
+        this.createdById = data.createdBy;
+        this.target = data.user;
+        this.reason = data.reason ?? null;
+    }
+
+    /** The author of the ban */
+    get author() {
+        return this.client.users.cache.get(this.createdById);
+    }
+    
+    /** Remove this ban */
+    unban() {
+        return this.client.bans.unban(this.serverId, this.target.id);
+    }
+}
