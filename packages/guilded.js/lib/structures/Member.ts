@@ -124,7 +124,7 @@ export class MemberBan extends Base<UpgradedTeamMemberBanPayload> {
     }
 
     /** Remove this ban */
-    unban() {
+    unban(): Promise<MemberBan | null> {
         return this.client.bans.unban(this.serverId, this.target.id);
     }
 }

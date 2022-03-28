@@ -142,7 +142,7 @@ export class Router {
     }
 
     /** Update a doc */
-    updateDoc(channelId: string, docId: number, options: RESTPutDocBody) {
+    updateDoc(channelId: string, docId: number, options: RESTPutDocBody): Promise<RESTPutDocResult> {
         return this.rest.put<RESTPutDocResult, RESTPutDocBody>(ROUTES.channelDoc(channelId, docId), options);
     }
 
@@ -184,22 +184,22 @@ export class Router {
     }
 
     /** Ban a member from a server */
-    banMember(serverId: string, userId: string) {
+    banMember(serverId: string, userId: string): Promise<RESTPostMemberBanResult> {
         return this.rest.post<RESTPostMemberBanResult, RESTPostMemberBanBody>(ROUTES.memberBan(serverId, userId));
     }
 
     /** Retrieve a ban from a server */
-    getMemberBan(serverId: string, userId: string) {
+    getMemberBan(serverId: string, userId: string): Promise<RESTGetMemberBanResult> {
         return this.rest.get<RESTGetMemberBanResult>(ROUTES.memberBan(serverId, userId));
     }
 
     /** Unban a member from a server */
-    unbanMember(serverId: string, userId: string) {
+    unbanMember(serverId: string, userId: string): Promise<RESTDeleteMemberBanResult> {
         return this.rest.delete<RESTDeleteMemberBanResult>(ROUTES.memberBan(serverId, userId));
     }
 
     /** Get all bans in a server */
-    getMemberBans(serverId: string) {
+    getMemberBans(serverId: string): Promise<RESTGetMemberBansResult> {
         return this.rest.get<RESTGetMemberBansResult>(ROUTES.memberBans(serverId));
     }
 
