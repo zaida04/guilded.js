@@ -10,13 +10,14 @@ import GlobalListManager from "../managers/global/ListManager";
 import GlobalMemberManager from "../managers/global/MemberManager";
 import GlobalMessageManager from "../managers/global/MessageManager";
 import GlobalRoleManager from "../managers/global/RoleManager";
+import GlobalUserManager from "../managers/global/UserManager";
+import GlobalMemberBanManager from "../managers/global/GuildBanManager";
 import type { Message } from "./Message";
 import type TypedEmitter from "typed-emitter";
-import type { WSChatMessageDeletedPayload, WSTeamMemberJoinedPayload, WSTeamMemberRemovedPayload, WSTeamMemberUpdatedPayload } from "@guildedjs/guilded-api-typings";
+import type { WSChatMessageDeletedPayload, WSTeamMemberRemovedPayload, WSTeamMemberUpdatedPayload } from "@guildedjs/guilded-api-typings";
 import type { Member } from "./Member";
 import type { Role } from "./Role";
 import { CacheStructure } from "../cache";
-import GlobalUserManager from "../managers/global/UserManager";
 
 export class Client extends (EventEmitter as unknown as new () => TypedEmitter<ClientEvents>) {
     /** The time in milliseconds the Client connected */
@@ -44,10 +45,11 @@ export class Client extends (EventEmitter as unknown as new () => TypedEmitter<C
     messages = new GlobalMessageManager(this);
     roles = new GlobalRoleManager(this);
     users = new GlobalUserManager(this);
+    bans = new GlobalMemberBanManager(this);
 
     constructor(public options: ClientOptions) {
-        if(typeof options !== "object") throw new Error("Must provide options in client constructor in the form of an object.")
-        if(typeof options?.token === "undefined") throw new Error("No token provided.");
+        if (typeof options !== "object") throw new Error("Must provide options in client constructor in the form of an object.");
+        if (typeof options?.token === "undefined") throw new Error("No token provided.");
         super();
     }
 
@@ -63,19 +65,19 @@ export class Client extends (EventEmitter as unknown as new () => TypedEmitter<C
 
     /** Connects the bot to the api. */
     login(opts?: { fresh?: boolean }) {
-        if(opts?.fresh) this.wsManager = new WebsocketManager({ token: this.options.token });
+        if (opts?.fresh) this.wsManager = new WebsocketManager({ token: this.options.token });
         this.wsManager.emitter
-            .on("error", (reason, err) => this.emit('error', `[WS] ${reason}`, err))
+            .on("error", (reason, err) => this.emit("error", `[WS] ${reason}`, err))
             .on("ready", () => this.emit("ready"))
             .on("gatewayEvent", (event, data) => this.gatewayHandler.handleWSMessage(event, data))
             .on("debug", (data) => this.emit("debug", data))
-            .on("exit", () => this.emit("exit"))
+            .on("exit", () => this.emit("exit"));
         this.wsManager.connect();
     }
 
     /** Disconnects the bot. */
     disconnect() {
-        if(!this.wsManager.isAlive) throw new Error("There is no active connection to disconnect.");
+        if (!this.wsManager.isAlive) throw new Error("There is no active connection to disconnect.");
         this.wsManager.emitter.removeAllListeners();
         this.wsManager.destroy();
         this.emit("exit");
@@ -94,7 +96,9 @@ interface ClientOptions {
     };
     cache?: {
         structureBuilder: <K, V>() => CacheStructure<K, V>;
-        removeMemberOnLeave: boolean;
+        removeMemberOnLeave?: boolean;
+        removeMemberBanOnUnban?: boolean;
+        cacheMemberBans?: boolean;
     };
 }
 

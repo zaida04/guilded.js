@@ -4,6 +4,7 @@ import {
     RESTDeleteDocResult,
     RESTDeleteGroupMemberResult,
     RESTDeleteListItemResult,
+    RESTDeleteMemberBanResult,
     RESTDeleteMemberNicknameResult,
     RESTDeleteMemberResult,
     RESTDeleteMemberRoleResult,
@@ -14,6 +15,8 @@ import {
     RESTGetDocsResult,
     RESTGetListItemResult,
     RESTGetListItemsResult,
+    RESTGetMemberBanResult,
+    RESTGetMemberBansResult,
     RESTGetMemberResult,
     RESTGetMemberRolesResult,
     RESTGetMemberSocialLinkResult,
@@ -26,6 +29,8 @@ import {
     RESTPostForumThreadResult,
     RESTPostListItemBody,
     RESTPostListItemResult,
+    RESTPostMemberBanBody,
+    RESTPostMemberBanResult,
     RESTPostRoleXpResult,
     RESTPostUserXPBody,
     RESTPostUserXpResult,
@@ -136,7 +141,6 @@ export class Router {
 
     /** Update a doc */
     updateDoc(channelId: string, docId: number, options: RESTPutDocBody) {
-        // @ts-ignore ts odd error fix TODO:
         return this.rest.put<RESTPutDocResult, RESTPutDocBody>(ROUTES.channelDoc(channelId, docId), options);
     }
 
@@ -165,16 +169,39 @@ export class Router {
         return this.rest.get<RESTGetMemberSocialLinkResult>(ROUTES.memberSocialLinks(serverId, userId, type));
     }
 
+    /** Get a member from a server */
     getMember(serverId: string, userId: string) {
         return this.rest.get<RESTGetMemberResult>(ROUTES.member(serverId, userId));
     }
 
+    /** Get all the members in a server */
     getMembers(serverId: string) {
         return this.rest.get<RESTGetMembersResult>(ROUTES.members(serverId));
     }
 
+    /** Kick a member from a server */
     kickMember(serverId: string, userId: string) {
         return this.rest.get<RESTDeleteMemberResult>(ROUTES.member(serverId, userId));
+    }
+
+    /** Ban a member from a server */
+    banMember(serverId: string, userId: string) {
+        return this.rest.post<RESTPostMemberBanResult, RESTPostMemberBanBody>(ROUTES.memberBan(serverId, userId));
+    }
+
+    /** Retrieve a ban from a server */
+    getMemberBan(serverId: string, userId: string) {
+        return this.rest.get<RESTGetMemberBanResult>(ROUTES.memberBan(serverId, userId));
+    }
+
+    /** Unban a member from a server */
+    unbanMember(serverId: string, userId: string) {
+        return this.rest.delete<RESTDeleteMemberBanResult>(ROUTES.memberBan(serverId, userId));
+    }
+
+    /** Get all bans in a server */
+    getMemberBans(serverId: string) {
+        return this.rest.get<RESTGetMemberBansResult>(ROUTES.memberBans(serverId));
     }
 
     /** Add member to group */

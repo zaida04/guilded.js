@@ -5,7 +5,7 @@ export interface UserPayload {
     createdAt: string;
 }
 
-export interface UserSummary {
+export interface UserSummaryPayload {
     id: string;
     type?: string;
     name: string;
