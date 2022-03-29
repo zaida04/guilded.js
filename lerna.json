@@ -3,7 +3,8 @@
     "command": {
         "publish": {
             "npmClient": "npm",
-            "registry": "https://registry.npmjs.org/"
+            "registry": "https://registry.npmjs.org/",
+            "message": "chore: publish packages"
         }
     },
     "publishConfig": {
