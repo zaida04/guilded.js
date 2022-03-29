@@ -1,6 +1,6 @@
 {
     "name": "@guildedjs/rest",
-    "version": "2.0.1",
+    "version": "2.1.0",
     "description": "Rest structure for guilded.js",
     "author": "Zaid \"Nico\" <contact@nico.engineer>",
     "license": "MIT",
@@ -12,13 +12,13 @@
         "prepublishOnly": "npx rimraf dist/ && npx rimraf types/ && yarn build"
     },
     "devDependencies": {
-        "@guildedjs/guilded-api-typings": "^2.0.0",
+        "@guildedjs/guilded-api-typings": "^2.1.0",
         "@types/node-fetch": "2.6.1",
         "@types/qs": "^6.9.7",
         "typescript": "4.6.3"
     },
     "dependencies": {
-        "@guildedjs/common": "^2.0.0",
+        "@guildedjs/common": "^2.0.1",
         "node-fetch": "^2.6.7",
         "qs": "^6.10.3"
     },
