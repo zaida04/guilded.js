@@ -17,7 +17,7 @@
         "refresh": "npx ts-node scripts/refresh.ts"
     },
     "devDependencies": {
-        "@sapphire/eslint-config": "4.3.2",
+        "@sapphire/eslint-config": "4.3.3",
         "@types/chai": "4.3.0",
         "@types/mocha": "9.1.0",
         "@types/rimraf": "3.0.2",
