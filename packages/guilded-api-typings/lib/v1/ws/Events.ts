@@ -1,4 +1,4 @@
-import type { ChatMessagePayload, TeamMemberPayload } from "../structs";
+import type { ChatMessagePayload, TeamMemberBanPayload, TeamMemberPayload } from "../structs";
 
 export enum WSOpCodes {
     SUCCESS,
@@ -16,6 +16,8 @@ export const WebSocketEvents = {
     TeamMemberJoined: "TeamMemberJoined",
     TeamMemberRemoved: "TeamMemberRemoved",
     TeamMemberUpdated: "TeamMemberUpdated",
+    TeamMemberBanned: "TeamMemberBanned",
+    TeamMemberUnbanned: "TeamMemberUnbanned",
     // This is intentional. Legacy change on Guilded's end.
     teamRolesUpdated: "teamRolesUpdated",
 } as const;
@@ -75,6 +77,8 @@ export interface WSTeamMemberRemovedPayload extends SkeletonWSPayload {
     d: {
         serverId: string;
         userId: string;
+        isKick: boolean;
+        isBan: boolean;
     };
     t: WSEvent["TeamMemberRemoved"];
 }
@@ -88,6 +92,22 @@ export interface WSTeamMemberUpdatedPayload extends SkeletonWSPayload {
         };
     };
     t: WSEvent["TeamMemberUpdated"];
+}
+
+export interface WSTeamMemberBannedPayload extends SkeletonWSPayload {
+    d: {
+        serverId: string;
+        serverMemberBan: TeamMemberBanPayload;
+    };
+    t: WSEvent["TeamMemberBanned"];
+}
+
+export interface WSTeamMemberUnbannedPayload extends SkeletonWSPayload {
+    d: {
+        serverId: string;
+        serverMemberBan: TeamMemberBanPayload;
+    };
+    t: WSEvent["TeamMemberUnbanned"];
 }
 
 export interface WSTeamRolesUpdatedPayload extends SkeletonWSPayload {

@@ -8,8 +8,10 @@ import type {
     WSChatMessageDeletedPayload,
     WSChatMessageUpdatedPayload,
     WSEvent,
+    WSTeamMemberBannedPayload,
     WSTeamMemberJoinedPayload,
     WSTeamMemberRemovedPayload,
+    WSTeamMemberUnbannedPayload,
     WSTeamMemberUpdatedPayload,
     WSTeamRolesUpdatedPayload,
 } from "@guildedjs/guilded-api-typings";
@@ -28,6 +30,8 @@ export class ClientGatewayHandler {
         [WebSocketEvents.TeamMemberRemoved]: (data) => this.teamMemberHandler.teamMemberRemoved(data as WSTeamMemberRemovedPayload),
         [WebSocketEvents.TeamMemberUpdated]: (data) => this.teamMemberHandler.teamMemberUpdated(data as WSTeamMemberUpdatedPayload),
         [WebSocketEvents.teamRolesUpdated]: (data) => this.teamHandler.teamRolesUpdated(data as WSTeamRolesUpdatedPayload),
+        [WebSocketEvents.TeamMemberBanned]: (data) => this.teamMemberHandler.teamMemberBanned(data as WSTeamMemberBannedPayload),
+        [WebSocketEvents.TeamMemberUnbanned]: (data) => this.teamMemberHandler.teamMemberUnbanned(data as WSTeamMemberUnbannedPayload),
     };
 
     constructor(public readonly client: Client) {}

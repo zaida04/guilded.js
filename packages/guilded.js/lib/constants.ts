@@ -7,6 +7,8 @@ export const constants = {
         TEAM_ROLES_UPATED: "rolesUpdated",
         TEAM_MEMBER_JOINED: "memberJoined",
         TEAM_MEMBER_REMOVED: "memberRemoved",
+        TEAM_MEMBER_BANNED: "memberBanned",
+        TEAM_MEMBER_UNBANNED: "memberUnbanned",
     },
 } as const;
 export type ClientEvent = typeof constants.clientEvents;

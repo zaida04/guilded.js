@@ -13,22 +13,36 @@ export class Member extends Base<UpgradedTeamMemberPayload> {
     joinedAt: Date | null;
     /** Roles this member has by ID (TODO: role object when Guilded API has one) */
     roleIds: number[] = [];
+    /** Whether this member has been kicked */
+    kicked: boolean;
+    /** Whether this member has been banned */
+    banned: boolean;
 
     constructor(client: Client, data: UpgradedTeamMemberPayload) {
         super(client, data);
         this.serverId = data.serverId;
         this.joinedAt = new Date(data.joinedAt);
+        this.kicked = false;
+        this.banned = false;
 
         this._update(data);
     }
 
-    _update(data: Partial<TeamMemberPayload>): this {
+    _update(data: Partial<TeamMemberPayload & { kicked: boolean; banned: boolean }>): this {
         if ("nickname" in data) {
             this.nickname = data.nickname ?? null;
         }
 
         if ("roleIds" in data && typeof data.roleIds !== "undefined") {
             this.roleIds = data.roleIds;
+        }
+
+        if ("kicked" in data && typeof data.kicked !== "undefined") {
+            this.kicked = data.kicked;
+        }
+
+        if ("banned" in data && typeof data.banned !== "undefined") {
+            this.banned = data.banned;
         }
 
         return this;
