@@ -8,6 +8,7 @@ import type {
     RESTDeleteMemberNicknameResult,
     RESTDeleteMemberResult,
     RESTDeleteMemberRoleResult,
+    RESTDeleteServerWebhookResult,
     RESTGetChannelMessageResult,
     RESTGetChannelMessagesQuery,
     RESTGetChannelMessagesResult,
@@ -21,6 +22,9 @@ import type {
     RESTGetMemberRolesResult,
     RESTGetMemberSocialLinkResult,
     RESTGetMembersResult,
+    RESTGetServerWebhookResult,
+    RESTGetServerWebhooksQuery,
+    RESTGetServerWebhooksResult,
     RESTPostChannelMessagesBody,
     RESTPostChannelMessagesResult,
     RESTPostDocsBody,
@@ -32,6 +36,8 @@ import type {
     RESTPostMemberBanBody,
     RESTPostMemberBanResult,
     RESTPostRoleXpResult,
+    RESTPostServerWebhooksBody,
+    RESTPostServerWebhooksResult,
     RESTPostUserXPBody,
     RESTPostUserXpResult,
     RESTPutChannelMessageBody,
@@ -44,7 +50,9 @@ import type {
     RESTPutMemberNicknameBody,
     RESTPutMemberNicknameResult,
     RESTPutMemberRoleResult,
-    RestPutReactionResult,
+    RESTPutReactionResult,
+    RESTPutServerWebhookBody,
+    RESTPutServerWebhookResult,
     UserSocialLink,
 } from "@guildedjs/guilded-api-typings";
 
@@ -152,8 +160,8 @@ export class Router {
     }
 
     /** Add a reaction emote */
-    addReactionEmote(channelId: string, contentId: string, emoteId: number): Promise<RestPutReactionResult> {
-        return this.rest.put<RestPutReactionResult>(ROUTES.channelReaction(channelId, contentId, emoteId));
+    addReactionEmote(channelId: string, contentId: string, emoteId: number): Promise<RESTPutReactionResult> {
+        return this.rest.put<RESTPutReactionResult>(ROUTES.channelReaction(channelId, contentId, emoteId));
     }
 
     /** Award XP to a member */
@@ -221,5 +229,33 @@ export class Router {
     /** Remove role to member */
     removeRoleFromMember(userId: string, roleId: number): Promise<RESTDeleteMemberRoleResult> {
         return this.rest.put<RESTDeleteMemberRoleResult>(ROUTES.memberRole(userId, roleId));
+    }
+
+    /** Create a webhook */
+    createWebhook(serverId: string): Promise<RESTPostServerWebhooksResult> {
+        return this.rest.post<RESTPostServerWebhooksResult, RESTPostServerWebhooksBody>(ROUTES.serverWebhooks(serverId));
+    }
+
+    /** Get a server's webhooks */
+    getWebhooks(serverId: string, channelId?: string): Promise<RESTGetServerWebhooksResult> {
+        return this.rest.get<RESTGetServerWebhooksResult, RESTGetServerWebhooksQuery>(
+            ROUTES.serverWebhooks(serverId),
+            channelId ? { channelId } : undefined,
+        );
+    }
+
+    /** Get a webhook */
+    getWebhook(serverId: string, webhookId: string): Promise<RESTGetServerWebhookResult> {
+        return this.rest.get<RESTGetServerWebhookResult>(ROUTES.serverWebhook(serverId, webhookId));
+    }
+
+    /** Update a webhook */
+    updateWebhook(serverId: string, webhookId: string, options: RESTPutServerWebhookBody): Promise<RESTPutServerWebhookResult> {
+        return this.rest.put<RESTPutServerWebhookResult, RESTPutServerWebhookBody>(ROUTES.serverWebhook(serverId, webhookId), options);
+    }
+
+    /** Delete a webhook */
+    deleteWebhook(serverId: string, webhookId: string): Promise<RESTDeleteServerWebhookResult> {
+        return this.rest.delete<RESTDeleteServerWebhookResult>(ROUTES.serverWebhook(serverId, webhookId));
     }
 }

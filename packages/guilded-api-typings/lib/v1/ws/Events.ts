@@ -1,4 +1,5 @@
 import type { ChatMessagePayload, TeamMemberPayload } from "../structs";
+import type { WebhookPayload } from "../structs/Webhook";
 
 export enum WSOpCodes {
     SUCCESS,
@@ -18,6 +19,8 @@ export const WebSocketEvents = {
     TeamMemberUpdated: "TeamMemberUpdated",
     // This is intentional. Legacy change on Guilded's end.
     teamRolesUpdated: "teamRolesUpdated",
+    TeamWebhookCreated: "TeamWebhookCreated",
+    TeamWebhookUpdated: "TeamWebhookUpdated",
 } as const;
 export type WSEvent = typeof WebSocketEvents;
 
@@ -96,4 +99,20 @@ export interface WSTeamRolesUpdatedPayload extends SkeletonWSPayload {
         memberRoleIds: unknown[];
     };
     t: WSEvent["teamRolesUpdated"];
+}
+
+export interface WSTeamWebhookCreatedPayload extends SkeletonWSPayload {
+    d: {
+        serverId: string;
+        webhook: WebhookPayload;
+    };
+    t: WSEvent["TeamWebhookCreated"];
+}
+
+export interface WSTeamWebhookUpdatedPayload extends SkeletonWSPayload {
+    d: {
+        serverId: string;
+        webhook: WebhookPayload;
+    };
+    t: WSEvent["TeamWebhookUpdated"];
 }

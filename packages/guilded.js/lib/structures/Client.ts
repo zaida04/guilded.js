@@ -14,14 +14,12 @@ import GlobalUserManager from "../managers/global/UserManager";
 import GlobalMemberBanManager from "../managers/global/GuildBanManager";
 import type { Message } from "./Message";
 import type TypedEmitter from "typed-emitter";
-import type {
-    WSChatMessageDeletedPayload,
-    WSTeamMemberRemovedPayload,
-    WSTeamMemberUpdatedPayload,
-} from "@guildedjs/guilded-api-typings";
+import type { WSChatMessageDeletedPayload, WSTeamMemberRemovedPayload, WSTeamMemberUpdatedPayload } from "@guildedjs/guilded-api-typings";
 import type { Member } from "./Member";
 import type { Role } from "./Role";
 import type { CacheStructure } from "../cache";
+import GlobalWebhookManager from "../managers/global/WebhookManager";
+import type { Webhook } from "./Webhook";
 
 export class Client extends (EventEmitter as unknown as new () => TypedEmitter<ClientEvents>) {
     /** The time in milliseconds the Client connected */
@@ -50,6 +48,7 @@ export class Client extends (EventEmitter as unknown as new () => TypedEmitter<C
     roles = new GlobalRoleManager(this);
     users = new GlobalUserManager(this);
     bans = new GlobalMemberBanManager(this);
+    webhooks = new GlobalWebhookManager(this);
 
     constructor(public options: ClientOptions) {
         if (typeof options !== "object") throw new Error("Must provide options in client constructor in the form of an object.");
@@ -103,6 +102,7 @@ interface ClientOptions {
         removeMemberOnLeave?: boolean;
         removeMemberBanOnUnban?: boolean;
         cacheMemberBans?: boolean;
+        cacheWebhooks?: boolean;
     };
 }
 
@@ -117,6 +117,8 @@ type ClientEvents = {
     memberJoined: (member: Member) => unknown;
     memberRemoved: (member: Member | WSTeamMemberRemovedPayload["d"]) => unknown;
     memberUpdated: (member: Member | WSTeamMemberUpdatedPayload["d"], oldMember: Member | null) => unknown;
+    webhookCreated: (webhook: Webhook) => unknown;
+    webhookUpdated: (webhook: Webhook, oldWebhook: Webhook | null) => unknown;
     teamRolesUpdated: (roleIds: Role[] | number[]) => unknown;
     unknownGatewayEvent: (data: any) => unknown;
 };
