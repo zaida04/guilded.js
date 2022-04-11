@@ -10,7 +10,7 @@ export async function* walk(dir: string): AsyncGenerator<any, any, unknown> {
         const entry = path.join(dir, d.name);
         if (d.isDirectory()) yield* await walk(entry);
 
-        if (!entry.endsWith(".js")) continue;
+        if (![".js", ".ts"].some((suffix) => entry.endsWith(suffix))) continue;
         else if (d.isFile()) yield [d.name, require(entry)];
     }
 }
