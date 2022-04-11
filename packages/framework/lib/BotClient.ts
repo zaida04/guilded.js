@@ -130,6 +130,48 @@ export default class BotClient extends Client {
         return `${dayString}${hourString}${minuteString}${secondString}`;
     }
 
+    stringToMilliseconds(text: string): number | undefined {
+        const matches = text.match(/(\d+[w|d|h|m|s]{1})/g);
+        if (!matches) return;
+
+        let total = 0;
+
+        for (const match of matches) {
+            // Finds the first of these letters
+            const validMatch = /(w|d|h|m|s)/.exec(match);
+            // if none of them were found cancel
+            if (!validMatch) return;
+            // Get the number which should be before the index of that match
+            const number = match.substring(0, validMatch.index);
+            // Get the letter that was found
+            const [letter] = validMatch;
+            if (!number || !letter) return;
+
+            let multiplier = 1000;
+            switch (letter.toLowerCase()) {
+                case `w`:
+                    multiplier = 1000 * 60 * 60 * 24 * 7;
+                    break;
+                case `d`:
+                    multiplier = 1000 * 60 * 60 * 24;
+                    break;
+                case `h`:
+                    multiplier = 1000 * 60 * 60;
+                    break;
+                case `m`:
+                    multiplier = 1000 * 60;
+                    break;
+            }
+
+            const amount = number ? parseInt(number, 10) : undefined;
+            if (!amount && amount !== 0) return;
+
+            total += amount * multiplier;
+        }
+
+        return total;
+    }
+
     async needMessage(userId: string, channelId: string, options?: MessageCollectorOptions & { amount?: 1 }): Promise<Message>;
     async needMessage(userId: string, channelId: string, options: MessageCollectorOptions & { amount?: number }): Promise<Message[]>;
     async needMessage(userId: string, channelId: string, options?: MessageCollectorOptions): Promise<Message | Message[]> {
