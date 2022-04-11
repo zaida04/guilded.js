@@ -9,4 +9,8 @@ export default class CommandsMonitor extends Monitor {
     execute(message: Message): unknown {
         return console.log("in command monitor", message);
     }
+
+    init(): unknown {
+        return void 0;
+    }
 }
