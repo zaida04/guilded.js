@@ -8,13 +8,16 @@
     "types": "types/index.d.ts",
     "typedocMain": "lib/index.ts",
     "scripts": {
+        "test": "npx ts-node test/index.ts",
         "build": "npx tsc && npx gen-esm-wrapper . ./dist/index.mjs",
         "prepublishOnly": "npx rimraf dist/ && npx rimraf types/ && yarn build"
     },
     "devDependencies": {
+        "dotenv": "^16.0.0",
         "typescript": "4.6.3"
     },
     "dependencies": {
+        "colorette": "^2.0.16",
         "guilded.js": "0.3.0"
     },
     "contributors": [
