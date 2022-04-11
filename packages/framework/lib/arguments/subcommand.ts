@@ -3,7 +3,7 @@ import type { Message } from "guilded.js";
 import { Argument } from "../structures/Argument";
 import type { Command, CommandArgument } from "../structures/Command";
 
-export default class CommandTypeArgument extends Argument {
+export default class SubcommandArgument extends Argument {
     name = "subcommand";
 
     execute(argument: CommandArgument, parameters: string[], message: Message, command: Command): Command | undefined {
