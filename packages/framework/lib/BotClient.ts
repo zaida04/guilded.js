@@ -1,7 +1,7 @@
 import path from "path";
 import Collection from "@discordjs/collection";
 import { walk } from "./utils/walk";
-import { Monitor } from "./Structures/Monitor";
+import { Monitor } from "./structures/Monitor";
 import { Client } from "guilded.js";
 import Message from "guilded.js/types/structures/Message";
 
@@ -76,6 +76,7 @@ export default class BotClient extends Client {
 
     /** Allows users to override and customize the addition of a event listener */
     initializeMessageListener() {
+        console.log("initializeMessageListener");
         this.on("messageCreated", (message) => this.processMonitors(message));
     }
 
@@ -83,10 +84,10 @@ export default class BotClient extends Client {
     processMonitors(message: Message) {
         this.monitors.forEach((monitor) => {
             if (monitor.ignoreBots && message.createdByBotId) return;
-            // @ts-ignore FIX THE ID PROPERTY FOR CLIENT.id
-            if (monitor.ignoreOthers && message.createdBy !== this.id) return;
+            // TODO: When the api supports getting the bots id
+            // if (monitor.ignoreOthers && message.createdBy !== this.id) return;
             if (monitor.ignoreEdits && message.updatedAt && message.updatedAt !== message.createdAt) return;
-            // TODO: figure out how to detect dms
+            // TODO: When the api supports using dm channels
             // if (monitor.ignoreDM && !message.teamId) return;
 
             void monitor.execute(message);
