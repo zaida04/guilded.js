@@ -49,7 +49,7 @@ export class Client extends (EventEmitter as unknown as new () => TypedEmitter<C
     bans = new GlobalMemberBanManager(this);
 
     /** The user belonging to this bot */
-    user: User | null = null;
+    user: ClientUser | null = null;
 
     constructor(public options: ClientOptions) {
         if (typeof options !== "object") throw new Error("Must provide options in client constructor in the form of an object.");
