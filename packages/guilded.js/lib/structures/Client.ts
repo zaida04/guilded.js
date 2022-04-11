@@ -14,14 +14,11 @@ import GlobalUserManager from "../managers/global/UserManager";
 import GlobalMemberBanManager from "../managers/global/GuildBanManager";
 import type { Message } from "./Message";
 import type TypedEmitter from "typed-emitter";
-import type {
-    WSChatMessageDeletedPayload,
-    WSTeamMemberRemovedPayload,
-    WSTeamMemberUpdatedPayload,
-} from "@guildedjs/guilded-api-typings";
+import type { WSChatMessageDeletedPayload, WSTeamMemberRemovedPayload, WSTeamMemberUpdatedPayload } from "@guildedjs/guilded-api-typings";
 import type { Member } from "./Member";
 import type { Role } from "./Role";
 import type { CacheStructure } from "../cache";
+import { ClientUser, User } from "./User";
 
 export class Client extends (EventEmitter as unknown as new () => TypedEmitter<ClientEvents>) {
     /** The time in milliseconds the Client connected */
@@ -51,6 +48,9 @@ export class Client extends (EventEmitter as unknown as new () => TypedEmitter<C
     users = new GlobalUserManager(this);
     bans = new GlobalMemberBanManager(this);
 
+    /** The user belonging to this bot */
+    user: User | null = null;
+
     constructor(public options: ClientOptions) {
         if (typeof options !== "object") throw new Error("Must provide options in client constructor in the form of an object.");
         if (typeof options?.token === "undefined") throw new Error("No token provided.");
@@ -72,7 +72,10 @@ export class Client extends (EventEmitter as unknown as new () => TypedEmitter<C
         if (opts?.fresh) this.wsManager = new WebsocketManager({ token: this.options.token });
         this.wsManager.emitter
             .on("error", (reason, err) => this.emit("error", `[WS] ${reason}`, err))
-            .on("ready", () => this.emit("ready"))
+            .on("ready", (user) => {
+                this.user = new ClientUser(this, user);
+                this.emit("ready");
+            })
             .on("gatewayEvent", (event, data) => this.gatewayHandler.handleWSMessage(event, data))
             .on("debug", (data) => this.emit("debug", data))
             .on("exit", () => this.emit("exit"));
