@@ -25,9 +25,10 @@ export class Monitor {
 
     execute(message: Message): Promise<unknown> | unknown {
         // Placeholder for the execution handler for this task.
+        throw new Error(`[Monitor Error] The ${this.name} monitor execute function was not provided.`);
     }
 
-    init(): Promise<unknown> | unknown {
+    init(): Promise<void> | void {
         // Placeholder for anything you would like to run when this task is first created.
         // For example, making sure some tables exist in the database.
     }
