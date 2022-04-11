@@ -1,7 +1,10 @@
 import { ROUTES } from "@guildedjs/common";
-import Embed from "@guildedjs/embeds";
-import { APIContent, APIPostWebhookResult } from "@guildedjs/guilded-api-typings";
+import type { RESTPostWebhookResult } from "@guildedjs/guilded-api-typings";
+import type { APIContent } from "@guildedjs/guilded-api-typings/dist/v1/structs/Webhook";
 import { RestManager } from "@guildedjs/rest";
+
+import type { Embed } from "./Embed";
+import { type parsedMessage, parseMessage } from "./messageUtil";
 
 export class WebhookClient {
     public URL: string;
@@ -31,10 +34,9 @@ export class WebhookClient {
         this.rest = new RestManager({ proxyURL: this.URL, token: this.token });
     }
 
-    /* istanbul ignore next */
     public send(content: string, embeds?: Embed[]): Promise<WebhookExecuteResponse> {
         return this.rest
-            .post<APIPostWebhookResult>("", {
+            .post<RESTPostWebhookResult>("", {
                 content,
                 embeds,
             })
@@ -50,7 +52,7 @@ export class WebhookClient {
     }
 }
 
-export interface WebhookExecuteResponse extends Omit<APIPostWebhookResult, "content"> {
+export interface WebhookExecuteResponse extends Omit<RESTPostWebhookResult, "content"> {
     content: string;
     parsedContent: parsedMessage;
     rawContent: APIContent;

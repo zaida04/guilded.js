@@ -1,5 +1,5 @@
 import type { APIEmbed } from "../structs/Embed";
-import type { WebhookPayload } from "../structs/Webhook";
+import type { WebhookContentPayload, WebhookPayload } from "../structs/Webhook";
 
 /**
  * POST
@@ -58,3 +58,5 @@ export interface RESTPostWebhookBody {
     content: string;
     embeds: APIEmbed[];
 }
+
+export type RESTPostWebhookResult = WebhookContentPayload;

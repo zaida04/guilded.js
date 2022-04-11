@@ -12,6 +12,7 @@
         "prepublishOnly": "npx rimraf dist/ && npx rimraf types/ && yarn build"
     },
     "devDependencies": {
+        "@guildedjs/guilded-api-typings": "^2.1.0",
         "typescript": "4.6.3"
     },
     "dependencies": {
