@@ -33,28 +33,7 @@ export interface CommandArgument {
     /** The name of the argument. Useful for when you need to alert the user X arg is missing. */
     name: string;
     /** The type of the argument you would like. Defaults to string. */
-    type?:
-        | "number"
-        | "emoji"
-        | "...emojis"
-        | "string"
-        | "...strings"
-        | "boolean"
-        | "subcommand"
-        | "member"
-        | "role"
-        | "...roles"
-        | "categorychannel"
-        | "newschannel"
-        | "textchannel"
-        | "guildtextchannel"
-        | "voicechannel"
-        | "command"
-        | "duration"
-        | "guild"
-        | "snowflake"
-        | "...snowflake"
-        | "nestedcommand";
+    type?: "number" | "string" | "...strings" | "boolean" | "duration" | "subcommand";
     /** The function that runs if this argument is required and is missing. */
     missing?: (message: Message) => unknown;
     /** Whether or not this argument is required. Defaults to true. */
