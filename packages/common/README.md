@@ -1,12 +1,12 @@
 # `@guildedjs/common`
 
-[![GitHub](https://img.shields.io/github/license/guildedjs/guilded.js)](https://github.com/guildedjs/guilded.js/blob/main/LICENSE)
+[![GitHub](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/guildedjs/guilded.js/blob/main/LICENSE)
 [![npm](https://img.shields.io/npm/v/@guildedjs/common?color=crimson&logo=npm)](https://www.npmjs.com/package/@guildedjs/common)
 [![CI workflows](https://github.com/guildedjs/guilded.js/actions/workflows/ci.yml/badge.svg)](https://github.com/guildedjs/guilded.js/actions/workflows/ci.yml)
 
 Common structures and utilities used in various @guildedjs packages
 
-> ⚠️ If you intend to use `@guildedjs/guilded.js` you won't need to install this, as it's already a dependency of that package.
+> ⚠️ If you intend to use `guilded.js` you won't need to install this, as it's already a dependency of that package.
 
 ## Installation
 

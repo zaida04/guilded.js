@@ -1,7 +1,7 @@
-const { writeFile } = require("fs/promises");
-const { join } = require("path");
+import { writeFile } from "fs/promises";
+import { join } from "path";
 
-void (async () => {
+void (async (): Promise<void> => {
     await writeFile(join(__dirname, "..", "docs", "CNAME"), "guilded.js.org");
     console.log("CREATED CNAME");
 })();

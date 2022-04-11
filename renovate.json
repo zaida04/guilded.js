@@ -1,0 +1,3 @@
+{
+    "extends": ["github>sapphiredev/readme:sapphire-renovate"]
+}

@@ -2,12 +2,15 @@
     "$schema": "https://json.schemastore.org/lerna.json",
     "command": {
         "publish": {
-            "message": "chore: release"
+            "npmClient": "npm",
+            "registry": "https://registry.npmjs.org/",
+            "message": "chore: publish packages"
         }
     },
     "publishConfig": {
         "access": "public"
     },
-    "packages": ["packages/*"],
+    "npmClient": "yarn",
+    "useWorkspaces": true,
     "version": "independent"
 }

@@ -1,9 +1,9 @@
-import path from "path";
 import Collection from "@discordjs/collection";
+import { Client, Message } from "guilded.js";
+import path from "path";
+
+import type { Monitor } from "./structures/Monitor";
 import { walk } from "./utils/walk";
-import { Monitor } from "./structures/Monitor";
-import { Client } from "guilded.js";
-import Message from "guilded.js/types/structures/Message";
 
 export default class BotClient extends Client {
     /** The options used to configure the bot. */
@@ -25,12 +25,12 @@ export default class BotClient extends Client {
     }
 
     /** Get the default client prefix. */
-    get prefix() {
+    get prefix(): string {
         return this.options.prefix;
     }
 
     /** Prepares the bot to run. Ideally used for loading files to the bot. */
-    async init() {
+    async init(): Promise<void> {
         await Promise.allSettled(
             [["monitors", this.monitors] as const].map(async ([dir, collection]) => {
                 try {
@@ -75,13 +75,13 @@ export default class BotClient extends Client {
     }
 
     /** Allows users to override and customize the addition of a event listener */
-    initializeMessageListener() {
+    initializeMessageListener(): void {
         console.log("initializeMessageListener");
         this.on("messageCreated", (message) => this.processMonitors(message));
     }
 
     /** Handler that is run on messages and can  */
-    processMonitors(message: Message) {
+    processMonitors(message: Message): void {
         this.monitors.forEach((monitor) => {
             if (monitor.ignoreBots && message.createdByBotId) return;
             // TODO: When the api supports getting the bots id

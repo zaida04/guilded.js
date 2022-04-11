@@ -1,10 +1,28 @@
 {
     "name": "guilded.js",
-    "version": "0.0.1-dev",
+    "version": "0.3.0",
     "description": "A Node.js library for the Guilded.gg (https://www.guilded.gg/) API written in TypeScript, usable in either JavaScript or TypeScript projects.",
+    "author": "Zaid \"Nico\" <contact@nico.engineer>",
+    "license": "MIT",
     "types": "types/index.d.ts",
     "main": "dist/index.js",
-    "author": "Zaid \"Nico\" <contact@nico.engineer>",
+    "typedocMain": "lib/index.ts",
+    "scripts": {
+        "build": "npx tsc && npx gen-esm-wrapper . ./dist/index.mjs",
+        "prepublishOnly": "npx rimraf dist/ && npx rimraf types/ && yarn build"
+    },
+    "devDependencies": {
+        "@guildedjs/guilded-api-typings": "^2.1.0",
+        "@types/node": "16.11.26",
+        "typed-emitter": "2.1.0",
+        "typescript": "4.6.3"
+    },
+    "dependencies": {
+        "@discordjs/collection": "^0.5.0",
+        "@guildedjs/common": "^2.0.1",
+        "@guildedjs/rest": "^2.1.0",
+        "@guildedjs/ws": "^1.1.0"
+    },
     "contributors": [
         {
             "name": "Zaid \"Nico\"",
@@ -22,28 +40,13 @@
             "url": "https://github.com/uhuh"
         }
     ],
-    "license": "MIT",
-    "scripts": {
-        "test": "cd ../../ && yarn build && cd packages/guilded.js && node ./__tests__/index.js",
-        "test:local": "yarn build && cd __tests__ && node index.js",
-        "build": "tsc",
-        "prepublishOnly": "npx rimraf dist/ && npx rimraf types/ && yarn build"
+    "exports": {
+        ".": {
+            "require": "./dist/index.js",
+            "import": "./dist/index.mjs"
+        },
+        "./": "./"
     },
-    "devDependencies": {
-        "@guildedjs/guilded-api-typings": "^2.0.0",
-        "@types/node": "^14.14.9",
-        "typed-emitter": "^2.0.0",
-        "typescript": "^4.4.2"
-    },
-    "dependencies": {
-        "@discordjs/collection": "^0.1.6",
-        "@guildedjs/rest": "^2.0.0",
-        "@guildedjs/ws": "^0.0.1"
-    },
-    "files": [
-        "dist",
-        "types"
-    ],
     "keywords": [
         "guildedjs",
         "guilded.js",
@@ -51,10 +54,10 @@
         "guilded-api",
         "guilded"
     ],
-    "directories": {
-        "lib": "lib",
-        "test": "__tests__"
-    },
+    "files": [
+        "dist",
+        "types"
+    ],
     "homepage": "https://github.com/guildedjs/guilded.js/tree/main/packages/guilded.js#readme",
     "repository": {
         "type": "git",
@@ -63,5 +66,5 @@
     "bugs": {
         "url": "https://github.com/guildedjs/guilded.js/issues"
     },
-    "gitHead": "0719b880becce0aa4bccaf5eb5b210ecb08b0547"
+    "gitHead": "eee38a19e0bfa812d7136cc78a6bc99e0b402b0c"
 }

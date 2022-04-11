@@ -1,3 +1,5 @@
+import { expect } from "chai";
+
 import { ROUTES } from "..";
 
 const TEST_DATA = {
@@ -53,75 +55,69 @@ describe("Test route building methods", () => {
     describe("Avatar URL route", () => {
         for (const size of ["Small", "Medium", "Large"] as const) {
             it(`Valid URL when size ${size}`, () => {
-                expect(ROUTES.ASSETS.AVATAR_URL(TEST_DATA["user-avatar"].hash, size)).toStrictEqual(TEST_DATA["user-avatar"].testURLs[size]);
+                expect(ROUTES.ASSETS.AVATAR_URL(TEST_DATA["user-avatar"].hash, size)).to.equal(TEST_DATA["user-avatar"].testURLs[size]);
             });
         }
         it("Valid URL when no size passed", () => {
-            expect(ROUTES.ASSETS.AVATAR_URL(TEST_DATA["user-avatar"].hash)).toStrictEqual(TEST_DATA["user-avatar"].testURLs.Medium);
+            expect(ROUTES.ASSETS.AVATAR_URL(TEST_DATA["user-avatar"].hash)).to.equal(TEST_DATA["user-avatar"].testURLs.Medium);
         });
     });
     describe("Chat-Image URL route", () => {
         it("Valid URL", () => {
-            expect(ROUTES.ASSETS.IMAGE_IN_CHAT(TEST_DATA["chat-image"].hash, "Full")).toStrictEqual(TEST_DATA["chat-image"].testURLs.Full);
+            expect(ROUTES.ASSETS.IMAGE_IN_CHAT(TEST_DATA["chat-image"].hash, "Full")).to.equal(TEST_DATA["chat-image"].testURLs.Full);
         });
         it("Valid URL when no size passed", () => {
-            expect(ROUTES.ASSETS.IMAGE_IN_CHAT(TEST_DATA["chat-image"].hash)).toStrictEqual(TEST_DATA["chat-image"].testURLs.Full);
+            expect(ROUTES.ASSETS.IMAGE_IN_CHAT(TEST_DATA["chat-image"].hash)).to.equal(TEST_DATA["chat-image"].testURLs.Full);
         });
         it("Valid URL when size params", () => {
-            expect(ROUTES.ASSETS.IMAGE_IN_CHAT(TEST_DATA["chat-image"].hash, "Full", 480, 480)).toStrictEqual(
+            expect(ROUTES.ASSETS.IMAGE_IN_CHAT(TEST_DATA["chat-image"].hash, "Full", 480, 480)).to.equal(
                 TEST_DATA["chat-image"].testURLs["Full-size"],
             );
         });
     });
     describe("Profile-Banner URL route", () => {
         it("Valid URL", () => {
-            expect(ROUTES.ASSETS.PROFILE_BANNER(TEST_DATA["profile-banner"].hash, "Hero")).toStrictEqual(TEST_DATA["profile-banner"].testURLs.Hero);
+            expect(ROUTES.ASSETS.PROFILE_BANNER(TEST_DATA["profile-banner"].hash, "Hero")).to.equal(TEST_DATA["profile-banner"].testURLs.Hero);
         });
         it("Valid URL when no size passed.", () => {
-            expect(ROUTES.ASSETS.PROFILE_BANNER(TEST_DATA["profile-banner"].hash)).toStrictEqual(TEST_DATA["profile-banner"].testURLs.Hero);
+            expect(ROUTES.ASSETS.PROFILE_BANNER(TEST_DATA["profile-banner"].hash)).to.equal(TEST_DATA["profile-banner"].testURLs.Hero);
         });
         it("Valid URL when size params", () => {
-            expect(ROUTES.ASSETS.PROFILE_BANNER(TEST_DATA["profile-banner"].hash, "Hero", 480, 480)).toStrictEqual(
+            expect(ROUTES.ASSETS.PROFILE_BANNER(TEST_DATA["profile-banner"].hash, "Hero", 480, 480)).to.equal(
                 TEST_DATA["profile-banner"].testURLs["Hero-size"],
             );
         });
     });
     describe("Team-Banner URL route", () => {
         it("Valid URL", () => {
-            expect(ROUTES.ASSETS.TEAM_BANNER(TEST_DATA["team-banner"].hash, "Hero")).toStrictEqual(TEST_DATA["team-banner"].testURLs.Hero);
+            expect(ROUTES.ASSETS.TEAM_BANNER(TEST_DATA["team-banner"].hash, "Hero")).to.equal(TEST_DATA["team-banner"].testURLs.Hero);
         });
         it("Valid URL when no size passed", () => {
-            expect(ROUTES.ASSETS.TEAM_BANNER(TEST_DATA["team-banner"].hash)).toStrictEqual(TEST_DATA["team-banner"].testURLs.Hero);
+            expect(ROUTES.ASSETS.TEAM_BANNER(TEST_DATA["team-banner"].hash)).to.equal(TEST_DATA["team-banner"].testURLs.Hero);
         });
         it("Valid URL when size params", () => {
-            expect(ROUTES.ASSETS.TEAM_BANNER(TEST_DATA["team-banner"].hash, "Hero", 480, 480)).toStrictEqual(
+            expect(ROUTES.ASSETS.TEAM_BANNER(TEST_DATA["team-banner"].hash, "Hero", 480, 480)).to.equal(
                 TEST_DATA["team-banner"].testURLs["Hero-size"],
             );
         });
     });
     describe("Team-Emoji URL route", () => {
         it("Valid URL when no size passed", () => {
-            expect(ROUTES.ASSETS.TEAM_EMOJI(TEST_DATA["team-emoji"].hash, undefined, "WEBP")).toStrictEqual(
-                TEST_DATA["team-emoji"].testURLs["Full-webp"],
-            );
+            expect(ROUTES.ASSETS.TEAM_EMOJI(TEST_DATA["team-emoji"].hash, undefined, "WEBP")).to.equal(TEST_DATA["team-emoji"].testURLs["Full-webp"]);
         });
         it("Valid URL when WEBP", () => {
-            expect(ROUTES.ASSETS.TEAM_EMOJI(TEST_DATA["team-emoji"].hash, "Full", "WEBP")).toStrictEqual(
-                TEST_DATA["team-emoji"].testURLs["Full-webp"],
-            );
+            expect(ROUTES.ASSETS.TEAM_EMOJI(TEST_DATA["team-emoji"].hash, "Full", "WEBP")).to.equal(TEST_DATA["team-emoji"].testURLs["Full-webp"]);
         });
         it("Valid URL when WEBP & size params", () => {
-            expect(ROUTES.ASSETS.TEAM_EMOJI(TEST_DATA["team-emoji"].hash, "Full", "WEBP", 480, 480)).toStrictEqual(
+            expect(ROUTES.ASSETS.TEAM_EMOJI(TEST_DATA["team-emoji"].hash, "Full", "WEBP", 480, 480)).to.equal(
                 TEST_DATA["team-emoji"].testURLs["Full-webp-size"],
             );
         });
         it("Valid URL when APNG", () => {
-            expect(ROUTES.ASSETS.TEAM_EMOJI(TEST_DATA["team-emoji"].hash, "Full", "APNG")).toStrictEqual(
-                TEST_DATA["team-emoji"].testURLs["Full-apng"],
-            );
+            expect(ROUTES.ASSETS.TEAM_EMOJI(TEST_DATA["team-emoji"].hash, "Full", "APNG")).to.equal(TEST_DATA["team-emoji"].testURLs["Full-apng"]);
         });
         it("Valid URL when APNG & size params", () => {
-            expect(ROUTES.ASSETS.TEAM_EMOJI(TEST_DATA["team-emoji"].hash, "Full", "APNG", 480, 480)).toStrictEqual(
+            expect(ROUTES.ASSETS.TEAM_EMOJI(TEST_DATA["team-emoji"].hash, "Full", "APNG", 480, 480)).to.equal(
                 TEST_DATA["team-emoji"].testURLs["Full-apng-size"],
             );
         });
@@ -129,11 +125,11 @@ describe("Test route building methods", () => {
     describe("Team-Icon URL route", () => {
         for (const size of ["Small", "Medium", "Large"] as const) {
             it(`Valid URL when size ${size}`, () => {
-                expect(ROUTES.ASSETS.TEAM_ICON(TEST_DATA["team-icon"].hash, size)).toStrictEqual(TEST_DATA["team-icon"].testURLs[size]);
+                expect(ROUTES.ASSETS.TEAM_ICON(TEST_DATA["team-icon"].hash, size)).to.equal(TEST_DATA["team-icon"].testURLs[size]);
             });
         }
         it("Valid URL when no size passed", () => {
-            expect(ROUTES.ASSETS.TEAM_ICON(TEST_DATA["team-icon"].hash)).toStrictEqual(TEST_DATA["team-icon"].testURLs.Medium);
+            expect(ROUTES.ASSETS.TEAM_ICON(TEST_DATA["team-icon"].hash)).to.equal(TEST_DATA["team-icon"].testURLs.Medium);
         });
     });
 });

@@ -1,14 +1,13 @@
 import Collection from "@discordjs/collection";
-import Base from "../Base";
-
-export interface ListItem {}
+import type { ListItemPayload } from "@guildedjs/guilded-api-typings";
+import { Base } from "../Base";
 
 export default class ListChannel extends Base {
     /** The items in this channel. */
-    items = new Collection<string, ListItem>();
+    readonly items = new Collection<string, ListItemPayload>();
 
     /** Create a list item. */
-    createItem(message: string, note?: string) {
-        return this.client.lists.createItem(this.id, { message, note });
+    createItem(message: string, note?: string): Promise<ListItemPayload> {
+        return this.client.lists.create(this.id, { message, note });
     }
 }

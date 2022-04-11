@@ -1,8 +1,25 @@
 {
     "name": "@guildedjs/common",
-    "version": "2.0.0",
+    "version": "2.0.1",
     "description": "Common structures and utilities used in various @guildedjs packages",
     "author": "Zaid \"Nico\" <contact@nico.engineer>",
+    "license": "MIT",
+    "types": "types/index.d.ts",
+    "main": "dist/index.js",
+    "typedocMain": "lib/index.ts",
+    "scripts": {
+        "build": "npx tsc",
+        "prepublishOnly": "npx rimraf dist/ && npx rimraf types/ && yarn build && npx gen-esm-wrapper . ./dist/index.mjs"
+    },
+    "devDependencies": {
+        "@guildedjs/guilded-api-typings": "^1.3.1",
+        "@types/uuid": "8.3.4",
+        "typescript": "4.6.3"
+    },
+    "dependencies": {
+        "@discordjs/collection": "^0.5.0",
+        "uuid": "^8.3.2"
+    },
     "contributors": [
         {
             "name": "Zaid \"Nico\"",
@@ -20,40 +37,16 @@
             "url": "https://github.com/uhuh"
         }
     ],
-    "homepage": "https://github.com/guildedjs/guilded.js/tree/main/packages/common#readme",
-    "license": "MIT",
-    "types": "types/index.d.ts",
-    "main": "dist/index.js",
-    "scripts": {
-        "test": "yarn build && node ./__tests__/index.js",
-        "build": "tsc",
-        "prepublishOnly": "npx rimraf dist/ && npx rimraf types/ && yarn build"
-    },
-    "devDependencies": {
-        "@guildedjs/guilded-api-typings": "^1.3.1",
-        "@types/uuid": "^8.3.0",
-        "typescript": "^4.4.2"
-    },
-    "dependencies": {
-        "@discordjs/collection": "^0.1.6",
-        "uuid": "^8.3.2"
-    },
     "keywords": [
         "guilded-gg",
         "guilded-api",
         "guilded-webhook"
     ],
-    "directories": {
-        "lib": "lib",
-        "test": "__tests__"
-    },
     "files": [
         "dist",
         "types"
     ],
-    "publishConfig": {
-        "access": "public"
-    },
+    "homepage": "https://github.com/guildedjs/guilded.js/tree/main/packages/common#readme",
     "repository": {
         "type": "git",
         "url": "git+https://github.com/guildedjs/guilded.js.git"
@@ -61,5 +54,5 @@
     "bugs": {
         "url": "https://github.com/guildedjs/guilded.js/issues"
     },
-    "gitHead": "0719b880becce0aa4bccaf5eb5b210ecb08b0547"
+    "gitHead": "eee38a19e0bfa812d7136cc78a6bc99e0b402b0c"
 }

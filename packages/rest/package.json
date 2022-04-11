@@ -1,8 +1,27 @@
 {
     "name": "@guildedjs/rest",
-    "version": "2.0.0",
-    "description": "Rest structure for @guildedjs/guilded.js",
+    "version": "2.1.0",
+    "description": "Rest structure for guilded.js",
     "author": "Zaid \"Nico\" <contact@nico.engineer>",
+    "license": "MIT",
+    "main": "dist/index.js",
+    "types": "types/index.d.ts",
+    "typedocMain": "lib/index.ts",
+    "scripts": {
+        "build": "npx tsc && npx gen-esm-wrapper . ./dist/index.mjs",
+        "prepublishOnly": "npx rimraf dist/ && npx rimraf types/ && yarn build"
+    },
+    "devDependencies": {
+        "@guildedjs/guilded-api-typings": "^2.1.0",
+        "@types/node-fetch": "2.6.1",
+        "@types/qs": "^6.9.7",
+        "typescript": "4.6.3"
+    },
+    "dependencies": {
+        "@guildedjs/common": "^2.0.1",
+        "node-fetch": "^2.6.7",
+        "qs": "^6.10.3"
+    },
     "contributors": [
         {
             "name": "Zaid \"Nico\"",
@@ -20,23 +39,19 @@
             "url": "https://github.com/uhuh"
         }
     ],
-    "license": "MIT",
-    "main": "dist/index.js",
-    "types": "types/index.d.ts",
-    "scripts": {
-        "test": "yarn build && node ./__tests__/index.js",
-        "build": "tsc",
-        "prepublishOnly": "npx rimraf dist/ && npx rimraf types/ && yarn build"
+    "exports": {
+        ".": {
+            "require": "./dist/index.js",
+            "import": "./dist/index.mjs"
+        },
+        "./": "./"
     },
-    "devDependencies": {
-        "@guildedjs/guilded-api-typings": "^2.0.0",
-        "@types/node-fetch": "^2.5.8",
-        "typescript": "^4.4.2"
-    },
-    "dependencies": {
-        "@guildedjs/common": "^2.0.0",
-        "node-fetch": "^2.6.1"
-    },
+    "keywords": [
+        "guilded",
+        "guildedjs",
+        "guilded.js",
+        "guilded-api"
+    ],
     "files": [
         "dist",
         "types"
@@ -49,5 +64,5 @@
     "bugs": {
         "url": "https://github.com/guildedjs/guilded.js/issues"
     },
-    "gitHead": "0719b880becce0aa4bccaf5eb5b210ecb08b0547"
+    "gitHead": "eee38a19e0bfa812d7136cc78a6bc99e0b402b0c"
 }

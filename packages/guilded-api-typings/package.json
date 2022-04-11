@@ -1,8 +1,19 @@
 {
     "name": "@guildedjs/guilded-api-typings",
-    "version": "2.0.0",
+    "version": "2.1.0",
     "description": "Typings for the guilded API",
     "author": "Zaid \"Nico\" <contact@nico.engineer>",
+    "license": "MIT",
+    "types": "dist/index.d.ts",
+    "main": "dist/index.js",
+    "typedocMain": "lib/index.ts",
+    "scripts": {
+        "build": "npx tsc",
+        "prepublishOnly": "npx rimraf dist/ && yarn build"
+    },
+    "devDependencies": {
+        "typescript": "4.6.3"
+    },
     "contributors": [
         {
             "name": "Zaid \"Nico\"",
@@ -20,20 +31,6 @@
             "url": "https://github.com/uhuh"
         }
     ],
-    "license": "MIT",
-    "types": "dist/index.d.ts",
-    "main": "dist/index.js",
-    "scripts": {
-        "build": "tsc",
-        "prepublishOnly": "npx rimraf dist/ && yarn build"
-    },
-    "devDependencies": {
-        "typescript": "^4.4.2"
-    },
-    "directories": {
-        "lib": "lib",
-        "test": "__tests__"
-    },
     "keywords": [
         "guilded",
         "guildedjs",
@@ -54,5 +51,5 @@
     "bugs": {
         "url": "https://github.com/guildedjs/guilded.js/issues"
     },
-    "gitHead": "0719b880becce0aa4bccaf5eb5b210ecb08b0547"
+    "gitHead": "eee38a19e0bfa812d7136cc78a6bc99e0b402b0c"
 }

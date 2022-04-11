@@ -1,5 +1,6 @@
-import Message from "guilded.js/types/structures/Message";
-import BotClient from "../BotClient";
+import type { Message } from "guilded.js";
+
+import type BotClient from "../BotClient";
 
 export class Monitor {
     /** The client itself */
@@ -22,11 +23,11 @@ export class Monitor {
         this.client.monitors.set(name, this);
     }
 
-    async execute(message: Message) {
+    execute(message: Message): Promise<unknown> | unknown {
         // Placeholder for the execution handler for this task.
     }
 
-    async init() {
+    init(): Promise<unknown> | unknown {
         // Placeholder for anything you would like to run when this task is first created.
         // For example, making sure some tables exist in the database.
     }

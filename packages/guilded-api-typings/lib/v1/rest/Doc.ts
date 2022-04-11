@@ -1,4 +1,4 @@
-import { DocPayload } from "../structs/Doc";
+import type { DocPayload } from "../structs/Doc";
 
 /**
  * POST

@@ -6,10 +6,10 @@ jobs:
         runs-on: ubuntu-latest
         steps:
             - name: Clone repo
-              uses: actions/checkout@v2
+              uses: actions/checkout@v3
 
             - name: Set up Node v16
-              uses: actions/setup-node@v2
+              uses: actions/setup-node@v3
               with:
                   node-version: "16"
                   cache: "yarn"
@@ -25,10 +25,10 @@ jobs:
         runs-on: ubuntu-latest
         steps:
             - name: Checkout repository
-              uses: actions/checkout@v2
+              uses: actions/checkout@a12a3943b4bdde767164f792f33f40b04645d846 # tag=v3
 
             - name: Install Node v14
-              uses: actions/setup-node@v2
+              uses: actions/setup-node@5b52f097d36d4b0b2f94ed6de710023fbb8b2236 # tag=v3
               with:
                   node-version: "16"
                   cache: "yarn"
@@ -40,19 +40,19 @@ jobs:
               run: yarn build
 
     tests:
-        name: Jest tests
+        name: Mocha tests
         runs-on: ubuntu-latest
         steps:
             - name: Checkout repository
-              uses: actions/checkout@v2
+              uses: actions/checkout@a12a3943b4bdde767164f792f33f40b04645d846 # tag=v3
 
             - name: Install Node v14
-              uses: actions/setup-node@v2
+              uses: actions/setup-node@5b52f097d36d4b0b2f94ed6de710023fbb8b2236 # tag=v3
               with:
                   node-version: "16"
                   cache: "yarn"
 
-            - name: I-nstall dependencies
+            - name: Install dependencies
               run: yarn install
 
             - name: Run TypeScript Compiler

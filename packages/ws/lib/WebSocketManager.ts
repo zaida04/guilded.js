@@ -1,8 +1,9 @@
-import WebSocket from "ws";
-import { EventEmitter } from "events";
+/* eslint-disable @typescript-eslint/no-base-to-string */
 import { ROUTES } from "@guildedjs/common";
+import { SkeletonWSPayload, WSEvent, WSOpCodes } from "@guildedjs/guilded-api-typings";
+import { EventEmitter } from "events";
 import type TypedEmitter from "typed-emitter";
-import { SkeletonWSPayload, WSOpCodes } from "@guildedjs/guilded-api-typings";
+import WebSocket from "ws";
 
 export default class WebSocketManager {
     /** The version of the websocket to connect to. */
@@ -35,20 +36,18 @@ export default class WebSocketManager {
     /** Count of how many times a reconnect has been attempted */
     reconnectAttemptAmount = 0;
 
-    constructor(public readonly options: WebSocketOptions) {
-        if (this.options.autoConnect) this.connect();
-    }
+    constructor(public readonly options: WebSocketOptions) {}
 
     /** The url that will be used to connect. Prioritizes proxy url and if not available uses the default base url for guidled. */
-    get wsURL() {
+    get wsURL(): string {
         return this.options.proxyURL ?? `wss://${ROUTES.WS_DOMAIN}/v${this.version}/websocket`;
     }
 
-    get reconnectAttemptExceeded() {
+    get reconnectAttemptExceeded(): boolean {
         return this.reconnectAttemptAmount >= (this.options.reconnectAttemptLimit ?? Infinity);
     }
 
-    connect() {
+    connect(): void {
         this.socket = new WebSocket(this.wsURL, {
             headers: {
                 Authorization: `Bearer ${this.token}`,
@@ -56,10 +55,11 @@ export default class WebSocketManager {
         });
 
         this.socket.on("open", this.onSocketOpen.bind(this));
-
+        this.socket.on("pong", this.onSocketPong.bind(this));
         this.socket.on("message", (data) => {
-            this._debug(data);
-            this.onSocketMessage(data);
+            this.emitter.emit("raw", data);
+            this._debug(data.toString());
+            this.onSocketMessage(data.toString());
         });
 
         this.socket.on("error", (err) => {
@@ -73,32 +73,29 @@ export default class WebSocketManager {
             this.emitter.emit("exit", "Gateway connection permanently closed due to error.");
         });
 
-        this.socket.on("close", (code: number, reason: string) => {
-            this._debug(`Gateway connection terminated with code ${code} for reason: ${reason}`);
-            if (!(this.options.autoConnect ?? true) || this.reconnectAttemptExceeded) {
+        this.socket.on("close", (code, reason) => {
+            this._debug(`Gateway connection terminated with code ${code} for reason: ${reason.toString()}`);
+            if (!(this.options.autoConnectOnErr ?? true) || this.reconnectAttemptExceeded) {
                 this.reconnectAttemptAmount++;
                 return this.connect();
             }
             this.destroy();
             this.emitter.emit("exit", "Gateway connection permanently closed.");
         });
-
-        this.socket.on("pong", this.onSocketPong.bind(this));
     }
 
-    destroy() {
+    destroy(): void {
         if (!this.socket) throw new Error("There is no active connection to destroy.");
         this.socket.removeAllListeners();
         if (this.socket.OPEN) this.socket.close();
+        this.isAlive = false;
     }
 
-    onSocketMessage(packet: WebSocket.Data) {
-        this.emitter.emit("raw", packet);
-        if (typeof packet !== "string") {
-            this.emitter.emit("error", "packet was not typeof string", null);
-            return void 0;
-        }
+    _debug(str: any): boolean {
+        return this.emitter.emit("debug", str);
+    }
 
+    private onSocketMessage(packet: string): void {
         let EVENT_NAME;
         let EVENT_DATA;
 
@@ -117,10 +114,11 @@ export default class WebSocketManager {
         switch (EVENT_DATA.op) {
             // Normal event based packets
             case WSOpCodes.SUCCESS:
-                this.emitter.emit("gatewayEvent", EVENT_NAME, EVENT_DATA);
+                this.emitter.emit("gatewayEvent", EVENT_NAME as keyof WSEvent, EVENT_DATA);
                 break;
             // Auto handled by ws lib
             case WSOpCodes.WELCOME:
+                this.emitter.emit("ready");
                 break;
             default:
                 this.emitter.emit("unknown", "unknown opcode", packet);
@@ -128,17 +126,15 @@ export default class WebSocketManager {
         }
     }
 
-    onSocketOpen() {
+    private onSocketOpen(): void {
+        this._debug("Socket connection opened.");
         this.isAlive = true;
         this.connectedAt = new Date();
     }
 
-    onSocketPong() {
+    private onSocketPong(): void {
+        this._debug("Pong received.");
         this.ping = Date.now() - this.lastPingedAt;
-    }
-
-    _debug(str: any) {
-        return this.emitter.emit("debug", str);
     }
 }
 
@@ -149,8 +145,6 @@ export interface WebSocketOptions {
     proxyURL?: string;
     /** The version of the websocket to connect to. */
     version?: 1;
-    /** Whether to connect automatically on instantiation. */
-    autoConnect?: boolean;
     /** Whether to try to re-establish connection on error */
     autoConnectOnErr?: boolean;
     /** Limit of how many times a reconnection should be attempted */
@@ -165,5 +159,6 @@ type WebsocketManagerEvents = {
     exit: (info: string) => unknown;
     unknown: (reason: string, data: any) => unknown;
     reconnect: () => unknown;
-    gatewayEvent: (event: string, data: Record<string, any>) => unknown;
+    gatewayEvent: (event: keyof WSEvent, data: SkeletonWSPayload) => unknown;
+    ready: () => unknown;
 };

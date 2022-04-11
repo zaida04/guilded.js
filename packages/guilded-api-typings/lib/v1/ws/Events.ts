@@ -1,4 +1,4 @@
-import { ChatMessagePayload } from "../structs/Message";
+import type { ChatMessagePayload, TeamMemberPayload } from "../structs";
 
 export enum WSOpCodes {
     SUCCESS,
@@ -13,11 +13,13 @@ export const WebSocketEvents = {
     ChatMessageCreated: "ChatMessageCreated",
     ChatMessageUpdated: "ChatMessageUpdated",
     ChatMessageDeleted: "ChatMessageDeleted",
+    TeamMemberJoined: "TeamMemberJoined",
+    TeamMemberRemoved: "TeamMemberRemoved",
     TeamMemberUpdated: "TeamMemberUpdated",
     // This is intentional. Legacy change on Guilded's end.
     teamRolesUpdated: "teamRolesUpdated",
 } as const;
-type WSEvent = typeof WebSocketEvents;
+export type WSEvent = typeof WebSocketEvents;
 
 export interface SkeletonWSPayload {
     d: unknown;
@@ -59,6 +61,22 @@ export interface WSChatMessageDeletedPayload extends SkeletonWSPayload {
         };
     };
     t: WSEvent["ChatMessageDeleted"];
+}
+
+export interface WSTeamMemberJoinedPayload extends SkeletonWSPayload {
+    d: {
+        serverId: string;
+        member: TeamMemberPayload;
+    };
+    t: WSEvent["TeamMemberJoined"];
+}
+
+export interface WSTeamMemberRemovedPayload extends SkeletonWSPayload {
+    d: {
+        serverId: string;
+        userId: string;
+    };
+    t: WSEvent["TeamMemberRemoved"];
 }
 
 export interface WSTeamMemberUpdatedPayload extends SkeletonWSPayload {

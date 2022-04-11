@@ -6,4 +6,4 @@ const bot = new BotClient({
     sourceFolderPath: __dirname,
 });
 
-void bot.connect();
+void bot.login();

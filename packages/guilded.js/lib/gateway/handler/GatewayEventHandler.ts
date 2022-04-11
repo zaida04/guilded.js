@@ -1,5 +1,5 @@
-import type { Client } from '../../Client';
+import type { Client } from "../../structures/Client";
 
 export default abstract class GatewayEventHandler {
-    public constructor(public client: Client) {}
+    constructor(public readonly client: Client) {}
 }

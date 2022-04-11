@@ -1,4 +1,5 @@
 {
+    "$schema": "https://json.schemastore.org/tsconfig.json",
     "compilerOptions": {
         "strict": true,
         "alwaysStrict": true,
@@ -8,9 +9,10 @@
         "pretty": true,
         "module": "CommonJS",
         "target": "ES6",
+        "importsNotUsedAsValues": "error",
         "lib": ["ESNext", "DOM"],
         "typeRoots": ["node_modules/@types"],
-        "types": ["node", "jest"],
+        "types": ["node", "mocha"],
         "sourceMap": true,
         "incremental": true,
         "esModuleInterop": true,
