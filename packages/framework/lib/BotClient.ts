@@ -34,7 +34,7 @@ export default class BotClient extends Client {
         await Promise.allSettled(
             [["monitors", this.monitors] as const].map(async ([dir, collection]) => {
                 try {
-                    for await (const result of walk(path.join(this.sourceFolderPath, dir))) {
+                    for await (const result of walk(path.join(__dirname, dir))) {
                         if (!result) return;
 
                         const [filename, file] = result;
@@ -76,7 +76,6 @@ export default class BotClient extends Client {
 
     /** Allows users to override and customize the addition of a event listener */
     initializeMessageListener(): void {
-        console.log("initializeMessageListener");
         this.on("messageCreated", (message) => this.processMonitors(message));
     }
 
