@@ -6,22 +6,16 @@ import type { Monitor } from "./structures/Monitor";
 import { walk } from "./utils/walk";
 
 export default class BotClient extends Client {
-    /** The options used to configure the bot. */
-    options: BotClientOptions;
     /** All your bot's monitors will be available here */
     monitors = new Collection<string, Monitor>();
     /** The bot's prefixes per team. <teamId, prefix> */
     prefixes = new Map<string, string>();
     /** The path that the end users commands,monitors, inhibitors and others will be located. */
-    sourceFolderPath: string;
+    sourceFolderPath = this.options.sourceFolderPath || path.join(process.cwd(), "src/");
 
-    constructor(options: BotClientOptions) {
+    constructor(public options: BotClientOptions, autoInit = true) {
         super(options);
-
-        this.options = options;
-        this.sourceFolderPath = options.sourceFolderPath || path.join(process.cwd(), "src/");
-
-        void this.init();
+        if (autoInit) void this.init();
     }
 
     /** Get the default client prefix. */
@@ -34,7 +28,7 @@ export default class BotClient extends Client {
         await Promise.allSettled(
             [["monitors", this.monitors] as const].map(async ([dir, collection]) => {
                 try {
-                    for await (const result of walk(path.join(this.sourceFolderPath, dir))) {
+                    for await (const result of walk(this.options.monitorDirPath ?? path.join(this.sourceFolderPath, dir))) {
                         if (!result) return;
 
                         const [filename, file] = result;
@@ -55,7 +49,7 @@ export default class BotClient extends Client {
         await Promise.allSettled(
             [["monitors", this.monitors] as const].map(async ([dir, collection]) => {
                 try {
-                    for await (const result of walk(path.join(this.sourceFolderPath, dir))) {
+                    for await (const result of walk(this.options.monitorDirPath ?? path.join(this.sourceFolderPath, dir))) {
                         if (!result) return;
 
                         const [filename, file] = result;
@@ -76,7 +70,6 @@ export default class BotClient extends Client {
 
     /** Allows users to override and customize the addition of a event listener */
     initializeMessageListener(): void {
-        console.log("initializeMessageListener");
         this.on("messageCreated", (message) => this.processMonitors(message));
     }
 
@@ -89,7 +82,6 @@ export default class BotClient extends Client {
             if (monitor.ignoreEdits && message.updatedAt && message.updatedAt !== message.createdAt) return;
             // TODO: When the api supports using dm channels
             // if (monitor.ignoreDM && !message.teamId) return;
-
             void monitor.execute(message);
         });
     }
@@ -99,9 +91,14 @@ export default class BotClient extends Client {
 export interface BotClientOptions {
     /** The prefix that will be used to determine if a message is executing a command. */
     prefix: string;
-    /** The path that the end users commands,monitors, inhibitors and others will be located. */
+    /** The path that the end users commands, monitors, inhibitors and others will be located. */
     sourceFolderPath?: string;
-
+    /** The path to a custom dir where commands are located. */
+    commandDirPath?: string;
+    /** The path to a custom dir where the monitors are located */
+    monitorDirPath?: string;
+    /** The path to a custom dir where the inhibitors are located */
+    inhibitorDirPath?: string;
     // TODO: THESE ARE REMOVED WHEN EXTENDS IS fixed
     token: string;
 }

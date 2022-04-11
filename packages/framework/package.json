@@ -1,10 +1,22 @@
 {
     "name": "@guildedjs/gil",
     "version": "0.0.1-dev",
-    "description": "Command framework for @guildedjs/guilded.js",
-    "types": "types/index.d.ts",
+    "description": "Framework for guilded.js that allows you to build bots with ease.",
+    "author": "Zaid \"Nico\" <contact@nico.engineer>",
+    "license": "MIT",
     "main": "dist/index.js",
-    "author": "Zaid \"Nico\"",
+    "types": "types/index.d.ts",
+    "typedocMain": "lib/index.ts",
+    "scripts": {
+        "build": "npx tsc && npx gen-esm-wrapper . ./dist/index.mjs",
+        "prepublishOnly": "npx rimraf dist/ && npx rimraf types/ && yarn build"
+    },
+    "devDependencies": {
+        "typescript": "4.6.3"
+    },
+    "dependencies": {
+        "guilded.js": "0.3.0"
+    },
     "contributors": [
         {
             "name": "Zaid \"Nico\"",
@@ -22,18 +34,19 @@
             "url": "https://github.com/uhuh"
         }
     ],
-    "license": "MIT",
-    "scripts": {
-        "test": "npx ts-node test/index.ts",
-        "build": "tsc",
-        "prepublishOnly": "npx rimraf dist/ && npx rimraf types/ && yarn build"
+    "exports": {
+        ".": {
+            "require": "./dist/index.js",
+            "import": "./dist/index.mjs"
+        },
+        "./": "./"
     },
-    "devDependencies": {
-        "typescript": "^4.4.2"
-    },
-    "dependencies": {
-        "guilded.js": "^0.0.1-dev"
-    },
+    "keywords": [
+        "guilded",
+        "guildedjs",
+        "guilded.js",
+        "guilded-api"
+    ],
     "files": [
         "dist",
         "types"
@@ -45,5 +58,6 @@
     },
     "bugs": {
         "url": "https://github.com/guildedjs/guilded.js/issues"
-    }
+    },
+    "gitHead": "eee38a19e0bfa812d7136cc78a6bc99e0b402b0c"
 }
