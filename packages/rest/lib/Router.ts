@@ -180,7 +180,7 @@ export class Router {
     }
 
     kickMember(serverId: string, userId: string): Promise<RESTDeleteMemberResult> {
-        return this.rest.get<RESTDeleteMemberResult>(ROUTES.member(serverId, userId));
+        return this.rest.delete<RESTDeleteMemberResult>(ROUTES.member(serverId, userId));
     }
 
     /** Ban a member from a server */
