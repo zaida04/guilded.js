@@ -66,8 +66,8 @@
         "packages/common",
         "packages/ws",
         "packages/rest",
-        "packages/guilded.js",
         "packages/webhook-client",
+        "packages/guilded.js",
         "packages/*"
     ],
     "engines": {
