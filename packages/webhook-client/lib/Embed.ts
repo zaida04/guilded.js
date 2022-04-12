@@ -94,18 +94,18 @@ export class Embed {
         }
     }
 
-    public setTitle(title: string | null): this {
-        this.title = title;
+    public setTitle(title?: string | null): this {
+        this.title = title ?? null;
         return this;
     }
 
-    public setDescription(description: string | null): this {
-        this.description = description;
+    public setDescription(description?: string | null): this {
+        this.description = description ?? null;
         return this;
     }
 
-    public setURL(url: string | null): this {
-        this.url = url;
+    public setURL(url?: string | null): this {
+        this.url = url ?? null;
         return this;
     }
 
@@ -131,27 +131,27 @@ export class Embed {
         return this;
     }
 
-    public setColor(color: string | number | [number, number, number] | null): this {
+    public setColor(color?: string | number | [number, number, number] | null): this {
         this.color = color ? resolveColor(color) : null;
         return this;
     }
 
-    public setFooter(text: string, iconURL?: string | null, proxyIconURL?: string | null): this {
+    public setFooter(text?: string, iconURL?: string | null, proxyIconURL?: string | null): this {
         this.footer = text ? { iconURL: iconURL ?? null, proxyIconURL: proxyIconURL ?? null, text } : null;
         return this;
     }
 
-    public setImage(url: string, height?: string | null, width?: string | null, proxyURL?: string | null): this {
+    public setImage(url?: string, height?: string | null, width?: string | null, proxyURL?: string | null): this {
         this.image = url ? { height: height ?? null, proxyURL: proxyURL ?? null, url, width: width ?? null } : null;
         return this;
     }
 
-    public setThumbnail(url: string, height?: string | null, width?: string | null, proxyURL?: string | null): this {
+    public setThumbnail(url?: string, height?: string | null, width?: string | null, proxyURL?: string | null): this {
         this.thumbnail = url ? { height: height ?? null, proxyURL: proxyURL ?? null, url, width: width ?? null } : null;
         return this;
     }
 
-    public setVideo(url: string, height?: string | null, width?: string | null, proxyURL?: string | null): this {
+    public setVideo(url?: string, height?: string | null, width?: string | null, proxyURL?: string | null): this {
         this.video = url ? { height: height ?? null, proxyURL: proxyURL ?? null, url, width: width ?? null } : null;
         return this;
     }
@@ -161,7 +161,7 @@ export class Embed {
         return this;
     }
 
-    public setAuthor(name: string, iconURL?: string | null, url?: string | null, proxyIconURL?: string | null): this {
+    public setAuthor(name?: string, iconURL?: string | null, url?: string | null, proxyIconURL?: string | null): this {
         this.author = name
             ? {
                   iconURL: iconURL ?? null,
