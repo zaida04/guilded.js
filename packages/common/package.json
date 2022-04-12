@@ -1,6 +1,6 @@
 {
     "name": "@guildedjs/common",
-    "version": "2.0.1",
+    "version": "2.1.0",
     "description": "Common structures and utilities used in various @guildedjs packages",
     "author": "Zaid \"Nico\" <contact@nico.engineer>",
     "license": "MIT",
