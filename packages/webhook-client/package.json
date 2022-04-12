@@ -1,6 +1,6 @@
 {
     "name": "@guildedjs/webhook-client",
-    "version": "0.0.1-dev",
+    "version": "0.0.2-dev",
     "description": "Structures and clients for webhooks in Guilded.",
     "author": "Zaid \"Nico\" <contact@nico.engineer>",
     "license": "MIT",
@@ -16,8 +16,8 @@
         "typescript": "4.6.3"
     },
     "dependencies": {
-        "@guildedjs/common": "2.0.1",
-        "@guildedjs/rest": "2.1.0"
+        "@guildedjs/common": "2.1.0",
+        "@guildedjs/rest": "2.2.1"
     },
     "contributors": [
         {
