@@ -76,7 +76,7 @@ export class Message extends Base<ChatMessagePayload> {
     }
 
     /** Get the author of this message */
-    get user(): User | null {
+    get author(): User | null {
         return this.client.users.cache.get(this.id) ?? null;
     }
 
