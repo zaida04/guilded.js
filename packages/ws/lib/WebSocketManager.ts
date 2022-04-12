@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-base-to-string */
 import { ROUTES } from "@guildedjs/common";
-import { SkeletonWSPayload, WSEvent, WSOpCodes } from "@guildedjs/guilded-api-typings";
+import { SkeletonWSPayload, WSEvent, WSOpCodes, WSWelcomePayload } from "@guildedjs/guilded-api-typings";
 import { EventEmitter } from "events";
 import type TypedEmitter from "typed-emitter";
 import WebSocket from "ws";
@@ -118,7 +118,7 @@ export default class WebSocketManager {
                 break;
             // Auto handled by ws lib
             case WSOpCodes.WELCOME:
-                this.emitter.emit("ready");
+                this.emitter.emit("ready", (EVENT_DATA as WSWelcomePayload).d.user);
                 break;
             default:
                 this.emitter.emit("unknown", "unknown opcode", packet);
@@ -160,5 +160,5 @@ type WebsocketManagerEvents = {
     unknown: (reason: string, data: any) => unknown;
     reconnect: () => unknown;
     gatewayEvent: (event: keyof WSEvent, data: SkeletonWSPayload) => unknown;
-    ready: () => unknown;
+    ready: (user: WSWelcomePayload["d"]["user"]) => unknown;
 };

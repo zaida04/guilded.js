@@ -1,4 +1,5 @@
-import type { ChatMessagePayload, TeamMemberPayload } from "../structs";
+import type { ChatMessagePayload, TeamMemberBanPayload, TeamMemberPayload } from "../structs";
+import type { WebhookPayload } from "../structs/Webhook";
 
 export enum WSOpCodes {
     SUCCESS,
@@ -16,8 +17,12 @@ export const WebSocketEvents = {
     TeamMemberJoined: "TeamMemberJoined",
     TeamMemberRemoved: "TeamMemberRemoved",
     TeamMemberUpdated: "TeamMemberUpdated",
+    TeamMemberBanned: "TeamMemberBanned",
+    TeamMemberUnbanned: "TeamMemberUnbanned",
     // This is intentional. Legacy change on Guilded's end.
     teamRolesUpdated: "teamRolesUpdated",
+    TeamWebhookCreated: "TeamWebhookCreated",
+    TeamWebhookUpdated: "TeamWebhookUpdated",
 } as const;
 export type WSEvent = typeof WebSocketEvents;
 
@@ -31,6 +36,13 @@ export interface SkeletonWSPayload {
 export interface WSWelcomePayload extends SkeletonWSPayload {
     d: {
         heartbeatIntervalMs: number;
+        user: {
+            id: string;
+            botId: string;
+            name: string;
+            createdAt: string;
+            createdBy: string;
+        };
         lastMessageId: string;
     };
 }
@@ -75,6 +87,8 @@ export interface WSTeamMemberRemovedPayload extends SkeletonWSPayload {
     d: {
         serverId: string;
         userId: string;
+        isKick: boolean;
+        isBan: boolean;
     };
     t: WSEvent["TeamMemberRemoved"];
 }
@@ -90,10 +104,42 @@ export interface WSTeamMemberUpdatedPayload extends SkeletonWSPayload {
     t: WSEvent["TeamMemberUpdated"];
 }
 
+export interface WSTeamMemberBannedPayload extends SkeletonWSPayload {
+    d: {
+        serverId: string;
+        serverMemberBan: TeamMemberBanPayload;
+    };
+    t: WSEvent["TeamMemberBanned"];
+}
+
+export interface WSTeamMemberUnbannedPayload extends SkeletonWSPayload {
+    d: {
+        serverId: string;
+        serverMemberBan: TeamMemberBanPayload;
+    };
+    t: WSEvent["TeamMemberUnbanned"];
+}
+
 export interface WSTeamRolesUpdatedPayload extends SkeletonWSPayload {
     d: {
         serverId: string;
         memberRoleIds: unknown[];
     };
     t: WSEvent["teamRolesUpdated"];
+}
+
+export interface WSTeamWebhookCreatedPayload extends SkeletonWSPayload {
+    d: {
+        serverId: string;
+        webhook: WebhookPayload;
+    };
+    t: WSEvent["TeamWebhookCreated"];
+}
+
+export interface WSTeamWebhookUpdatedPayload extends SkeletonWSPayload {
+    d: {
+        serverId: string;
+        webhook: WebhookPayload;
+    };
+    t: WSEvent["TeamWebhookUpdated"];
 }

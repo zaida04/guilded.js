@@ -66,6 +66,7 @@
         "packages/common",
         "packages/ws",
         "packages/rest",
+        "packages/webhook-client",
         "packages/guilded.js",
         "packages/*"
     ],

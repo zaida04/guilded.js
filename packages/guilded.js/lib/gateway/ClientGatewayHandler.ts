@@ -8,17 +8,23 @@ import type {
     WSChatMessageDeletedPayload,
     WSChatMessageUpdatedPayload,
     WSEvent,
+    WSTeamMemberBannedPayload,
     WSTeamMemberJoinedPayload,
     WSTeamMemberRemovedPayload,
+    WSTeamMemberUnbannedPayload,
     WSTeamMemberUpdatedPayload,
     WSTeamRolesUpdatedPayload,
+    WSTeamWebhookCreatedPayload,
+    WSTeamWebhookUpdatedPayload,
 } from "@guildedjs/guilded-api-typings";
 import { WebSocketEvents } from "@guildedjs/guilded-api-typings";
+import TeamWebhookEventHandler from "./handler/TeamWebhookEventHandler";
 
 export class ClientGatewayHandler {
     messageHandler = new MessageEventHandler(this.client);
     teamHandler = new TeamEventHandler(this.client);
     teamMemberHandler = new TeamMemberEventHandler(this.client);
+    teamWebhookHandler = new TeamWebhookEventHandler(this.client);
 
     readonly eventToHandlerMap: Record<keyof WSEvent, (data: SkeletonWSPayload) => boolean> = {
         [WebSocketEvents.ChatMessageCreated]: (data) => this.messageHandler.messageCreated(data as WSChatMessageCreatedPayload),
@@ -28,6 +34,10 @@ export class ClientGatewayHandler {
         [WebSocketEvents.TeamMemberRemoved]: (data) => this.teamMemberHandler.teamMemberRemoved(data as WSTeamMemberRemovedPayload),
         [WebSocketEvents.TeamMemberUpdated]: (data) => this.teamMemberHandler.teamMemberUpdated(data as WSTeamMemberUpdatedPayload),
         [WebSocketEvents.teamRolesUpdated]: (data) => this.teamHandler.teamRolesUpdated(data as WSTeamRolesUpdatedPayload),
+        [WebSocketEvents.TeamMemberBanned]: (data) => this.teamMemberHandler.teamMemberBanned(data as WSTeamMemberBannedPayload),
+        [WebSocketEvents.TeamMemberUnbanned]: (data) => this.teamMemberHandler.teamMemberUnbanned(data as WSTeamMemberUnbannedPayload),
+        [WebSocketEvents.TeamWebhookCreated]: (data) => this.teamWebhookHandler.teamWebhookCreated(data as WSTeamWebhookCreatedPayload),
+        [WebSocketEvents.TeamWebhookUpdated]: (data) => this.teamWebhookHandler.teamWebhookUpdated(data as WSTeamWebhookUpdatedPayload),
     };
 
     constructor(public readonly client: Client) {}
