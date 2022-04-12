@@ -20,6 +20,7 @@ import type { Role } from "./Role";
 import type { CacheStructure } from "../cache";
 import GlobalWebhookManager from "../managers/global/WebhookManager";
 import type { Webhook } from "./Webhook";
+import { ClientUser, User } from "./User";
 
 export class Client extends (EventEmitter as unknown as new () => TypedEmitter<ClientEvents>) {
     /** The time in milliseconds the Client connected */
@@ -50,6 +51,9 @@ export class Client extends (EventEmitter as unknown as new () => TypedEmitter<C
     bans = new GlobalMemberBanManager(this);
     webhooks = new GlobalWebhookManager(this);
 
+    /** The user belonging to this bot */
+    user: ClientUser | null = null;
+
     constructor(public options: ClientOptions) {
         if (typeof options !== "object") throw new Error("Must provide options in client constructor in the form of an object.");
         if (typeof options?.token === "undefined") throw new Error("No token provided.");
@@ -71,7 +75,10 @@ export class Client extends (EventEmitter as unknown as new () => TypedEmitter<C
         if (opts?.fresh) this.wsManager = new WebsocketManager({ token: this.options.token });
         this.wsManager.emitter
             .on("error", (reason, err) => this.emit("error", `[WS] ${reason}`, err))
-            .on("ready", () => this.emit("ready"))
+            .on("ready", (user) => {
+                this.user = new ClientUser(this, user);
+                this.emit("ready");
+            })
             .on("gatewayEvent", (event, data) => this.gatewayHandler.handleWSMessage(event, data))
             .on("debug", (data) => this.emit("debug", data))
             .on("exit", () => this.emit("exit"));
