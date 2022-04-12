@@ -179,7 +179,7 @@ export default class BotClient extends Client {
             key: userId,
             channelId,
             createdAt: Date.now(),
-            filter: options?.filter || ((msg): boolean => userId === msg.createdBy),
+            filter: options?.filter || ((msg): boolean => userId === msg.createdById),
             amount: options?.amount || 1,
             // DEFAULTS TO 5 MINUTES
             duration: options?.duration || 300000,

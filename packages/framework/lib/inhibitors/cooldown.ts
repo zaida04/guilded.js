@@ -12,7 +12,7 @@ export default class CooldownInhibitor extends Inhibitor {
     async execute(message: Message, command: Command): Promise<boolean> {
         if (!command.cooldown) return false;
 
-        const key = `${message.createdBy}-${command.name}`;
+        const key = `${message.createdById}-${command.name}`;
         const cooldown = this.membersInCooldown.get(key);
         if (cooldown) {
             if (cooldown.used >= (command.cooldown.allowedUses || 1)) {

@@ -59,7 +59,7 @@ export default class CommandsMonitor extends Monitor {
         )}]`;
 
         // TODO: use message author tag or name here
-        const user = bgGreen(black(`${""}(${message.createdBy})`));
+        const user = bgGreen(black(`${""}(${message.createdById})`));
         const guild = bgMagenta(black(`${serverName}${message.serverId ? `(${message.serverId})` : ""}`));
 
         console.log(`${bgBlue(`[${this.getTime()}]`)} => ${command} by ${user} in ${guild} with Message ID: ${message.id}`);
@@ -160,7 +160,7 @@ export default class CommandsMonitor extends Monitor {
                     replyMessageIds: [message.id],
                 });
                 if (question) {
-                    const response = await this.client.needMessage(message.createdBy, message.channelId);
+                    const response = await this.client.needMessage(message.createdById, message.channelId);
                     if (response) {
                         const responseArg = await resolver.execute(argument, [response.content], message, command);
                         if (responseArg) {
