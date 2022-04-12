@@ -1,6 +1,6 @@
 {
     "name": "@guildedjs/gil",
-    "version": "0.0.1-dev",
+    "version": "0.0.2-dev",
     "description": "Framework for guilded.js that allows you to build bots with ease.",
     "author": "Zaid \"Nico\" <contact@nico.engineer>",
     "license": "MIT",
@@ -18,7 +18,7 @@
     },
     "dependencies": {
         "colorette": "^2.0.16",
-        "guilded.js": "0.3.0"
+        "guilded.js": "0.4.1"
     },
     "contributors": [
         {
