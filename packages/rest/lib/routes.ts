@@ -41,4 +41,8 @@ export const ROUTES = {
 
     // Role Memberships Endpoints
     memberRole: (memberId: string, roleId: number) => `/members/${memberId}/roles/${roleId}` as const,
+
+    // Webhook Endpoints
+    serverWebhooks: (serverId: string) => `/servers/${serverId}/webhooks`,
+    serverWebhook: (serverId: string, webhookId: string) => `/servers/${serverId}/webhooks/${webhookId}`,
 } as const;

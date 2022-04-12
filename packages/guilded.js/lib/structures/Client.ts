@@ -18,6 +18,8 @@ import type { WSChatMessageDeletedPayload, WSTeamMemberRemovedPayload, WSTeamMem
 import type { Member } from "./Member";
 import type { Role } from "./Role";
 import type { CacheStructure } from "../cache";
+import GlobalWebhookManager from "../managers/global/WebhookManager";
+import type { Webhook } from "./Webhook";
 import { ClientUser, User } from "./User";
 
 export class Client extends (EventEmitter as unknown as new () => TypedEmitter<ClientEvents>) {
@@ -47,6 +49,7 @@ export class Client extends (EventEmitter as unknown as new () => TypedEmitter<C
     roles = new GlobalRoleManager(this);
     users = new GlobalUserManager(this);
     bans = new GlobalMemberBanManager(this);
+    webhooks = new GlobalWebhookManager(this);
 
     /** The user belonging to this bot */
     user: ClientUser | null = null;
@@ -106,6 +109,7 @@ interface ClientOptions {
         removeMemberOnLeave?: boolean;
         removeMemberBanOnUnban?: boolean;
         cacheMemberBans?: boolean;
+        cacheWebhooks?: boolean;
     };
 }
 
@@ -120,6 +124,8 @@ type ClientEvents = {
     memberJoined: (member: Member) => unknown;
     memberRemoved: (member: Member | WSTeamMemberRemovedPayload["d"]) => unknown;
     memberUpdated: (member: Member | WSTeamMemberUpdatedPayload["d"], oldMember: Member | null) => unknown;
+    webhookCreated: (webhook: Webhook) => unknown;
+    webhookUpdated: (webhook: Webhook, oldWebhook: Webhook | null) => unknown;
     teamRolesUpdated: (roleIds: Role[] | number[]) => unknown;
     unknownGatewayEvent: (data: any) => unknown;
 };

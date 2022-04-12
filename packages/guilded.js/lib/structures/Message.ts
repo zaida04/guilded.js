@@ -1,6 +1,7 @@
 import type { ChatMessagePayload } from "@guildedjs/guilded-api-typings";
 import type Client from "./Client";
 import { Base } from "./Base";
+import type { User } from "./User";
 
 export enum MessageType {
     Default,
@@ -23,7 +24,7 @@ export class Message extends Base<ChatMessagePayload> {
     /** If set, this message will only be seen by those mentioned or replied to. */
     readonly isPrivate: boolean;
     /** The ID of the user who created this message (Note: If this event has createdByBotId or createdByWebhookId present, this field will still be populated, but can be ignored. In these cases, the value of this field will always be Ann6LewA) */
-    readonly createdBy: string;
+    readonly createdById: string;
     /** The ID of the bot who created this message, if it was created by a bot */
     readonly createdByBotId: string | null;
     /** The ID of the webhook who created this message, if it was created by a webhook */
@@ -45,7 +46,7 @@ export class Message extends Base<ChatMessagePayload> {
         this.content = data.content;
         this.serverId = data.serverId ?? null;
         this.replyMessageIds = data.replyMessageIds ?? [];
-        this.createdBy = data.createdBy;
+        this.createdById = data.createdBy;
         this.createdByBotId = data.createdByBotId ?? null;
         this.createdByWebhookId = data.createdByWebhookId ?? null;
         this.createdAt = new Date(data.createdAt);
@@ -72,6 +73,11 @@ export class Message extends Base<ChatMessagePayload> {
         }
 
         return this;
+    }
+
+    /** Get the author of this message */
+    get author(): User | null {
+        return this.client.users.cache.get(this.id) ?? null;
     }
 
     /* Update message content */
