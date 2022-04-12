@@ -33,6 +33,13 @@ export interface SkeletonWSPayload {
 export interface WSWelcomePayload extends SkeletonWSPayload {
     d: {
         heartbeatIntervalMs: number;
+        user: {
+            id: string;
+            botId: string;
+            name: string;
+            createdAt: string;
+            createdBy: string;
+        };
         lastMessageId: string;
     };
 }
