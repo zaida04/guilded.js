@@ -9,6 +9,8 @@ export const constants = {
         TEAM_MEMBER_REMOVED: "memberRemoved",
         TEAM_MEMBER_BANNED: "memberBanned",
         TEAM_MEMBER_UNBANNED: "memberUnbanned",
+        TEAM_WEBHOOK_CREATED: "webhookCreated",
+        TEAM_WEBHOOK_UPDATED: "webhookUpdated",
     },
 } as const;
 export type ClientEvent = typeof constants.clientEvents;
