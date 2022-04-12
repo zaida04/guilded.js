@@ -14,8 +14,14 @@ import GlobalUserManager from "../managers/global/UserManager";
 import GlobalMemberBanManager from "../managers/global/GuildBanManager";
 import type { Message } from "./Message";
 import type TypedEmitter from "typed-emitter";
-import type { WSChatMessageDeletedPayload, WSTeamMemberRemovedPayload, WSTeamMemberUpdatedPayload } from "@guildedjs/guilded-api-typings";
-import type { Member } from "./Member";
+import type {
+    WSChatMessageDeletedPayload,
+    WSTeamMemberBannedPayload,
+    WSTeamMemberRemovedPayload,
+    WSTeamMemberUnbannedPayload,
+    WSTeamMemberUpdatedPayload,
+} from "@guildedjs/guilded-api-typings";
+import type { Member, MemberBan } from "./Member";
 import type { Role } from "./Role";
 import type { CacheStructure } from "../cache";
 import GlobalWebhookManager from "../managers/global/WebhookManager";
@@ -124,6 +130,8 @@ type ClientEvents = {
     memberJoined: (member: Member) => unknown;
     memberRemoved: (member: Member | WSTeamMemberRemovedPayload["d"]) => unknown;
     memberUpdated: (member: Member | WSTeamMemberUpdatedPayload["d"], oldMember: Member | null) => unknown;
+    memberBanned: (member: MemberBan | WSTeamMemberBannedPayload["d"]) => unknown;
+    memberUnbanned: (member: MemberBan | WSTeamMemberUnbannedPayload["d"]) => unknown;
     webhookCreated: (webhook: Webhook) => unknown;
     webhookUpdated: (webhook: Webhook, oldWebhook: Webhook | null) => unknown;
     teamRolesUpdated: (roleIds: Role[] | number[]) => unknown;
