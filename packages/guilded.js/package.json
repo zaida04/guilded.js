@@ -1,6 +1,6 @@
 {
     "name": "guilded.js",
-    "version": "0.4.1",
+    "version": "0.4.2",
     "description": "A Node.js library for the Guilded.gg (https://www.guilded.gg/) API written in TypeScript, usable in either JavaScript or TypeScript projects.",
     "author": "Zaid \"Nico\" <contact@nico.engineer>",
     "license": "MIT",
@@ -20,8 +20,8 @@
     "dependencies": {
         "@discordjs/collection": "^0.5.0",
         "@guildedjs/common": "^2.1.0",
-        "@guildedjs/rest": "^2.2.1",
-        "@guildedjs/webhook-client": "0.0.2-dev",
+        "@guildedjs/rest": "^2.2.2",
+        "@guildedjs/webhook-client": "0.0.3-dev",
         "@guildedjs/ws": "^1.2.1"
     },
     "contributors": [
