@@ -1,0 +1,66 @@
+{
+    "name": "@guildedjs/gil",
+    "version": "0.0.1-dev",
+    "description": "Framework for guilded.js that allows you to build bots with ease.",
+    "author": "Zaid \"Nico\" <contact@nico.engineer>",
+    "license": "MIT",
+    "main": "dist/index.js",
+    "types": "types/index.d.ts",
+    "typedocMain": "lib/index.ts",
+    "scripts": {
+        "test": "npx ts-node test/index.ts",
+        "build": "npx tsc && npx gen-esm-wrapper . ./dist/index.mjs",
+        "prepublishOnly": "npx rimraf dist/ && npx rimraf types/ && yarn build"
+    },
+    "devDependencies": {
+        "dotenv": "^16.0.0",
+        "typescript": "4.6.3"
+    },
+    "dependencies": {
+        "colorette": "^2.0.16",
+        "guilded.js": "0.3.0"
+    },
+    "contributors": [
+        {
+            "name": "Zaid \"Nico\"",
+            "email": "contact@nico.engineer",
+            "url": "https://github.com/zaida04"
+        },
+        {
+            "name": "Skillz4Killz",
+            "email": "guildedjs@drskillz.33mail.com",
+            "url": "https://github.com/Skillz4Killz"
+        },
+        {
+            "name": "Uhuh \"Dylan\"",
+            "email": "dylan@panku.io",
+            "url": "https://github.com/uhuh"
+        }
+    ],
+    "exports": {
+        ".": {
+            "require": "./dist/index.js",
+            "import": "./dist/index.mjs"
+        },
+        "./": "./"
+    },
+    "keywords": [
+        "guilded",
+        "guildedjs",
+        "guilded.js",
+        "guilded-api"
+    ],
+    "files": [
+        "dist",
+        "types"
+    ],
+    "homepage": "https://github.com/guildedjs/guilded.js/tree/main/packages/framework#readme",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/guildedjs/guilded.js.git"
+    },
+    "bugs": {
+        "url": "https://github.com/guildedjs/guilded.js/issues"
+    },
+    "gitHead": "eee38a19e0bfa812d7136cc78a6bc99e0b402b0c"
+}
