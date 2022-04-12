@@ -232,8 +232,8 @@ export class Router {
     }
 
     /** Create a webhook */
-    createWebhook(serverId: string): Promise<RESTPostServerWebhooksResult> {
-        return this.rest.post<RESTPostServerWebhooksResult, RESTPostServerWebhooksBody>(ROUTES.serverWebhooks(serverId));
+    createWebhook(serverId: string, options: RESTPostServerWebhooksBody): Promise<RESTPostServerWebhooksResult> {
+        return this.rest.post<RESTPostServerWebhooksResult, RESTPostServerWebhooksBody>(ROUTES.serverWebhooks(serverId), options);
     }
 
     /** Get a server's webhooks */

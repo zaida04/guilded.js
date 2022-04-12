@@ -10,7 +10,7 @@ export default class GlobalWebhookManager extends CacheableStructManager<string,
 
     /** Create a webhook */
     createWebhook(serverId: string, options: RESTPostServerWebhooksBody): Promise<Webhook> {
-        return this.client.rest.router.createWebhook(serverId).then((data) => {
+        return this.client.rest.router.createWebhook(serverId, options).then((data) => {
             // This is in the case of which the WS gateway beats us to adding the message to the cache. If they haven't, then we do it ourselves.
             const existingWebhook = this.client.webhooks.cache.get(data.webhook.id);
             if (existingWebhook) return existingWebhook;
