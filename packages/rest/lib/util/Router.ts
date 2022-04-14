@@ -56,7 +56,7 @@ import type {
     UserSocialLink,
 } from "@guildedjs/guilded-api-typings";
 
-import type { RestManager } from "./RestManager";
+import type { RestManager } from "../RestManager";
 import { ROUTES } from "./routes";
 
 export class Router {

@@ -1,7 +1,8 @@
 import { RestManager } from "./RestManager";
-export * from "./constants";
+export * from "./errors/GuildedAPIError";
+export * from "./errors/PermissionsError";
 export * from "./RestManager";
-export * from "./RestManager";
-export * from "./routes";
 export * from "./typings";
+export * from "./util/constants";
+export * from "./util/routes";
 export default RestManager;

@@ -2,9 +2,10 @@ import { ROUTES } from "@guildedjs/common";
 import fetch, { Response } from "node-fetch";
 import { stringify } from "qs";
 
-import { GuildedAPIError } from "./GuildedAPIError";
-import { Router } from "./Router";
+import { GuildedAPIError } from "./errors/GuildedAPIError";
+import { PermissionsError } from "./errors/PermissionsError";
 import type { RestOptions } from "./typings";
+import { Router } from "./util/Router";
 
 export class RestManager {
     /** The bot token to be used for making requests. */
@@ -57,6 +58,10 @@ export class RestManager {
             }
 
             const parsedRequest = await request.json().catch(() => ({ message: "Cannot parse JSON Error Response." }));
+            if (request.status === 403 && parsedRequest.code === "ForbiddenError") {
+                console.log(parsedRequest);
+                throw new PermissionsError(parsedRequest.message, data.method, data.path, parsedRequest.meta?.missingPermissions);
+            }
             throw new GuildedAPIError(parsedRequest.message, data.method, data.path, request.status);
         }
 
