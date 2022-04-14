@@ -59,7 +59,6 @@ export class RestManager {
 
             const parsedRequest = await request.json().catch(() => ({ message: "Cannot parse JSON Error Response." }));
             if (request.status === 403 && parsedRequest.code === "ForbiddenError") {
-                console.log(parsedRequest);
                 throw new PermissionsError(parsedRequest.message, data.method, data.path, parsedRequest.meta?.missingPermissions);
             }
             throw new GuildedAPIError(parsedRequest.message, data.method, data.path, request.status);
