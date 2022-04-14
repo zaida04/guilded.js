@@ -15,9 +15,11 @@ This repo serves as a monorepo that houses several packages, mainly the `guilded
 
 ## 📦 Packages
 
--   `guilded.js` (**[GitHub](https://github.com/guildedjs/guilded.js/tree/main/packages/guilded.js#readme), [NPM](https://www.npmjs.com/package/guilded.js)**) - main package that provides a lib for the guilded.gg API. Comes with built in caching, structures, etc.
+-   `guilded.js` (**[GitHub](https://github.com/guildedjs/guilded.js/tree/main/packages/guilded.js#readme), [NPM](https://www.npmjs.com/package/guilded.js)**) - Main library that ties everything together. Has additional logic for caching.
+-   `@guildedjs/gil` (**[GitHub](https://github.com/guildedjs/guilded.js/tree/main/packages/gil#readme), [NPM](https://www.npmjs.com/package/@guildedjs/gil)**) - Framework allowing you to build bots with ease.
 -   `@guildedjs/guilded-api-types` (**[GitHub](https://github.com/guildedjs/guilded.js/tree/main/packages/guilded-api-typings#readme), [NPM](https://www.npmjs.com/package/@guildedjs/guilded-api-typings)**) - Interfacing directly with the API without using `guilded.js`? This package provides typings covering the entire API.
--   `@guildedjs/rest (WIP)` (**[GitHub](https://github.com/guildedjs/guilded.js/tree/main/packages/rest#readme), [NPM](https://www.npmjs.com/package/@guildedjs/rest)**) - Utility for making REST requests to the Guilded API. Includes ratelimit handling.
+-   `@guildedjs/webhook-client` (**[GitHub](https://github.com/guildedjs/guilded.js/tree/main/packages/webhook-client#readme), [NPM](https://www.npmjs.com/package/@guildedjs/webhook-client)**) - Library agnostic client for interacting with webhooks.
+-   `@guildedjs/rest` (**[GitHub](https://github.com/guildedjs/guilded.js/tree/main/packages/rest#readme), [NPM](https://www.npmjs.com/package/@guildedjs/rest)**) - Utility for making REST requests to the Guilded API. Includes ratelimit handling.
 -   `@guildedjs/ws` (**[GitHub](https://github.com/guildedjs/guilded.js/tree/main/packages/ws#readme), [NPM](https://www.npmjs.com/package/@guildedjs/ws)**) - Utility for connecting to Guilded's WebSocket gateway and receiving events.
 -   `@guildedjs/common` (**[GitHub](https://github.com/guildedjs/guilded.js/tree/main/packages/common#readme), [NPM](https://www.npmjs.com/package/@guildedjs/common)**) - Helper functions used across packages.
 
