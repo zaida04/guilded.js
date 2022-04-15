@@ -77,7 +77,12 @@ export class Message extends Base<ChatMessagePayload> {
 
     /** Get the author of this message */
     get author(): User | null {
-        return this.client.users.cache.get(this.id) ?? null;
+        return this.client.users.cache.get(this.createdById) ?? null;
+    }
+
+    /** The author id of the user who sent this message. */
+    get authorId(): string {
+        return this.createdByBotId ?? this.createdByWebhookId ?? this.createdById;
     }
 
     /* Update message content */
