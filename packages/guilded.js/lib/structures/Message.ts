@@ -1,4 +1,4 @@
-import type { ChatMessagePayload } from "@guildedjs/guilded-api-typings";
+import type { ChatMessagePayload, RESTPostChannelMessagesBody } from "@guildedjs/guilded-api-typings";
 import type Client from "./Client";
 import { Base } from "./Base";
 import type { User } from "./User";
@@ -83,5 +83,16 @@ export class Message extends Base<ChatMessagePayload> {
     /* Update message content */
     update(newContent: string): Promise<Message> {
         return this.client.messages.update(this.channelId, this.id, newContent).then(() => this);
+    }
+
+    /** Send a message in the same channel as this message. */
+    send(content: RESTPostChannelMessagesBody | string) {
+        return this.client.messages.send(this.channelId, content);
+    }
+
+    /** Send a message that replies to this message. It mentions the user who sent this message. */
+    reply(content: RESTPostChannelMessagesBody | string) {
+        if (typeof content === "string") content = { content };
+        return this.client.messages.send(this.channelId, { content: content.content, replyMessageIds: content.replyMessageIds ?? [this.id] });
     }
 }
