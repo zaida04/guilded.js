@@ -33,7 +33,7 @@ This repo serves as a monorepo that houses several packages, mainly the `guilded
 
 ## ⚡ Usage
 
-You can find extra examples [here](https://github.com/guildedjs/guilded.js/tree/main/examples)
+You can find extra examples [here](https://github.com/guildedjs/examples/tree/main/examples)
 
 ```ts
 const { Client } = require("guilded.js");
