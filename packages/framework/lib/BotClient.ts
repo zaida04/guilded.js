@@ -39,6 +39,50 @@ export default class BotClient extends Client {
         return this.options.botMention;
     }
 
+    async loadFile(result: any, dir: string, collection: Collection<string, any>): Promise<void> {
+        const [filename, file] = result;
+        const name = filename.substring(0, filename.length - 2);
+        const piece = file.default ? new file.default(this, name) : new file(this, name);
+
+        let cmd: Command | undefined = undefined;
+        if (dir === "commands" && piece.parentCommand) {
+            const subcommandNames = piece.parentCommand.split("-");
+            for (const subname of subcommandNames) {
+                // LOOK FOR MAIN COMMAND
+                if (!cmd) {
+                    const mainCmd = collection.get(subname);
+                    if (mainCmd) {
+                        cmd = mainCmd as Command;
+                        continue;
+                    } else {
+                        throw new Error(
+                            `You tried to create a subcommand named ${piece.name}. However, the parent command, ${subname}, was not found.`,
+                        );
+                    }
+                }
+
+                const subcmd = cmd?.subcommands?.get(subname) as Command;
+                if (subcmd) {
+                    cmd = subcmd;
+                    continue;
+                } else {
+                    throw new Error(
+                        `You tried to create a subcommand named ${piece.name} inside the main command ${cmd.name}. However, the parent command, ${subname}, was not found.`,
+                    );
+                }
+            }
+        }
+
+        if (cmd) {
+            if (!cmd.subcommands) cmd.subcommands = new Collection();
+            cmd.subcommands.set(piece.name || name, piece);
+        } else {
+            collection.set(piece.name || name, piece);
+        }
+
+        if (piece.init) await piece.init();
+    }
+
     /** Prepares the bot to run. Ideally used for loading files to the bot. */
     async init(): Promise<void> {
         await Promise.allSettled(
@@ -50,15 +94,7 @@ export default class BotClient extends Client {
             ].map(async ([dir, collection]) => {
                 try {
                     for await (const result of walk(path.join(__dirname, dir))) {
-                        if (!result) return;
-
-                        const [filename, file] = result;
-                        const name = filename.substring(0, filename.length - 2);
-                        const piece = file.default ? new file.default(this, name) : new file(this, name);
-
-                        collection.set(piece.name || name, piece);
-
-                        if (piece.init) await piece.init();
+                        await this.loadFile(result, dir, collection);
                     }
                 } catch (error) {
                     console.log(error);
@@ -76,14 +112,7 @@ export default class BotClient extends Client {
             ].map(async ([dir, collection]) => {
                 try {
                     for await (const result of walk(this.options.monitorDirPath ?? path.join(this.sourceFolderPath, dir))) {
-                        if (!result) return;
-
-                        const [filename, file] = result;
-                        const name = filename.substring(0, filename.length - 2);
-                        const piece = file.default ? new file.default(this, name) : new file(this, name);
-
-                        collection.set(piece.name || name, piece);
-                        if (piece.init) await piece.init();
+                        await this.loadFile(result, dir, collection);
                     }
                 } catch (error) {
                     console.log(error);
