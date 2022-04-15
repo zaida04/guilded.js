@@ -12,7 +12,9 @@
         "test": "npx nyc mocha -r ts-node/register ./packages/**/__tests__/*.test.ts",
         "test:build": "pnpm run build && pnpm run test",
         "prepublishOnly": "pnpm run lint && pnpm recursive run prepublishOnly",
-        "prerelease": "pnpm changeset version && pnpm install -r",
+        "prerelease": "pnpm run changeset && pnpm run changeset && pnpm install -r",
+        "changeset": "npx changeset",
+        "changeset:version": "npx changeset version",
         "prepare": "npx husky install",
         "prettier": "npx prettier --write **/*.{ts,js,json,yml,yaml,md}",
         "refresh": "npx ts-node scripts/refresh.ts"

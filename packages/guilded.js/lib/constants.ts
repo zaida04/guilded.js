@@ -14,3 +14,12 @@ export const constants = {
     },
 } as const;
 export type ClientEvent = typeof constants.clientEvents;
+
+export const ROUTES = {
+    AWS_CDN: "https://s3-us-west-2.amazonaws.com/www.guilded.gg/" as const,
+    BASE_DOMAIN: "www.guilded.gg" as const,
+    API_DOMAIN: "api.guilded.gg" as const,
+    CDN: "img.guildedcdn.com" as const,
+    IMAGE_CDN_DOMAIN: "img.guildedcdn.com" as const,
+    MEDIA_DOMAIN: "media.guilded.gg" as const,
+};

@@ -1,5 +1,5 @@
 import RestManager from "@guildedjs/rest";
-import WebsocketManager from "@guildedjs/ws";
+import { WebSocketManager } from "@guildedjs/ws";
 import { EventEmitter } from "node:events";
 import { ClientGatewayHandler } from "../gateway/ClientGatewayHandler";
 import GlobalChannelManager from "../managers/global/ChannelManager";
@@ -26,7 +26,7 @@ import type { Role } from "./Role";
 import type { CacheStructure } from "../cache";
 import GlobalWebhookManager from "../managers/global/WebhookManager";
 import type { Webhook } from "./Webhook";
-import { ClientUser, User } from "./User";
+import { ClientUser } from "./User";
 
 export class Client extends (EventEmitter as unknown as new () => TypedEmitter<ClientEvents>) {
     /** The time in milliseconds the Client connected */
@@ -39,7 +39,7 @@ export class Client extends (EventEmitter as unknown as new () => TypedEmitter<C
     });
 
     /** The websocket connection */
-    wsManager = new WebsocketManager({ token: this.options.token });
+    wsManager = new WebSocketManager({ token: this.options.token });
 
     /** The gateway event handlers will be processed by this manager. */
     gatewayHandler = new ClientGatewayHandler(this);
@@ -78,7 +78,7 @@ export class Client extends (EventEmitter as unknown as new () => TypedEmitter<C
 
     /** Connects the bot to the api. */
     login(opts?: { fresh?: boolean }): void {
-        if (opts?.fresh) this.wsManager = new WebsocketManager({ token: this.options.token });
+        if (opts?.fresh) this.wsManager = new WebSocketManager({ token: this.options.token });
         this.wsManager.emitter
             .on("error", (reason, err) => this.emit("error", `[WS] ${reason}`, err))
             .on("ready", (user) => {

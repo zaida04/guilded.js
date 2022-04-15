@@ -1,11 +1,10 @@
 /* eslint-disable @typescript-eslint/no-base-to-string */
-import { ROUTES } from "@guildedjs/common";
 import { SkeletonWSPayload, WSEvent, WSOpCodes, WSWelcomePayload } from "@guildedjs/guilded-api-typings";
 import { EventEmitter } from "events";
 import type TypedEmitter from "typed-emitter";
 import WebSocket from "ws";
 
-export default class WebSocketManager {
+export class WebSocketManager {
     /** The version of the websocket to connect to. */
     version = this.options.version ?? 1;
 
@@ -40,7 +39,7 @@ export default class WebSocketManager {
 
     /** The url that will be used to connect. Prioritizes proxy url and if not available uses the default base url for guidled. */
     get wsURL(): string {
-        return this.options.proxyURL ?? `wss://${ROUTES.WS_DOMAIN}/v${this.version}/websocket`;
+        return this.options.proxyURL ?? `wss://api.guilded.gg/v${this.version}/websocket`;
     }
 
     get reconnectAttemptExceeded(): boolean {

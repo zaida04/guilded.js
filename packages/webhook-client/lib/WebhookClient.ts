@@ -1,4 +1,3 @@
-import { ROUTES } from "@guildedjs/common";
 import type { RESTPostWebhookResult } from "@guildedjs/guilded-api-typings";
 import type { APIContent } from "@guildedjs/guilded-api-typings/dist/v1/structs/Webhook";
 import { RestManager } from "@guildedjs/rest";
@@ -30,7 +29,7 @@ export class WebhookClient {
         } else {
             throw new TypeError("You must provide either a webhook URL or a webhook ID & token in an object when constructing the Webhook Client");
         }
-        this.URL = `https://${ROUTES.MEDIA_DOMAIN}/webhooks/${this.id}/${this.token}`;
+        this.URL = `https://media.guilded.gg/webhooks/${this.id}/${this.token}`;
         this.rest = new RestManager({ proxyURL: this.URL, token: this.token });
     }
 
