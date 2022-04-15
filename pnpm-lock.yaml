@@ -60,21 +60,6 @@ importers:
       typedoc-plugin-remove-references: 0.0.6
       typescript: 4.6.3
 
-  packages/common:
-    specifiers:
-      '@discordjs/collection': ^0.5.0
-      '@guildedjs/guilded-api-typings': workspace:*
-      '@types/uuid': 8.3.4
-      typescript: 4.6.3
-      uuid: ^8.3.2
-    dependencies:
-      '@discordjs/collection': 0.5.0
-      uuid: 8.3.2
-    devDependencies:
-      '@guildedjs/guilded-api-typings': link:../guilded-api-typings
-      '@types/uuid': 8.3.4
-      typescript: 4.6.3
-
   packages/framework:
     specifiers:
       '@discordjs/collection': ^0.5.0
@@ -99,7 +84,6 @@ importers:
   packages/guilded.js:
     specifiers:
       '@discordjs/collection': ^0.5.0
-      '@guildedjs/common': workspace:*
       '@guildedjs/guilded-api-typings': workspace:*
       '@guildedjs/rest': workspace:*
       '@guildedjs/webhook-client': workspace:*
@@ -109,7 +93,6 @@ importers:
       typescript: 4.6.3
     dependencies:
       '@discordjs/collection': 0.5.0
-      '@guildedjs/common': link:../common
       '@guildedjs/rest': link:../rest
       '@guildedjs/webhook-client': link:../webhook-client
       '@guildedjs/ws': link:../ws
@@ -121,7 +104,6 @@ importers:
 
   packages/rest:
     specifiers:
-      '@guildedjs/common': workspace:*
       '@guildedjs/guilded-api-typings': workspace:*
       '@types/node-fetch': 2.6.1
       '@types/qs': ^6.9.7
@@ -129,7 +111,6 @@ importers:
       qs: ^6.10.3
       typescript: 4.6.3
     dependencies:
-      '@guildedjs/common': link:../common
       node-fetch: 2.6.7
       qs: 6.10.3
     devDependencies:
@@ -140,12 +121,10 @@ importers:
 
   packages/webhook-client:
     specifiers:
-      '@guildedjs/common': workspace:*
       '@guildedjs/guilded-api-typings': workspace:*
       '@guildedjs/rest': workspace:*
       typescript: 4.6.3
     dependencies:
-      '@guildedjs/common': link:../common
       '@guildedjs/rest': link:../rest
     devDependencies:
       '@guildedjs/guilded-api-typings': link:../guilded-api-typings
@@ -153,14 +132,12 @@ importers:
 
   packages/ws:
     specifiers:
-      '@guildedjs/common': workspace:*
       '@guildedjs/guilded-api-typings': workspace:*
       '@types/ws': 8.5.3
       typed-emitter: 2.1.0
       typescript: 4.6.3
       ws: 8.5.0
     dependencies:
-      '@guildedjs/common': link:../common
       '@guildedjs/guilded-api-typings': link:../guilded-api-typings
       '@types/ws': 8.5.3
       typed-emitter: 2.1.0
@@ -1651,10 +1628,6 @@ packages:
 
   /@types/semver/6.2.3:
     resolution: {integrity: sha512-KQf+QAMWKMrtBMsB8/24w53tEsxllMj6TuA80TT/5igJalLI/zm0L3oXRbIAl4Ohfc85gyHX/jhMwsVkmhLU4A==}
-    dev: true
-
-  /@types/uuid/8.3.4:
-    resolution: {integrity: sha512-c/I8ZRb51j+pYGAu5CrFMRxqZ2ke4y2grEBO5AUjgSkSk+qT2Ea+OdWElz/OiMf5MNpn2b17kuVBwZLQJXzihw==}
     dev: true
 
   /@types/ws/8.5.3:
@@ -6686,11 +6659,6 @@ packages:
     deprecated: Please upgrade  to version 7 or higher.  Older versions may use Math.random() in certain circumstances, which is known to be problematic.  See https://v8.dev/blog/math-random for details.
     hasBin: true
     dev: true
-
-  /uuid/8.3.2:
-    resolution: {integrity: sha512-+NYs2QeMWy+GWFOEm9xnn6HCDp0l7QBD7ml8zLUmJ+93Q5NF0NocErnwkTkXVFNiX3/fpC6afS8Dhb/gz7R7eg==}
-    hasBin: true
-    dev: false
 
   /v8-compile-cache-lib/3.0.0:
     resolution: {integrity: sha512-mpSYqfsFvASnSn5qMiwrr4VKfumbPyONLCOPmsR3A6pTY/r0+tSaVbgPWSAIuzbk3lCTa+FForeTiO+wBQGkjA==}

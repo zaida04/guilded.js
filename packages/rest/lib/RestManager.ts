@@ -1,4 +1,3 @@
-import { ROUTES } from "@guildedjs/common";
 import fetch, { Response } from "node-fetch";
 import { stringify } from "qs";
 
@@ -21,7 +20,7 @@ export class RestManager {
 
     /** The base url to send the request to. */
     get baseURL(): string {
-        return this.proxyURL ?? `https://${ROUTES.BASE_DOMAIN}/api/v${this.version}`;
+        return this.proxyURL ?? `https://www.guilded.gg/api/v${this.version}`;
     }
 
     public async make<T extends JSONB, B = RequestBodyObject, Q = never>(
