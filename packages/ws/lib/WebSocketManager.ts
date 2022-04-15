@@ -75,7 +75,7 @@ export default class WebSocketManager {
 
         this.socket.on("close", (code, reason) => {
             this._debug(`Gateway connection terminated with code ${code} for reason: ${reason.toString()}`);
-            if ((this.options.autoConnectOnErr ?? true) || !this.reconnectAttemptExceeded) {
+            if ((this.options.autoConnectOnErr ?? true) && !this.reconnectAttemptExceeded) {
                 this.reconnectAttemptAmount++;
                 return this.connect();
             }
