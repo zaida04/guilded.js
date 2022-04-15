@@ -6,7 +6,7 @@
     "author": "Zaid \"Nico\" <contact@nico.engineer>",
     "scripts": {
         "build": "pnpm recursive run build",
-        "lint": "npx eslint packages/ scripts/ examples/",
+        "lint": "npx eslint packages/ scripts/",
         "lint:fix": "pnpm run lint --fix",
         "docs": "npx rimraf docs && npx typedoc && npx ts-node scripts/post-docs.ts",
         "test": "npx nyc mocha -r ts-node/register ./packages/**/__tests__/*.test.ts",
