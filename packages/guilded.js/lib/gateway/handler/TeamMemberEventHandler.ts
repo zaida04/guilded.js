@@ -7,9 +7,9 @@ import type {
 } from "@guildedjs/guilded-api-typings";
 import { constants } from "../../constants";
 import { Member, MemberBan, User } from "../../structures";
-import GatewayEventHandler from "./GatewayEventHandler";
+import { GatewayEventHandler } from "./GatewayEventHandler";
 
-export default class TeamMemberEventHandler extends GatewayEventHandler {
+export class TeamMemberEventHandler extends GatewayEventHandler {
     teamMemberUpdated(data: WSTeamMemberUpdatedPayload): boolean {
         const existingMember = this.client.members.cache.get(TeamMemberEventHandler.buildMemberKey(data.d.serverId, data.d.userInfo.id));
         if (!existingMember) return this.client.emit(constants.clientEvents.TEAM_MEMBER_UPDATED, data.d, null);

@@ -1,6 +1,6 @@
 import { Base } from "./Base";
 import type { UserPayload, WSWelcomePayload } from "@guildedjs/guilded-api-typings";
-import type Client from "./Client";
+import type { Client } from "./Client";
 
 export class User extends Base<UserPayload> {
     /** The name for this user */

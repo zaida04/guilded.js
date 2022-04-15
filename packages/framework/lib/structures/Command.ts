@@ -1,7 +1,7 @@
 import type Collection from "@discordjs/collection";
 import type { Message } from "guilded.js";
 
-import type BotClient from "../BotClient";
+import type { BotClient } from "../BotClient";
 
 export abstract class Command {
     /** The command aliases are stored here. */

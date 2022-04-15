@@ -1,7 +1,7 @@
 import type { Client } from "../structures/Client";
-import MessageEventHandler from "./handler/MessageEventHandler";
-import TeamEventHandler from "./handler/TeamEventHandler";
-import TeamMemberEventHandler from "./handler/TeamMemberEventHandler";
+import { MessageEventHandler } from "./handler/MessageEventHandler";
+import { TeamEventHandler } from "./handler/TeamEventHandler";
+import { TeamMemberEventHandler } from "./handler/TeamMemberEventHandler";
 import type {
     SkeletonWSPayload,
     WSChatMessageCreatedPayload,
@@ -18,7 +18,7 @@ import type {
     WSTeamWebhookUpdatedPayload,
 } from "@guildedjs/guilded-api-typings";
 import { WebSocketEvents } from "@guildedjs/guilded-api-typings";
-import TeamWebhookEventHandler from "./handler/TeamWebhookEventHandler";
+import { TeamWebhookEventHandler } from "./handler/TeamWebhookEventHandler";
 
 export class ClientGatewayHandler {
     messageHandler = new MessageEventHandler(this.client);

@@ -1,7 +1,7 @@
 import { Argument } from "../structures/Argument";
 import type { CommandArgument } from "../structures/Command";
 
-export default class StringArgument extends Argument {
+export class StringArgument extends Argument {
     name = "string";
 
     execute(argument: CommandArgument, parameters: string[]): string | undefined {

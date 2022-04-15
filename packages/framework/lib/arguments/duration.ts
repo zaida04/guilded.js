@@ -1,7 +1,7 @@
 import { Argument } from "../structures/Argument";
 import type { CommandArgument } from "../structures/Command";
 
-export default class DurationArgument extends Argument {
+export class DurationArgument extends Argument {
     name = "duration";
 
     execute(argument: CommandArgument, parameters: string[]): number | undefined {

@@ -1,6 +1,6 @@
 import type { Message } from "guilded.js";
 
-import type BotClient from "../BotClient";
+import type { BotClient } from "../BotClient";
 
 export abstract class Monitor {
     /** Whether this monitor should ignore messages that are sent by bots. By default this is true. */

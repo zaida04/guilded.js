@@ -4,7 +4,7 @@ import { Base } from "../Base";
 
 export interface Doc {}
 
-export default class DocChannel extends Base {
+export class DocChannel extends Base {
     /** The docs in this channel. */
     readonly docs = new Collection<string, Doc>();
 

@@ -1,8 +1,8 @@
 import Collection from "@discordjs/collection";
 import { MemberBan } from "../../structures/Member";
-import CacheableStructManager from "./CacheableStructManager";
+import { CacheableStructManager } from "./CacheableStructManager";
 
-export default class GlobalGuildBanManager extends CacheableStructManager<string, MemberBan> {
+export class GlobalGuildBanManager extends CacheableStructManager<string, MemberBan> {
     /** Fetch a member ban in a server */
     fetch(serverId: string, userId: string): Promise<MemberBan> {
         return this.client.rest.router.getMemberBan(serverId, userId).then((data) => {

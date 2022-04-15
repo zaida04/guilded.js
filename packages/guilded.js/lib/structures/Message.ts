@@ -1,5 +1,5 @@
 import type { ChatMessagePayload, RESTPostChannelMessagesBody } from "@guildedjs/guilded-api-typings";
-import type Client from "./Client";
+import type { Client } from "./Client";
 import { Base } from "./Base";
 import type { User } from "./User";
 

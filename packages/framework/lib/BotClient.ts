@@ -8,7 +8,7 @@ import type { Inhibitor } from "./structures/Inhibitor";
 import type { Monitor } from "./structures/Monitor";
 import { walk } from "./utils/walk";
 
-export default class BotClient extends Client {
+export class BotClient extends Client {
     /** All your bot's monitors will be available here */
     monitors = new Collection<string, Monitor>();
     /** All your bot's commands will be available here */

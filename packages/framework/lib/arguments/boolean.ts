@@ -1,7 +1,7 @@
 import { Argument } from "../structures/Argument";
 import type { CommandArgument } from "../structures/Command";
 
-export default class BooleanArgument extends Argument {
+export class BooleanArgument extends Argument {
     name = "boolean";
 
     execute(argument: CommandArgument, parameters: string[]): boolean | undefined {

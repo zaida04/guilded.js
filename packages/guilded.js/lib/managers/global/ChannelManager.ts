@@ -1,3 +1,3 @@
-import GlobalManager from "./GlobalManager";
+import { GlobalManager } from "./GlobalManager";
 
-export default class GlobalChannelManager extends GlobalManager {}
+export class GlobalChannelManager extends GlobalManager {}

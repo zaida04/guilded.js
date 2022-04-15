@@ -3,7 +3,7 @@ import type { ChatMessageContent, RESTGetChannelMessagesQuery } from "@guildedjs
 import { Base } from "../Base";
 import type { Message } from "../Message";
 
-export default class Channel extends Base {
+export class Channel extends Base {
     /** Send a message to this channel. */
     send(content: ChatMessageContent | string): Promise<Message> {
         return this.client.messages.send(this.id, content);

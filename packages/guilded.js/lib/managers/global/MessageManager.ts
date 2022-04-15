@@ -1,9 +1,9 @@
 import type { RESTPostChannelMessagesBody, RESTGetChannelMessagesQuery } from "@guildedjs/guilded-api-typings";
 import { Message } from "../../structures/Message";
-import CacheableStructManager from "./CacheableStructManager";
+import { CacheableStructManager } from "./CacheableStructManager";
 import Collection from "@discordjs/collection";
 
-export default class GlobalMessageManager extends CacheableStructManager<string, Message> {
+export class GlobalMessageManager extends CacheableStructManager<string, Message> {
     /** Get a list of the latest 50 messages from a channel. */
     fetchMany(channelId: string, options: RESTGetChannelMessagesQuery): Promise<Collection<string, Message>> {
         return this.client.rest.router.getChannelMessages(channelId, options).then((data) => {

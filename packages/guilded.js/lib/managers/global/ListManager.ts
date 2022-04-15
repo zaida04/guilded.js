@@ -1,7 +1,7 @@
 import type { ListItemPayload, ListItemSummaryPayload, RESTPostListItemBody, RESTPutListItemBody } from "@guildedjs/guilded-api-typings";
-import GlobalManager from "./GlobalManager";
+import { GlobalManager } from "./GlobalManager";
 
-export default class GlobalListManager extends GlobalManager {
+export class GlobalListManager extends GlobalManager {
     /** Create a list item. */
     create(channelId: string, options: RESTPostListItemBody): Promise<ListItemPayload> {
         return this.client.rest.router.createListItem(channelId, options).then((data) => data.listItem);

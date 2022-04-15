@@ -2,7 +2,7 @@ import type { Message } from "guilded.js";
 
 import { Command } from "../structures/Command";
 
-export default class PingCommand extends Command {
+export class PingCommand extends Command {
     name = "ping";
 
     execute(message: Message): any {

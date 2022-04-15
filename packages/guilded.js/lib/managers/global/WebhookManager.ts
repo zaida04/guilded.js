@@ -1,9 +1,9 @@
 import Collection from "@discordjs/collection";
 import type { RESTPostServerWebhooksBody, RESTPutServerWebhookBody } from "@guildedjs/guilded-api-typings";
 import { Webhook } from "../../structures/Webhook";
-import CacheableStructManager from "./CacheableStructManager";
+import { CacheableStructManager } from "./CacheableStructManager";
 
-export default class GlobalWebhookManager extends CacheableStructManager<string, Webhook> {
+export class GlobalWebhookManager extends CacheableStructManager<string, Webhook> {
     get _shouldCacheWebhook() {
         return this.client.options.cache?.cacheWebhooks !== false;
     }

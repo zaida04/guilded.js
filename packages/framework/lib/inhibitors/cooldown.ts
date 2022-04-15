@@ -4,7 +4,7 @@ import type { Message } from "guilded.js";
 import type { Command } from "../structures/Command";
 import { Inhibitor } from "../structures/Inhibitor";
 
-export default class CooldownInhibitor extends Inhibitor {
+export class CooldownInhibitor extends Inhibitor {
     name = "cooldown";
     /** The collection of users that are in cooldown */
     membersInCooldown = new Collection<string, Cooldown>();

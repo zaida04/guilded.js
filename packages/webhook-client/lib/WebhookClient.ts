@@ -56,5 +56,3 @@ export interface WebhookExecuteResponse extends Omit<RESTPostWebhookResult, "con
     parsedContent: parsedMessage;
     rawContent: APIContent;
 }
-
-export default WebhookClient;

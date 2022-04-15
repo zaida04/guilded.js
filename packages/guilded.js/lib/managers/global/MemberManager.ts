@@ -1,10 +1,10 @@
 import { User } from "../../structures";
 import { Member, PartialMember } from "../../structures/Member";
-import CacheableStructManager from "./CacheableStructManager";
+import { CacheableStructManager } from "./CacheableStructManager";
 import Collection from "@discordjs/collection";
 import type { SocialLink, UserSocialLink } from "@guildedjs/guilded-api-typings";
 
-export default class GlobalMemberManager extends CacheableStructManager<string, Member> {
+export class GlobalMemberManager extends CacheableStructManager<string, Member> {
     /** Fetch a member from a server */
     fetch(serverId: string, memberId: string): Promise<Member> {
         return this.client.rest.router.getMember(serverId, memberId).then((data) => {

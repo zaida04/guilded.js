@@ -1,17 +1,17 @@
-import RestManager from "@guildedjs/rest";
+import { RestManager } from "@guildedjs/rest";
 import { WebSocketManager } from "@guildedjs/ws";
 import { EventEmitter } from "node:events";
 import { ClientGatewayHandler } from "../gateway/ClientGatewayHandler";
-import GlobalChannelManager from "../managers/global/ChannelManager";
-import GlobalDocManager from "../managers/global/DocManager";
-import GlobalForumManager from "../managers/global/ForumManager";
-import GlobalGroupManager from "../managers/global/GroupManager";
-import GlobalListManager from "../managers/global/ListManager";
-import GlobalMemberManager from "../managers/global/MemberManager";
-import GlobalMessageManager from "../managers/global/MessageManager";
-import GlobalRoleManager from "../managers/global/RoleManager";
-import GlobalUserManager from "../managers/global/UserManager";
-import GlobalMemberBanManager from "../managers/global/GuildBanManager";
+import { GlobalChannelManager } from "../managers/global/ChannelManager";
+import { GlobalDocManager } from "../managers/global/DocManager";
+import { GlobalForumManager } from "../managers/global/ForumManager";
+import { GlobalGroupManager } from "../managers/global/GroupManager";
+import { GlobalListManager } from "../managers/global/ListManager";
+import { GlobalMemberManager } from "../managers/global/MemberManager";
+import { GlobalMessageManager } from "../managers/global/MessageManager";
+import { GlobalRoleManager } from "../managers/global/RoleManager";
+import { GlobalUserManager } from "../managers/global/UserManager";
+import { GlobalGuildBanManager } from "../managers/global/GuildBanManager";
 import type { Message } from "./Message";
 import type TypedEmitter from "typed-emitter";
 import type {
@@ -24,7 +24,7 @@ import type {
 import type { Member, MemberBan } from "./Member";
 import type { Role } from "./Role";
 import type { CacheStructure } from "../cache";
-import GlobalWebhookManager from "../managers/global/WebhookManager";
+import { GlobalWebhookManager } from "../managers/global/WebhookManager";
 import type { Webhook } from "./Webhook";
 import { ClientUser } from "./User";
 
@@ -54,7 +54,7 @@ export class Client extends (EventEmitter as unknown as new () => TypedEmitter<C
     messages = new GlobalMessageManager(this);
     roles = new GlobalRoleManager(this);
     users = new GlobalUserManager(this);
-    bans = new GlobalMemberBanManager(this);
+    bans = new GlobalGuildBanManager(this);
     webhooks = new GlobalWebhookManager(this);
 
     /** The user belonging to this bot */
@@ -137,5 +137,3 @@ type ClientEvents = {
     teamRolesUpdated: (roleIds: Role[] | number[]) => unknown;
     unknownGatewayEvent: (data: any) => unknown;
 };
-
-export default Client;

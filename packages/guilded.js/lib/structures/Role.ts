@@ -1,4 +1,4 @@
-import type Client from "./Client";
+import type { Client } from "./Client";
 import { Base } from "./Base";
 
 export class Role extends Base<{ id: number; serverId: string }, number> {

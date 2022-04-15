@@ -1,7 +1,7 @@
 import type { RESTPutServerWebhookBody } from "@guildedjs/guilded-api-typings";
 import type { WebhookPayload } from "@guildedjs/guilded-api-typings/dist/v1/structs/Webhook";
 import { Base } from "./Base";
-import type Client from "./Client";
+import type { Client } from "./Client";
 import type { User } from "./User";
 
 /**

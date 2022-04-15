@@ -2,7 +2,7 @@ import type { Message } from "guilded.js";
 
 import { Monitor } from "../structures/Monitor";
 
-export default class MessageCollectorMonitor extends Monitor {
+export class MessageCollectorMonitor extends Monitor {
     execute(message: Message): void {
         const collector = this.client.messageCollectors.get(message.createdById);
         // This user has no collectors pending or the message is in a different channel

@@ -2,7 +2,7 @@ import Collection from "@discordjs/collection";
 import type { ListItemPayload } from "@guildedjs/guilded-api-typings";
 import { Base } from "../Base";
 
-export default class ListChannel extends Base {
+export class ListChannel extends Base {
     /** The items in this channel. */
     readonly items = new Collection<string, ListItemPayload>();
 

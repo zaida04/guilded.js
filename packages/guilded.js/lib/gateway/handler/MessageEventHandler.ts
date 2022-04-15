@@ -1,9 +1,9 @@
 import type { WSChatMessageCreatedPayload, WSChatMessageDeletedPayload, WSChatMessageUpdatedPayload } from "@guildedjs/guilded-api-typings";
 import { constants } from "../../constants";
 import { Message } from "../../structures/Message";
-import GatewayEventHandler from "./GatewayEventHandler";
+import { GatewayEventHandler } from "./GatewayEventHandler";
 
-export default class MessageEventHandler extends GatewayEventHandler {
+export class MessageEventHandler extends GatewayEventHandler {
     messageCreated(data: WSChatMessageCreatedPayload): boolean {
         // This is in the case that a REST request beats us to adding the message in the cache.
         const existingMessage = this.client.messages.cache.get(data.d.message.id);

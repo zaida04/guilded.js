@@ -12,7 +12,7 @@
         "test": "npx nyc mocha -r ts-node/register ./packages/**/__tests__/*.test.ts",
         "test:build": "pnpm run build && pnpm run test",
         "prepublishOnly": "pnpm run lint && pnpm recursive run prepublishOnly",
-        "prerelease": "pnpm run changeset && pnpm run changeset && pnpm install -r",
+        "prerelease": "pnpm run changeset && pnpm run changeset:version && pnpm install -r",
         "changeset": "npx changeset",
         "changeset:version": "npx changeset version",
         "prepare": "npx husky install",
@@ -46,6 +46,7 @@
         "ts-node": "10.7.0",
         "typedoc": "0.22.15",
         "typedoc-plugin-remove-references": "0.0.6",
+        "typedoc-plugin-rename-defaults": "^0.5.1",
         "typescript": "4.6.3"
     },
     "contributors": [

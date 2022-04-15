@@ -1,4 +1,4 @@
-import type Client from "./Client";
+import type { Client } from "./Client";
 import { Base } from "./Base";
 import type { UpgradedTeamMemberBanPayload, UpgradedTeamMemberPayload, UpgradedTeamMemberSummaryPayload } from "../typings";
 import type { TeamMemberPayload, UserSummaryPayload } from "@guildedjs/guilded-api-typings";

@@ -1,6 +1,6 @@
-import GlobalManager from "./GlobalManager";
+import { GlobalManager } from "./GlobalManager";
 
-export default class GlobalGroupManager extends GlobalManager {
+export class GlobalGroupManager extends GlobalManager {
     /** Add member to group */
     addMember(groupId: string, userId: string): Promise<void> {
         return this.client.rest.router.addMemberToGroup(groupId, userId).then(() => void 0);

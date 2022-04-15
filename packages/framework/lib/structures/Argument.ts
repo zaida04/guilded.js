@@ -1,6 +1,6 @@
 import type { Message } from "guilded.js";
 
-import type BotClient from "../BotClient";
+import type { BotClient } from "../BotClient";
 import type { Command, CommandArgument } from "./Command";
 
 export abstract class Argument {

@@ -1,9 +1,9 @@
 import type { WSTeamWebhookCreatedPayload, WSTeamWebhookUpdatedPayload } from "@guildedjs/guilded-api-typings";
 import { constants } from "../../constants";
 import { Webhook } from "../../structures/Webhook";
-import GatewayEventHandler from "./GatewayEventHandler";
+import { GatewayEventHandler } from "./GatewayEventHandler";
 
-export default class TeamWebhookEventHandler extends GatewayEventHandler {
+export class TeamWebhookEventHandler extends GatewayEventHandler {
     teamWebhookCreated(data: WSTeamWebhookCreatedPayload): boolean {
         const existingWebhook = this.client.webhooks.cache.get(data.d.webhook.id);
         if (existingWebhook) return this.client.emit(constants.clientEvents.TEAM_WEBHOOK_CREATED, existingWebhook);

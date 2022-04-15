@@ -2,7 +2,7 @@ import Collection from "@discordjs/collection";
 import type { ForumThreadPayload } from "@guildedjs/guilded-api-typings";
 import { Base } from "../Base";
 
-export default class ForumChannel extends Base {
+export class ForumChannel extends Base {
     /** The threads in this channel. */
     readonly threads = new Collection<string, ForumThreadPayload>();
 

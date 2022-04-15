@@ -1,4 +1,4 @@
-import BotClient from "../lib";
+import { BotClient } from "../lib";
 
 const bot = new BotClient({
     token: "test",
