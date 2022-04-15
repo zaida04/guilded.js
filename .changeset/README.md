@@ -13,4 +13,4 @@ The release steps follows this:
 
 -   "pnpm run prerelease"
 -   "pnpm i -r"
--   "pnpm run publish"
+-   "pnpm recursive publish"
