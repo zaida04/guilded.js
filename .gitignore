@@ -13,3 +13,4 @@ coverage/
 *.env
 docs/
 package-lock.json
+CHANGELOG.md
