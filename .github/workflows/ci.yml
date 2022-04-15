@@ -8,17 +8,22 @@ jobs:
             - name: Clone repo
               uses: actions/checkout@v3
 
+            - name: Install PNPM
+              uses: pnpm/action-setup@646cdf48217256a3d0b80361c5a50727664284f2
+              with:
+                  version: 6.32.7
+
             - name: Set up Node v16
               uses: actions/setup-node@v3
               with:
                   node-version: "16"
-                  cache: "yarn"
+                  cache: "pnpm"
 
             - name: Install dependencies
-              run: yarn install
+              run: pnpm install -r
 
             - name: Run linter
-              run: yarn lint
+              run: pnpm run lint
 
     typescript:
         name: TypeScript Build
@@ -27,17 +32,22 @@ jobs:
             - name: Checkout repository
               uses: actions/checkout@a12a3943b4bdde767164f792f33f40b04645d846 # tag=v3
 
+            - name: Install PNPM
+              uses: pnpm/action-setup@646cdf48217256a3d0b80361c5a50727664284f2
+              with:
+                  version: 6.32.7
+
             - name: Install Node v14
               uses: actions/setup-node@5b52f097d36d4b0b2f94ed6de710023fbb8b2236 # tag=v3
               with:
                   node-version: "16"
-                  cache: "yarn"
+                  cache: "pnpm"
 
             - name: Install dependencies
-              run: yarn install
+              run: pnpm install -r
 
             - name: Run TypeScript Compiler
-              run: yarn build
+              run: pnpm run build
 
     tests:
         name: Mocha tests
@@ -46,17 +56,22 @@ jobs:
             - name: Checkout repository
               uses: actions/checkout@a12a3943b4bdde767164f792f33f40b04645d846 # tag=v3
 
+            - name: Install PNPM
+              uses: pnpm/action-setup@646cdf48217256a3d0b80361c5a50727664284f2
+              with:
+                  version: 6.32.7
+
             - name: Install Node v14
               uses: actions/setup-node@5b52f097d36d4b0b2f94ed6de710023fbb8b2236 # tag=v3
               with:
                   node-version: "16"
-                  cache: "yarn"
+                  cache: "pnpm"
 
             - name: Install dependencies
-              run: yarn install
+              run: pnpm install -r
 
             - name: Run TypeScript Compiler
-              run: yarn build
+              run: pnpm run build
 
             - name: Run tests
-              run: yarn test
+              run: pnpm run test

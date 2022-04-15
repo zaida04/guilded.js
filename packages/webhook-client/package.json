@@ -9,15 +9,15 @@
     "typedocMain": "lib/index.ts",
     "scripts": {
         "build": "npx tsc && npx gen-esm-wrapper . ./dist/index.mjs",
-        "prepublishOnly": "npx rimraf dist/ && npx rimraf types/ && yarn build"
+        "prepublishOnly": "npx rimraf dist/ && npx rimraf types/ && pnpm run build"
     },
     "devDependencies": {
-        "@guildedjs/guilded-api-typings": "^2.2.0",
+        "@guildedjs/guilded-api-typings": "workspace:*",
         "typescript": "4.6.3"
     },
     "dependencies": {
-        "@guildedjs/common": "2.1.0",
-        "@guildedjs/rest": "2.3.2"
+        "@guildedjs/common": "workspace:*",
+        "@guildedjs/rest": "workspace:*"
     },
     "contributors": [
         {

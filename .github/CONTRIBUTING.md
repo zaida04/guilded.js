@@ -9,9 +9,9 @@ If you wish to contribute to the codebase or documentation, feel free to fork th
 To get ready to work on the codebase, please do the following:
 
 -   Fork & clone the repository, and make sure you're on the main branch
--   Run yarn install
+-   Run pnpm install -r
 -   Code your heart out!
--   Run yarn test to run ESLint and ensure any JSDoc changes are valid
+-   Run pnpm run test to run ESLint and ensure any JSDoc changes are valid
 -   Submit a pull request (Make sure you follow the conventional commit format)
 
 > Adapted from https://github.com/discordjs/discord.js/blob/master/.github/CONTRIBUTING.md

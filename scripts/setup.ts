@@ -1,5 +1,5 @@
-import { execSync } from "child_process";
+import { exec } from "child_process";
 import { join } from "path";
 
-const commands = ["yarn install", "yarn build"];
-commands.forEach((command) => execSync(command, { cwd: join(__dirname, "..") }));
+const stdout = (...args: any[]): void => console.log(args);
+["pnpm install -r", "pnpm run build"].forEach((command) => exec(command, { cwd: join(__dirname, "..") }, stdout));

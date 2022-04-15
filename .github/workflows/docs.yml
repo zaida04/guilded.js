@@ -11,20 +11,25 @@ jobs:
             - name: Checkout repository
               uses: actions/checkout@v3
 
+            - name: Install PNPM
+              uses: pnpm/action-setup@646cdf48217256a3d0b80361c5a50727664284f2
+              with:
+                  version: 6.32.7
+
             - name: Install Node v14
               uses: actions/setup-node@v3
               with:
                   node-version: "16"
-                  cache: "yarn"
+                  cache: "pnpm"
 
             - name: Install dependencies
-              run: yarn install
+              run: pnpm install
 
             - name: Build project
-              run: yarn build
+              run: pnpm run build
 
             - name: Build the docs
-              run: yarn docs
+              run: pnpm run docs
 
             - name: Commit the Docs
               uses: cpina/github-action-push-to-another-repository@main
