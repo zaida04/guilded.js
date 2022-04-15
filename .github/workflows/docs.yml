@@ -15,16 +15,16 @@ jobs:
               uses: actions/setup-node@v3
               with:
                   node-version: "16"
-                  cache: "yarn"
+                  cache: "pnpm"
 
             - name: Install dependencies
-              run: yarn install
+              run: pnpm install
 
             - name: Build project
-              run: yarn build
+              run: pnpm run build
 
             - name: Build the docs
-              run: yarn docs
+              run: pnpm run docs
 
             - name: Commit the Docs
               uses: cpina/github-action-push-to-another-repository@main

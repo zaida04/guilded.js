@@ -12,13 +12,13 @@ jobs:
               uses: actions/setup-node@v3
               with:
                   node-version: "16"
-                  cache: "yarn"
+                  cache: "pnpm"
 
             - name: Install dependencies
-              run: yarn install
+              run: pnpm install -r
 
             - name: Run linter
-              run: yarn lint
+              run: pnpm run lint
 
     typescript:
         name: TypeScript Build
@@ -31,13 +31,13 @@ jobs:
               uses: actions/setup-node@5b52f097d36d4b0b2f94ed6de710023fbb8b2236 # tag=v3
               with:
                   node-version: "16"
-                  cache: "yarn"
+                  cache: "pnpm"
 
             - name: Install dependencies
-              run: yarn install
+              run: pnpm install
 
             - name: Run TypeScript Compiler
-              run: yarn build
+              run: pnpm run build
 
     tests:
         name: Mocha tests
@@ -50,13 +50,13 @@ jobs:
               uses: actions/setup-node@5b52f097d36d4b0b2f94ed6de710023fbb8b2236 # tag=v3
               with:
                   node-version: "16"
-                  cache: "yarn"
+                  cache: "pnpm"
 
             - name: Install dependencies
-              run: yarn install
+              run: pnpm install
 
             - name: Run TypeScript Compiler
-              run: yarn build
+              run: pnpm run build
 
             - name: Run tests
-              run: yarn test
+              run: pnpm run test

@@ -5,18 +5,20 @@
     "description": "Overarching repository for the Guilded.JS repository",
     "author": "Zaid \"Nico\" <contact@nico.engineer>",
     "scripts": {
-        "build": "yarn workspaces run build",
+        "build": "pnpm recursive run build",
         "lint": "npx eslint packages/ scripts/ examples/",
-        "lint:fix": "yarn lint --fix",
+        "lint:fix": "pnpm run lint --fix",
         "docs": "npx rimraf docs && npx typedoc && npx ts-node scripts/post-docs.ts",
         "test": "npx nyc mocha -r ts-node/register ./packages/**/__tests__/*.test.ts",
-        "test:build": "yarn build && yarn test",
-        "prepublishOnly": "yarn lint && yarn workspaces run prepublishOnly",
+        "test:build": "pnpm run build && pnpm run test",
+        "prepublishOnly": "pnpm run lint && pnpm recursive run prepublishOnly",
+        "prerelease": "pnpm changeset version && pnpm install -r",
         "prepare": "npx husky install",
         "prettier": "npx prettier --write **/*.{ts,js,json,yml,yaml,md}",
         "refresh": "npx ts-node scripts/refresh.ts"
     },
     "devDependencies": {
+        "@changesets/cli": "^2.22.0",
         "@sapphire/eslint-config": "4.3.3",
         "@types/chai": "4.3.0",
         "@types/mocha": "9.1.0",
@@ -61,18 +63,8 @@
             "url": "https://github.com/uhuh"
         }
     ],
-    "workspaces": [
-        "packages/guilded-api-typings",
-        "packages/common",
-        "packages/ws",
-        "packages/rest",
-        "packages/webhook-client",
-        "packages/guilded.js",
-        "packages/*"
-    ],
     "engines": {
-        "npm": "please-use-yarn",
-        "yarn": ">= 1.22.10",
+        "npm": "npx only-allow pnpm",
         "node": ">= 16.0.0"
     }
 }

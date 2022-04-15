@@ -9,7 +9,7 @@
     "typedocMain": "lib/index.ts",
     "scripts": {
         "build": "npx tsc",
-        "prepublishOnly": "npx rimraf dist/ && yarn build"
+        "prepublishOnly": "npx rimraf dist/ && pnpm run build"
     },
     "devDependencies": {
         "typescript": "4.6.3"

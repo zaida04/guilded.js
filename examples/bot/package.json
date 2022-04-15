@@ -8,7 +8,7 @@
     "scripts": {
         "start": "node dist/index.js",
         "build": "npx tsc",
-        "dev": "yarn build && yarn start"
+        "dev": "npm run build && npm run start"
     },
     "devDependencies": {
         "@sapphire/ts-config": "^3.3.2",
