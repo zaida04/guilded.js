@@ -53,6 +53,16 @@ export class Member extends Base<UpgradedTeamMemberPayload> {
         return this.client.users.cache.get(this.id) ?? null;
     }
 
+    /** The username of this member */
+    get username(): string | null {
+        return this.user?.name ?? null;
+    }
+
+    /** Either the nickname or the username associated with this member. */
+    get displayName(): string | null {
+        return this.nickname ?? this.username;
+    }
+
     /** Get a list of the roles assigned to this member. */
     getRoles(): Promise<number[]> {
         return this.client.members.getRoles(this.serverId, this.id);
