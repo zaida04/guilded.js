@@ -41,7 +41,7 @@ export class BotClient extends Client {
 
     async loadFile(result: any, dir: string, collection: Collection<string, any>): Promise<void> {
         const [filename, file] = result;
-        const name = filename.substring(0, filename.length - 2);
+        const name = filename.substring(0, filename.length - 3);
         const piece = file.default ? new file.default(this, name) : new file(this, name);
 
         let cmd: Command | undefined = undefined;
