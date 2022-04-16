@@ -20,7 +20,7 @@ export class CommandsMonitor extends Monitor {
             else if (message.content.startsWith(this.client.botMention)) prefix = this.client.botMention;
         }
         // IF NO PREFIX IS USED, CANCEL
-        else if (!message.content.startsWith(prefix)) return;
+        if (!message.content.startsWith(prefix)) return;
 
         // `!ping testing` becomes `ping`
         const [commandName, ...parameters] = message.content.substring(prefix.length).split(" ");
@@ -98,7 +98,7 @@ export class CommandsMonitor extends Monitor {
                 if (!(await this.commandAllowed(message, command))) return;
 
                 await command.execute?.(message, args);
-                return this.logCommand(message, "Success", command.name);
+                return this.logCommand(message, "Success", command.parentCommand ? `${command.parentCommand}-${command.name}` :command.name);
             }
 
             // A subcommand was asked for in this command
