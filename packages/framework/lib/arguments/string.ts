@@ -20,3 +20,5 @@ export class StringArgument extends Argument {
         // shut up eslint
     }
 }
+
+export default StringArgument;

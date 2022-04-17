@@ -15,3 +15,5 @@ export class DurationArgument extends Argument {
         // shut up eslint
     }
 }
+
+export default DurationArgument;

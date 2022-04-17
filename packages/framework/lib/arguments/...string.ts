@@ -14,3 +14,5 @@ export class RemainingStringArgument extends Argument {
         // shut up eslint
     }
 }
+
+export default RemainingStringArgument

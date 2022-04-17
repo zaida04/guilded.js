@@ -20,3 +20,5 @@ export class SubcommandArgument extends Argument {
         // shut up eslint
     }
 }
+
+export default SubcommandArgument;

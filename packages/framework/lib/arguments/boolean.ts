@@ -16,3 +16,5 @@ export class BooleanArgument extends Argument {
         // shut up eslint
     }
 }
+
+export default BooleanArgument;
