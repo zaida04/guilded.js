@@ -27,8 +27,8 @@ export class TeamMemberEventHandler extends GatewayEventHandler {
         return this.client.emit(constants.clientEvents.TEAM_MEMBER_JOINED, newMember);
     }
     teamMemberRemoved(data: WSTeamMemberRemovedPayload): boolean {
-        if (this.client.options.cache?.removeMemberOnLeave) this.client.members.cache.delete(data.d.userId);
         const existingMember = this.client.members.cache.get(TeamMemberEventHandler.buildMemberKey(data.d.serverId, data.d.userId));
+        if (this.client.options.cache?.removeMemberOnLeave) this.client.members.cache.delete(TeamMemberEventHandler.buildMemberKey(data.d.serverId, data.d.userId));
         return this.client.emit(
             constants.clientEvents.TEAM_MEMBER_REMOVED,
             existingMember?._update({ kicked: data.d.isKick, banned: data.d.isBan }) ?? data.d,

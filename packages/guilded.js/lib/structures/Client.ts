@@ -111,7 +111,7 @@ interface ClientOptions {
         proxyURL?: string;
     };
     cache?: {
-        structureBuilder: <K, V>() => CacheStructure<K, V>;
+        structureBuilder?: <K, V>() => CacheStructure<K, V>;
         removeMemberOnLeave?: boolean;
         removeMemberBanOnUnban?: boolean;
         cacheMemberBans?: boolean;
