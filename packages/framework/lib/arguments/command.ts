@@ -20,3 +20,5 @@ export class CommandTypeArgument extends Argument {
         // shut up eslint
     }
 }
+
+export default CommandTypeArgument;

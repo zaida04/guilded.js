@@ -20,3 +20,5 @@ export async function* walk(dir: string): AsyncGenerator<any, any, unknown> {
     // LOAD DIRECTORIES AFTER FILES TO ALLOW SUBCOMMANDS TO HAVE COMMAND FILES MADE FIRST!
     for (const directory of directories) yield* walk(directory);
 }
+
+export default walk;

@@ -13,3 +13,5 @@ export class PingCommand extends Command {
         // comment to shut up eslint error
     }
 }
+
+export default PingCommand;

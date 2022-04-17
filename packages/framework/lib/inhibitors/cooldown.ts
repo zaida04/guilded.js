@@ -50,3 +50,5 @@ export interface Cooldown {
     used: number;
     timestamp: number;
 }
+
+export default CooldownInhibitor;

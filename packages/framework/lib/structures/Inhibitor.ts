@@ -11,3 +11,5 @@ export abstract class Inhibitor {
     abstract execute(message: Message, command: Command): Promise<boolean> | boolean;
     abstract init(): Promise<unknown> | unknown;
 }
+
+export default Inhibitor;

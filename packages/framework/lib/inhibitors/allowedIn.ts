@@ -23,3 +23,5 @@ export class AllowedInInhibitor extends Inhibitor {
         // shut up eslint
     }
 }
+
+export default AllowedInInhibitor;

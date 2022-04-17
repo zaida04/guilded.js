@@ -21,3 +21,5 @@ export class NumberArgument extends Argument {
         // shut up eslint
     }
 }
+
+export default NumberArgument;

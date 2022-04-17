@@ -41,7 +41,7 @@ export class BotClient extends Client {
 
     async loadFile(result: any, dir: string, collection: Collection<string, any>): Promise<void> {
         const [filename, file] = result;
-        const name = filename.substring(0, filename.length - 2);
+        const { name } = path.parse(filename);
         const piece = file.default ? new file.default(this, name) : new file(this, name);
 
         let cmd: Command | undefined = undefined;
@@ -279,3 +279,5 @@ export interface MessageCollector extends CollectMessagesOptions {
     /** Where the messages are stored if the amount to collect is more than 1. */
     messages: Message[];
 }
+
+export default BotClient;
