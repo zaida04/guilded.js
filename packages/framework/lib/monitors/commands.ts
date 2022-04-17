@@ -98,7 +98,7 @@ export class CommandsMonitor extends Monitor {
                 if (!(await this.commandAllowed(message, command))) return;
 
                 await command.execute?.(message, args);
-                return this.logCommand(message, "Success", command.parentCommand ? `${command.parentCommand}-${command.name}` :command.name);
+                return this.logCommand(message, "Success", command.parentCommand ? `${command.parentCommand}-${command.name}` : command.name);
             }
 
             // A subcommand was asked for in this command
