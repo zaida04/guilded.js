@@ -26,3 +26,5 @@ export class MessageCollectorMonitor extends Monitor {
         // shut up eslint
     }
 }
+
+export default MessageCollectorMonitor;

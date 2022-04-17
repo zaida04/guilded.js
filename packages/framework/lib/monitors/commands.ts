@@ -202,3 +202,5 @@ export class CommandsMonitor extends Monitor {
         return void 0;
     }
 }
+
+export default CommandsMonitor;
