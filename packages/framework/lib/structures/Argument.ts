@@ -11,3 +11,5 @@ export abstract class Argument {
     abstract execute(argument: CommandArgument, parameters: string[], message: Message, command: Command): Promise<unknown> | unknown;
     abstract init(): Promise<unknown> | unknown;
 }
+
+export default Argument;

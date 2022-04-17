@@ -1,5 +1,3 @@
-import { parse } from "path";
-
 import Collection from "@discordjs/collection";
 import { Client, Message } from "guilded.js";
 import path from "path";
@@ -43,7 +41,7 @@ export class BotClient extends Client {
 
     async loadFile(result: any, dir: string, collection: Collection<string, any>): Promise<void> {
         const [filename, file] = result;
-        const name = parse(filename).name;
+        const { name } = path.parse(filename);
         const piece = file.default ? new file.default(this, name) : new file(this, name);
 
         let cmd: Command | undefined = undefined;
@@ -281,3 +279,5 @@ export interface MessageCollector extends CollectMessagesOptions {
     /** Where the messages are stored if the amount to collect is more than 1. */
     messages: Message[];
 }
+
+export default BotClient;

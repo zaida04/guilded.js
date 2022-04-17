@@ -53,3 +53,5 @@ export interface CommandArgument {
     /** If the type is a number, you can use this to allow/disable non-integers. By default this is false. */
     allowDecimals?: boolean;
 }
+
+export default Command;
