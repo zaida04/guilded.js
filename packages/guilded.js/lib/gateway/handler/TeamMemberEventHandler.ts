@@ -11,12 +11,12 @@ import { GatewayEventHandler } from "./GatewayEventHandler";
 
 export class TeamMemberEventHandler extends GatewayEventHandler {
     teamMemberUpdated(data: WSTeamMemberUpdatedPayload): boolean {
-        const existingMember = this.client.members.cache.get(TeamMemberEventHandler.buildMemberKey(data.d.serverId, data.d.userInfo.id));
-        if (!existingMember) return this.client.emit(constants.clientEvents.TEAM_MEMBER_UPDATED, data.d, null);
+        const member = this.client.members.cache.get(TeamMemberEventHandler.buildMemberKey(data.d.serverId, data.d.userInfo.id));
+        if (!member) return this.client.emit(constants.clientEvents.TEAM_MEMBER_UPDATED, data.d, null);
 
-        const cloneExistingMember = existingMember._clone();
-        cloneExistingMember._update({ nickname: data.d.userInfo.nickname });
-        return this.client.emit(constants.clientEvents.TEAM_MEMBER_UPDATED, cloneExistingMember, existingMember);
+        const oldMember = member._clone();
+        member._update({ nickname: data.d.userInfo.nickname });
+        return this.client.emit(constants.clientEvents.TEAM_MEMBER_UPDATED, member, oldMember);
     }
     teamMemberJoined(data: WSTeamMemberJoinedPayload): boolean {
         const newMember = new Member(this.client, { ...data.d.member, serverId: data.d.serverId, id: data.d.member.user.id });
