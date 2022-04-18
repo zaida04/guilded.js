@@ -89,7 +89,7 @@ export class Message extends Base<ChatMessagePayload> {
 
     /** Get the member of this message (if in server) */
     get member(): Member | null {
-        return this.client.members.cache.get(buildMemberKey(this.serverId ?? "", this.authorId)) ?? null;
+        return this.serverId ? (this.client.members.cache.get(buildMemberKey(this.serverId, this.authorId)) ?? null) : null;
     }
 
     /* Update message content */
