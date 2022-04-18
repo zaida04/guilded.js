@@ -9,7 +9,7 @@ export class TeamEventHandler extends GatewayEventHandler {
         for (const m of data.d.memberRoleIds) {
             const member = this.client.members.cache.get(`${data.d.serverId}:${m.userId}`);
             if (!member) {
-                newMembers.push({ …m, serverId: data.d.serverId });
+                newMembers.push({ ...m, serverId: data.d.serverId });
                 continue;
             }
             oldMembers.push(member._clone());
