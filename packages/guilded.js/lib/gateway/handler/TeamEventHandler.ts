@@ -1,13 +1,14 @@
 import type { WSTeamRolesUpdatedPayload } from "@guildedjs/guilded-api-typings";
 import { constants } from "../../constants";
 import { GatewayEventHandler } from "./GatewayEventHandler";
+import { buildMemberKey } from "../../util";
 
 export class TeamEventHandler extends GatewayEventHandler {
     teamRolesUpdated(data: WSTeamRolesUpdatedPayload): boolean {
         const newMembers = [];
         const oldMembers = [];
         for (const m of data.d.memberRoleIds) {
-            const member = this.client.members.cache.get(`${data.d.serverId}:${m.userId}`);
+            const member = this.client.members.cache.get(buildMemberKey(data.d.serverId, m.userId));
             if (!member) {
                 newMembers.push({ ...m, serverId: data.d.serverId });
                 continue;
