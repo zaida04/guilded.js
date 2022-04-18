@@ -17,7 +17,11 @@ export class GlobalMessageManager extends CacheableStructManager<string, Message
     }
 
     /** Get details for a specific chat message from a chat channel. */
-    fetch(channelId: string, messageId: string): Promise<Message> {
+    async fetch(channelId: string, messageId: string, force?: boolean): Promise<Message> {
+        if (!force) {
+            const existingMessage = this.client.messages.cache.get(messageId);
+            if (existingMessage) return existingMessage;
+        }
         return this.client.rest.router.getChannelMessage(channelId, messageId).then((data) => {
             const newMessage = new Message(this.client, data.message);
             this.client.messages.cache.set(newMessage.id, newMessage);

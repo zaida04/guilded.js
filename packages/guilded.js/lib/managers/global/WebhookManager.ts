@@ -34,7 +34,11 @@ export class GlobalWebhookManager extends CacheableStructManager<string, Webhook
     }
 
     /** Get a webhook */
-    getWebhook(serverId: string, webhookId: string): Promise<Webhook> {
+    async getWebhook(serverId: string, webhookId: string, force?: boolean): Promise<Webhook> {
+        if (!force) {
+            const existingWebhook = this.client.webhooks.cache.get(webhookId);
+            if (existingWebhook) return existingWebhook;
+        }
         return this.client.rest.router.getWebhook(serverId, webhookId).then((data) => {
             const newWebhook = new Webhook(this.client, data.webhook);
             if (this._shouldCacheWebhook) this.cache.set(newWebhook.id, newWebhook);
