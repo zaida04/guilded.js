@@ -5,10 +5,10 @@ import { buildMemberKey } from "../../util";
 
 export class GlobalGuildBanManager extends CacheableStructManager<string, MemberBan> {
     /** Fetch a member ban in a server */
-    async fetch(serverId: string, userId: string, force?: boolean): Promise<MemberBan> {
+    fetch(serverId: string, userId: string, force?: boolean): Promise<MemberBan> {
         if (!force) {
             const existingMemberBan = this.client.bans.cache.get(buildMemberKey(serverId, userId));
-            if (existingMemberBan) return existingMemberBan;
+            if (existingMemberBan) return Promise.resolve(existingMemberBan);
         }
         return this.client.rest.router.getMemberBan(serverId, userId).then((data) => {
             const newMemberBan = new MemberBan(this.client, { ...data.serverMemberBan, serverId });
