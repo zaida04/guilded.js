@@ -7,11 +7,16 @@ import { buildMemberKey } from "../../util";
 
 export class GlobalMemberManager extends CacheableStructManager<string, Member> {
     /** Fetch a member from a server */
-    fetch(serverId: string, memberId: string): Promise<Member> {
+    fetch(serverId: string, memberId: string, force?: boolean): Promise<Member> {
+        const memberKey = buildMemberKey(serverId, memberId);
+        if (!force) {
+            const existingMember = this.client.members.cache.get(memberKey);
+            if (existingMember) return Promise.resolve(existingMember);
+        }
         return this.client.rest.router.getMember(serverId, memberId).then((data) => {
             const newMember = new Member(this.client, { ...data.member, serverId, id: data.member.user.id });
             this.client.users.cache.set(data.member.user.id, new User(this.client, data.member.user));
-            this.client.members.cache.set(buildMemberKey(serverId, newMember.id), newMember);
+            this.client.members.cache.set(memberKey, newMember);
             return newMember;
         });
     }
