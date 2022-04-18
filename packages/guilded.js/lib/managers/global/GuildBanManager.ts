@@ -1,6 +1,7 @@
 import Collection from "@discordjs/collection";
 import { MemberBan } from "../../structures/Member";
 import { CacheableStructManager } from "./CacheableStructManager";
+import { buildMemberKey } from "../../util";
 
 export class GlobalGuildBanManager extends CacheableStructManager<string, MemberBan> {
     /** Fetch a member ban in a server */
@@ -37,8 +38,8 @@ export class GlobalGuildBanManager extends CacheableStructManager<string, Member
     /** Unban a user from a server. Returns existing ban if cached. */
     unban(serverId: string, userId: string, removeBanIfCached = false): Promise<MemberBan | null> {
         return this.client.rest.router.unbanMember(serverId, userId).then((data) => {
-            const existingBan = this.client.bans.cache.get(`${serverId}:${userId}`);
-            if (this.client.options.cache?.removeMemberOnLeave || removeBanIfCached) this.client.bans.cache.delete(`${serverId}:${userId}`);
+            const existingBan = this.client.bans.cache.get(buildMemberKey(serverId, userId));
+            if (this.client.options.cache?.removeMemberOnLeave || removeBanIfCached) this.client.bans.cache.delete(buildMemberKey(serverId, userId));
             return existingBan ?? null;
         });
     }

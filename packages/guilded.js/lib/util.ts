@@ -28,3 +28,7 @@ export const ASSET_BUILDER = {
     TEAM_ICON: (hash: string, size: "Small" | "Medium" | "Large" = "Medium"): string =>
         formAssetURL("TeamAvatar", hash, IMG_EXTENSION.PNG, undefined, undefined, size),
 };
+
+export const buildMemberKey = (serverId: string, memberId: string): string => {
+    return `${serverId}:${memberId}`;
+}
