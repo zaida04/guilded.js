@@ -3,6 +3,7 @@ import { Member, PartialMember } from "../../structures/Member";
 import { CacheableStructManager } from "./CacheableStructManager";
 import Collection from "@discordjs/collection";
 import type { SocialLink, UserSocialLink } from "@guildedjs/guilded-api-typings";
+import { buildMemberKey } from "../../util";
 
 export class GlobalMemberManager extends CacheableStructManager<string, Member> {
     /** Fetch a member from a server */
@@ -10,7 +11,7 @@ export class GlobalMemberManager extends CacheableStructManager<string, Member> 
         return this.client.rest.router.getMember(serverId, memberId).then((data) => {
             const newMember = new Member(this.client, { ...data.member, serverId, id: data.member.user.id });
             this.client.users.cache.set(data.member.user.id, new User(this.client, data.member.user));
-            this.client.members.cache.set(`${serverId}:${newMember.id}`, newMember);
+            this.client.members.cache.set(buildMemberKey(serverId, newMember.id), newMember);
             return newMember;
         });
     }
@@ -29,7 +30,7 @@ export class GlobalMemberManager extends CacheableStructManager<string, Member> 
 
     /** Kick a member from a server */
     kick(serverId: string, memberId: string): Promise<Member | null> {
-        return this.client.rest.router.kickMember(serverId, memberId).then((_) => this.client.members.cache.get(`${serverId}:${memberId}`) ?? null);
+        return this.client.rest.router.kickMember(serverId, memberId).then((_) => this.client.members.cache.get(buildMemberKey(serverId, memberId)) ?? null);
     }
 
     /** Get a list of the roles assigned to a member using the id of the member. */

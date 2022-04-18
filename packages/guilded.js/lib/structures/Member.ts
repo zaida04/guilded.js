@@ -3,6 +3,7 @@ import { Base } from "./Base";
 import type { UpgradedTeamMemberBanPayload, UpgradedTeamMemberPayload, UpgradedTeamMemberSummaryPayload } from "../typings";
 import type { TeamMemberPayload, UserSummaryPayload } from "@guildedjs/guilded-api-typings";
 import type { User } from "./User";
+import { buildMemberKey } from "../util";
 
 export class Member extends Base<UpgradedTeamMemberPayload> {
     /** The ID of the server this role belongs to */
@@ -133,7 +134,7 @@ export class MemberBan extends Base<UpgradedTeamMemberBanPayload> {
     target: UserSummaryPayload;
 
     constructor(client: Client, data: UpgradedTeamMemberBanPayload) {
-        const transformedBanId = `${data.serverId}:${data.user.id}`;
+        const transformedBanId = buildMemberKey(data.serverId, data.user.id);
         super(client, { ...data, id: transformedBanId });
         this.serverId = data.serverId;
         this.createdAt = new Date(data.createdAt);

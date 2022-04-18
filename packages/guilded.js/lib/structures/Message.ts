@@ -2,6 +2,8 @@ import type { ChatMessagePayload, RESTPostChannelMessagesBody } from "@guildedjs
 import type { Client } from "./Client";
 import { Base } from "./Base";
 import type { User } from "./User";
+import type { Member } from "./Member";
+import { buildMemberKey } from "../util";
 
 export enum MessageType {
     Default,
@@ -83,6 +85,11 @@ export class Message extends Base<ChatMessagePayload> {
     /** The author id of the user who sent this message. */
     get authorId(): string {
         return this.createdByBotId ?? this.createdByWebhookId ?? this.createdById;
+    }
+
+    /** Get the member of this message (if in server) */
+    get member(): Member | null {
+        return this.serverId ? (this.client.members.cache.get(buildMemberKey(this.serverId, this.authorId)) ?? null) : null;
     }
 
     /* Update message content */
