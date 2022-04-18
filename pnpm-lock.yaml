@@ -66,13 +66,13 @@ importers:
 
   packages/framework:
     specifiers:
-      '@discordjs/collection': ^0.5.0
+      '@discordjs/collection': ^0.6.0
       colorette: ^2.0.16
       dotenv: ^16.0.0
       guilded.js: workspace:*
       typescript: 4.6.3
     dependencies:
-      '@discordjs/collection': 0.5.0
+      '@discordjs/collection': 0.6.0
       colorette: 2.0.16
       guilded.js: link:../guilded.js
     devDependencies:
@@ -87,7 +87,7 @@ importers:
 
   packages/guilded.js:
     specifiers:
-      '@discordjs/collection': ^0.5.0
+      '@discordjs/collection': ^0.6.0
       '@guildedjs/guilded-api-typings': workspace:*
       '@guildedjs/rest': workspace:*
       '@guildedjs/webhook-client': workspace:*
@@ -96,7 +96,7 @@ importers:
       typed-emitter: 2.1.0
       typescript: 4.6.3
     dependencies:
-      '@discordjs/collection': 0.5.0
+      '@discordjs/collection': 0.6.0
       '@guildedjs/rest': link:../rest
       '@guildedjs/webhook-client': link:../webhook-client
       '@guildedjs/ws': link:../ws
@@ -546,8 +546,8 @@ packages:
       '@cspotcode/source-map-consumer': 0.8.0
     dev: true
 
-  /@discordjs/collection/0.5.0:
-    resolution: {integrity: sha512-3Vr3y4/Kl6ThOsD/cbXkK4JmjawQahbM3ojHpD6XyTEOG4fwZFMYH/NTWKFd5WZUw38iQsvGC4Kt4VkL++1hFQ==}
+  /@discordjs/collection/0.6.0:
+    resolution: {integrity: sha512-Ieaetb36l0nmAS5X9Upqk4W7euAO6FdXPxn3I8vBAKEcoIzEZI1mcVcPfCfagGJZSgBKpENnAnKkP4GAn+MV8w==}
     engines: {node: '>=16.9.0'}
     dev: false
 

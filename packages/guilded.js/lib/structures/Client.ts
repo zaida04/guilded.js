@@ -20,9 +20,9 @@ import type {
     WSTeamMemberRemovedPayload,
     WSTeamMemberUnbannedPayload,
     WSTeamMemberUpdatedPayload,
+    TeamMemberRoleIdsPayload,
 } from "@guildedjs/guilded-api-typings";
 import type { Member, MemberBan } from "./Member";
-import type { Role } from "./Role";
 import type { CacheStructure } from "../cache";
 import { GlobalWebhookManager } from "../managers/global/WebhookManager";
 import type { Webhook } from "./Webhook";
@@ -134,6 +134,6 @@ type ClientEvents = {
     memberUnbanned: (member: MemberBan | WSTeamMemberUnbannedPayload["d"]) => unknown;
     webhookCreated: (webhook: Webhook) => unknown;
     webhookUpdated: (webhook: Webhook, oldWebhook: Webhook | null) => unknown;
-    teamRolesUpdated: (roleIds: Role[] | number[]) => unknown;
+    rolesUpdated: (members: (Member | TeamMemberRoleIdsPayload & { serverId: string })[], oldMembers: Member[]) => unknown;
     unknownGatewayEvent: (data: any) => unknown;
 };
