@@ -18,3 +18,8 @@ export interface TeamMemberBanPayload {
     createdBy: string;
     createdAt: string;
 }
+
+export interface TeamMemberRoleIdsPayload {
+    userId: string;
+    roleIds: number[];
+}

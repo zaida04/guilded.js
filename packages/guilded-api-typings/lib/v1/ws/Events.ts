@@ -1,4 +1,4 @@
-import type { ChatMessagePayload, TeamMemberBanPayload, TeamMemberPayload } from "../structs";
+import type { ChatMessagePayload, TeamMemberBanPayload, TeamMemberPayload, TeamMemberRoleIdsPayload } from "../structs";
 import type { WebhookPayload } from "../structs/Webhook";
 
 export enum WSOpCodes {
@@ -123,7 +123,7 @@ export interface WSTeamMemberUnbannedPayload extends SkeletonWSPayload {
 export interface WSTeamRolesUpdatedPayload extends SkeletonWSPayload {
     d: {
         serverId: string;
-        memberRoleIds: unknown[];
+        memberRoleIds: TeamMemberRoleIdsPayload[];
     };
     t: WSEvent["teamRolesUpdated"];
 }
