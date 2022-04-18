@@ -15,6 +15,6 @@ export class TeamEventHandler extends GatewayEventHandler {
             oldMembers.push(member._clone());
             newMembers.push(member._update({ roleIds: m.roleIds }));
         }
-        return this.client.emit(constants.clientEvents.TEAM_ROLES_UPATED, data.d.serverId, newMembers, oldMembers)
+        return this.client.emit(constants.clientEvents.TEAM_ROLES_UPATED, newMembers, oldMembers)
     }
 }

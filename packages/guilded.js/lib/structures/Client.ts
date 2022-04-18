@@ -134,6 +134,6 @@ type ClientEvents = {
     memberUnbanned: (member: MemberBan | WSTeamMemberUnbannedPayload["d"]) => unknown;
     webhookCreated: (webhook: Webhook) => unknown;
     webhookUpdated: (webhook: Webhook, oldWebhook: Webhook | null) => unknown;
-    rolesUpdated: (serverId: string, members: (Member | TeamMemberRoleIdsPayload)[], oldMembers: Member[]) => unknown;
+    rolesUpdated: (members: (Member | TeamMemberRoleIdsPayload)[], oldMembers: Member[]) => unknown;
     unknownGatewayEvent: (data: any) => unknown;
 };
