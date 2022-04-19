@@ -2,7 +2,7 @@
     "cleanOutputDir": true,
     "entryPointStrategy": "resolve",
     "entryPoints": [
-        "packages/framework/lib/index.ts",
+        "packages/gil/lib/index.ts",
         "packages/guilded-api-typings/lib/index.ts",
         "packages/guilded.js/lib/index.ts",
         "packages/rest/lib/index.ts",

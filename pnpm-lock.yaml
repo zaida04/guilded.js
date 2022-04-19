@@ -64,7 +64,7 @@ importers:
       typedoc-plugin-rename-defaults: 0.5.1_typedoc@0.22.15
       typescript: 4.6.3
 
-  packages/framework:
+  packages/gil:
     specifiers:
       '@discordjs/collection': ^0.6.0
       colorette: ^2.0.16

@@ -55,7 +55,7 @@
         "dist",
         "types"
     ],
-    "homepage": "https://github.com/guildedjs/guilded.js/tree/main/packages/framework#readme",
+    "homepage": "https://github.com/guildedjs/guilded.js/tree/main/packages/gil#readme",
     "repository": {
         "type": "git",
         "url": "git+https://github.com/guildedjs/guilded.js.git"
