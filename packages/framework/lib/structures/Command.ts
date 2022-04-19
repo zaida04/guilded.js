@@ -35,7 +35,7 @@ export interface CommandArgument {
     /** The name of the argument. Useful for when you need to alert the user X arg is missing. */
     name: string;
     /** The type of the argument you would like. Defaults to string. */
-    type?: "number" | "string" | "...strings" | "boolean" | "duration" | "subcommand";
+    type?: "number" | "string" | "...string" | "boolean" | "duration" | "subcommand";
     /** The function that runs if this argument is required and is missing. */
     missing?: (message: Message) => unknown;
     /** Whether or not this argument is required. Defaults to true. */
