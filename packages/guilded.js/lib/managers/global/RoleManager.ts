@@ -7,12 +7,12 @@ export class GlobalRoleManager extends GlobalManager {
     }
 
     /** Assign role to member */
-    addRoleToMember(memberId: string, roleId: number): Promise<void> {
-        return this.client.rest.router.assignRoleToMember(memberId, roleId).then(() => void 0);
+    addRoleToMember(serverId: string, memberId: string, roleId: number): Promise<void> {
+        return this.client.rest.router.assignRoleToMember(serverId, memberId, roleId).then(() => void 0);
     }
 
     /** Remove role from member */
-    removeRoleFromMember(memberId: string, roleId: number): Promise<void> {
-        return this.client.rest.router.removeRoleFromMember(memberId, roleId).then(() => void 0);
+    removeRoleFromMember(serverId: string, memberId: string, roleId: number): Promise<void> {
+        return this.client.rest.router.removeRoleFromMember(serverId, memberId, roleId).then(() => void 0);
     }
 }

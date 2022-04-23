@@ -222,13 +222,13 @@ export class Router {
     }
 
     /** Assign role to member */
-    assignRoleToMember(userId: string, roleId: number): Promise<RESTPutMemberRoleResult> {
-        return this.rest.put<RESTPutMemberRoleResult>(ROUTES.memberRole(userId, roleId));
+    assignRoleToMember(serverId: string, userId: string, roleId: number): Promise<RESTPutMemberRoleResult> {
+        return this.rest.put<RESTPutMemberRoleResult>(ROUTES.memberRole(serverId, userId, roleId));
     }
 
     /** Remove role to member */
-    removeRoleFromMember(userId: string, roleId: number): Promise<RESTDeleteMemberRoleResult> {
-        return this.rest.put<RESTDeleteMemberRoleResult>(ROUTES.memberRole(userId, roleId));
+    removeRoleFromMember(serverId: string, userId: string, roleId: number): Promise<RESTDeleteMemberRoleResult> {
+        return this.rest.delete<RESTDeleteMemberRoleResult>(ROUTES.memberRole(serverId, userId, roleId));
     }
 
     /** Create a webhook */
