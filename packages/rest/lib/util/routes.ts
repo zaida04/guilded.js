@@ -40,7 +40,7 @@ export const ROUTES = {
     groupMember: (groupId: string, userId: string) => `/groups/${groupId}/members/${userId}` as const,
 
     // Role Memberships Endpoints
-    memberRole: (memberId: string, roleId: number) => `/members/${memberId}/roles/${roleId}` as const,
+    memberRole: (serverId: string, memberId: string, roleId: number) => `/servers/${serverId}/members/${memberId}/roles/${roleId}` as const,
 
     // Webhook Endpoints
     serverWebhooks: (serverId: string) => `/servers/${serverId}/webhooks`,

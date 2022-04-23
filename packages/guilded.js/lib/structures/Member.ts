@@ -86,12 +86,12 @@ export class Member extends Base<UpgradedTeamMemberPayload> {
 
     /** Add role to this member */
     addRole(roleId: number): Promise<void> {
-        return this.client.roles.addRoleToMember(this.id, roleId);
+        return this.client.roles.addRoleToMember(this.serverId, this.id, roleId);
     }
 
     /** Remove role from this member */
     removeRole(roleId: number): Promise<void> {
-        return this.client.roles.removeRoleFromMember(this.id, roleId);
+        return this.client.roles.removeRoleFromMember(this.serverId, this.id, roleId);
     }
 
     /** Kick this user */
