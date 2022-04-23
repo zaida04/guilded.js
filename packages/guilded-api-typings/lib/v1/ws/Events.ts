@@ -69,6 +69,8 @@ export interface WSChatMessageDeletedPayload extends SkeletonWSPayload {
         message: {
             id: string;
             channelId: string;
+            serverId: string;
+            isPrivate: boolean;
             deletedAt: string;
         };
     };
