@@ -228,7 +228,7 @@ export class Router {
 
     /** Remove role to member */
     removeRoleFromMember(serverId: string, userId: string, roleId: number): Promise<RESTDeleteMemberRoleResult> {
-        return this.rest.put<RESTDeleteMemberRoleResult>(ROUTES.memberRole(serverId, userId, roleId));
+        return this.rest.delete<RESTDeleteMemberRoleResult>(ROUTES.memberRole(serverId, userId, roleId));
     }
 
     /** Create a webhook */
