@@ -62,9 +62,12 @@ export class CommandsMonitor extends Monitor {
         const user = bgGreen(black(`${""}(${message.createdById})`));
         const guild = bgMagenta(black(`${serverName}${message.serverId ? `(${message.serverId})` : ""}`));
 
-        console.log(`${bgBlue(`[${this.getTime()}]`)} => ${command} by ${user} in ${guild} with Message ID: ${message.id}`);
+        console.log(`${bgBlue(`[${this.client.getTime()}]`)} ${command} by ${user} in ${guild} with Message ID: ${message.id}`);
     }
 
+    /**
+     * @deprecated use Client.getTime()
+     */
     getTime(): string {
         const now = new Date();
         const hours = now.getHours();
