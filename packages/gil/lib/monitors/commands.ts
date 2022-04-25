@@ -65,24 +65,6 @@ export class CommandsMonitor extends Monitor {
         console.log(`${bgBlue(`[${this.client.getTime()}]`)} ${command} by ${user} in ${guild} with Message ID: ${message.id}`);
     }
 
-    /**
-     * @deprecated use Client.getTime()
-     */
-    getTime(): string {
-        const now = new Date();
-        const hours = now.getHours();
-        const minute = now.getMinutes();
-
-        let hour = hours;
-        let amOrPm = `AM`;
-        if (hour > 12) {
-            amOrPm = `PM`;
-            hour -= 12;
-        }
-
-        return `${hour >= 10 ? hour : `0${hour}`}:${minute >= 10 ? minute : `0${minute}`} ${amOrPm}`;
-    }
-
     async executeCommand(message: Message, command: Command, parameters: string[]): Promise<void> {
         try {
             // bot.slowmode.set(message.author.id, message.timestamp);
