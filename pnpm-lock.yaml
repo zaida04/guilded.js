@@ -5,7 +5,7 @@ importers:
   .:
     specifiers:
       '@changesets/cli': ^2.22.0
-      '@sapphire/eslint-config': 4.3.3
+      '@sapphire/eslint-config': 4.3.4
       '@types/chai': 4.3.1
       '@types/mocha': 9.1.1
       '@types/rimraf': 3.0.2
@@ -35,7 +35,7 @@ importers:
       typescript: 4.6.3
     devDependencies:
       '@changesets/cli': 2.22.0
-      '@sapphire/eslint-config': 4.3.3
+      '@sapphire/eslint-config': 4.3.4
       '@types/chai': 4.3.1
       '@types/mocha': 9.1.1
       '@types/rimraf': 3.0.2
@@ -1524,8 +1524,8 @@ packages:
       '@octokit/openapi-types': 11.2.0
     dev: true
 
-  /@sapphire/eslint-config/4.3.3:
-    resolution: {integrity: sha512-A2BSta86QVzdeYlRj9sbjnI/8pfYKcX/SQencJvUy02l603ErOPpWUn9eHhnLb1/PHaQNOWu27aKPYoQEoofPA==}
+  /@sapphire/eslint-config/4.3.4:
+    resolution: {integrity: sha512-5OgfdNAjuzDUzz7PwkHAbGX426/MzsW4gcLaTz8eUFLOljUKJDAKy3mSNmQTCfC+ipVySzQ0i4AWgZftfsfjFQ==}
     engines: {node: '>=v14.0.0', npm: '>=7.0.0'}
     dependencies:
       '@typescript-eslint/eslint-plugin': 5.20.0_81f0d1a74f014d44d273bd1612c85fd9
