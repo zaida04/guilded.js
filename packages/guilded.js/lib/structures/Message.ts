@@ -105,6 +105,6 @@ export class Message extends Base<ChatMessagePayload> {
     /** Send a message that replies to this message. It mentions the user who sent this message. */
     reply(content: RESTPostChannelMessagesBody | string) {
         if (typeof content === "string") content = { content };
-        return this.client.messages.send(this.channelId, { content: content.content, replyMessageIds: content.replyMessageIds ?? [this.id] });
+        return this.client.messages.send(this.channelId, { ...content, replyMessageIds: content.replyMessageIds ?? [this.id] });
     }
 }

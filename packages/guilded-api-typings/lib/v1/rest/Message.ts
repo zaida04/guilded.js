@@ -10,6 +10,8 @@ export interface RESTPostChannelMessagesResult {
 export interface RESTPostChannelMessagesBody {
     /** Whether the message can only be seen by those mentioned or replied to */
     isPrivate?: boolean;
+    /** If set, this message will not notify any mentioned users or roles. */
+    isSilent?: boolean;
     /** The id(s) of the messages this message is a reply to */
     replyMessageIds?: string[];
     /** The message content. */

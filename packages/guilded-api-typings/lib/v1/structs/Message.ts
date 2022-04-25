@@ -1,12 +1,3 @@
-export interface ChatMessageContent {
-    /** If set, this message will only be seen by those mentioned or replied to. */
-    isPrivate?: boolean;
-    /** The ids of the messages that this will be replying to. */
-    replyMessageIds?: string[];
-    /** The message content to create. */
-    content: string;
-}
-
 export interface ChatMessagePayload {
     /** The id of the message */
     id: string;
