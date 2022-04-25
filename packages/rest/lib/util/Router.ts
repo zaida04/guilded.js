@@ -1,5 +1,4 @@
 import type {
-    ChatMessageContent,
     RESTDeleteChannelMessageResult,
     RESTDeleteDocResult,
     RESTDeleteGroupMemberResult,
@@ -63,7 +62,7 @@ export class Router {
     constructor(public readonly rest: RestManager) {}
 
     /** Send a message to a channel */
-    createChannelMessage(channelId: string, content: ChatMessageContent | string): Promise<RESTPostChannelMessagesResult> {
+    createChannelMessage(channelId: string, content: RESTPostChannelMessagesBody | string): Promise<RESTPostChannelMessagesResult> {
         if (typeof content === "string") content = { content };
 
         return this.rest.post<RESTPostChannelMessagesResult, RESTPostChannelMessagesBody>(ROUTES.channelMessages(channelId), content);

@@ -1,11 +1,11 @@
 import type Collection from "@discordjs/collection";
-import type { ChatMessageContent, RESTGetChannelMessagesQuery } from "@guildedjs/guilded-api-typings";
+import type { RESTPostChannelMessagesBody, RESTGetChannelMessagesQuery } from "@guildedjs/guilded-api-typings";
 import { Base } from "../Base";
 import type { Message } from "../Message";
 
 export class Channel extends Base {
     /** Send a message to this channel. */
-    send(content: ChatMessageContent | string): Promise<Message> {
+    send(content: RESTPostChannelMessagesBody | string): Promise<Message> {
         return this.client.messages.send(this.id, content);
     }
 
