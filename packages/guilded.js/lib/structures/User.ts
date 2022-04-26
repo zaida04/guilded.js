@@ -8,9 +8,9 @@ export class User extends Base<UserPayload> {
     /** The type of this user */
     readonly type: UserType;
     /** The avatar image associated with this user */
-    readonly avatar?: string;
+    avatar: string | null = null;
     /** The banner image associated with this user */
-    readonly banner?: string;
+    banner: string | null = null;
     /** When this user was created */
     readonly createdAt: Date | null;
 
@@ -19,8 +19,21 @@ export class User extends Base<UserPayload> {
         this.name = data.name;
         this.createdAt = new Date(data.createdAt);
         this.type = data.type === "bot" ? UserType.Bot : UserType.User;
-        this.avatar = data.avatar;
-        this.banner = data.banner;
+
+        this._update(data);
+    }
+
+    _update(data: Partial<UserPayload>): this {
+
+        if ("avatar" in data) {
+            this.avatar = data.avatar ?? null;
+        }
+
+        if ("banner" in data) {
+            this.banner = data.banner ?? null;
+        }
+
+        return this;
     }
 }
 
