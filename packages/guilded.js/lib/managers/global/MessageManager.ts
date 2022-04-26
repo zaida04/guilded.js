@@ -30,7 +30,7 @@ export class GlobalMessageManager extends CacheableStructManager<string, Message
     }
 
     /** Send a message in a channel */
-    send(channelId: string, content: RESTPostChannelMessagesBody | string): Promise<Message> {
+    send(channelId: string, content: RESTPostChannelMessagesBody): Promise<Message> {
         return this.client.rest.router.createChannelMessage(channelId, content).then((data) => {
             // This is in the case of which the WS gateway beats us to adding the message to the cache. If they haven't, then we do it ourselves.
             const existingMessage = this.client.messages.cache.get(data.message.id);
@@ -47,8 +47,8 @@ export class GlobalMessageManager extends CacheableStructManager<string, Message
     }
 
     /** Update a channel message. */
-    update(channelId: string, messageId: string, content: string): Promise<Message> {
-        return this.client.rest.router.updateChannelMessage(channelId, messageId, { content }).then((data) => {
+    update(channelId: string, messageId: string, content: RESTPostChannelMessagesBody): Promise<Message> {
+        return this.client.rest.router.updateChannelMessage(channelId, messageId, content).then((data) => {
             // This is in the case of which the WS gateway beats us to modifying the message in the cache. If they haven't, then we do it ourselves.
             const existingMessage = this.client.messages.cache.get(data.message.id);
             if (existingMessage) return existingMessage._update(data.message);

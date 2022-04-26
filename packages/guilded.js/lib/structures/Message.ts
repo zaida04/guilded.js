@@ -93,18 +93,17 @@ export class Message extends Base<ChatMessagePayload> {
     }
 
     /* Update message content */
-    update(newContent: string): Promise<Message> {
+    update(newContent: RESTPostChannelMessagesBody): Promise<Message> {
         return this.client.messages.update(this.channelId, this.id, newContent).then(() => this);
     }
 
     /** Send a message in the same channel as this message. */
-    send(content: RESTPostChannelMessagesBody | string) {
+    send(content: RESTPostChannelMessagesBody) {
         return this.client.messages.send(this.channelId, content);
     }
 
     /** Send a message that replies to this message. It mentions the user who sent this message. */
-    reply(content: RESTPostChannelMessagesBody | string) {
-        if (typeof content === "string") content = { content };
+    reply(content: RESTPostChannelMessagesBody) {
         return this.client.messages.send(this.channelId, { ...content, replyMessageIds: content.replyMessageIds ?? [this.id] });
     }
 }
