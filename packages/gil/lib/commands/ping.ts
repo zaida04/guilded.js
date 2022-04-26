@@ -6,7 +6,7 @@ export class PingCommand extends Command {
     name = "ping";
 
     execute(message: Message): any {
-        return this.client.messages.send(message.channelId, "Pong");
+        return this.client.messages.send(message.channelId, { content: "Pong" });
     }
 
     init(): void {

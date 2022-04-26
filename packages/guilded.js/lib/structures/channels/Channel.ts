@@ -5,7 +5,7 @@ import type { Message } from "../Message";
 
 export class Channel extends Base {
     /** Send a message to this channel. */
-    send(content: RESTPostChannelMessagesBody | string): Promise<Message> {
+    send(content: RESTPostChannelMessagesBody): Promise<Message> {
         return this.client.messages.send(this.id, content);
     }
 
@@ -20,7 +20,7 @@ export class Channel extends Base {
     }
 
     /** Update a channel message. */
-    updateMessage(messageId: string, content: string): Promise<Message> {
+    updateMessage(messageId: string, content: RESTPostChannelMessagesBody): Promise<Message> {
         return this.client.messages.update(this.id, messageId, content);
     }
 
