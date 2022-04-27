@@ -1,14 +1,6 @@
 import type { TeamMemberBanPayload, TeamMemberPayload, TeamMemberSummaryPayload } from "../structs";
 
 /**
- * GET
- * /servers/:serverId/members/:userId/roles
- */
-export interface RESTGetMemberRolesResult {
-    roleIds: number[];
-}
-
-/**
  * PUT
  * /servers/:serverId/members/:userId/nickname
  */
