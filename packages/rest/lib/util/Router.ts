@@ -62,9 +62,7 @@ export class Router {
     constructor(public readonly rest: RestManager) {}
 
     /** Send a message to a channel */
-    createChannelMessage(channelId: string, content: RESTPostChannelMessagesBody | string): Promise<RESTPostChannelMessagesResult> {
-        if (typeof content === "string") content = { content };
-
+    createChannelMessage(channelId: string, content: RESTPostChannelMessagesBody): Promise<RESTPostChannelMessagesResult> {
         return this.rest.post<RESTPostChannelMessagesResult, RESTPostChannelMessagesBody>(ROUTES.channelMessages(channelId), content);
     }
 
