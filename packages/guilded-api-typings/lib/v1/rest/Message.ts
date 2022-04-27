@@ -1,4 +1,4 @@
-import type { ChatMessagePayload, EmbedPayload } from "../structs/Message";
+import type { ChatMessagePayload } from "../structs/Message";
 
 /**
  * POST
@@ -7,7 +7,10 @@ import type { ChatMessagePayload, EmbedPayload } from "../structs/Message";
 export interface RESTPostChannelMessagesResult {
     message: ChatMessagePayload;
 }
-export type RESTPostChannelMessagesBody = Pick<ChatMessagePayload, "isPrivate" | "replyMessageIds" | "content" | "embeds"> & { isSilent?: boolean };
+export type RESTPostChannelMessagesBody = Pick<ChatMessagePayload, "isPrivate" | "replyMessageIds" | "embeds"> & {
+    isSilent?: boolean;
+    content?: string;
+};
 /**
  * GET
  * /channels/:channelId/messages
@@ -35,12 +38,7 @@ export interface RESTGetChannelMessageResult {
  * /channels/:channelId/messages/:messageId
  */
 export type RESTPutChannelMessageResult = RESTGetChannelMessageResult;
-export interface RESTPutChannelMessageBody {
-    /** Message content to update to. */
-    content: string;
-    /** The embeds to update to. */
-    embeds?: EmbedPayload[];
-}
+export type RESTPutChannelMessageBody = Pick<ChatMessagePayload, "embeds"> & { content?: string };
 
 /**
  * DELETE

@@ -36,4 +36,4 @@ export const buildMemberKey = (serverId: string, memberId: string): string => {
 };
 
 export const resolveContentToData = (content: RESTPostChannelMessagesBody | string | Embed) =>
-    typeof content === "string" ? { content } : content instanceof Embed ? { content: "", embeds: [content.toJSON()] } : content;
+    typeof content === "string" ? { content } : content instanceof Embed ? { embeds: [content.toJSON()] } : content;

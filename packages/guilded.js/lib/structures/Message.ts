@@ -45,7 +45,7 @@ export class Message extends Base<ChatMessagePayload> {
 
         this.id = data.id;
         this.channelId = data.channelId;
-        this.content = data.content;
+        this.content = data.content ?? "";
         this.serverId = data.serverId ?? null;
         this.replyMessageIds = data.replyMessageIds ?? [];
         this.createdById = data.createdBy;
@@ -93,7 +93,7 @@ export class Message extends Base<ChatMessagePayload> {
     }
 
     /* Update message content */
-    update(newContent: RESTPostChannelMessagesBody | string): Promise<Message> {
+    edit(newContent: RESTPostChannelMessagesBody | string): Promise<Message> {
         return this.client.messages.update(this.channelId, this.id, newContent).then(() => this);
     }
 
