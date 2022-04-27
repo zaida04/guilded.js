@@ -1,7 +1,9 @@
 export interface DocPayload {
     /** The id of the doc */
     id: number;
-    /** The ID of the channel */
+    /** The ID of the server this doc belongs to */
+    serverId: string;
+    /** The ID of the channel this doc belongs to */
     channelId: string;
     /** The title of the doc */
     title: string;

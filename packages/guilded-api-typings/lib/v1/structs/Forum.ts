@@ -1,7 +1,9 @@
 export interface ForumThreadPayload {
     /** The ID of the forum thread */
     id: number;
-    /** The ID of the channel */
+    /** The ID of the server this forum thread belongs to */
+    serverId: string;
+    /** The ID of the channel this forum thread belongs to */
     channelId: string;
     /** The title of the forum thread */
     title?: string;
