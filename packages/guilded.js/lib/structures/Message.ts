@@ -89,7 +89,7 @@ export class Message extends Base<ChatMessagePayload> {
 
     /** Get the member of this message (if in server) */
     get member(): Member | null {
-        return this.serverId ? (this.client.members.cache.get(buildMemberKey(this.serverId, this.authorId)) ?? null) : null;
+        return this.serverId ? this.client.members.cache.get(buildMemberKey(this.serverId, this.authorId)) ?? null : null;
     }
 
     /* Update message content */
@@ -104,7 +104,14 @@ export class Message extends Base<ChatMessagePayload> {
 
     /** Send a message that replies to this message. It mentions the user who sent this message. */
     reply(content: RESTPostChannelMessagesBody | string) {
-        if (typeof content === "string") content = { content };
-        return this.client.messages.send(this.channelId, { ...content, replyMessageIds: content.replyMessageIds ? [this.id, ...content.replyMessageIds] : [this.id] });
+        return this.client.messages.send(
+            this.channelId,
+            typeof content !== "string"
+                ? {
+                      ...content,
+                      replyMessageIds: content.replyMessageIds ? [this.id, ...content.replyMessageIds] : [this.id],
+                  }
+                : content,
+        );
     }
 }

@@ -31,6 +31,7 @@ export class GlobalMessageManager extends CacheableStructManager<string, Message
 
     /** Send a message in a channel */
     send(channelId: string, content: RESTPostChannelMessagesBody | string): Promise<Message> {
+        if (typeof content === "string") content = { content };
         return this.client.rest.router.createChannelMessage(channelId, content).then((data) => {
             // This is in the case of which the WS gateway beats us to adding the message to the cache. If they haven't, then we do it ourselves.
             const existingMessage = this.client.messages.cache.get(data.message.id);
