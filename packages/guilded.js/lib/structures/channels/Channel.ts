@@ -20,7 +20,7 @@ export class Channel extends Base {
     }
 
     /** Update a channel message. */
-    updateMessage(messageId: string, content: string): Promise<Message> {
+    updateMessage(messageId: string, content: RESTPostChannelMessagesBody | string): Promise<Message> {
         return this.client.messages.update(this.id, messageId, content);
     }
 

@@ -93,7 +93,7 @@ export class Message extends Base<ChatMessagePayload> {
     }
 
     /* Update message content */
-    update(newContent: string): Promise<Message> {
+    update(newContent: RESTPostChannelMessagesBody | string): Promise<Message> {
         return this.client.messages.update(this.channelId, this.id, newContent).then(() => this);
     }
 
