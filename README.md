@@ -21,6 +21,7 @@ This repo serves as a monorepo that houses several packages, mainly the `guilded
 -   `@guildedjs/webhook-client` (**[GitHub](https://github.com/guildedjs/guilded.js/tree/main/packages/webhook-client#readme), [NPM](https://www.npmjs.com/package/@guildedjs/webhook-client)**) - Library agnostic client for interacting with webhooks.
 -   `@guildedjs/rest` (**[GitHub](https://github.com/guildedjs/guilded.js/tree/main/packages/rest#readme), [NPM](https://www.npmjs.com/package/@guildedjs/rest)**) - Utility for making REST requests to the Guilded API. Includes ratelimit handling.
 -   `@guildedjs/ws` (**[GitHub](https://github.com/guildedjs/guilded.js/tree/main/packages/ws#readme), [NPM](https://www.npmjs.com/package/@guildedjs/ws)**) - Utility for connecting to Guilded's WebSocket gateway and receiving events.
+-   `@guildedjs/embeds` (**[GitHub](https://github.com/guildedjs/guilded.js/tree/main/packages/embeds#readme), [NPM](https://www.npmjs.com/package/@guildedjs/embeds)**) - Library agnostic embed structure.
 
 ## 📥 Installation
 

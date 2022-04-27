@@ -1,4 +1,4 @@
-import type { ChatMessagePayload } from "../structs/Message";
+import type { ChatMessagePayload, EmbedPayload } from "../structs/Message";
 
 /**
  * POST
@@ -7,17 +7,7 @@ import type { ChatMessagePayload } from "../structs/Message";
 export interface RESTPostChannelMessagesResult {
     message: ChatMessagePayload;
 }
-export interface RESTPostChannelMessagesBody {
-    /** Whether the message can only be seen by those mentioned or replied to */
-    isPrivate?: boolean;
-    /** If set, this message will not notify any mentioned users or roles. */
-    isSilent?: boolean;
-    /** The id(s) of the messages this message is a reply to */
-    replyMessageIds?: string[];
-    /** The message content. */
-    content: string;
-}
-
+export type RESTPostChannelMessagesBody = Pick<ChatMessagePayload, "isPrivate" | "replyMessageIds" | "content" | "embeds"> & { isSilent?: boolean };
 /**
  * GET
  * /channels/:channelId/messages
@@ -26,6 +16,9 @@ export interface RESTGetChannelMessagesResult {
     messages: ChatMessagePayload[];
 }
 export interface RESTGetChannelMessagesQuery {
+    before?: string;
+    after?: string;
+    limit?: number;
     includePrivate?: boolean;
 }
 
@@ -45,6 +38,8 @@ export type RESTPutChannelMessageResult = RESTGetChannelMessageResult;
 export interface RESTPutChannelMessageBody {
     /** Message content to update to. */
     content: string;
+    /** The embeds to update to. */
+    embeds?: EmbedPayload[];
 }
 
 /**
