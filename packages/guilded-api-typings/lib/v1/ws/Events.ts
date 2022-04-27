@@ -1,4 +1,4 @@
-import type { ChatMessagePayload, TeamMemberBanPayload, TeamMemberPayload, TeamMemberRoleIdsPayload } from "../structs";
+import type { ChatMessagePayload, ListItemSummaryPayload, TeamMemberBanPayload, TeamMemberPayload, TeamMemberRoleIdsPayload } from "../structs";
 import type { WebhookPayload } from "../structs/Webhook";
 
 export enum WSOpCodes {
@@ -23,6 +23,8 @@ export const WebSocketEvents = {
     teamRolesUpdated: "teamRolesUpdated",
     TeamWebhookCreated: "TeamWebhookCreated",
     TeamWebhookUpdated: "TeamWebhookUpdated",
+    ListItemCompleted: "ListItemCompleted",
+    ListItemUncompleted: "ListItemUncompleted",
 } as const;
 export type WSEvent = typeof WebSocketEvents;
 
@@ -144,4 +146,20 @@ export interface WSTeamWebhookUpdatedPayload extends SkeletonWSPayload {
         webhook: WebhookPayload;
     };
     t: WSEvent["TeamWebhookUpdated"];
+}
+
+export interface WSListItemCompleted extends SkeletonWSPayload {
+    d: {
+        serverId: string;
+        listItem: ListItemSummaryPayload;
+    };
+    t: WSEvent["ListItemCompleted"];
+}
+
+export interface WSListItemUncompleted extends SkeletonWSPayload {
+    d: {
+        serverId: string;
+        listItem: ListItemSummaryPayload;
+    };
+    t: WSEvent["ListItemUncompleted"];
 }

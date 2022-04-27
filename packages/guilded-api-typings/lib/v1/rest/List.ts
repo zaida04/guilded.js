@@ -45,3 +45,15 @@ export interface RESTPostListItemBody {
 export interface RESTPostListItemResult {
     listItem: ListItemPayload;
 }
+
+/**
+ * POST
+ * /channels/:channelId/items/:listItemId/complete
+ */
+export type RESTPostListItemCompleteResult = never;
+
+/**
+ * DELETE
+ * /channels/:channelId/items/:listItemId/complete
+ */
+export type RESTDeleteListItemCompleteResult = never;

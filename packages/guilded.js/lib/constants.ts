@@ -11,6 +11,8 @@ export const constants = {
         TEAM_MEMBER_UNBANNED: "memberUnbanned",
         TEAM_WEBHOOK_CREATED: "webhookCreated",
         TEAM_WEBHOOK_UPDATED: "webhookUpdated",
+        LIST_COMPLETED: "listCompleted",
+        LIST_UNCOMPLETED: "listUncompleted",
     },
 } as const;
 export type ClientEvent = typeof constants.clientEvents;
