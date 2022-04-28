@@ -139,42 +139,36 @@ export class BotClient extends Client {
     initializeTasks(): void {
         this.tasks.forEach(async (task) => {
             // TASKS THAT NEED TO RUN IMMEDIATELY ARE EXECUTED FIRST
-            if (task.runOnStartup) await task.execute();
+            if (task.runOnStartup) await this.executeTask(task);
 
             // SET TIMEOUT WILL DETERMINE THE RIGHT TIME TO RUN THE TASK FIRST TIME AFTER STARTUP
             setTimeout(async () => {
-                console.log(`${bgBlue(`[${this.getTime()}]`)} [TASK: ${bgYellow(black(task.name))}] started.`);
-                try {
-                    const started = Date.now();
-                    await task.execute();
-                    console.log(
-                        `${bgBlue(`[${this.getTime()}]`)} [TASK: ${bgGreen(black(task.name))}] executed in ${this.humanizeMilliseconds(
-                            Date.now() - started,
-                        )}.`,
-                    );
-                } catch (error) {
-                    console.log(error);
-                }
+                await this.executeTask(task);
 
                 setInterval(async () => {
-                    // IF TASKS REQUIRE BOT BEING FULLY READY EXIT OUT THIS INTERVAL IF BOT ISN'T READY
-                    if (task.requireFullyReady && !this.readyTimestamp) return;
-
-                    console.log(`${bgBlue(`[${this.getTime()}]`)} [TASK: ${bgYellow(black(task.name))}] started.`);
-                    try {
-                        const started = Date.now();
-                        await task.execute();
-                        console.log(
-                            `${bgBlue(`[${this.getTime()}]`)} [TASK: ${bgGreen(black(task.name))}] executed in ${this.humanizeMilliseconds(
-                                Date.now() - started,
-                            )}.`,
-                        );
-                    } catch (error) {
-                        console.log(error);
-                    }
+                    await this.executeTask(task);
                 }, task.millisecondsInterval);
             }, Date.now() % task.millisecondsInterval);
         });
+    }
+
+    /** Handler to execute a task when it is time. */
+    async executeTask(task: Task): Promise<void> {
+        // IF TASK REQUIRES BOT BEING FULLY READY EXIT OUT IF BOT ISN'T READY
+        if (task.requireReady && !this.readyTimestamp) return;
+
+        console.log(`${bgBlue(`[${this.getTime()}]`)} [TASK: ${bgYellow(black(task.name))}] started.`);
+        const started = Date.now();
+        try {
+            await task.execute();
+            console.log(
+                `${bgBlue(`[${this.getTime()}]`)} [TASK: ${bgGreen(black(task.name))}] executed in ${this.humanizeMilliseconds(
+                    Date.now() - started,
+                )}.`,
+            );
+        } catch (error) {
+            console.log(error);
+        }
     }
 
     /** Handler that is run on messages and can  */

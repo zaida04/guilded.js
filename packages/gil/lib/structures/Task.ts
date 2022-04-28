@@ -6,7 +6,7 @@ export abstract class Task {
     /** Whether or not this task should run immediately on startup. Default to false. */
     runOnStartup = false;
     /** Whether this task requires the bot to be fully ready before running. Default to false. */
-    requireFullyReady = false;
+    requireReady = false;
 
     constructor(public readonly client: BotClient, public name: string) {}
     abstract execute(): Promise<unknown> | unknown;
