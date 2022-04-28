@@ -31,6 +31,6 @@ export interface ListNoteContent {
     createdAt: string;
     createdBy: string;
     content: string;
-    updatedAt: string;
-    updatedBy: string;
+    updatedAt?: string;
+    updatedBy?: string;
 }
