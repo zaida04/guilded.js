@@ -2,7 +2,7 @@ import type { BotClient } from "../BotClient";
 
 export abstract class Task {
     /** The amount of time this task should take to run. Defaults to 1 hour(3,600,000 ms) */
-    millisecondsInterval = 60 * 60 * 100;
+    millisecondsInterval = 60 * 60 * 1000;
     /** Whether or not this task should run immediately on startup. Default to false. */
     runOnStartup = false;
     /** Whether this task requires the bot to be fully ready before running. Default to false. */
