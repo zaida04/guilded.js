@@ -3,33 +3,31 @@ import type { APIEmbed } from "@guildedjs/guilded-api-typings";
 import { resolveColor } from "./util";
 
 export class Embed {
-    public title: string | null;
-    public description: string | null;
-    public url: string | null;
-    public timestamp: number | null;
-    public timestampString: string | null;
-    public color: number | null;
-    public footer: {
+    title: string | null;
+    description: string | null;
+    url: string | null;
+    timestamp: number | null;
+    private timestampString: string | null;
+    color: number | null;
+    footer: {
         text: string;
         iconURL: string | null;
     } | null;
-
-    public image: APIEmbedMediaData | null;
-    public thumbnail: APIEmbedMediaData | null;
-    public video: APIEmbedMediaData | null;
-    public author: {
+    image: APIEmbedMediaData | null;
+    thumbnail: APIEmbedMediaData | null;
+    video: APIEmbedMediaData | null;
+    author: {
         name: string | null;
         iconURL: string | null;
         url: string | null;
     } | null;
-
-    public fields: {
+    fields: {
         inline: boolean | null;
         name: string;
         value: string;
     }[];
 
-    public constructor(data?: Partial<APIEmbed>) {
+    constructor(data?: Partial<APIEmbed>) {
         this.footer = null;
         this.image = null;
         this.thumbnail = null;
@@ -46,7 +44,7 @@ export class Embed {
         if (data) this._update(data);
     }
 
-    public _update(data: Partial<APIEmbed>): void {
+    _update(data: Partial<APIEmbed>): void {
         if ("color" in data) this.setColor(data.color);
         if ("timestamp" in data) this.setTimestamp(data.timestamp);
         if ("title" in data) this.setTitle(data.title);
@@ -59,22 +57,22 @@ export class Embed {
         if ("fields" in data) this.addFields(data.fields ?? []);
     }
 
-    public setTitle(title?: string | null): this {
+    setTitle(title?: string | null): this {
         this.title = title ?? null;
         return this;
     }
 
-    public setDescription(description?: string | null): this {
+    setDescription(description?: string | null): this {
         this.description = description ?? null;
         return this;
     }
 
-    public setURL(url?: string | null): this {
+    setURL(url?: string | null): this {
         this.url = url ?? null;
         return this;
     }
 
-    public setTimestamp(timestamp?: string | number | Date | null): this {
+    setTimestamp(timestamp?: string | number | Date | null): this {
         if (timestamp === null) {
             this.timestamp = null;
             this.timestampString = null;
@@ -96,27 +94,27 @@ export class Embed {
         return this;
     }
 
-    public setColor(color?: string | number | [number, number, number] | null): this {
+    setColor(color?: string | number | [number, number, number] | null): this {
         this.color = color ? resolveColor(color) : null;
         return this;
     }
 
-    public setFooter(text?: string, iconURL?: string | null): this {
+    setFooter(text?: string, iconURL?: string | null): this {
         this.footer = text ? { iconURL: iconURL ?? null, text } : null;
         return this;
     }
 
-    public setImage(url?: string): this {
+    setImage(url?: string): this {
         this.image = url ? { url } : null;
         return this;
     }
 
-    public setThumbnail(url?: string): this {
+    setThumbnail(url?: string): this {
         this.thumbnail = url ? { url } : null;
         return this;
     }
 
-    public setAuthor(name?: string, iconURL?: string | null, url?: string | null): this {
+    setAuthor(name?: string, iconURL?: string | null, url?: string | null): this {
         this.author = name
             ? {
                   iconURL: iconURL ?? null,
@@ -127,7 +125,7 @@ export class Embed {
         return this;
     }
 
-    public addFields(fields: { name: string; value: string; inline?: boolean }[]): this {
+    addFields(fields: { name: string; value: string; inline?: boolean }[]): this {
         this.fields.push(
             ...fields.map((field) => ({
                 inline: field.inline ?? false,
@@ -138,17 +136,17 @@ export class Embed {
         return this;
     }
 
-    public addField(name: string, value: string, inline?: boolean): this {
+    addField(name: string, value: string, inline?: boolean): this {
         this.addFields([{ inline, name, value }]);
         return this;
     }
 
-    public clearFields(): this {
+    clearFields(): this {
         this.fields.length = 0;
         return this;
     }
 
-    public toJSON(): APIEmbed {
+    toJSON(): APIEmbed {
         return {
             author: this.author?.name
                 ? {
