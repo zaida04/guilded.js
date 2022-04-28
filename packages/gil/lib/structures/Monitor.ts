@@ -12,9 +12,7 @@ export abstract class Monitor {
     /** Whether this monitor should ignore messages that are sent in DM. By default this is true. */
     ignoreDM = true;
 
-    constructor(public readonly client: BotClient, public name: string) {
-        this.client.monitors.set(name, this);
-    }
+    constructor(public readonly client: BotClient, public name: string) {}
 
     abstract execute(message: Message): Promise<unknown> | unknown;
     abstract init(): Promise<unknown> | unknown;

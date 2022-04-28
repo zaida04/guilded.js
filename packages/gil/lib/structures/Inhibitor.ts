@@ -4,9 +4,7 @@ import type { BotClient } from "../BotClient";
 import type { Command } from "./Command";
 
 export abstract class Inhibitor {
-    constructor(public readonly client: BotClient, public name: string) {
-        this.client.inhibitors.set(name, this);
-    }
+    constructor(public readonly client: BotClient, public name: string) {}
 
     abstract execute(message: Message, command: Command): Promise<boolean> | boolean;
     abstract init(): Promise<unknown> | unknown;
