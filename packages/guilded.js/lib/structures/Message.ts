@@ -93,7 +93,7 @@ export class Message extends Base<ChatMessagePayload> {
     }
 
     /* Edit message content */
-    edit(newContent: RESTPostChannelMessagesBody | string): Promise<Message> {
+    edit(newContent: RESTPostChannelMessagesBody | Embed | string): Promise<Message> {
         return this.client.messages.update(this.channelId, this.id, newContent).then(() => this);
     }
 
