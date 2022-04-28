@@ -23,9 +23,7 @@ export abstract class Command {
     /** The name of the parent command. If nested subcommands, use `-` to separate the names. For example: `.settings staff modrole` would be parentCommand: "settings-staff" */
     parentCommand?: string;
 
-    constructor(public readonly client: BotClient, public name: string) {
-        this.client.commands.set(name, this);
-    }
+    constructor(public readonly client: BotClient, public name: string) {}
 
     abstract execute(message: Message, args: Record<string, unknown>): Promise<unknown> | unknown;
     abstract init(): Promise<unknown> | unknown;
