@@ -40,14 +40,6 @@ client.login();
 
 Documentation is located [here](https://guilded.js.org)
 
-## 📦 Dependencies
-
--   [`@guildedjs/guilded-api-typings`](https://github.com/guildedjs/guilded.js/tree/main/packages/guilded-api-typings) (dev dep): used for typing the REST and WS payloads
--   [`@guildedjs/rest`](https://github.com/guildedjs/guilded.js/tree/main/packages/rest): Rest util for `@guildedjs` packages
--   [`@guildedjs/ws`](https://github.com/guildedjs/guilded.js/tree/main/packages/rest): Rest structure for `@guildedjs` packages
--   `@discordjs/collection`: Map utility
--   `uuid` - Generate IDs for structures such as Messages
-
 ## ✋ Contributing
 
 Please see the main [README.md](https://github.com/guildedjs/guilded.js) for info on how to contribute to this package or the other `@guildedjs` packages.
