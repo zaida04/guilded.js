@@ -7,25 +7,30 @@ export class Embed {
     description: string | null;
     url: string | null;
     timestamp: number | null;
-    private timestampString: string | null;
     color: number | null;
-    footer: {
-        text: string;
-        iconURL: string | null;
-    } | null;
+
     image: APIEmbedMediaData | null;
     thumbnail: APIEmbedMediaData | null;
     video: APIEmbedMediaData | null;
+
     author: {
         name: string | null;
         iconURL: string | null;
         url: string | null;
     } | null;
+
     fields: {
         inline: boolean | null;
         name: string;
         value: string;
     }[];
+
+    footer: {
+        text: string;
+        iconURL: string | null;
+    } | null;
+
+    private timestampString: string | null;
 
     constructor(data?: Partial<APIEmbed>) {
         this.footer = null;
