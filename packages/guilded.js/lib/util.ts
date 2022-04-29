@@ -1,3 +1,5 @@
+import { Embed } from "@guildedjs/embeds";
+import type { RESTPostChannelMessagesBody } from "@guildedjs/guilded-api-typings";
 import { ROUTES } from "./constants";
 
 export enum IMG_EXTENSION {
@@ -31,4 +33,7 @@ export const ASSET_BUILDER = {
 
 export const buildMemberKey = (serverId: string, memberId: string): string => {
     return `${serverId}:${memberId}`;
-}
+};
+
+export const resolveContentToData = (content: RESTPostChannelMessagesBody | string | Embed) =>
+    typeof content === "string" ? { content } : content instanceof Embed ? { embeds: [content.toJSON()] } : content;

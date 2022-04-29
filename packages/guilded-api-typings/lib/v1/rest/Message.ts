@@ -7,17 +7,10 @@ import type { ChatMessagePayload } from "../structs/Message";
 export interface RESTPostChannelMessagesResult {
     message: ChatMessagePayload;
 }
-export interface RESTPostChannelMessagesBody {
-    /** Whether the message can only be seen by those mentioned or replied to */
-    isPrivate?: boolean;
-    /** If set, this message will not notify any mentioned users or roles. */
+export type RESTPostChannelMessagesBody = Pick<ChatMessagePayload, "isPrivate" | "replyMessageIds" | "embeds"> & {
     isSilent?: boolean;
-    /** The id(s) of the messages this message is a reply to */
-    replyMessageIds?: string[];
-    /** The message content. */
-    content: string;
-}
-
+    content?: string;
+};
 /**
  * GET
  * /channels/:channelId/messages
@@ -26,6 +19,9 @@ export interface RESTGetChannelMessagesResult {
     messages: ChatMessagePayload[];
 }
 export interface RESTGetChannelMessagesQuery {
+    before?: string;
+    after?: string;
+    limit?: number;
     includePrivate?: boolean;
 }
 
@@ -42,10 +38,7 @@ export interface RESTGetChannelMessageResult {
  * /channels/:channelId/messages/:messageId
  */
 export type RESTPutChannelMessageResult = RESTGetChannelMessageResult;
-export interface RESTPutChannelMessageBody {
-    /** Message content to update to. */
-    content: string;
-}
+export type RESTPutChannelMessageBody = Pick<ChatMessagePayload, "embeds"> & { content?: string };
 
 /**
  * DELETE

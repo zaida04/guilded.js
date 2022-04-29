@@ -15,5 +15,6 @@ export type UserSocialLink =
 
 export interface SocialLink {
     type: string;
-    serviceId: string;
+    serviceId?: string;
+    handle?: string;
 }

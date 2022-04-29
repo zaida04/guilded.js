@@ -9,3 +9,11 @@ export type RESTPutMemberRoleResult = never;
  * /servers/:serverId/members/:userId/roles/:roleId
  */
 export type RESTDeleteMemberRoleResult = never;
+
+/**
+ * GET
+ * /servers/:serverId/members/:userId/roles
+ */
+export interface RESTGetMemberRolesResult {
+    roleIds: number[];
+}

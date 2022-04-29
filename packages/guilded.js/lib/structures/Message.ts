@@ -4,6 +4,7 @@ import { Base } from "./Base";
 import type { User } from "./User";
 import type { Member } from "./Member";
 import { buildMemberKey } from "../util";
+import type { Embed } from "@guildedjs/embeds";
 
 export enum MessageType {
     Default,
@@ -45,7 +46,7 @@ export class Message extends Base<ChatMessagePayload> {
 
         this.id = data.id;
         this.channelId = data.channelId;
-        this.content = data.content;
+        this.content = data.content ?? "";
         this.serverId = data.serverId ?? null;
         this.replyMessageIds = data.replyMessageIds ?? [];
         this.createdById = data.createdBy;
@@ -92,8 +93,8 @@ export class Message extends Base<ChatMessagePayload> {
         return this.serverId ? this.client.members.cache.get(buildMemberKey(this.serverId, this.authorId)) ?? null : null;
     }
 
-    /* Update message content */
-    update(newContent: RESTPostChannelMessagesBody | string): Promise<Message> {
+    /* Edit message content */
+    edit(newContent: RESTPostChannelMessagesBody | Embed | string): Promise<Message> {
         return this.client.messages.update(this.channelId, this.id, newContent).then(() => this);
     }
 

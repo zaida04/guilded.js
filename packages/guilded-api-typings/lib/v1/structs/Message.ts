@@ -23,4 +23,45 @@ export interface ChatMessagePayload {
     createdByWebhookId?: string;
     /** The ISO 8601 timestamp that the message was updated at, if relevant */
     updatedAt?: string;
+    /** The embeds within this message */
+    embeds?: EmbedPayload[];
+}
+
+export interface EmbedPayload {
+    title?: string;
+    description?: string;
+    url?: string;
+    timestamp?: string;
+    color?: number;
+    footer?: EmbedFooter;
+    image?: EmbedImage;
+    thumbnail?: EmbedThumbnail;
+    video?: EmbedVideo;
+    provider?: EmbedProvider;
+    author?: EmbedAuthor;
+    fields?: EmbedField[];
+}
+
+export interface EmbedFooter {
+    text: string;
+    icon_url?: string;
+}
+export interface EmbedImage {
+    url: string;
+}
+export type EmbedThumbnail = EmbedImage;
+export type EmbedVideo = EmbedImage;
+export interface EmbedProvider {
+    name?: string;
+    url?: string;
+}
+export interface EmbedAuthor {
+    name: string;
+    icon_url?: string;
+    url?: string;
+}
+export interface EmbedField {
+    inline?: boolean;
+    name: string;
+    value: string;
 }

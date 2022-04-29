@@ -64,6 +64,14 @@ importers:
       typedoc-plugin-rename-defaults: 0.5.1_typedoc@0.22.15
       typescript: 4.6.3
 
+  packages/embeds:
+    specifiers:
+      '@guildedjs/guilded-api-typings': workspace:*
+      typescript: 4.6.3
+    devDependencies:
+      '@guildedjs/guilded-api-typings': link:../guilded-api-typings
+      typescript: 4.6.3
+
   packages/gil:
     specifiers:
       '@discordjs/collection': ^0.6.0
@@ -88,6 +96,7 @@ importers:
   packages/guilded.js:
     specifiers:
       '@discordjs/collection': ^0.6.0
+      '@guildedjs/embeds': workspace:*
       '@guildedjs/guilded-api-typings': workspace:*
       '@guildedjs/rest': workspace:*
       '@guildedjs/webhook-client': workspace:*
@@ -97,6 +106,7 @@ importers:
       typescript: 4.6.3
     dependencies:
       '@discordjs/collection': 0.6.0
+      '@guildedjs/embeds': link:../embeds
       '@guildedjs/rest': link:../rest
       '@guildedjs/webhook-client': link:../webhook-client
       '@guildedjs/ws': link:../ws

@@ -8,6 +8,8 @@ import type {
     WSChatMessageDeletedPayload,
     WSChatMessageUpdatedPayload,
     WSEvent,
+    WSListItemCompleted,
+    WSListItemUncompleted,
     WSTeamMemberBannedPayload,
     WSTeamMemberJoinedPayload,
     WSTeamMemberRemovedPayload,
@@ -19,12 +21,14 @@ import type {
 } from "@guildedjs/guilded-api-typings";
 import { WebSocketEvents } from "@guildedjs/guilded-api-typings";
 import { TeamWebhookEventHandler } from "./handler/TeamWebhookEventHandler";
+import { ListEventHandler } from "./handler/ListEventHandler";
 
 export class ClientGatewayHandler {
     messageHandler = new MessageEventHandler(this.client);
     teamHandler = new TeamEventHandler(this.client);
     teamMemberHandler = new TeamMemberEventHandler(this.client);
     teamWebhookHandler = new TeamWebhookEventHandler(this.client);
+    listHandler = new ListEventHandler(this.client);
 
     readonly eventToHandlerMap: Record<keyof WSEvent, (data: SkeletonWSPayload) => boolean> = {
         [WebSocketEvents.ChatMessageCreated]: (data) => this.messageHandler.messageCreated(data as WSChatMessageCreatedPayload),
@@ -38,6 +42,8 @@ export class ClientGatewayHandler {
         [WebSocketEvents.TeamMemberUnbanned]: (data) => this.teamMemberHandler.teamMemberUnbanned(data as WSTeamMemberUnbannedPayload),
         [WebSocketEvents.TeamWebhookCreated]: (data) => this.teamWebhookHandler.teamWebhookCreated(data as WSTeamWebhookCreatedPayload),
         [WebSocketEvents.TeamWebhookUpdated]: (data) => this.teamWebhookHandler.teamWebhookUpdated(data as WSTeamWebhookUpdatedPayload),
+        [WebSocketEvents.ListItemCompleted]: (data) => this.listHandler.ListItemCompleted(data as WSListItemCompleted),
+        [WebSocketEvents.ListItemUncompleted]: (data) => this.listHandler.ListItemUncompleted(data as WSListItemUncompleted),
     };
 
     constructor(public readonly client: Client) {}
