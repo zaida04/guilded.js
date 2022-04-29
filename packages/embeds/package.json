@@ -1,6 +1,6 @@
 {
     "name": "@guildedjs/embeds",
-    "version": "0.1.0",
+    "version": "0.2.0",
     "description": "Library-agnostic guilded embed builder utility for the guilded.gg API",
     "author": "Zaid \"Nico\" <contact@nico.engineer>",
     "license": "MIT",
