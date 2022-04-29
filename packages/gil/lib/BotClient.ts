@@ -1,4 +1,5 @@
 import Collection from "@discordjs/collection";
+import { bgBlue, bgGreen, bgYellow, black } from "colorette";
 import { Client, Message } from "guilded.js";
 import path from "path";
 
@@ -6,6 +7,7 @@ import type { Argument } from "./structures/Argument";
 import type { Command } from "./structures/Command";
 import type { Inhibitor } from "./structures/Inhibitor";
 import type { Monitor } from "./structures/Monitor";
+import type Task from "./structures/Task";
 import { walk } from "./utils/walk";
 
 export class BotClient extends Client {
@@ -17,6 +19,8 @@ export class BotClient extends Client {
     arguments = new Collection<string, Argument>();
     /** All your bot's inhibitors will be available here */
     inhibitors = new Collection<string, Inhibitor>();
+    /** All your bot's tasks will be available here */
+    tasks = new Collection<string, Task>();
     /** The bot's prefixes per team. <teamId, prefix> */
     prefixes = new Map<string, string>();
     /** The message collectors that are pending. */
@@ -91,6 +95,7 @@ export class BotClient extends Client {
                 ["commands", this.commands] as const,
                 ["arguments", this.arguments] as const,
                 ["inhibitors", this.inhibitors] as const,
+                ["tasks", this.tasks] as const,
             ].map(async ([dir, collection]) => {
                 try {
                     for await (const result of walk(path.join(__dirname, dir))) {
@@ -109,6 +114,7 @@ export class BotClient extends Client {
                 ["commands", this.commands] as const,
                 ["arguments", this.arguments] as const,
                 ["inhibitors", this.inhibitors] as const,
+                ["tasks", this.tasks] as const,
             ].map(async ([dir, collection]) => {
                 try {
                     for await (const result of walk(this.options.monitorDirPath ?? path.join(this.sourceFolderPath, dir))) {
@@ -121,6 +127,7 @@ export class BotClient extends Client {
         ).catch(() => null);
 
         this.initializeMessageListener();
+        this.initializeTasks();
     }
 
     /** Allows users to override and customize the addition of a event listener */
@@ -128,12 +135,47 @@ export class BotClient extends Client {
         this.on("messageCreated", (message) => this.processMonitors(message));
     }
 
+    /** Allows users to override and customize the initialization of scheduled task intervals. */
+    initializeTasks(): void {
+        this.tasks.forEach(async (task) => {
+            // TASKS THAT NEED TO RUN IMMEDIATELY ARE EXECUTED FIRST
+            if (task.runOnStartup) await this.executeTask(task);
+
+            // SET TIMEOUT WILL DETERMINE THE RIGHT TIME TO RUN THE TASK FIRST TIME AFTER STARTUP
+            setTimeout(async () => {
+                await this.executeTask(task);
+
+                setInterval(async () => {
+                    await this.executeTask(task);
+                }, task.millisecondsInterval);
+            }, Date.now() % task.millisecondsInterval);
+        });
+    }
+
+    /** Handler to execute a task when it is time. */
+    async executeTask(task: Task): Promise<void> {
+        // IF TASK REQUIRES BOT BEING FULLY READY EXIT OUT IF BOT ISN'T READY
+        if (task.requireReady && !this.readyTimestamp) return;
+
+        console.log(`${bgBlue(`[${this.getTime()}]`)} [TASK: ${bgYellow(black(task.name))}] started.`);
+        const started = Date.now();
+        try {
+            await task.execute();
+            console.log(
+                `${bgBlue(`[${this.getTime()}]`)} [TASK: ${bgGreen(black(task.name))}] executed in ${this.humanizeMilliseconds(
+                    Date.now() - started,
+                )}.`,
+            );
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
     /** Handler that is run on messages and can  */
     processMonitors(message: Message): void {
         this.monitors.forEach((monitor) => {
-            if (monitor.ignoreBots && message.createdByBotId) return;
-            // TODO: When the api supports getting the bots id
-            // if (monitor.ignoreOthers && message.createdBy !== this.id) return;
+            if (monitor.ignoreBots && (message.createdByBotId || message.createdByWebhookId)) return;
+            if (monitor.ignoreOthers && message.createdByBotId !== this.user?.botId) return;
             if (monitor.ignoreEdits && message.updatedAt && message.updatedAt !== message.createdAt) return;
             // TODO: When the api supports using dm channels
             // if (monitor.ignoreDM && !message.teamId) return;
@@ -228,6 +270,21 @@ export class BotClient extends Client {
                 reject,
             });
         });
+    }
+
+    getTime(): string {
+        const now = new Date();
+        const hours = now.getHours();
+        const minute = now.getMinutes();
+
+        let hour = hours;
+        let amOrPm = `AM`;
+        if (hour > 12) {
+            amOrPm = `PM`;
+            hour -= 12;
+        }
+
+        return `${hour >= 10 ? hour : `0${hour}`}:${minute >= 10 ? minute : `0${minute}`} ${amOrPm}`;
     }
 }
 
