@@ -14,7 +14,6 @@
     "devDependencies": {
         "@guildedjs/guilded-api-typings": "workspace:*",
         "@types/node": "16.11.28",
-        "typed-emitter": "2.1.0",
         "typescript": "4.6.3"
     },
     "dependencies": {
@@ -22,7 +21,8 @@
         "@guildedjs/embeds": "workspace:*",
         "@guildedjs/rest": "workspace:*",
         "@guildedjs/webhook-client": "workspace:*",
-        "@guildedjs/ws": "workspace:*"
+        "@guildedjs/ws": "workspace:*",
+        "typed-emitter": "2.1.0"
     },
     "contributors": [
         {
