@@ -1,12 +1,10 @@
 import Collection from "@discordjs/collection";
 import type { DocPayload, RESTPostDocsBody, RESTPutDocBody } from "@guildedjs/guilded-api-typings";
-import { Base } from "../Base";
+import { Channel } from "./Channel";
 
-export interface Doc {}
-
-export class DocChannel extends Base {
+export class DocChannel extends Channel {
     /** The docs in this channel. */
-    readonly docs = new Collection<string, Doc>();
+    readonly docs = new Collection<number, DocPayload>();
 
     /** Create a doc. */
     createDoc(options: RESTPostDocsBody): Promise<DocPayload> {

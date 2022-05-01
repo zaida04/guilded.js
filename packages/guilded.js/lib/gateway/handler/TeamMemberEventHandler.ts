@@ -13,11 +13,11 @@ import { buildMemberKey } from "../../util";
 export class TeamMemberEventHandler extends GatewayEventHandler {
     teamMemberUpdated(data: WSTeamMemberUpdatedPayload): boolean {
         const member = this.client.members.cache.get(buildMemberKey(data.d.serverId, data.d.userInfo.id));
-        if (!member) return this.client.emit(constants.clientEvents.TEAM_MEMBER_UPDATED, data.d, null);
+        if (!member) return this.client.emit(constants.clientEvents.MEMBER_UPDATED, data.d, null);
 
         const oldMember = member._clone();
         member._update({ nickname: data.d.userInfo.nickname });
-        return this.client.emit(constants.clientEvents.TEAM_MEMBER_UPDATED, member, oldMember);
+        return this.client.emit(constants.clientEvents.MEMBER_UPDATED, member, oldMember);
     }
     teamMemberJoined(data: WSTeamMemberJoinedPayload): boolean {
         const newMember = new Member(this.client, { ...data.d.member, serverId: data.d.serverId, id: data.d.member.user.id });
@@ -25,14 +25,14 @@ export class TeamMemberEventHandler extends GatewayEventHandler {
 
         this.client.members.cache.set(buildMemberKey(data.d.serverId, data.d.member.user.id), newMember);
         this.client.users.cache.set(newUser.id, newUser);
-        return this.client.emit(constants.clientEvents.TEAM_MEMBER_JOINED, newMember);
+        return this.client.emit(constants.clientEvents.MEMBER_JOINED, newMember);
     }
     teamMemberRemoved(data: WSTeamMemberRemovedPayload): boolean {
         const memberKey = buildMemberKey(data.d.serverId, data.d.userId);
         const existingMember = this.client.members.cache.get(memberKey);
         if (this.client.options.cache?.removeMemberOnLeave) this.client.members.cache.delete(memberKey);
         return this.client.emit(
-            constants.clientEvents.TEAM_MEMBER_REMOVED,
+            constants.clientEvents.MEMBER_REMOVED,
             existingMember?._update({ kicked: data.d.isKick, banned: data.d.isBan }) ?? data.d,
         );
     }
@@ -40,12 +40,11 @@ export class TeamMemberEventHandler extends GatewayEventHandler {
         const newMemberBan = new MemberBan(this.client, { serverId: data.d.serverId, ...data.d.serverMemberBan });
         if (this.client.options.cache?.cacheMemberBans !== false)
             this.client.bans.cache.set(buildMemberKey(newMemberBan.serverId, newMemberBan.target.id), newMemberBan);
-        return this.client.emit(constants.clientEvents.TEAM_MEMBER_BANNED, newMemberBan);
+        return this.client.emit(constants.clientEvents.MEMBER_BANNED, newMemberBan);
     }
     teamMemberUnbanned(data: WSTeamMemberUnbannedPayload): boolean {
         const existingMemberBan = this.client.bans.cache.get(buildMemberKey(data.d.serverId, data.d.serverMemberBan.user.id));
         if (existingMemberBan && this.client.options.cache?.removeMemberOnLeave) this.client.bans.cache.delete(existingMemberBan.id);
-        return this.client.emit(constants.clientEvents.TEAM_MEMBER_UNBANNED, existingMemberBan ?? data.d);
+        return this.client.emit(constants.clientEvents.MEMBER_UNBANNED, existingMemberBan ?? data.d);
     }
-
 }

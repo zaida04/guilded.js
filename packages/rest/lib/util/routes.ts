@@ -2,6 +2,10 @@ import type { UserSocialLink } from "@guildedjs/guilded-api-typings";
 
 export const ROUTES = {
     // Channel Endpoints
+    channels: () => `/channels` as string,
+    channel: (channelId: string) => `/channels/${channelId}` as const,
+
+    // Channel Endpoints
     channelMessages: (channelId: string) => `/channels/${channelId}/messages` as const,
     channelMessage: (channelId: string, messageId: string) => `/channels/${channelId}/messages/${messageId}` as const,
 
@@ -19,6 +23,7 @@ export const ROUTES = {
     // List Endpoints
     listItems: (channelId: string) => `/channels/${channelId}/items` as const,
     listItem: (channelId: string, itemId: string) => `/channels/${channelId}/items/${itemId}` as const,
+    listItemComplete: (channelId: string, itemId: string) => `/channels/${channelId}/items/${itemId}/complete` as const,
 
     // Docs Endpoints
     channelDocs: (channelId: string) => `/channels/${channelId}/docs` as const,

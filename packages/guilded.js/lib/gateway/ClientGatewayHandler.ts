@@ -7,9 +7,18 @@ import type {
     WSChatMessageCreatedPayload,
     WSChatMessageDeletedPayload,
     WSChatMessageUpdatedPayload,
+    WSDocCreated,
+    WSDocDeleted,
+    WSDocUpdated,
     WSEvent,
     WSListItemCompleted,
+    WSListItemCreated,
+    WSListItemDeleted,
     WSListItemUncompleted,
+    WSListItemUpdated,
+    WSTeamChannelCreated,
+    WSTeamChannelDeleted,
+    WSTeamChannelUpdated,
     WSTeamMemberBannedPayload,
     WSTeamMemberJoinedPayload,
     WSTeamMemberRemovedPayload,
@@ -22,6 +31,8 @@ import type {
 import { WebSocketEvents } from "@guildedjs/guilded-api-typings";
 import { TeamWebhookEventHandler } from "./handler/TeamWebhookEventHandler";
 import { ListEventHandler } from "./handler/ListEventHandler";
+import { TeamChannelEventHandler } from "./handler/TeamChannelEventHandler";
+import { DocEventHandler } from "./handler/DocEventHandler";
 
 export class ClientGatewayHandler {
     messageHandler = new MessageEventHandler(this.client);
@@ -29,6 +40,8 @@ export class ClientGatewayHandler {
     teamMemberHandler = new TeamMemberEventHandler(this.client);
     teamWebhookHandler = new TeamWebhookEventHandler(this.client);
     listHandler = new ListEventHandler(this.client);
+    teamChannelHandler = new TeamChannelEventHandler(this.client);
+    docHandler = new DocEventHandler(this.client);
 
     readonly eventToHandlerMap: Record<keyof WSEvent, (data: SkeletonWSPayload) => boolean> = {
         [WebSocketEvents.ChatMessageCreated]: (data) => this.messageHandler.messageCreated(data as WSChatMessageCreatedPayload),
@@ -44,6 +57,15 @@ export class ClientGatewayHandler {
         [WebSocketEvents.TeamWebhookUpdated]: (data) => this.teamWebhookHandler.teamWebhookUpdated(data as WSTeamWebhookUpdatedPayload),
         [WebSocketEvents.ListItemCompleted]: (data) => this.listHandler.ListItemCompleted(data as WSListItemCompleted),
         [WebSocketEvents.ListItemUncompleted]: (data) => this.listHandler.ListItemUncompleted(data as WSListItemUncompleted),
+        [WebSocketEvents.ListItemCreated]: (data) => this.listHandler.ListItemCreated(data as WSListItemCreated),
+        [WebSocketEvents.ListItemUpdated]: (data) => this.listHandler.ListItemUpdated(data as WSListItemUpdated),
+        [WebSocketEvents.ListItemDeleted]: (data) => this.listHandler.ListItemDeleted(data as WSListItemDeleted),
+        [WebSocketEvents.DocCreated]: (data) => this.docHandler.DocCreated(data as WSDocCreated),
+        [WebSocketEvents.DocDeleted]: (data) => this.docHandler.DocDeleted(data as WSDocDeleted),
+        [WebSocketEvents.DocUpdated]: (data) => this.docHandler.DocUpdated(data as WSDocUpdated),
+        [WebSocketEvents.TeamChannelCreated]: (data) => this.teamChannelHandler.TeamChannelCreated(data as WSTeamChannelCreated),
+        [WebSocketEvents.TeamChannelDeleted]: (data) => this.teamChannelHandler.TeamChannelDeleted(data as WSTeamChannelDeleted),
+        [WebSocketEvents.TeamChannelUpdated]: (data) => this.teamChannelHandler.TeamChannelUpdated(data as WSTeamChannelUpdated),
     };
 
     constructor(public readonly client: Client) {}

@@ -1,4 +1,4 @@
-import type { ListItemPayload, ListItemSummaryPayload } from "../structs";
+import type { ListItemPayload } from "../structs";
 import type { SkeletonWSPayload, WSEvent } from "./Events";
 
 export interface WSListItemCreated extends SkeletonWSPayload {
@@ -26,7 +26,7 @@ export interface WSListItemDeleted extends SkeletonWSPayload {
 export interface WSListItemCompleted extends SkeletonWSPayload {
     d: {
         serverId: string;
-        listItem: ListItemSummaryPayload;
+        listItem: ListItemPayload;
     };
     t: WSEvent["ListItemCompleted"];
 }
@@ -34,7 +34,7 @@ export interface WSListItemCompleted extends SkeletonWSPayload {
 export interface WSListItemUncompleted extends SkeletonWSPayload {
     d: {
         serverId: string;
-        listItem: ListItemSummaryPayload;
+        listItem: ListItemPayload;
     };
     t: WSEvent["ListItemUncompleted"];
 }
