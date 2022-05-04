@@ -6,7 +6,7 @@ import { GlobalChannelManager } from "../managers/global/ChannelManager";
 import { GlobalDocManager } from "../managers/global/DocManager";
 import { GlobalForumManager } from "../managers/global/ForumManager";
 import { GlobalGroupManager } from "../managers/global/GroupManager";
-import { GlobalListManager } from "../managers/global/ListManager";
+import { GlobalListItemManager } from "../managers/global/ListManager";
 import { GlobalMemberManager } from "../managers/global/MemberManager";
 import { GlobalMessageManager } from "../managers/global/MessageManager";
 import { GlobalRoleManager } from "../managers/global/RoleManager";
@@ -21,12 +21,16 @@ import type {
     WSTeamMemberUnbannedPayload,
     WSTeamMemberUpdatedPayload,
     TeamMemberRoleIdsPayload,
+    DocPayload,
+    ListItemPayload,
+    ListItemSummaryPayload,
 } from "@guildedjs/guilded-api-typings";
 import type { Member, MemberBan } from "./Member";
 import type { CacheStructure } from "../cache";
 import { GlobalWebhookManager } from "../managers/global/WebhookManager";
 import type { Webhook } from "./Webhook";
 import { ClientUser } from "./User";
+import type { Channel } from "./channels";
 
 export class Client extends (EventEmitter as unknown as new () => TypedEmitter<ClientEvents>) {
     /** The time in milliseconds the Client connected */
@@ -49,7 +53,7 @@ export class Client extends (EventEmitter as unknown as new () => TypedEmitter<C
     docs = new GlobalDocManager(this);
     forums = new GlobalForumManager(this);
     groups = new GlobalGroupManager(this);
-    lists = new GlobalListManager(this);
+    lists = new GlobalListItemManager(this);
     members = new GlobalMemberManager(this);
     messages = new GlobalMessageManager(this);
     roles = new GlobalRoleManager(this);
@@ -116,6 +120,7 @@ interface ClientOptions {
         removeMemberBanOnUnban?: boolean;
         cacheMemberBans?: boolean;
         cacheWebhooks?: boolean;
+        cacheChannels?: boolean;
     };
 }
 
@@ -127,6 +132,17 @@ type ClientEvents = {
     messageCreated: (message: Message) => unknown;
     messageUpdated: (message: Message, oldMessage: Message | null) => unknown;
     messageDeleted: (message: Message | WSChatMessageDeletedPayload["d"]) => unknown;
+    channelCreated: (channel: Channel) => unknown;
+    channelUpdated: (channel: Channel, oldChannel: Channel | null) => unknown;
+    channelDeleted: (channel: Channel) => unknown;
+    docCreated: (doc: DocPayload) => unknown;
+    docUpdated: (newDoc: DocPayload, oldDoc: DocPayload | null) => unknown;
+    docDeleted: (doc: DocPayload) => unknown;
+    listItemCreated: (item: ListItemPayload) => unknown;
+    listItemUpdated: (newItem: ListItemPayload, oldItem: ListItemPayload | ListItemSummaryPayload | null) => unknown;
+    listItemDeleted: (item: ListItemPayload) => unknown;
+    listItemCompleted: (item: ListItemPayload) => unknown;
+    listItemUncompleted: (item: ListItemPayload) => unknown;
     memberJoined: (member: Member) => unknown;
     memberRemoved: (member: Member | WSTeamMemberRemovedPayload["d"]) => unknown;
     memberUpdated: (member: Member | WSTeamMemberUpdatedPayload["d"], oldMember: Member | null) => unknown;
@@ -134,6 +150,6 @@ type ClientEvents = {
     memberUnbanned: (member: MemberBan | WSTeamMemberUnbannedPayload["d"]) => unknown;
     webhookCreated: (webhook: Webhook) => unknown;
     webhookUpdated: (webhook: Webhook, oldWebhook: Webhook | null) => unknown;
-    rolesUpdated: (members: (Member | TeamMemberRoleIdsPayload & { serverId: string })[], oldMembers: Member[]) => unknown;
+    rolesUpdated: (members: (Member | (TeamMemberRoleIdsPayload & { serverId: string }))[], oldMembers: Member[]) => unknown;
     unknownGatewayEvent: (data: any) => unknown;
 };

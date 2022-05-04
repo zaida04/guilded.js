@@ -1,3 +1,4 @@
+export * from "./Channel";
 export * from "./Doc";
 export * from "./Embed";
 export * from "./Forum";

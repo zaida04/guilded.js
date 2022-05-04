@@ -1,7 +1,7 @@
 import type { ListItemPayload, ListItemSummaryPayload, RESTPostListItemBody, RESTPutListItemBody } from "@guildedjs/guilded-api-typings";
 import { GlobalManager } from "./GlobalManager";
 
-export class GlobalListManager extends GlobalManager {
+export class GlobalListItemManager extends GlobalManager {
     /** Create a list item. */
     create(channelId: string, options: RESTPostListItemBody): Promise<ListItemPayload> {
         return this.client.rest.router.createListItem(channelId, options).then((data) => data.listItem);
@@ -25,5 +25,15 @@ export class GlobalListManager extends GlobalManager {
     /** Delete list item */
     delete(channelId: string, itemId: string): Promise<void> {
         return this.client.rest.router.deleteListItem(channelId, itemId).then(() => void 0);
+    }
+
+    /** Complete list item */
+    complete(channelId: string, itemId: string): Promise<void> {
+        return this.client.rest.router.completeListItem(channelId, itemId).then(() => void 0);
+    }
+
+    /** Uncomplete list item */
+    uncomplete(channelId: string, itemId: string): Promise<void> {
+        return this.client.rest.router.uncompleteListItem(channelId, itemId).then(() => void 0);
     }
 }

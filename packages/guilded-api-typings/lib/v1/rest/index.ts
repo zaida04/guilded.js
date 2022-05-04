@@ -1,3 +1,4 @@
+export * from "./Channel";
 export * from "./Doc";
 export * from "./Forum";
 export * from "./Group";

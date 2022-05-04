@@ -1,7 +1,9 @@
 import type {
     RESTDeleteChannelMessageResult,
+    RESTDeleteChannelResult,
     RESTDeleteDocResult,
     RESTDeleteGroupMemberResult,
+    RESTDeleteListItemCompleteResult,
     RESTDeleteListItemResult,
     RESTDeleteMemberBanResult,
     RESTDeleteMemberNicknameResult,
@@ -11,6 +13,7 @@ import type {
     RESTGetChannelMessageResult,
     RESTGetChannelMessagesQuery,
     RESTGetChannelMessagesResult,
+    RESTGetChannelResult,
     RESTGetDocResult,
     RESTGetDocsResult,
     RESTGetListItemResult,
@@ -26,11 +29,14 @@ import type {
     RESTGetServerWebhooksResult,
     RESTPostChannelMessagesBody,
     RESTPostChannelMessagesResult,
+    RESTPostChannelsBody,
+    RESTPostChannelsResult,
     RESTPostDocsBody,
     RESTPostDocsResult,
     RESTPostForumThreadBody,
     RESTPostForumThreadResult,
     RESTPostListItemBody,
+    RESTPostListItemCompleteResult,
     RESTPostListItemResult,
     RESTPostMemberBanBody,
     RESTPostMemberBanResult,
@@ -60,6 +66,21 @@ import { ROUTES } from "./routes";
 
 export class Router {
     constructor(public readonly rest: RestManager) {}
+
+    /** Create a channel */
+    createChannel(data: RESTPostChannelsBody): Promise<RESTPostChannelsResult> {
+        return this.rest.post<RESTPostChannelsResult, RESTPostChannelsBody>(ROUTES.channels(), data);
+    }
+
+    /** Fetch a channel */
+    getChannel(channelId: string): Promise<RESTGetChannelResult> {
+        return this.rest.get<RESTGetChannelResult>(ROUTES.channel(channelId));
+    }
+
+    /** Delete a channel */
+    deleteChannel(channelId: string): Promise<RESTDeleteChannelResult> {
+        return this.rest.delete<RESTDeleteChannelResult>(ROUTES.channel(channelId));
+    }
 
     /** Send a message to a channel */
     createChannelMessage(channelId: string, content: RESTPostChannelMessagesBody): Promise<RESTPostChannelMessagesResult> {
@@ -129,6 +150,14 @@ export class Router {
     /** Delete list item */
     deleteListItem(channelId: string, itemId: string): Promise<RESTDeleteListItemResult> {
         return this.rest.delete<RESTDeleteListItemResult>(ROUTES.listItem(channelId, itemId));
+    }
+
+    completeListItem(channelId: string, itemId: string): Promise<RESTPostListItemCompleteResult> {
+        return this.rest.post<RESTPostListItemCompleteResult>(ROUTES.listItemComplete(channelId, itemId));
+    }
+
+    uncompleteListItem(channelId: string, itemId: string): Promise<RESTDeleteListItemCompleteResult> {
+        return this.rest.delete<RESTDeleteListItemCompleteResult>(ROUTES.listItemComplete(channelId, itemId));
     }
 
     /** Create a doc. */
