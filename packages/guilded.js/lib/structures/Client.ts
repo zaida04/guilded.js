@@ -148,6 +148,7 @@ type ClientEvents = {
     memberUpdated: (member: Member | WSTeamMemberUpdatedPayload["d"], oldMember: Member | null) => unknown;
     memberBanned: (member: MemberBan | WSTeamMemberBannedPayload["d"]) => unknown;
     memberUnbanned: (member: MemberBan | WSTeamMemberUnbannedPayload["d"]) => unknown;
+    serverCreated: (server: { serverId: string }) => unknown;
     webhookCreated: (webhook: Webhook) => unknown;
     webhookUpdated: (webhook: Webhook, oldWebhook: Webhook | null) => unknown;
     rolesUpdated: (members: (Member | (TeamMemberRoleIdsPayload & { serverId: string }))[], oldMembers: Member[]) => unknown;
