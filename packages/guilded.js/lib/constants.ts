@@ -22,6 +22,7 @@ export const constants = {
         DOC_CREATED: "docCreated",
         DOC_UPDATED: "docUpdated",
         DOC_DELETED: "docDeleted",
+        SERVER_CREATED: "serverCreated",
     },
 } as const;
 export type ClientEvent = typeof constants.clientEvents;

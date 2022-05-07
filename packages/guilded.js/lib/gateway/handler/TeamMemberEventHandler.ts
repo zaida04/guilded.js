@@ -25,6 +25,7 @@ export class TeamMemberEventHandler extends GatewayEventHandler {
 
         this.client.members.cache.set(buildMemberKey(data.d.serverId, data.d.member.user.id), newMember);
         this.client.users.cache.set(newUser.id, newUser);
+        if (data.d.member.user.id === this.client.user!.id) this.client.emit(constants.clientEvents.SERVER_CREATED, { serverId: data.d.serverId });
         return this.client.emit(constants.clientEvents.MEMBER_JOINED, newMember);
     }
     teamMemberRemoved(data: WSTeamMemberRemovedPayload): boolean {
