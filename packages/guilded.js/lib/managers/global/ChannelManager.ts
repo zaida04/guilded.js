@@ -14,7 +14,11 @@ export class GlobalChannelManager extends CacheableStructManager<string, Channel
             return newChannel;
         });
     }
-    fetch(channelId: string): Promise<Channel> {
+    fetch(channelId: string, force?: boolean): Promise<Channel> {
+        if (!force) {
+            const existingChannel = this.client.channels.cache.get(channelId);
+            if (existingChannel) return Promise.resolve(existingChannel);
+        }
         return this.client.rest.router.getChannel(channelId).then((data) => {
             const fetchedChannel = new (transformTypeToChannel(data.channel.type))(this.client, data.channel);
             if (this.shouldCacheChannel) this.cache.set(fetchedChannel.id, fetchedChannel);
