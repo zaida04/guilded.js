@@ -65,6 +65,11 @@
             "name": "Uhuh \"Dylan\"",
             "email": "dylan@panku.io",
             "url": "https://github.com/uhuh"
+        },
+        {
+            "name": "DaStormer",
+            "email": "dastormer@stormdevelopmentz.xyz",
+            "url": "https://github.com/DaStormer"
         }
     ],
     "engines": {
