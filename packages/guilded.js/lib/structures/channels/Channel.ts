@@ -1,5 +1,5 @@
 import type Collection from "@discordjs/collection";
-import type { RESTGetChannelMessagesQuery, ServerChannelPayload } from "@guildedjs/guilded-api-typings";
+import type { RESTGetChannelMessagesQuery, RESTPostChannelMessagesBody, ServerChannelPayload } from "@guildedjs/guilded-api-typings";
 import { Base } from "../Base";
 import type { Client } from "../Client";
 import type { Message } from "../Message";
@@ -80,6 +80,11 @@ export class Channel extends Base {
     /** Delete this channel. */
     delete() {
         return this.client.channels.delete(this.id);
+    }
+
+    /** Send a chat message in the channel. */
+    send(content: RESTPostChannelMessagesBody | string) {
+        return this.client.messages.send(this.id, content);
     }
 }
 
