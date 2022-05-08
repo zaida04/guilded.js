@@ -5,7 +5,7 @@ import type { ChannelType as APIChannelType } from "@guildedjs/guilded-api-typin
 
 export class GlobalChannelManager extends CacheableStructManager<string, Channel> {
     get shouldCacheChannel() {
-        return this.client.options?.cache !== false;
+        return this.client.options?.cache?.cacheChannels !== false;
     }
 
     create(options: RESTPostChannelsBody): Promise<Channel> {
