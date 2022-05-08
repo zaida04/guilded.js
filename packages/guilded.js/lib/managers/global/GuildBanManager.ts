@@ -4,6 +4,10 @@ import { CacheableStructManager } from "./CacheableStructManager";
 import { buildMemberKey } from "../../util";
 
 export class GlobalGuildBanManager extends CacheableStructManager<string, MemberBan> {
+    get shouldCacheBan() {
+        return this.client.options.cache?.cacheMemberBans !== false;
+    }
+
     /** Fetch a member ban in a server */
     fetch(serverId: string, userId: string, force?: boolean): Promise<MemberBan> {
         if (!force) {
@@ -12,7 +16,7 @@ export class GlobalGuildBanManager extends CacheableStructManager<string, Member
         }
         return this.client.rest.router.getMemberBan(serverId, userId).then((data) => {
             const newMemberBan = new MemberBan(this.client, { ...data.serverMemberBan, serverId });
-            if (this.client.options.cache?.cacheMemberBans !== false) this.client.bans.cache.set(newMemberBan.id, newMemberBan);
+            if (this.shouldCacheBan) this.client.bans.cache.set(newMemberBan.id, newMemberBan);
             return newMemberBan;
         });
     }
@@ -24,7 +28,7 @@ export class GlobalGuildBanManager extends CacheableStructManager<string, Member
             for (const ban of data.serverMemberBans) {
                 const newMemberBan = new MemberBan(this.client, { serverId, ...ban });
                 newMemberBans.set(newMemberBan.id, newMemberBan);
-                if (this.client.options.cache?.cacheMemberBans !== false) this.client.bans.cache.set(newMemberBan.id, newMemberBan);
+                if (this.shouldCacheBan) this.client.bans.cache.set(newMemberBan.id, newMemberBan);
             }
             return newMemberBans;
         });
@@ -34,7 +38,7 @@ export class GlobalGuildBanManager extends CacheableStructManager<string, Member
     ban(serverId: string, userId: string): Promise<MemberBan> {
         return this.client.rest.router.banMember(serverId, userId).then((data) => {
             const newMemberBan = new MemberBan(this.client, { serverId, ...data.serverMemberBan });
-            if (this.client.options.cache?.cacheMemberBans !== false) this.client.bans.cache.set(newMemberBan.id, newMemberBan);
+            if (this.shouldCacheBan) this.client.bans.cache.set(newMemberBan.id, newMemberBan);
             return newMemberBan;
         });
     }
