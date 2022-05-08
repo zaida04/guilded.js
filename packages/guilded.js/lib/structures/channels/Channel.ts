@@ -77,6 +77,11 @@ export class Channel extends Base {
         return this.client.messages.fetch(this.id, messageId);
     }
 
+    /** Delete this channel. */
+    delete() {
+        return this.client.channels.delete(this.id);
+    }
+
     /** Send a chat message in the channel. */
     send(content: RESTPostChannelMessagesBody | string) {
         return this.client.messages.send(this.id, content);
