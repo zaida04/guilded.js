@@ -14,7 +14,7 @@ export interface DocPayload {
     /** The ID of the user who created this doc */
     createdBy: string;
     /** The ISO 8601 timestamp that the doc was updated at, if relevant */
-    updatedAt: string;
+    updatedAt?: string;
     /** The ID of the user who updated this doc */
-    updatedBy: string;
+    updatedBy?: string;
 }
