@@ -5,7 +5,7 @@ export interface RESTPostChannelsBody {
     topic?: string;
     isPublic?: boolean;
     type?: ChannelType;
-    serverId?: string;
+    serverId: string;
     groupId?: string;
     categoryId?: number;
 }
