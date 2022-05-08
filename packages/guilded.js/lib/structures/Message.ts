@@ -115,4 +115,9 @@ export class Message extends Base<ChatMessagePayload> {
                 : content,
         );
     }
+
+    /** Delete this message. */
+    delete() {
+        return this.client.messages.delete(this.channelId, this.id);
+    }
 }
