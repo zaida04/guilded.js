@@ -118,6 +118,7 @@ interface ClientOptions {
         structureBuilder?: <K, V>() => CacheStructure<K, V>;
         removeMemberOnLeave?: boolean;
         removeMemberBanOnUnban?: boolean;
+        removeChannelOnDelete?: boolean;
         cacheMemberBans?: boolean;
         cacheWebhooks?: boolean;
         cacheChannels?: boolean;
