@@ -5,6 +5,7 @@ import type { User } from "./User";
 import type { Member } from "./Member";
 import { buildMemberKey } from "../util";
 import type { Embed } from "@guildedjs/embeds";
+import type { Channel } from "./channels";
 
 export enum MessageType {
     Default,
@@ -93,6 +94,11 @@ export class Message extends Base<ChatMessagePayload> {
         return this.serverId ? this.client.members.cache.get(buildMemberKey(this.serverId, this.authorId)) ?? null : null;
     }
 
+    /** Get the channel of this message */
+    get channel(): Channel | null {
+        return this.client.channels.cache.get(this.channelId) ?? null;
+    }
+
     /* Edit message content */
     edit(newContent: RESTPostChannelMessagesBody | Embed | string): Promise<Message> {
         return this.client.messages.update(this.channelId, this.id, newContent).then(() => this);
@@ -109,9 +115,9 @@ export class Message extends Base<ChatMessagePayload> {
             this.channelId,
             typeof content !== "string"
                 ? {
-                      ...content,
-                      replyMessageIds: content.replyMessageIds ? [this.id, ...content.replyMessageIds] : [this.id],
-                  }
+                    ...content,
+                    replyMessageIds: content.replyMessageIds ? [this.id, ...content.replyMessageIds] : [this.id],
+                }
                 : content,
         );
     }
