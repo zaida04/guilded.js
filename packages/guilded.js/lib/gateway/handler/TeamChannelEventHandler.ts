@@ -30,6 +30,7 @@ export class TeamChannelEventHandler extends GatewayEventHandler {
         const deletedChannel =
             existingChannel?._update({ ...data.d.channel, deleted: true }) ??
             new (transformTypeToChannel(data.d.channel.type))(this.client, data.d.channel);
+        if (this.client.options.cache?.removeChannelOnDelete) this.client.channels.cache.delete(deletedChannel.id);
         return this.client.emit(constants.clientEvents.CHANNEL_DELETED, deletedChannel);
     }
 }
