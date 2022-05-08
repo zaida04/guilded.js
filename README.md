@@ -75,4 +75,4 @@ Please ensure your commits pass the test, lint, and build scripts.
 
 > **Guilded.JS** © [zaida04](https://github.com/zaida04). All packages released under [MIT](https://github.com/guildedjs/guilded.js/blob/main/LICENSE).
 
-Maintained by: [zaida04](https://github.com/zaida04), [Skillz4Killz](https://github.com/Skillz4Killz), and [Uhuh](https://github.com/Uhuh)
+Maintained by: [zaida04](https://github.com/zaida04), [Skillz4Killz](https://github.com/Skillz4Killz), [Uhuh](https://github.com/Uhuh), and [DaStormer](https://github.com/DaStormer)
