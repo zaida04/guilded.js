@@ -1,8 +1,8 @@
 import Collection from "@discordjs/collection";
 import type { ForumThreadPayload } from "@guildedjs/guilded-api-typings";
-import { Base } from "../Base";
+import { Channel } from "./Channel";
 
-export class ForumChannel extends Base {
+export class ForumChannel extends Channel {
     /** The threads in this channel. */
     readonly threads = new Collection<string, ForumThreadPayload>();
 

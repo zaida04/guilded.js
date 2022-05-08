@@ -1,5 +1,5 @@
 import type { RESTPostChannelsBody } from "@guildedjs/guilded-api-typings";
-import { Channel, DocChannel, ListChannel } from "../../structures";
+import { Channel, DocChannel, ForumChannel, ListChannel } from "../../structures";
 import { CacheableStructManager } from "./CacheableStructManager";
 import type { ChannelType as APIChannelType } from "@guildedjs/guilded-api-typings";
 
@@ -33,9 +33,10 @@ export class GlobalChannelManager extends CacheableStructManager<string, Channel
     }
 }
 
-export const transformTypeToChannel = (str: APIChannelType) => typeToChannel[str as "docs" | "list"] ?? Channel;
+export const transformTypeToChannel = (str: APIChannelType) => typeToChannel[str as "forums" | "docs" | "list"] ?? Channel;
 
 export const typeToChannel = {
+    forums: ForumChannel,
     docs: DocChannel,
     list: ListChannel,
 };
