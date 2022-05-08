@@ -3,7 +3,7 @@
     <p><b>Tools for interacting with the official <a href="https://www.guilded.gg/">Guilded.gg</a> API.</b></p>  
     <br />
     <p>
-        <a href="https://www.guilded.gg/i/k1ber4Jp"><img src="https://guilded.nico.engineer/shields/i/k1ber4Jp?style=flat"></a>
+        <a href="https://www.guilded.gg/i/k1ber4Jp"><img src="https://shields.yoki-labs.xyz/shields/i/k1ber4Jp?style=flat"></a>
         <img src="https://github.com/guildedjs/guilded.js/actions/workflows/ci.yml/badge.svg" alt="CI">
         <a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="License: MIT"></a><br>
     </p>
