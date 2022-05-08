@@ -76,6 +76,11 @@ export class Channel extends Base {
     fetchMessage(messageId: string): Promise<Message> {
         return this.client.messages.fetch(this.id, messageId);
     }
+
+    /** Delete this channel. */
+    delete() {
+        return this.client.channels.delete(this.id);
+    }
 }
 
 enum ChannelType {
