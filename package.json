@@ -17,7 +17,7 @@
         "changeset:version": "npx changeset version",
         "prepare": "npx husky install",
         "prettier": "npx prettier --write **/*.{ts,js,json,yml,yaml,md}",
-        "refresh": "npx ts-node scripts/refresh.ts"
+        "reset": "rimraf node_modules/ packages/**/node_modules packages/**/dist packages/**/types"
     },
     "devDependencies": {
         "@changesets/cli": "^2.22.0",

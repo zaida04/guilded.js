@@ -1,2 +1,0 @@
-require("./reset");
-require("./setup");
