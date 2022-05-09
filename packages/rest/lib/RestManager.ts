@@ -1,6 +1,9 @@
-import constructFetchPolyfill from "fetch-ponyfill";
+let HTTPFetch = globalThis.fetch;
+if (!HTTPFetch) {
+    HTTPFetch = require("node-fetch");
+}
+
 import { stringify } from "qs";
-const HTTP = constructFetchPolyfill();
 
 import { GuildedAPIError } from "./errors/GuildedAPIError";
 import { PermissionsError } from "./errors/PermissionsError";
@@ -43,7 +46,7 @@ export class RestManager {
         const queryAppendedURL = data.query ? `${data.path}?${stringify(data.query)}` : data.path;
         let request;
         try {
-            request = await HTTP.fetch(this.baseURL + queryAppendedURL, requestOptions);
+            request = await HTTPFetch(this.baseURL + queryAppendedURL, requestOptions);
         } catch (e: any) {
             throw new Error(`Error while making API call, ${e.message.toString()}`);
         }
