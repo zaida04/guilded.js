@@ -33,8 +33,8 @@ import { ClientUser } from "./User";
 import type { Channel } from "./channels";
 
 export class Client extends (EventEmitter as unknown as new () => TypedEmitter<ClientEvents>) {
-    /** The time in milliseconds the Client connected */
-    readyTimestamp = 0;
+    /** The time in milliseconds since the Client connected */
+    readyTimestamp: number | null = null;
 
     /** The manager for the bot to make requests to the REST api. */
     rest = new RestManager({
@@ -43,7 +43,7 @@ export class Client extends (EventEmitter as unknown as new () => TypedEmitter<C
     });
 
     /** The websocket connection */
-    wsManager = new WebSocketManager({ token: this.options.token });
+    ws = new WebSocketManager({ token: this.options.token });
 
     /** The gateway event handlers will be processed by this manager. */
     gatewayHandler = new ClientGatewayHandler(this);
@@ -82,24 +82,25 @@ export class Client extends (EventEmitter as unknown as new () => TypedEmitter<C
 
     /** Connects the bot to the api. */
     login(opts?: { fresh?: boolean }): void {
-        if (opts?.fresh) this.wsManager = new WebSocketManager({ token: this.options.token });
-        this.wsManager.emitter
+        if (opts?.fresh) this.ws = new WebSocketManager({ token: this.options.token });
+        this.ws.emitter
             .on("error", (reason, err) => this.emit("error", `[WS] ${reason}`, err))
             .on("ready", (user) => {
                 this.user = new ClientUser(this, user);
+                this.readyTimestamp = Date.now();
                 this.emit("ready");
             })
             .on("gatewayEvent", (event, data) => this.gatewayHandler.handleWSMessage(event, data))
             .on("debug", (data) => this.emit("debug", data))
             .on("exit", () => this.emit("exit"));
-        this.wsManager.connect();
+        this.ws.connect();
     }
 
     /** Disconnects the bot. */
     disconnect(): void {
-        if (!this.wsManager.isAlive) throw new Error("There is no active connection to disconnect.");
-        this.wsManager.emitter.removeAllListeners();
-        this.wsManager.destroy();
+        if (!this.ws.isAlive) throw new Error("There is no active connection to disconnect.");
+        this.ws.emitter.removeAllListeners();
+        this.ws.destroy();
         this.emit("exit");
     }
 }

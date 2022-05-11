@@ -54,6 +54,7 @@ export class WebSocketManager {
         });
 
         this.socket.on("open", this.onSocketOpen.bind(this));
+        this.socket.on("ping", this.onSocketPing.bind(this));
         this.socket.on("pong", this.onSocketPong.bind(this));
         this.socket.on("message", (data) => {
             this.emitter.emit("raw", data);
@@ -91,7 +92,7 @@ export class WebSocketManager {
     }
 
     _debug(str: any): boolean {
-        return this.emitter.emit("debug", str);
+        return this.emitter.emit("debug", `[DEBUG] ${str}`);
     }
 
     private onSocketMessage(packet: string): void {
@@ -129,6 +130,12 @@ export class WebSocketManager {
         this._debug("Socket connection opened.");
         this.isAlive = true;
         this.connectedAt = new Date();
+    }
+
+    private onSocketPing(): void {
+        this._debug("Ping received.");
+        this.lastPingedAt = Date.now();
+        this.socket!.ping();
     }
 
     private onSocketPong(): void {
