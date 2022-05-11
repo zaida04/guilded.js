@@ -79,6 +79,7 @@ export class Router {
         return this.rest.get<RESTGetChannelResult>(ROUTES.channel(channelId));
     }
 
+    /** Update a channel */
     updateChannel(channelId: string, data: RESTPatchChannelBody): Promise<RESTPatchChannelResult> {
         return this.rest.patch<RESTPatchChannelResult>(ROUTES.channel(channelId), data);
     }
