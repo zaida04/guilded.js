@@ -14,7 +14,7 @@
         "@typescript-eslint/explicit-function-return-type": "error",
         "@typescript-eslint/explicit-member-accessibility": "off",
         "@typescript-eslint/no-invalid-this": "off",
-        "lines-between-class-members": ["warn", "always"],
+        "@typescript-eslint/lines-between-class-members": ["warn", "always"],
         "array-callback-return": "off",
         "simple-import-sort/imports": "warn",
         "simple-import-sort/exports": "warn",
