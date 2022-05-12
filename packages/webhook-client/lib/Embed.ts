@@ -4,11 +4,17 @@ import { resolveColor } from "./util";
 
 export class Embed {
     public title: string | null;
+
     public description: string | null;
+
     public url: string | null;
+
     public timestamp: number | null;
+
     public timestampString: string | null;
+
     public color: number | null;
+
     public footer: {
         text: string;
         iconURL: string | null;
@@ -16,8 +22,11 @@ export class Embed {
     } | null;
 
     public image: APIEmbedMediaData | null;
+
     public thumbnail: APIEmbedMediaData | null;
+
     public video: APIEmbedMediaData | null;
+
     public provider: {
         name: string | null;
         url: string | null;

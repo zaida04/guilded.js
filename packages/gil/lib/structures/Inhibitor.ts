@@ -7,6 +7,7 @@ export abstract class Inhibitor {
     constructor(public readonly client: BotClient, public name: string) {}
 
     abstract execute(message: Message, command: Command): Promise<boolean> | boolean;
+
     abstract init(): Promise<unknown> | unknown;
 }
 

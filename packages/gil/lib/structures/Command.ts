@@ -6,12 +6,16 @@ import type { BotClient } from "../BotClient";
 export abstract class Command {
     /** The command aliases are stored here. */
     aliases?: string[];
+
     /** The arguments you wish to request from the user. */
     arguments?: readonly CommandArgument[];
+
     /** Where is this command allowed to run in? By default, it is allowed to run in a server only! */
     allowedIn?: ("dm" | "server")[] = ["server"];
+
     /** The description of the command */
     description?: string;
+
     /** The cooldown settings for this command. */
     cooldown?: {
         seconds: number;
@@ -20,12 +24,14 @@ export abstract class Command {
 
     /** The subcommands for this command. */
     subcommands?: Collection<string, Command>;
+
     /** The name of the parent command. If nested subcommands, use `-` to separate the names. For example: `.settings staff modrole` would be parentCommand: "settings-staff" */
     parentCommand?: string;
 
     constructor(public readonly client: BotClient, public name: string) {}
 
     abstract execute(message: Message, args: Record<string, unknown>): Promise<unknown> | unknown;
+
     abstract init(): Promise<unknown> | unknown;
 }
 
