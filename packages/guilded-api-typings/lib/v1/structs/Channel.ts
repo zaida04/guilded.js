@@ -5,7 +5,7 @@ export interface ServerChannelPayload {
     topic?: string;
     createdAt: string;
     createdBy: string;
-    updatedAt: string;
+    updatedAt?: string;
     serverId: string;
     parentId?: string;
     categoryId?: string;

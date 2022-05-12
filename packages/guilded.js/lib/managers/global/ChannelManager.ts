@@ -1,4 +1,4 @@
-import type { RESTPostChannelsBody } from "@guildedjs/guilded-api-typings";
+import type { RESTPatchChannelBody, RESTPostChannelsBody } from "@guildedjs/guilded-api-typings";
 import { Channel, DocChannel, ForumChannel, ListChannel } from "../../structures";
 import { CacheableStructManager } from "./CacheableStructManager";
 import type { ChannelType as APIChannelType } from "@guildedjs/guilded-api-typings";
@@ -23,6 +23,16 @@ export class GlobalChannelManager extends CacheableStructManager<string, Channel
             const fetchedChannel = new (transformTypeToChannel(data.channel.type))(this.client, data.channel);
             if (this.shouldCacheChannel) this.cache.set(fetchedChannel.id, fetchedChannel);
             return fetchedChannel;
+        });
+    }
+    update(channelId: string, options: RESTPatchChannelBody): Promise<Channel> {
+        return this.client.rest.router.updateChannel(channelId, options).then((data) => {
+            const existingChannel = this.cache.get(channelId);
+            if (existingChannel) return existingChannel._update(data.channel);
+
+            const newChannel = new (transformTypeToChannel(data.channel.type))(this.client, data.channel);
+            if (this.shouldCacheChannel) this.cache.set(newChannel.id, newChannel);
+            return newChannel;
         });
     }
     delete(channelId: string): Promise<Channel | void> {

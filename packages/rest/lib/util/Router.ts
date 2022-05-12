@@ -27,6 +27,8 @@ import type {
     RESTGetServerWebhookResult,
     RESTGetServerWebhooksQuery,
     RESTGetServerWebhooksResult,
+    RESTPatchChannelBody,
+    RESTPatchChannelResult,
     RESTPostChannelMessagesBody,
     RESTPostChannelMessagesResult,
     RESTPostChannelsBody,
@@ -75,6 +77,11 @@ export class Router {
     /** Fetch a channel */
     getChannel(channelId: string): Promise<RESTGetChannelResult> {
         return this.rest.get<RESTGetChannelResult>(ROUTES.channel(channelId));
+    }
+
+    /** Update a channel */
+    updateChannel(channelId: string, data: RESTPatchChannelBody): Promise<RESTPatchChannelResult> {
+        return this.rest.patch<RESTPatchChannelResult>(ROUTES.channel(channelId), data);
     }
 
     /** Delete a channel */
