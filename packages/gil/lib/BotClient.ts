@@ -251,9 +251,7 @@ export class BotClient extends Client {
     }
 
     async needMessage(userId: string, channelId: string, options?: MessageCollectorOptions & { amount?: 1 }): Promise<Message>;
-
     async needMessage(userId: string, channelId: string, options: MessageCollectorOptions & { amount?: number }): Promise<Message[]>;
-
     async needMessage(userId: string, channelId: string, options?: MessageCollectorOptions): Promise<Message | Message[]> {
         const messages = await this.collectMessages({
             key: userId,
