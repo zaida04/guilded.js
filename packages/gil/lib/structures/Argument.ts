@@ -7,6 +7,7 @@ export abstract class Argument {
     constructor(public readonly client: BotClient, public name: string) {}
 
     abstract execute(argument: CommandArgument, parameters: string[], message: Message, command: Command): Promise<unknown> | unknown;
+
     abstract init(): Promise<unknown> | unknown;
 }
 

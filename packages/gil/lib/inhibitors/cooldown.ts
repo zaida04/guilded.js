@@ -6,6 +6,7 @@ import { Inhibitor } from "../structures/Inhibitor";
 
 export class CooldownInhibitor extends Inhibitor {
     name = "cooldown";
+
     /** The collection of users that are in cooldown */
     membersInCooldown = new Collection<string, Cooldown>();
 

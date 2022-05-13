@@ -13,18 +13,25 @@ import { walk } from "./utils/walk";
 export class BotClient extends Client {
     /** All your bot's monitors will be available here */
     monitors = new Collection<string, Monitor>();
+
     /** All your bot's commands will be available here */
     commands = new Collection<string, Command>();
+
     /** All your bot's arguments will be available here */
     arguments = new Collection<string, Argument>();
+
     /** All your bot's inhibitors will be available here */
     inhibitors = new Collection<string, Inhibitor>();
+
     /** All your bot's tasks will be available here */
     tasks = new Collection<string, Task>();
+
     /** The bot's prefixes per team. <teamId, prefix> */
     prefixes = new Map<string, string>();
+
     /** The message collectors that are pending. */
     messageCollectors = new Collection<string, MessageCollector>();
+
     /** The path that the end users commands,monitors, inhibitors and others will be located. */
     sourceFolderPath = this.options.sourceFolderPath || path.join(process.cwd(), "src/");
 

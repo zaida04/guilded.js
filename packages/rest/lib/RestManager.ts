@@ -13,10 +13,13 @@ import { Router } from "./util/Router";
 export class RestManager {
     /** The bot token to be used for making requests. */
     token = this.options.token;
+
     /** The version of the API to be used for making requests. By default, this will use the latest version that the library supports. */
     version = this.options.version ?? 1;
+
     /** The proxy url if it was set. */
     proxyURL = this.options.proxyURL;
+
     /** The router with all the helper methods. */
     readonly router = new Router(this);
 

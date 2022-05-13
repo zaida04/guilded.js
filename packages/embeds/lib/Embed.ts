@@ -4,13 +4,19 @@ import { resolveColor } from "./util";
 
 export class Embed {
     title: string | null;
+
     description: string | null;
+
     url: string | null;
+
     timestamp: number | null;
+
     color: number | null;
 
     image: APIEmbedMediaData | null;
+
     thumbnail: APIEmbedMediaData | null;
+
     video: APIEmbedMediaData | null;
 
     author: {

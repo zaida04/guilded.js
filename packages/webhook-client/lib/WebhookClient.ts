@@ -7,8 +7,11 @@ import { type parsedMessage, parseMessage } from "./messageUtil";
 
 export class WebhookClient {
     public URL: string;
+
     public id: string;
+
     public token: string;
+
     private rest: RestManager;
 
     public constructor(webhookConnection: string | { id: string; token: string }) {
