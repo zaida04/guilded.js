@@ -27,6 +27,8 @@ export class Message extends Base<ChatMessagePayload> {
     readonly replyMessageIds: string[] = [];
     /** If set, this message will only be seen by those mentioned or replied to. */
     readonly isPrivate: boolean;
+    /** If set, this message did not notify, mention or reply recipients. */
+    readonly isSilent: boolean;
     /** The ID of the user who created this message (Note: If this event has createdByBotId or createdByWebhookId present, this field will still be populated, but can be ignored. In these cases, the value of this field will always be Ann6LewA) */
     readonly createdById: string;
     /** The ID of the bot who created this message, if it was created by a bot */
@@ -56,6 +58,7 @@ export class Message extends Base<ChatMessagePayload> {
         this.createdAt = new Date(data.createdAt);
         this.updatedAt = null;
         this.isPrivate = data.isPrivate ?? false;
+        this.isSilent = data.isSilent ?? false;
         this.type = data.type === "system" ? MessageType.System : MessageType.Default;
 
         this._update(data);
@@ -115,9 +118,9 @@ export class Message extends Base<ChatMessagePayload> {
             this.channelId,
             typeof content !== "string"
                 ? {
-                    ...content,
-                    replyMessageIds: content.replyMessageIds ? [this.id, ...content.replyMessageIds] : [this.id],
-                }
+                      ...content,
+                      replyMessageIds: content.replyMessageIds ? [this.id, ...content.replyMessageIds] : [this.id],
+                  }
                 : content,
         );
     }
