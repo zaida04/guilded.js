@@ -7,8 +7,7 @@ import type { ChatMessagePayload } from "../structs/Message";
 export interface RESTPostChannelMessagesResult {
     message: ChatMessagePayload;
 }
-export type RESTPostChannelMessagesBody = Pick<ChatMessagePayload, "isPrivate" | "replyMessageIds" | "embeds"> & {
-    isSilent?: boolean;
+export type RESTPostChannelMessagesBody = Pick<ChatMessagePayload, "isPrivate" | "replyMessageIds" | "embeds" | "isSilent"> & {
     content?: string;
 };
 /**

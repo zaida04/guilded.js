@@ -5,6 +5,7 @@ export interface TeamMemberPayload {
     roleIds: number[];
     nickname?: string;
     joinedAt: string;
+    isOwner?: boolean;
 }
 
 export interface TeamMemberSummaryPayload {

@@ -13,6 +13,8 @@ export interface ChatMessagePayload {
     replyMessageIds?: string[];
     /** If set, this message will only be seen by those mentioned or replied to. */
     isPrivate?: boolean;
+    /** If set, this message did not notify, mention or reply recipients. */
+    isSilent?: boolean;
     /** The ISO 8601 timestamp that the message was created at. */
     createdAt: string;
     /** The ID of the user who created this message (Note: If this event has createdByBotId or createdByWebhookId present, this field will still be populated, but can be ignored. In these cases, the value of this field will always be Ann6LewA) */
