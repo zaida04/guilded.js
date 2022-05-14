@@ -50,7 +50,7 @@ export class Member extends Base<UpgradedTeamMemberPayload> {
         }
 
         if ("isOwner" in data && typeof data.isOwner !== "undefined") {
-            this.isOwner == data.isOwner;
+            this.isOwner = data.isOwner;
         }
 
         return this;
