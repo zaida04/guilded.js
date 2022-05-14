@@ -18,6 +18,8 @@ export class Member extends Base<UpgradedTeamMemberPayload> {
     kicked: boolean;
     /** Whether this member has been banned */
     banned: boolean;
+    /** Whether this member owns the server */
+    isOwner: boolean;
 
     constructor(client: Client, data: UpgradedTeamMemberPayload) {
         super(client, data);
@@ -25,6 +27,7 @@ export class Member extends Base<UpgradedTeamMemberPayload> {
         this.joinedAt = new Date(data.joinedAt);
         this.kicked = false;
         this.banned = false;
+        this.isOwner = false;
 
         this._update(data);
     }
@@ -44,6 +47,10 @@ export class Member extends Base<UpgradedTeamMemberPayload> {
 
         if ("banned" in data && typeof data.banned !== "undefined") {
             this.banned = data.banned;
+        }
+
+        if ("isOwner" in data && typeof data.isOwner !== "undefined") {
+            this.isOwner == data.isOwner;
         }
 
         return this;
