@@ -2,6 +2,7 @@ export * from "./structures";
 export * from "./structures/Client";
 export * from "./managers/global";
 export * from "./gateway/ClientGatewayHandler";
+export * from "./utils/Collection";
 export * from "./cache";
 export * from "./constants";
 export * from "./util";
