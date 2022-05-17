@@ -6,3 +6,4 @@ export * from "./Message";
 export * from "./Role";
 export * from "./User";
 export * from "./Webhook";
+export * from "./Embed";

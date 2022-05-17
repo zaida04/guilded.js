@@ -18,7 +18,6 @@
     },
     "dependencies": {
         "@discordjs/collection": "^0.6.0",
-        "@guildedjs/embeds": "workspace:*",
         "@guildedjs/rest": "workspace:*",
         "@guildedjs/webhook-client": "workspace:*",
         "@guildedjs/ws": "workspace:*",
