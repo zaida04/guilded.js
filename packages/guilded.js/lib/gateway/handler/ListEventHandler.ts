@@ -18,7 +18,7 @@ export class ListEventHandler extends GatewayEventHandler {
     ListItemUncompleted(data: WSListItemUncompleted) {
         const existingChannel = this.client.channels.cache.get(data.d.listItem.channelId) as ListChannel | undefined;
         if (existingChannel) existingChannel.items.set(data.d.listItem.id, data.d.listItem);
-        return this.client.emit(constants.clientEvents.LIST_ITEM_COMPLETED, data.d.listItem);
+        return this.client.emit(constants.clientEvents.LIST_ITEM_UNCOMPLETED, data.d.listItem);
     }
     ListItemCreated(data: WSListItemCreated) {
         const existingChannel = this.client.channels.cache.get(data.d.listItem.channelId) as ListChannel | undefined;
