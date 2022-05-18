@@ -35,7 +35,12 @@ export const buildMemberKey = (serverId: string, memberId: string): string => {
     return `${serverId}:${memberId}`;
 };
 
-export const resolveContentToData = (content: RESTPostChannelMessagesBody | string | Embed) =>
-    typeof content === "string" ? { content } : content instanceof Embed ? { embeds: [content.toJSON()] } : content;
+export const resolveContentToData = (content: RESTPostChannelMessagesBody | string | Embed): RESTPostChannelMessagesBody => {
+    if (typeof content === "string") return { content };
+    if (content instanceof Embed) return { embeds: [content.toJSON()] };
+
+    content.embeds = content.embeds?.map((x) => (x instanceof Embed ? x.toJSON() : x));
+    return content;
+};
 
 export { resolveColor } from "@guildedjs/webhook-client";
