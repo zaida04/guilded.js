@@ -1,41 +1,30 @@
 import type { APIEmbed } from "@guildedjs/guilded-api-typings";
 
-import { resolveColor } from "./util";
+import { resolveColor } from "../util";
 
 export class Embed {
     title: string | null;
-
     description: string | null;
-
     url: string | null;
-
     timestamp: number | null;
-
     color: number | null;
-
     image: APIEmbedMediaData | null;
-
     thumbnail: APIEmbedMediaData | null;
-
     video: APIEmbedMediaData | null;
-
     author: {
         name: string | null;
         iconURL: string | null;
         url: string | null;
     } | null;
-
     fields: {
         inline: boolean | null;
         name: string;
         value: string;
     }[];
-
     footer: {
         text: string;
         iconURL: string | null;
     } | null;
-
     private timestampString: string | null;
 
     constructor(data?: Partial<APIEmbed>) {

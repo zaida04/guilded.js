@@ -2,7 +2,7 @@ import type { RESTPostChannelMessagesBody, RESTGetChannelMessagesQuery } from "@
 import { Message } from "../../structures/Message";
 import { CacheableStructManager } from "./CacheableStructManager";
 import Collection from "@discordjs/collection";
-import type { Embed } from "@guildedjs/embeds";
+import type { Embed } from "../../structures/Embed";
 import { resolveContentToData } from "../../util";
 
 export class GlobalMessageManager extends CacheableStructManager<string, Message> {

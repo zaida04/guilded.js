@@ -19,4 +19,3 @@ export {
     parsedMessage,
     parsedTextResponse,
 } from "@guildedjs/webhook-client";
-export * from "@guildedjs/embeds";

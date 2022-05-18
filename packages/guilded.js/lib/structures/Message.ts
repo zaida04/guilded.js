@@ -4,7 +4,7 @@ import { Base } from "./Base";
 import type { User } from "./User";
 import type { Member } from "./Member";
 import { buildMemberKey } from "../util";
-import type { Embed } from "@guildedjs/embeds";
+import type { Embed } from "./Embed";
 import type { Channel } from "./channels";
 
 export enum MessageType {

@@ -64,14 +64,6 @@ importers:
       typedoc-plugin-rename-defaults: 0.5.1_typedoc@0.22.15
       typescript: 4.6.4
 
-  packages/embeds:
-    specifiers:
-      '@guildedjs/guilded-api-typings': workspace:*
-      typescript: 4.6.4
-    devDependencies:
-      '@guildedjs/guilded-api-typings': link:../guilded-api-typings
-      typescript: 4.6.4
-
   packages/gil:
     specifiers:
       '@discordjs/collection': ^0.6.0
@@ -96,7 +88,6 @@ importers:
   packages/guilded.js:
     specifiers:
       '@discordjs/collection': ^0.6.0
-      '@guildedjs/embeds': workspace:*
       '@guildedjs/guilded-api-typings': workspace:*
       '@guildedjs/rest': workspace:*
       '@guildedjs/webhook-client': workspace:*
@@ -106,7 +97,6 @@ importers:
       typescript: 4.6.4
     dependencies:
       '@discordjs/collection': 0.6.0
-      '@guildedjs/embeds': link:../embeds
       '@guildedjs/rest': link:../rest
       '@guildedjs/webhook-client': link:../webhook-client
       '@guildedjs/ws': link:../ws
@@ -651,7 +641,6 @@ packages:
       pacote: 11.3.5
       semver: 7.3.7
     transitivePeerDependencies:
-      - bluebird
       - supports-color
     dev: true
 
@@ -820,7 +809,6 @@ packages:
       whatwg-url: 8.7.0
       yargs-parser: 20.2.4
     transitivePeerDependencies:
-      - bluebird
       - supports-color
     dev: true
 
@@ -1018,7 +1006,6 @@ packages:
       npm-registry-fetch: 9.0.0
       npmlog: 4.1.2
     transitivePeerDependencies:
-      - bluebird
       - supports-color
     dev: true
 
@@ -1048,7 +1035,6 @@ packages:
       pify: 5.0.0
       read-package-json: 3.0.1
     transitivePeerDependencies:
-      - bluebird
       - supports-color
     dev: true
 
@@ -1183,7 +1169,6 @@ packages:
       pacote: 11.3.5
       semver: 7.3.7
     transitivePeerDependencies:
-      - bluebird
       - encoding
       - supports-color
     dev: true
@@ -1392,8 +1377,6 @@ packages:
       promise-retry: 2.0.1
       semver: 7.3.7
       which: 2.0.2
-    transitivePeerDependencies:
-      - bluebird
     dev: true
 
   /@npmcli/installed-package-contents/1.0.7:
@@ -2141,8 +2124,6 @@ packages:
       ssri: 8.0.1
       tar: 6.1.11
       unique-filename: 1.1.1
-    transitivePeerDependencies:
-      - bluebird
     dev: true
 
   /caching-transform/4.0.0:
@@ -4231,7 +4212,6 @@ packages:
       import-local: 3.1.0
       npmlog: 4.1.2
     transitivePeerDependencies:
-      - bluebird
       - encoding
       - supports-color
     dev: true
@@ -4253,7 +4233,6 @@ packages:
       npm-package-arg: 8.1.5
       npm-registry-fetch: 11.0.0
     transitivePeerDependencies:
-      - bluebird
       - supports-color
     dev: true
 
@@ -4267,7 +4246,6 @@ packages:
       semver: 7.3.7
       ssri: 8.0.1
     transitivePeerDependencies:
-      - bluebird
       - supports-color
     dev: true
 
@@ -4492,7 +4470,6 @@ packages:
       socks-proxy-agent: 5.0.1
       ssri: 8.0.1
     transitivePeerDependencies:
-      - bluebird
       - supports-color
     dev: true
 
@@ -4517,7 +4494,6 @@ packages:
       socks-proxy-agent: 6.1.1
       ssri: 8.0.1
     transitivePeerDependencies:
-      - bluebird
       - supports-color
     dev: true
 
@@ -5001,7 +4977,6 @@ packages:
       minizlib: 2.1.2
       npm-package-arg: 8.1.5
     transitivePeerDependencies:
-      - bluebird
       - supports-color
     dev: true
 
@@ -5018,7 +4993,6 @@ packages:
       minizlib: 2.1.2
       npm-package-arg: 8.1.5
     transitivePeerDependencies:
-      - bluebird
       - supports-color
     dev: true
 
@@ -5316,7 +5290,6 @@ packages:
       ssri: 8.0.1
       tar: 6.1.11
     transitivePeerDependencies:
-      - bluebird
       - supports-color
     dev: true
 
@@ -5518,11 +5491,6 @@ packages:
 
   /promise-inflight/1.0.1:
     resolution: {integrity: sha1-mEcocL8igTL8vdhoEputEsPAKeM=}
-    peerDependencies:
-      bluebird: '*'
-    peerDependenciesMeta:
-      bluebird:
-        optional: true
     dev: true
 
   /promise-retry/2.0.1:
