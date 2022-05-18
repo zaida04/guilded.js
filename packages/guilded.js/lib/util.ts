@@ -1,5 +1,4 @@
 import type { RESTPostChannelMessagesBody } from "@guildedjs/guilded-api-typings";
-import { COLORS } from "./util/colors";
 import { ROUTES } from "./constants";
 import { Embed } from "./structures/Embed";
 
