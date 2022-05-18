@@ -1,10 +1,4 @@
 {
     "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-    "extends": ["github>sapphiredev/readme:sapphire-renovate"],
-    "packageRules": [
-        {
-            "matchDepTypes": ["devDependencies"],
-            "allowedVersions": "minor"
-        }
-    ]
+    "extends": ["github>sapphiredev/readme:sapphire-renovate"]
 }
