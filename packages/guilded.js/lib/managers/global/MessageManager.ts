@@ -1,9 +1,10 @@
-import type { RESTPostChannelMessagesBody, RESTGetChannelMessagesQuery } from "@guildedjs/guilded-api-typings";
+import type { RESTPostChannelMessagesBody, RESTGetChannelMessagesQuery, EmbedPayload } from "@guildedjs/guilded-api-typings";
 import { Message } from "../../structures/Message";
 import { CacheableStructManager } from "./CacheableStructManager";
 import Collection from "@discordjs/collection";
 import type { Embed } from "../../structures/Embed";
 import { resolveContentToData } from "../../util";
+import type { MessageContent } from "../../typings";
 
 export class GlobalMessageManager extends CacheableStructManager<string, Message> {
     /** Get a list of the latest 50 messages from a channel. */
@@ -32,7 +33,7 @@ export class GlobalMessageManager extends CacheableStructManager<string, Message
     }
 
     /** Send a message in a channel */
-    send(channelId: string, content: RESTPostChannelMessagesBody | string | Embed): Promise<Message> {
+    send(channelId: string, content: MessageContent): Promise<Message> {
         return this.client.rest.router.createChannelMessage(channelId, resolveContentToData(content)).then((data) => {
             // This is in the case of which the WS gateway beats us to adding the message to the cache. If they haven't, then we do it ourselves.
             const existingMessage = this.client.messages.cache.get(data.message.id);

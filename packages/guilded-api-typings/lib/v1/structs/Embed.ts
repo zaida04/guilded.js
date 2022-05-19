@@ -1,16 +1,13 @@
-export interface APIEmbed {
-    title?: string;
-    description?: string;
-    url?: string;
-    timestamp?: string;
-    color?: number;
-    footer?: APIEmbedFooter;
+import type { EmbedPayload } from "./Message";
+
+// embed struct for the client API, webhooks mainly
+export interface APIEmbed extends EmbedPayload {
+    author?: APIEmbedAuthor;
     image?: APIEmbedImage;
     thumbnail?: APIEmbedThumbnail;
     video?: APIEmbedVideo;
     provider?: APIEmbedProvider;
-    author?: APIEmbedAuthor;
-    fields?: APIEmbedField[];
+    footer?: APIEmbedFooter;
 }
 
 export interface APIEmbedFooter {
@@ -38,9 +35,4 @@ export interface APIEmbedAuthor {
     icon_url?: string;
     url?: string;
     proxy_icon_url?: string;
-}
-export interface APIEmbedField {
-    inline?: boolean;
-    name: string;
-    value: string;
 }

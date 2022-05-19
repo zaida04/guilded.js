@@ -1,4 +1,4 @@
-import type { APIEmbed } from "@guildedjs/guilded-api-typings";
+import type { APIEmbed, EmbedPayload } from "@guildedjs/guilded-api-typings";
 
 import { resolveColor } from "../util";
 
@@ -146,7 +146,7 @@ export class Embed {
         return this;
     }
 
-    toJSON(): APIEmbed {
+    toJSON(): EmbedPayload {
         return {
             author: this.author?.name
                 ? {
@@ -182,11 +182,6 @@ export class Embed {
             timestamp: this.timestampString ?? undefined,
             title: this.title ?? undefined,
             url: this.url ?? undefined,
-            video: this.video
-                ? {
-                      url: this.video.url ?? undefined,
-                  }
-                : undefined,
         };
     }
 }
