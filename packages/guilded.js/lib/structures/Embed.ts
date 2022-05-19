@@ -182,11 +182,6 @@ export class Embed {
             timestamp: this.timestampString ?? undefined,
             title: this.title ?? undefined,
             url: this.url ?? undefined,
-            video: this.video
-                ? {
-                      url: this.video.url ?? undefined,
-                  }
-                : undefined,
         };
     }
 }

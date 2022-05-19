@@ -37,9 +37,7 @@ export interface EmbedPayload {
     color?: number;
     footer?: EmbedFooter;
     image?: EmbedImage;
-    thumbnail?: EmbedThumbnail;
-    video?: EmbedVideo;
-    provider?: EmbedProvider;
+    thumbnail?: EmbedImage;
     author?: EmbedAuthor;
     fields?: EmbedField[];
 }
@@ -50,12 +48,6 @@ export interface EmbedFooter {
 }
 export interface EmbedImage {
     url: string;
-}
-export type EmbedThumbnail = EmbedImage;
-export type EmbedVideo = EmbedImage;
-export interface EmbedProvider {
-    name?: string;
-    url?: string;
 }
 export interface EmbedAuthor {
     name: string;
