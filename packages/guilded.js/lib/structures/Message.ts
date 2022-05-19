@@ -4,8 +4,9 @@ import { Base } from "./Base";
 import type { User } from "./User";
 import type { Member } from "./Member";
 import { buildMemberKey } from "../util";
-import type { Embed } from "./Embed";
+import { Embed } from "./Embed";
 import type { Channel } from "./channels";
+import type { MessageContent } from "../typings";
 
 export enum MessageType {
     Default,
@@ -108,20 +109,19 @@ export class Message extends Base<ChatMessagePayload> {
     }
 
     /** Send a message in the same channel as this message. */
-    send(content: RESTPostChannelMessagesBody | string) {
+    send(content: MessageContent) {
         return this.client.messages.send(this.channelId, content);
     }
 
     /** Send a message that replies to this message. It mentions the user who sent this message. */
-    reply(content: RESTPostChannelMessagesBody | string) {
+    reply(content: MessageContent) {
         return this.client.messages.send(
             this.channelId,
-            typeof content !== "string"
-                ? {
-                      ...content,
-                      replyMessageIds: content.replyMessageIds ? [this.id, ...content.replyMessageIds] : [this.id],
-                  }
-                : content,
+            typeof content === "string"
+                ? { content, replyMessageIds: [this.id] }
+                : content instanceof Embed
+                ? { embeds: [content] }
+                : { ...content, replyMessageIds: content.replyMessageIds ? [this.id, ...content.replyMessageIds] : [this.id] },
         );
     }
 

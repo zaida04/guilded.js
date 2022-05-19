@@ -1,6 +1,7 @@
-import type { RESTPostChannelMessagesBody } from "@guildedjs/guilded-api-typings";
+import type { EmbedPayload, RESTPostChannelMessagesBody } from "@guildedjs/guilded-api-typings";
 import { ROUTES } from "./constants";
 import { Embed } from "./structures/Embed";
+import type { MessageContent } from "./typings";
 
 export enum IMG_EXTENSION {
     PNG = "png",
@@ -35,12 +36,11 @@ export const buildMemberKey = (serverId: string, memberId: string): string => {
     return `${serverId}:${memberId}`;
 };
 
-export const resolveContentToData = (content: RESTPostChannelMessagesBody | string | Embed): RESTPostChannelMessagesBody => {
+export const resolveContentToData = (content: MessageContent): RESTPostChannelMessagesBody => {
     if (typeof content === "string") return { content };
     if (content instanceof Embed) return { embeds: [content.toJSON()] };
 
-    content.embeds = content.embeds?.map((x) => (x instanceof Embed ? x.toJSON() : x));
-    return content;
+    return { ...content, embeds: content.embeds?.map((x) => (x instanceof Embed ? x.toJSON() : x)) };
 };
 
 export { resolveColor } from "@guildedjs/webhook-client";
