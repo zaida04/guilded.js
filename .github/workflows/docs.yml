@@ -12,7 +12,7 @@ jobs:
               uses: actions/checkout@v3
 
             - name: Install PNPM
-              uses: pnpm/action-setup@57b9359b4c69c79ca51422d02ca739a7957f4aed
+              uses: pnpm/action-setup@10693b3829bf86eb2572aef5f3571dcf5ca9287d
               with:
                   version: 6.32.7
 
