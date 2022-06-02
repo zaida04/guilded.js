@@ -24,6 +24,7 @@ import type {
     RESTGetMemberRolesResult,
     RESTGetMemberSocialLinkResult,
     RESTGetMembersResult,
+    RESTGetServerResult,
     RESTGetServerWebhookResult,
     RESTGetServerWebhooksQuery,
     RESTGetServerWebhooksResult,
@@ -127,6 +128,11 @@ export class Router {
     /** Delete a member's nickname */
     deleteMemberNickname(serverId: string, userId: string): Promise<RESTDeleteMemberNicknameResult> {
         return this.rest.delete<RESTDeleteMemberNicknameResult>(ROUTES.memberNickname(serverId, userId));
+    }
+
+    /** Get a server */
+    getServer(serverId: string): Promise<RESTGetServerResult> {
+        return this.rest.get<RESTGetServerResult>(ROUTES.server(serverId));
     }
 
     /** Create a thread in a forum */

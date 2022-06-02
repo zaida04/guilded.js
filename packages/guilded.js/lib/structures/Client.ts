@@ -31,6 +31,7 @@ import { GlobalWebhookManager } from "../managers/global/WebhookManager";
 import type { Webhook } from "./Webhook";
 import { ClientUser } from "./User";
 import type { Channel } from "./channels";
+import { GlobalServerManager } from "../managers/global/ServerManager";
 
 export class Client extends (EventEmitter as unknown as new () => TypedEmitter<ClientEvents>) {
     /** The time in milliseconds since the Client connected */
@@ -60,6 +61,7 @@ export class Client extends (EventEmitter as unknown as new () => TypedEmitter<C
     users = new GlobalUserManager(this);
     bans = new GlobalGuildBanManager(this);
     webhooks = new GlobalWebhookManager(this);
+    servers = new GlobalServerManager(this);
 
     /** The user belonging to this bot */
     user: ClientUser | null = null;
@@ -123,6 +125,7 @@ interface ClientOptions {
         cacheMemberBans?: boolean;
         cacheWebhooks?: boolean;
         cacheChannels?: boolean;
+        cacheServers?: boolean;
     };
 }
 
