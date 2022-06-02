@@ -27,6 +27,8 @@ export interface ChatMessagePayload {
     updatedAt?: string;
     /** The embeds within this message */
     embeds?: EmbedPayload[];
+    /** The mentions within this message */
+    mentions?: MentionsPayload;
 }
 
 export interface EmbedPayload {
@@ -58,4 +60,12 @@ export interface EmbedField {
     inline?: boolean;
     name: string;
     value: string;
+}
+
+export interface MentionsPayload {
+    users?: { id: string }[];
+    channels?: { id: string }[];
+    roles?: { id: number }[];
+    everyone?: boolean;
+    here?: boolean;
 }

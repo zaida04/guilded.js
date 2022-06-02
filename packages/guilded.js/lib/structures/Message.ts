@@ -1,4 +1,4 @@
-import type { ChatMessagePayload, RESTPostChannelMessagesBody } from "@guildedjs/guilded-api-typings";
+import type { ChatMessagePayload, RESTPostChannelMessagesBody, MentionsPayload } from "@guildedjs/guilded-api-typings";
 import type { Client } from "./Client";
 import { Base } from "./Base";
 import type { User } from "./User";
@@ -24,6 +24,8 @@ export class Message extends Base<ChatMessagePayload> {
     readonly type: MessageType;
     /** The content of the message */
     content: string;
+    /** The mentions within this message */
+    mentions?: MentionsPayload;
     /** The ID of the messages that this is replying to. */
     readonly replyMessageIds: string[] = [];
     /** If set, this message will only be seen by those mentioned or replied to. */
@@ -69,6 +71,10 @@ export class Message extends Base<ChatMessagePayload> {
     _update(data: Partial<ChatMessagePayload> | { deletedAt: string }): this {
         if ("content" in data && typeof data.content !== "undefined") {
             this.content = data.content;
+        }
+
+        if ("mentions" in data) {
+            this.mentions = data.mentions;
         }
 
         if ("updatedAt" in data) {
