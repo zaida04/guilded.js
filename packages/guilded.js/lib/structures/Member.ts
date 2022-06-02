@@ -105,6 +105,11 @@ export class Member extends Base<UpgradedTeamMemberPayload> {
     kick(): Promise<Member | null> {
         return this.client.members.kick(this.serverId, this.id);
     }
+
+    /** Ban this user */
+    ban(): Promise<MemberBan> {
+        return this.client.bans.ban(this.serverId, this.id);
+    }
 }
 
 /** A partial summary representation of a member. Can fetch this member to get full data */
