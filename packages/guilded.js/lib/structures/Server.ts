@@ -10,7 +10,7 @@ export class Server extends Base<ServerPayload> {
     /** The ID of the owner of this server */
     ownerId: string;
     /** The type of this server */
-    type: ServerType | null;
+    type!: ServerType | null;
     /** The name of this server */
     name!: string;
     /** The URL this server is accessible from */
