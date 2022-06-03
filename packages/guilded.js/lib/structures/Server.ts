@@ -3,6 +3,8 @@ import { Base } from "./Base";
 import type { ServerPayload, ServerType } from "@guildedjs/guilded-api-typings";
 import type { User } from "./User";
 import type { Channel } from "./channels";
+import { buildMemberKey } from "../util";
+import type { Member } from "./Member";
 
 export class Server extends Base<ServerPayload> {
     /** The ID of the owner of this server */
@@ -31,14 +33,14 @@ export class Server extends Base<ServerPayload> {
     constructor(client: Client, data: ServerPayload) {
         super(client, data);
         this.ownerId = data.ownerId;
-        this.type = data.type ?? null;
         this.createdAt = new Date(data.createdAt);
         this._update(data);
     }
 
-    get owner(): User | null {
-        return this.client.users.cache.get(this.ownerId) ?? null;
+    get owner(): Member | null {
+        return this.client.members.cache.get(buildMemberKey(this.id, this.ownerId)) ?? null;
     }
+
 
     get defaultChannel(): Channel | null {
         return this.defaultChannelId ? this.client.channels.cache.get(this.defaultChannelId) ?? null : null;
@@ -47,6 +49,10 @@ export class Server extends Base<ServerPayload> {
     _update(data: Partial<ServerPayload>): this {
         if ("name" in data && typeof data.name !== "undefined") {
             this.name = data.name;
+        }
+
+        if ("type" in data && typeof data.type !== "undefined") {
+            this.type = data.type ?? null;
         }
 
         if ("url" in data && typeof data.url !== "undefined") {
