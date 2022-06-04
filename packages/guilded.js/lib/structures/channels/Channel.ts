@@ -1,5 +1,10 @@
 import type Collection from "@discordjs/collection";
-import type { RESTGetChannelMessagesQuery, RESTPostChannelMessagesBody, RESTPatchChannelBody, ServerChannelPayload } from "@guildedjs/guilded-api-typings";
+import type {
+    RESTGetChannelMessagesQuery,
+    RESTPostChannelMessagesBody,
+    RESTPatchChannelBody,
+    ServerChannelPayload,
+} from "@guildedjs/guilded-api-typings";
 import { Base } from "../Base";
 import type { Client } from "../Client";
 import type { Message } from "../Message";
@@ -9,26 +14,38 @@ export class Channel extends Base {
     type: ChannelType;
     name!: string;
     topic!: string | null;
-    createdAt: Date;
+    createdAt: number;
     createdBy: string;
-    updatedAt!: Date | null;
+    updatedAt!: number | null;
     serverId: string;
     parentId!: string | null;
     categoryId!: string | null;
     groupId: string;
     isPublic!: boolean;
     archivedBy!: string | null;
-    archivedAt!: Date | null;
+    archivedAt!: number | null;
 
     constructor(client: Client, data: ServerChannelPayload & { deleted?: boolean }) {
         super(client, data);
         this.serverId = data.serverId;
         this.type = channelTypeToEnumMap[data.type];
-        this.createdAt = new Date(data.createdAt);
+        this.createdAt = Date.parse(data.createdAt);
         this.createdBy = data.createdBy;
         this.groupId = data.groupId;
 
         this._update(data);
+    }
+
+    get createdAtDate(): Date {
+        return new Date(this.createdAt);
+    }
+
+    get archivedAtDate(): Date | null {
+        return this.archivedAt ? new Date(this.archivedAt) : null;
+    }
+
+    get updatedAtDate(): Date | null {
+        return this.updatedAt ? new Date(this.updatedAt) : null;
     }
 
     _update(data: Partial<ServerChannelPayload & { deleted?: boolean }>): this {
@@ -41,7 +58,7 @@ export class Channel extends Base {
         }
 
         if ("updatedAt" in data && typeof data.updatedAt !== "undefined") {
-            this.updatedAt = data.updatedAt ? new Date(data.updatedAt) : null;
+            this.updatedAt = data.updatedAt ? Date.parse(data.updatedAt) : null;
         }
 
         if ("parentId" in data && typeof data.updatedAt !== "undefined") {
@@ -61,7 +78,7 @@ export class Channel extends Base {
         }
 
         if ("archivedAt" in data && typeof data.archivedAt !== "undefined") {
-            this.archivedAt = data.archivedAt ? new Date(data.archivedAt) : null;
+            this.archivedAt = data.archivedAt ? Date.parse(data.archivedAt) : null;
         }
 
         return this;

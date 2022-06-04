@@ -11,7 +11,7 @@ export class Member extends Base<UpgradedTeamMemberPayload> {
     /** The nickname for this member */
     nickname: string | null = null;
     /** Date this member joined */
-    joinedAt: Date | null;
+    joinedAt: number | null;
     /** Roles this member has by ID (TODO: role object when Guilded API has one) */
     roleIds: number[] = [];
     /** Whether this member has been kicked */
@@ -24,12 +24,16 @@ export class Member extends Base<UpgradedTeamMemberPayload> {
     constructor(client: Client, data: UpgradedTeamMemberPayload) {
         super(client, data);
         this.serverId = data.serverId;
-        this.joinedAt = new Date(data.joinedAt);
+        this.joinedAt = Date.parse(data.joinedAt);
         this.kicked = false;
         this.banned = false;
         this.isOwner = false;
 
         this._update(data);
+    }
+
+    get joinedAtDate(): Date | null {
+        return this.joinedAt ? new Date(this.joinedAt) : null;
     }
 
     _update(data: Partial<TeamMemberPayload & { kicked: boolean; banned: boolean }>): this {
@@ -137,7 +141,7 @@ export class MemberBan extends Base<UpgradedTeamMemberBanPayload> {
     /** Id this ban was created in */
     serverId: string;
     /** Date this ban was created */
-    createdAt: Date;
+    createdAt: number;
     /** The ID of user who banned this person */
     createdById: string;
     /** The reason this user was banned */
@@ -149,10 +153,14 @@ export class MemberBan extends Base<UpgradedTeamMemberBanPayload> {
         const transformedBanId = buildMemberKey(data.serverId, data.user.id);
         super(client, { ...data, id: transformedBanId });
         this.serverId = data.serverId;
-        this.createdAt = new Date(data.createdAt);
+        this.createdAt = Date.parse(data.createdAt);
         this.createdById = data.createdBy;
         this.target = data.user;
         this.reason = data.reason ?? null;
+    }
+
+    get createdAtDate(): Date {
+        return new Date(this.createdAt);
     }
 
     /** The author of the ban */

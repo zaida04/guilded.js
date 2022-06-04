@@ -12,19 +12,22 @@ export class User extends Base<UserPayload> {
     /** The banner image associated with this user */
     banner: string | null = null;
     /** When this user was created */
-    readonly createdAt: Date | null;
+    readonly createdAt: number | null;
 
     constructor(client: Client, data: UserPayload) {
         super(client, data);
         this.name = data.name;
-        this.createdAt = new Date(data.createdAt);
+        this.createdAt = Date.parse(data.createdAt);
         this.type = data.type === "bot" ? UserType.Bot : UserType.User;
 
         this._update(data);
     }
 
-    _update(data: Partial<UserPayload>): this {
+    get createdAtDate(): Date | null {
+        return this.createdAt ? new Date(this.createdAt) : null;
+    }
 
+    _update(data: Partial<UserPayload>): this {
         if ("avatar" in data) {
             this.avatar = data.avatar ?? null;
         }
