@@ -39,13 +39,13 @@ export class Message extends Base<ChatMessagePayload> {
     /** The ID of the webhook who created this message, if it was created by a webhook */
     readonly createdByWebhookId: string | null;
     /** The timestamp that the message was created at. */
-    readonly createdAt: number;
+    readonly _createdAt: number;
     /** The timestamp that the message was updated at, if relevant */
-    updatedAt: number | null;
+    _updatedAt: number | null;
     /** Whether the message has been deleted */
     deleted = false;
     /** When the message was deleted, if it was */
-    deletedAt: number | null = null;
+    _deletedAt: number | null = null;
 
     constructor(client: Client, data: ChatMessagePayload) {
         super(client, data);
@@ -58,8 +58,8 @@ export class Message extends Base<ChatMessagePayload> {
         this.createdById = data.createdBy;
         this.createdByBotId = data.createdByBotId ?? null;
         this.createdByWebhookId = data.createdByWebhookId ?? null;
-        this.createdAt = Date.parse(data.createdAt);
-        this.updatedAt = null;
+        this._createdAt = Date.parse(data.createdAt);
+        this._updatedAt = null;
         this.isPrivate = data.isPrivate ?? false;
         this.isSilent = data.isSilent ?? false;
         this.type = data.type === "system" ? MessageType.System : MessageType.Default;
@@ -67,16 +67,16 @@ export class Message extends Base<ChatMessagePayload> {
         this._update(data);
     }
 
-    get createdAtDate(): Date {
-        return new Date(this.createdAt);
+    get createdAt(): Date {
+        return new Date(this._createdAt);
     }
 
-    get updatedAtDate(): Date | null {
-        return this.updatedAt ? new Date(this.updatedAt) : null;
+    get updatedAt(): Date | null {
+        return this._updatedAt ? new Date(this._updatedAt) : null;
     }
 
-    get deletedAtDate(): Date | null {
-        return this.deletedAt ? new Date(this.deletedAt) : null;
+    get deletedAt(): Date | null {
+        return this._deletedAt ? new Date(this._deletedAt) : null;
     }
 
     /** Update details of this structure */
@@ -90,12 +90,12 @@ export class Message extends Base<ChatMessagePayload> {
         }
 
         if ("updatedAt" in data) {
-            this.updatedAt = data.updatedAt ? Date.parse(data.updatedAt) : null;
+            this._updatedAt = data.updatedAt ? Date.parse(data.updatedAt) : null;
         }
 
         if ("deletedAt" in data) {
             this.deleted = true;
-            this.deletedAt = Date.parse(data.deletedAt);
+            this._deletedAt = Date.parse(data.deletedAt);
         }
 
         return this;

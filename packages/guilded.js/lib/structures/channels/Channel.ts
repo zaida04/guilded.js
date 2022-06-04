@@ -14,38 +14,38 @@ export class Channel extends Base {
     type: ChannelType;
     name!: string;
     topic!: string | null;
-    createdAt: number;
+    _createdAt: number;
     createdBy: string;
-    updatedAt!: number | null;
+    _updatedAt!: number | null;
     serverId: string;
     parentId!: string | null;
     categoryId!: string | null;
     groupId: string;
     isPublic!: boolean;
     archivedBy!: string | null;
-    archivedAt!: number | null;
+    _archivedAt!: number | null;
 
     constructor(client: Client, data: ServerChannelPayload & { deleted?: boolean }) {
         super(client, data);
         this.serverId = data.serverId;
         this.type = channelTypeToEnumMap[data.type];
-        this.createdAt = Date.parse(data.createdAt);
+        this._createdAt = Date.parse(data.createdAt);
         this.createdBy = data.createdBy;
         this.groupId = data.groupId;
 
         this._update(data);
     }
 
-    get createdAtDate(): Date {
-        return new Date(this.createdAt);
+    get createdAt(): Date {
+        return new Date(this._createdAt);
     }
 
-    get archivedAtDate(): Date | null {
-        return this.archivedAt ? new Date(this.archivedAt) : null;
+    get archivedAt(): Date | null {
+        return this._archivedAt ? new Date(this._archivedAt) : null;
     }
 
-    get updatedAtDate(): Date | null {
-        return this.updatedAt ? new Date(this.updatedAt) : null;
+    get updatedAt(): Date | null {
+        return this._updatedAt ? new Date(this._updatedAt) : null;
     }
 
     _update(data: Partial<ServerChannelPayload & { deleted?: boolean }>): this {
@@ -58,7 +58,7 @@ export class Channel extends Base {
         }
 
         if ("updatedAt" in data && typeof data.updatedAt !== "undefined") {
-            this.updatedAt = data.updatedAt ? Date.parse(data.updatedAt) : null;
+            this._updatedAt = data.updatedAt ? Date.parse(data.updatedAt) : null;
         }
 
         if ("parentId" in data && typeof data.updatedAt !== "undefined") {
@@ -78,7 +78,7 @@ export class Channel extends Base {
         }
 
         if ("archivedAt" in data && typeof data.archivedAt !== "undefined") {
-            this.archivedAt = data.archivedAt ? Date.parse(data.archivedAt) : null;
+            this._archivedAt = data.archivedAt ? Date.parse(data.archivedAt) : null;
         }
 
         return this;

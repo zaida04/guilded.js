@@ -11,7 +11,7 @@ export class Member extends Base<UpgradedTeamMemberPayload> {
     /** The nickname for this member */
     nickname: string | null = null;
     /** Date this member joined */
-    joinedAt: number | null;
+    _joinedAt: number | null;
     /** Roles this member has by ID (TODO: role object when Guilded API has one) */
     roleIds: number[] = [];
     /** Whether this member has been kicked */
@@ -24,7 +24,7 @@ export class Member extends Base<UpgradedTeamMemberPayload> {
     constructor(client: Client, data: UpgradedTeamMemberPayload) {
         super(client, data);
         this.serverId = data.serverId;
-        this.joinedAt = Date.parse(data.joinedAt);
+        this._joinedAt = Date.parse(data.joinedAt);
         this.kicked = false;
         this.banned = false;
         this.isOwner = false;
@@ -32,8 +32,8 @@ export class Member extends Base<UpgradedTeamMemberPayload> {
         this._update(data);
     }
 
-    get joinedAtDate(): Date | null {
-        return this.joinedAt ? new Date(this.joinedAt) : null;
+    get joinedAt(): Date | null {
+        return this._joinedAt ? new Date(this._joinedAt) : null;
     }
 
     _update(data: Partial<TeamMemberPayload & { kicked: boolean; banned: boolean }>): this {
@@ -141,7 +141,7 @@ export class MemberBan extends Base<UpgradedTeamMemberBanPayload> {
     /** Id this ban was created in */
     serverId: string;
     /** Date this ban was created */
-    createdAt: number;
+    _createdAt: number;
     /** The ID of user who banned this person */
     createdById: string;
     /** The reason this user was banned */
@@ -153,14 +153,14 @@ export class MemberBan extends Base<UpgradedTeamMemberBanPayload> {
         const transformedBanId = buildMemberKey(data.serverId, data.user.id);
         super(client, { ...data, id: transformedBanId });
         this.serverId = data.serverId;
-        this.createdAt = Date.parse(data.createdAt);
+        this._createdAt = Date.parse(data.createdAt);
         this.createdById = data.createdBy;
         this.target = data.user;
         this.reason = data.reason ?? null;
     }
 
-    get createdAtDate(): Date {
-        return new Date(this.createdAt);
+    get createdAt(): Date {
+        return new Date(this._createdAt);
     }
 
     /** The author of the ban */
