@@ -15,4 +15,5 @@ export * from "./structures/Argument";
 export * from "./structures/Command";
 export * from "./structures/Inhibitor";
 export * from "./structures/Monitor";
+export * from "./structures/Task";
 export * from "./utils/walk";
