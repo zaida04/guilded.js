@@ -27,17 +27,17 @@ export class Server extends Base<ServerPayload> {
     /** The default channel of this server */
     defaultChannelId!: string;
     /** The date this server was created */
-    createdAt!: number;
+    _createdAt!: number;
 
     constructor(client: Client, data: ServerPayload) {
         super(client, data);
         this.ownerId = data.ownerId;
-        this.createdAt = Date.parse(data.createdAt);
+        this._createdAt = Date.parse(data.createdAt);
         this._update(data);
     }
 
-    get createdAtDate(): Date {
-        return new Date(this.createdAt);
+    get createdAt(): Date {
+        return new Date(this._createdAt);
     }
 
     get url(): string {

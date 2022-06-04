@@ -39,13 +39,13 @@ export class Message extends Base<ChatMessagePayload> {
     /** The ID of the webhook who created this message, if it was created by a webhook */
     readonly createdByWebhookId: string | null;
     /** The timestamp that the message was created at. */
-    readonly createdAt: Date;
+    readonly _createdAt: number;
     /** The timestamp that the message was updated at, if relevant */
-    updatedAt: Date | null;
+    _updatedAt: number | null;
     /** Whether the message has been deleted */
     deleted = false;
     /** When the message was deleted, if it was */
-    deletedAt: Date | null = null;
+    _deletedAt: number | null = null;
 
     constructor(client: Client, data: ChatMessagePayload) {
         super(client, data);
@@ -58,13 +58,25 @@ export class Message extends Base<ChatMessagePayload> {
         this.createdById = data.createdBy;
         this.createdByBotId = data.createdByBotId ?? null;
         this.createdByWebhookId = data.createdByWebhookId ?? null;
-        this.createdAt = new Date(data.createdAt);
-        this.updatedAt = null;
+        this._createdAt = Date.parse(data.createdAt);
+        this._updatedAt = null;
         this.isPrivate = data.isPrivate ?? false;
         this.isSilent = data.isSilent ?? false;
         this.type = data.type === "system" ? MessageType.System : MessageType.Default;
 
         this._update(data);
+    }
+
+    get createdAt(): Date {
+        return new Date(this._createdAt);
+    }
+
+    get updatedAt(): Date | null {
+        return this._updatedAt ? new Date(this._updatedAt) : null;
+    }
+
+    get deletedAt(): Date | null {
+        return this._deletedAt ? new Date(this._deletedAt) : null;
     }
 
     /** Update details of this structure */
@@ -78,12 +90,12 @@ export class Message extends Base<ChatMessagePayload> {
         }
 
         if ("updatedAt" in data) {
-            this.updatedAt = data.updatedAt ? new Date(data.updatedAt) : null;
+            this._updatedAt = data.updatedAt ? Date.parse(data.updatedAt) : null;
         }
 
         if ("deletedAt" in data) {
             this.deleted = true;
-            this.deletedAt = new Date(data.deletedAt);
+            this._deletedAt = Date.parse(data.deletedAt);
         }
 
         return this;

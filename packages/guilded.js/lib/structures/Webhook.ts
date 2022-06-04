@@ -26,12 +26,12 @@ export class Webhook extends Base<WebhookPayload> {
     /**
      * The date in which this webhook was created
      */
-    createdAt: Date;
+    _createdAt: number;
 
     /**
      * The date this webhook was deleted if it was deleted
      */
-    deletedAt: Date | null = null;
+    _deletedAt: number | null = null;
 
     /**
      * The user who created this webhook
@@ -46,9 +46,17 @@ export class Webhook extends Base<WebhookPayload> {
     constructor(client: Client, data: WebhookPayload) {
         super(client, data);
         this.serverId = data.serverId;
-        this.createdAt = new Date(data.createdAt);
+        this._createdAt = Date.parse(data.createdAt);
         this.authorID = data.createdBy;
         this._update(data);
+    }
+
+    get createdAt(): Date {
+        return new Date(this._createdAt);
+    }
+
+    get deletedAt(): Date | null {
+        return this._deletedAt ? new Date(this._deletedAt) : null;
     }
 
     /** The author of this webhook */
@@ -61,7 +69,7 @@ export class Webhook extends Base<WebhookPayload> {
         if ("channelId" in data && data.channelId !== undefined) this.channelID = data.channelId;
         if ("token" in data && data.token !== undefined) this.token = data.token ?? null;
         if ("deletedAt" in data && data.deletedAt !== undefined) {
-            this.deletedAt = data.deletedAt ? new Date(data.deletedAt) : null;
+            this._deletedAt = data.deletedAt ? Date.parse(data.deletedAt) : null;
         }
 
         return this;
