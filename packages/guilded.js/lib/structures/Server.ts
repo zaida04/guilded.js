@@ -1,7 +1,6 @@
 import type { Client } from "./Client";
 import { Base } from "./Base";
-import type { ServerPayload, ServerType } from "@guildedjs/guilded-api-typings";
-import type { User } from "./User";
+import type { ServerPayload, ServerType as APIServerType } from "@guildedjs/guilded-api-typings";
 import type { Channel } from "./channels";
 import { buildMemberKey } from "../util";
 import type { Member } from "./Member";
@@ -41,7 +40,6 @@ export class Server extends Base<ServerPayload> {
         return this.client.members.cache.get(buildMemberKey(this.id, this.ownerId)) ?? null;
     }
 
-
     get defaultChannel(): Channel | null {
         return this.defaultChannelId ? this.client.channels.cache.get(this.defaultChannelId) ?? null : null;
     }
@@ -52,7 +50,7 @@ export class Server extends Base<ServerPayload> {
         }
 
         if ("type" in data && typeof data.type !== "undefined") {
-            this.type = data.type ?? null;
+            this.type = ServerTypeMap[data.type] ?? null;
         }
 
         if ("url" in data && typeof data.url !== "undefined") {
@@ -85,3 +83,24 @@ export class Server extends Base<ServerPayload> {
         return this;
     }
 }
+
+export enum ServerType {
+    Team,
+    Organization,
+    Community,
+    Clan,
+    Guild,
+    Friends,
+    Streaming,
+    Other,
+}
+export const ServerTypeMap: Record<APIServerType, ServerType> = {
+    team: ServerType.Team,
+    organization: ServerType.Organization,
+    community: ServerType.Community,
+    clan: ServerType.Clan,
+    guild: ServerType.Guild,
+    friends: ServerType.Friends,
+    streaming: ServerType.Streaming,
+    other: ServerType.Other,
+};
