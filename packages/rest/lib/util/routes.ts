@@ -9,6 +9,9 @@ export const ROUTES = {
     channelMessages: (channelId: string) => `/channels/${channelId}/messages` as const,
     channelMessage: (channelId: string, messageId: string) => `/channels/${channelId}/messages/${messageId}` as const,
 
+    // Server Endpoints
+    server: (serverId: string) => `/servers/${serverId}` as const,
+
     // Member Endpoints
     memberNickname: (serverId: string, userId: string) => `/servers/${serverId}/members/${userId}/nickname` as const,
     memberRoles: (serverId: string, userId: string) => `/servers/${serverId}/members/${userId}/roles` as const,
