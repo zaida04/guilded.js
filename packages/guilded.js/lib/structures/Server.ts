@@ -12,8 +12,8 @@ export class Server extends Base<ServerPayload> {
     type!: ServerType | null;
     /** The name of this server */
     name!: string;
-    /** The URL this server is accessible from */
-    url!: string;
+    /** The slug of the URL this server is accessible from */
+    shortURL!: string;
     /** The description of this server */
     description!: string | null;
     /** The icon of this server */
@@ -27,17 +27,21 @@ export class Server extends Base<ServerPayload> {
     /** The default channel of this server */
     defaultChannelId!: string;
     /** The date this server was created */
-    createdAt!: Date;
+    createdAt!: number;
 
     constructor(client: Client, data: ServerPayload) {
         super(client, data);
         this.ownerId = data.ownerId;
-        this.createdAt = new Date(data.createdAt);
+        this.createdAt = Date.parse(data.createdAt);
         this._update(data);
     }
 
-    get fullUrl(): string {
-        return `https://www.guilded.gg/${this.url}`;
+    get createdAtDate(): Date {
+        return new Date(this.createdAt);
+    }
+
+    get url(): string {
+        return `https://www.guilded.gg/${this.shortURL}`;
     }
 
     get owner(): Member | null {
@@ -58,7 +62,7 @@ export class Server extends Base<ServerPayload> {
         }
 
         if ("url" in data && typeof data.url !== "undefined") {
-            this.url = data.url ?? null;
+            this.shortURL = data.url ?? null;
         }
 
         if ("about" in data && typeof data.about !== "undefined") {
