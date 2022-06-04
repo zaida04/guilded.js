@@ -36,6 +36,10 @@ export class Server extends Base<ServerPayload> {
         this._update(data);
     }
 
+    get fullUrl(): string {
+        return `https://www.guilded.gg/${this.url}`;
+    }
+
     get owner(): Member | null {
         return this.client.members.cache.get(buildMemberKey(this.id, this.ownerId)) ?? null;
     }
