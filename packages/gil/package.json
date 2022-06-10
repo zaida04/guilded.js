@@ -8,9 +8,9 @@
     "types": "types/index.d.ts",
     "typedocMain": "lib/index.ts",
     "scripts": {
-        "test": "npx ts-node test/index.ts",
-        "build": "npx tsc && npx gen-esm-wrapper . ./dist/index.mjs",
-        "prepublishOnly": "npx rimraf dist/ && npx rimraf types/ && pnpm run build"
+        "test": "ts-node test/index.ts",
+        "build": "tsc && gen-esm-wrapper . ./dist/index.mjs",
+        "prepublishOnly": "rimraf dist/ && rimraf types/ && pnpm run build"
     },
     "devDependencies": {
         "dotenv": "^16.0.1",

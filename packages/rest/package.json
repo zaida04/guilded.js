@@ -8,8 +8,8 @@
     "types": "types/index.d.ts",
     "typedocMain": "lib/index.ts",
     "scripts": {
-        "build": "npx tsc && npx gen-esm-wrapper . ./dist/index.mjs",
-        "prepublishOnly": "npx rimraf dist/ && npx rimraf types/ && pnpm run build"
+        "build": "tsc && gen-esm-wrapper . ./dist/index.mjs",
+        "prepublishOnly": "rimraf dist/ && rimraf types/ && pnpm run build"
     },
     "devDependencies": {
         "@guildedjs/guilded-api-typings": "workspace:*",
