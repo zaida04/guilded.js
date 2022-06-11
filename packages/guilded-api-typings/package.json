@@ -8,8 +8,8 @@
     "main": "dist/index.js",
     "typedocMain": "lib/index.ts",
     "scripts": {
-        "build": "npx tsc",
-        "prepublishOnly": "npx rimraf dist/ && pnpm run build"
+        "build": "tsc",
+        "prepublishOnly": "rimraf dist/ && pnpm run build"
     },
     "devDependencies": {
         "typescript": "4.7.2"
