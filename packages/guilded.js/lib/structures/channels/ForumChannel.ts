@@ -1,13 +1,13 @@
 import Collection from "@discordjs/collection";
-import type { ForumThreadPayload } from "@guildedjs/guilded-api-typings";
+import type { ForumTopicPayload } from "@guildedjs/guilded-api-typings";
 import { Channel } from "./Channel";
 
 export class ForumChannel extends Channel {
-    /** The threads in this channel. */
-    readonly threads = new Collection<string, ForumThreadPayload>();
+    /** The topics in this channel. */
+    readonly topics = new Collection<string, ForumTopicPayload>();
 
-    /** Create a thread in a forum */
-    createThread(title: string, content: string): Promise<ForumThreadPayload> {
-        return this.client.forums.createThread(this.id, { title, content });
+    /** Create a topic in a forum */
+    createTopic(title: string, content: string): Promise<ForumTopicPayload> {
+        return this.client.forums.createTopic(this.id, { title, content });
     }
 }

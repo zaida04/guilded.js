@@ -21,7 +21,7 @@ export const ROUTES = {
     memberBans: (serverId: string) => `/servers/${serverId}/bans` as const,
 
     // Forum Endpoints
-    forumThread: (channelId: string) => `/channels/${channelId}/forum` as const,
+    forumTopic: (channelId: string) => `/channels/${channelId}/topics` as const,
 
     // List Endpoints
     listItems: (channelId: string) => `/channels/${channelId}/items` as const,

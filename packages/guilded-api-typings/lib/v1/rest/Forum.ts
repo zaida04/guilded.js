@@ -1,13 +1,13 @@
-import type { ForumThreadPayload } from "../structs/Forum";
+import type { ForumTopicPayload } from "../structs/Forum";
 
 /**
  * POST
- * /channels/:channelId/forum
+ * /channels/:channelId/topics
  */
-export interface RESTPostForumThreadResult {
-    forumThread: ForumThreadPayload;
+export interface RESTPostForumTopicResult {
+    forumTopic: ForumTopicPayload;
 }
-export interface RESTPostForumThreadBody {
+export interface RESTPostForumTopicBody {
     title: string;
     content: string;
 }
