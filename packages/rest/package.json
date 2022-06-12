@@ -15,11 +15,11 @@
         "@guildedjs/guilded-api-typings": "workspace:*",
         "@types/node-fetch": "2.6.1",
         "@types/qs": "^6.9.7",
-        "typescript": "4.7.2"
+        "typescript": "4.7.3"
     },
     "dependencies": {
         "node-fetch": "2.6.7",
-        "qs": "^6.10.3"
+        "qs": "^6.10.5"
     },
     "contributors": [
         {
