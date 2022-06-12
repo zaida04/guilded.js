@@ -1,4 +1,4 @@
-export interface ForumThreadPayload {
+export interface ForumTopicPayload {
     /** The ID of the forum thread */
     id: number;
     /** The ID of the server this forum thread belongs to */

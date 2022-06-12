@@ -36,8 +36,8 @@ import type {
     RESTPostChannelsResult,
     RESTPostDocsBody,
     RESTPostDocsResult,
-    RESTPostForumThreadBody,
-    RESTPostForumThreadResult,
+    RESTPostForumTopicBody,
+    RESTPostForumTopicResult,
     RESTPostListItemBody,
     RESTPostListItemCompleteResult,
     RESTPostListItemResult,
@@ -135,9 +135,9 @@ export class Router {
         return this.rest.get<RESTGetServerResult>(ROUTES.server(serverId));
     }
 
-    /** Create a thread in a forum */
-    createForumThread(channelId: string, options: RESTPostForumThreadBody): Promise<RESTPostForumThreadResult> {
-        return this.rest.post<RESTPostForumThreadResult, RESTPostForumThreadBody>(ROUTES.forumThread(channelId), options);
+    /** Create a topic in a forum */
+    createForumTopic(channelId: string, options: RESTPostForumTopicBody): Promise<RESTPostForumTopicResult> {
+        return this.rest.post<RESTPostForumTopicResult, RESTPostForumTopicBody>(ROUTES.forumTopic(channelId), options);
     }
 
     /** Create a list item. */
