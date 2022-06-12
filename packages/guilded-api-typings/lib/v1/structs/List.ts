@@ -1,3 +1,5 @@
+import type { MentionsPayload } from "./Message";
+
 export interface ListItemPayload {
     /** The ID of the list item. */
     id: string;
@@ -7,6 +9,8 @@ export interface ListItemPayload {
     channelId: string;
     /** The message of the list item. */
     message: string;
+    /** The mentions within the list item. */
+    mentions?: MentionsPayload;
     /** The note of the list item. */
     note?: ListNoteContent;
     /** The ISO 8601 timestamp that the list item was created at */
@@ -25,12 +29,13 @@ export interface ListItemPayload {
     completedAt?: string;
 }
 
-export type ListItemSummaryPayload = Omit<ListItemPayload, "note"> & { note?: Omit<ListNoteContent, "content"> };
+export type ListItemSummaryPayload = Omit<ListItemPayload, "note" | "mentions"> & { note?: Omit<ListNoteContent, "content" | "mentions"> };
 
 export interface ListNoteContent {
     createdAt: string;
     createdBy: string;
     content: string;
+    mentions?: MentionsPayload;
     updatedAt?: string;
     updatedBy?: string;
 }
