@@ -8,6 +8,7 @@ importers:
       '@sapphire/eslint-config': 4.3.4
       '@types/chai': 4.3.1
       '@types/mocha': 9.1.1
+      '@types/node': 16.11.39
       '@types/rimraf': 3.0.2
       '@typescript-eslint/eslint-plugin': 5.27.1
       '@typescript-eslint/parser': 5.27.1
@@ -37,6 +38,7 @@ importers:
       '@sapphire/eslint-config': 4.3.4
       '@types/chai': 4.3.1
       '@types/mocha': 9.1.1
+      '@types/node': 16.11.39
       '@types/rimraf': 3.0.2
       '@typescript-eslint/eslint-plugin': 5.27.1_aq7uryhocdbvbqum33pitcm3y4
       '@typescript-eslint/parser': 5.27.1_ud6rd4xtew5bv4yhvkvu24pzm4
@@ -56,7 +58,7 @@ importers:
       prettier: 2.6.2
       pretty-quick: 3.1.3_prettier@2.6.2
       rimraf: 3.0.2
-      ts-node: 10.8.1_typescript@4.7.3
+      ts-node: 10.8.1_pjlhwcktroxhni6x7uirug5lya
       typedoc: 0.22.17_typescript@4.7.3
       typedoc-plugin-remove-references: 0.0.6
       typedoc-plugin-rename-defaults: 0.5.1_typedoc@0.22.17
@@ -3714,7 +3716,7 @@ packages:
     engines: {node: '>=8'}
     dev: true
 
-  /ts-node/10.8.1_typescript@4.7.3:
+  /ts-node/10.8.1_pjlhwcktroxhni6x7uirug5lya:
     resolution: {integrity: sha512-Wwsnao4DQoJsN034wePSg5nZiw4YKXf56mPIAeD6wVmiv+RytNSWqc2f3fKvcUoV+Yn2+yocD71VOfQHbmVX4g==}
     hasBin: true
     peerDependencies:
@@ -3733,6 +3735,7 @@ packages:
       '@tsconfig/node12': 1.0.9
       '@tsconfig/node14': 1.0.1
       '@tsconfig/node16': 1.0.2
+      '@types/node': 16.11.39
       acorn: 8.7.1
       acorn-walk: 8.2.0
       arg: 4.1.3
