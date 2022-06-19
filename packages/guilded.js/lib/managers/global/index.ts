@@ -8,3 +8,4 @@ export * from "./ListManager";
 export * from "./MemberManager";
 export * from "./MessageManager";
 export * from "./RoleManager";
+export * from "./ServerManager";
