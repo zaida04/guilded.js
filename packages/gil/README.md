@@ -13,11 +13,8 @@ You can install this package from [NPM](https://www.npmjs.com/package/@guildedjs
 -   `npm install @guildedjs/gil guilded.js`
 -   `yarn add @guildedjs/gil guilded.js`
 
-## Documentation
-
-### Monitors
-
-Monitors are handlers that are ran on every single message sent. You can use monitors for several features such as auto-moderation like filtering messages for bad words or urls etc... Some of the monitors that are built into the Gil framework is the CommandHandler. This monitor runs on all messages and checks if the message was trying to execute a command.
+## Guide
+https://www.guilded.gg/guildedjs/groups/G3p7OAgz/channels/5d6a6aed-3888-4156-9fbd-ebea8313c6e3/docs/312915
 
 ## Contributing
 
