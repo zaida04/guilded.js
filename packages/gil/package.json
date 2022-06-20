@@ -14,11 +14,11 @@
     },
     "devDependencies": {
         "dotenv": "^16.0.1",
-        "typescript": "4.7.3"
+        "typescript": "4.7.4"
     },
     "dependencies": {
         "@discordjs/collection": "^0.7.0",
-        "colorette": "^2.0.17",
+        "colorette": "^2.0.19",
         "guilded.js": "workspace:*"
     },
     "contributors": [
