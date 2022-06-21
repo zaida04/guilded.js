@@ -301,7 +301,7 @@ export class BotClient extends Client {
     }
 
     /** Handler that is executed when a user is using a command too fast and goes into cooldown. Override this to customize the behavior. */
-    async cooldownReached(message: Message, command: Command, options: RespondToCooldownOption): Promise<unknown> {
+    cooldownReached(message: Message, command: Command, options: RespondToCooldownOption): Promise<unknown> {
         return message.reply(
             `You must wait **${this.humanizeMilliseconds(options.cooldown.timestamp - options.now)}** before using the *${
                 command.fullName
