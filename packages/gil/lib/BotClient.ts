@@ -3,6 +3,7 @@ import { bgBlue, bgGreen, bgYellow, black } from "colorette";
 import { Client, Message } from "guilded.js";
 import path from "path";
 
+import type { Cooldown } from "./inhibitors/cooldown";
 import type { Argument } from "./structures/Argument";
 import type { Command } from "./structures/Command";
 import type { Inhibitor } from "./structures/Inhibitor";
@@ -190,6 +191,7 @@ export class BotClient extends Client {
         });
     }
 
+    /** Converts a number of milliseconds to a easy to read format(1d2h3m). */
     humanizeMilliseconds(milliseconds: number): string {
         // Gets ms into seconds
         const time = milliseconds / 1000;
@@ -208,6 +210,7 @@ export class BotClient extends Client {
         return `${dayString}${hourString}${minuteString}${secondString}`;
     }
 
+    /** Converts a text form(1d2h3m) of time to a number in milliseconds. */
     stringToMilliseconds(text: string): number | undefined {
         const matches = text.match(/(\d+[w|d|h|m|s]{1})/g);
         if (!matches) return;
@@ -250,6 +253,7 @@ export class BotClient extends Client {
         return total;
     }
 
+    /** Request some message(s) from a user in a channel. */
     async needMessage(userId: string, channelId: string, options?: MessageCollectorOptions & { amount?: 1 }): Promise<Message>;
     async needMessage(userId: string, channelId: string, options: MessageCollectorOptions & { amount?: number }): Promise<Message[]>;
     async needMessage(userId: string, channelId: string, options?: MessageCollectorOptions): Promise<Message | Message[]> {
@@ -266,6 +270,7 @@ export class BotClient extends Client {
         return (options?.amount || 1) > 1 ? messages : messages[0];
     }
 
+    /** Handler that will create a collecetor internally. Users should be using needMessage. */
     collectMessages(options: CollectMessagesOptions): Promise<Message[]> {
         return new Promise((resolve, reject) => {
             this.messageCollectors.get(options.key)?.reject("A new collector began before the user responded to the previous one.");
@@ -279,6 +284,7 @@ export class BotClient extends Client {
         });
     }
 
+    /** Get a clean string form of the current time. For example: 12:00PM */
     getTime(): string {
         const now = new Date();
         const hours = now.getHours();
@@ -292,6 +298,15 @@ export class BotClient extends Client {
         }
 
         return `${hour >= 10 ? hour : `0${hour}`}:${minute >= 10 ? minute : `0${minute}`} ${amOrPm}`;
+    }
+
+    /** Handler that is executed when a user is using a command too fast and goes into cooldown. Override this to customize the behavior. */
+    async respondToCooldown(message: Message, command: Command, options: RespondToCooldownOption): Promise<unknown> {
+        return await message.reply(
+            `You must wait **${this.humanizeMilliseconds(options.cooldown.timestamp - options.now)}** before using the *${
+                command.fullName
+            }* command again.`,
+        );
     }
 }
 
@@ -345,3 +360,10 @@ export interface MessageCollector extends CollectMessagesOptions {
 }
 
 export default BotClient;
+
+export interface RespondToCooldownOption {
+    /** The timestamp right when the user used the command. */
+    now: number;
+    /** The cooldown details */
+    cooldown: Cooldown;
+}
