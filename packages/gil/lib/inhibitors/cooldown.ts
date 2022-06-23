@@ -19,9 +19,9 @@ export class CooldownInhibitor extends Inhibitor {
             if (cooldown.used >= (command.cooldown.allowedUses || 1)) {
                 const now = Date.now();
                 if (cooldown.timestamp > now) {
-                    await this.client.messages.send(message.channelId, {
-                        content: `You must wait **${this.client.humanizeMilliseconds(cooldown.timestamp - now)}** before using this command again.`,
-                        replyMessageIds: [message.id],
+                    await this.client.cooldownReached(message, command, {
+                        now,
+                        cooldown,
                     });
                     return true;
                 }
@@ -48,7 +48,9 @@ export class CooldownInhibitor extends Inhibitor {
 }
 
 export interface Cooldown {
+    /** The amount of times a command was used. */
     used: number;
+    /** The timestamp when this command should be available to use again. */
     timestamp: number;
 }
 

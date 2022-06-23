@@ -33,6 +33,10 @@ export abstract class Command {
     abstract execute(message: Message, args: Record<string, unknown>): Promise<unknown> | unknown;
 
     abstract init(): Promise<unknown> | unknown;
+
+    get fullName(): string {
+        return `${this.parentCommand ? `${this.parentCommand.split("-").join(" ")} ` : ""}${this.name}`;
+    }
 }
 
 export interface CommandArgument {
