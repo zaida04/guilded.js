@@ -23,10 +23,6 @@ export class CooldownInhibitor extends Inhibitor {
                         now,
                         cooldown,
                     });
-                    await this.client.messages.send(message.channelId, {
-                        content: `You must wait **${this.client.humanizeMilliseconds(cooldown.timestamp - now)}** before using this command again.`,
-                        replyMessageIds: [message.id],
-                    });
                     return true;
                 }
                 cooldown.used = 0;
