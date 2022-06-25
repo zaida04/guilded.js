@@ -27,12 +27,15 @@ import type {
     WSTeamRolesUpdatedPayload,
     WSTeamWebhookCreatedPayload,
     WSTeamWebhookUpdatedPayload,
+    WSChannelMessageReactionCreatedPayload,
+    WSChannelMessageReactionDeletedPayload,
 } from "@guildedjs/guilded-api-typings";
 import { WebSocketEvents } from "@guildedjs/guilded-api-typings";
 import { TeamWebhookEventHandler } from "./handler/TeamWebhookEventHandler";
 import { ListEventHandler } from "./handler/ListEventHandler";
 import { TeamChannelEventHandler } from "./handler/TeamChannelEventHandler";
 import { DocEventHandler } from "./handler/DocEventHandler";
+import { ReactionEventHandler } from "./handler/ReactionEventHandler";
 
 export class ClientGatewayHandler {
     messageHandler = new MessageEventHandler(this.client);
@@ -42,6 +45,7 @@ export class ClientGatewayHandler {
     listHandler = new ListEventHandler(this.client);
     teamChannelHandler = new TeamChannelEventHandler(this.client);
     docHandler = new DocEventHandler(this.client);
+    reactionHandler = new ReactionEventHandler(this.client);
 
     readonly eventToHandlerMap: Record<keyof WSEvent, (data: SkeletonWSPayload) => boolean> = {
         [WebSocketEvents.ChatMessageCreated]: (data) => this.messageHandler.messageCreated(data as WSChatMessageCreatedPayload),
@@ -66,6 +70,8 @@ export class ClientGatewayHandler {
         [WebSocketEvents.TeamChannelCreated]: (data) => this.teamChannelHandler.TeamChannelCreated(data as WSTeamChannelCreated),
         [WebSocketEvents.TeamChannelDeleted]: (data) => this.teamChannelHandler.TeamChannelDeleted(data as WSTeamChannelDeleted),
         [WebSocketEvents.TeamChannelUpdated]: (data) => this.teamChannelHandler.TeamChannelUpdated(data as WSTeamChannelUpdated),
+        [WebSocketEvents.ChannelMessageReactionCreated]: (data) => this.reactionHandler.messageReactionCreated(data as WSChannelMessageReactionCreatedPayload),
+        [WebSocketEvents.ChannelMessageReactionDeleted]: (data) => this.reactionHandler.messageReactionDeleted(data as WSChannelMessageReactionDeletedPayload),
     };
 
     constructor(public readonly client: Client) {}

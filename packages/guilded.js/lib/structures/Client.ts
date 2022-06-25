@@ -24,6 +24,8 @@ import type {
     DocPayload,
     ListItemPayload,
     ListItemSummaryPayload,
+    WSChannelMessageReactionCreatedPayload,
+    WSChannelMessageReactionDeletedPayload,
 } from "@guildedjs/guilded-api-typings";
 import type { Member, MemberBan } from "./Member";
 import type { CacheStructure } from "../cache";
@@ -137,6 +139,8 @@ type ClientEvents = {
     messageCreated: (message: Message) => unknown;
     messageUpdated: (message: Message, oldMessage: Message | null) => unknown;
     messageDeleted: (message: Message | WSChatMessageDeletedPayload["d"]) => unknown;
+    messageReactionCreated: (reaction: WSChannelMessageReactionCreatedPayload["d"]) => unknown;
+    messageReactionDeleted: (reaction: WSChannelMessageReactionDeletedPayload["d"]) => unknown;
     channelCreated: (channel: Channel) => unknown;
     channelUpdated: (channel: Channel, oldChannel: Channel | null) => unknown;
     channelDeleted: (channel: Channel) => unknown;

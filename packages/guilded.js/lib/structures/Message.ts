@@ -143,6 +143,16 @@ export class Message extends Base<ChatMessagePayload> {
         );
     }
 
+    /** Add a reaction emote */
+    addReaction(emoteId: number): Promise<void> {
+        return this.client.rest.router.addReactionEmote(this.channelId, this.id, emoteId).then(() => void 0);
+    }
+
+    /** Delete a reaction emote */
+    deleteReaction(emoteId: number): Promise<void> {
+        return this.client.rest.router.deleteReactionEmote(this.channelId, this.id, emoteId).then(() => void 0);
+    }
+
     /** Delete this message. */
     delete() {
         return this.client.messages.delete(this.channelId, this.id);

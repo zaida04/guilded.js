@@ -9,6 +9,7 @@ import type {
     RESTDeleteMemberNicknameResult,
     RESTDeleteMemberResult,
     RESTDeleteMemberRoleResult,
+    RESTDeleteReactionResult,
     RESTDeleteServerWebhookResult,
     RESTGetChannelMessageResult,
     RESTGetChannelMessagesQuery,
@@ -201,6 +202,11 @@ export class Router {
     /** Add a reaction emote */
     addReactionEmote(channelId: string, contentId: string, emoteId: number): Promise<RESTPutReactionResult> {
         return this.rest.put<RESTPutReactionResult>(ROUTES.channelReaction(channelId, contentId, emoteId));
+    }
+
+    /** Delete a reaction emote */
+    deleteReactionEmote(channelId: string, contentId: string, emoteId: number): Promise<RESTDeleteReactionResult> {
+        return this.rest.delete<RESTDeleteReactionResult>(ROUTES.channelReaction(channelId, contentId, emoteId));
     }
 
     /** Award XP to a member */

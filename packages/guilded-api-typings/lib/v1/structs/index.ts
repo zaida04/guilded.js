@@ -1,6 +1,7 @@
 export * from "./Channel";
 export * from "./Doc";
 export * from "./Embed";
+export * from "./Emote";
 export * from "./Forum";
 export * from "./List";
 export * from "./Member";
