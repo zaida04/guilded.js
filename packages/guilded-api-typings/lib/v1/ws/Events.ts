@@ -31,6 +31,8 @@ export const WebSocketEvents = {
     DocCreated: "DocCreated",
     DocUpdated: "DocUpdated",
     DocDeleted: "DocDeleted",
+    ChannelMessageReactionCreated: "ChannelMessageReactionCreated",
+    ChannelMessageReactionDeleted: "ChannelMessageReactionDeleted",
 } as const;
 export type WSEvent = typeof WebSocketEvents;
 

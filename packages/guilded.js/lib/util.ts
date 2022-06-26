@@ -35,6 +35,12 @@ export const ASSET_BUILDER = {
 export const buildMemberKey = (serverId: string, memberId: string): string => {
     return `${serverId}:${memberId}`;
 };
+export const buildMessageReactionKey = (messageId: string, userId: string, emoteId: string) => {
+    return `${messageId}:${userId}:${emoteId}`;
+};
+export const buildReactionKey = (userId: string, emoteId: string) => {
+    return `${userId}:${emoteId}`;
+};
 
 export const resolveContentToData = (content: MessageContent): RESTPostChannelMessagesBody => {
     if (typeof content === "string") return { content };

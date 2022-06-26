@@ -49,6 +49,11 @@ export class GlobalMessageManager extends CacheableStructManager<string, Message
         return this.client.rest.router.addReactionEmote(channelId, contentId, emoteId).then(() => void 0);
     }
 
+    /** Delete a reaction emote */
+    deleteReaction(channelId: string, contentId: string, emoteId: number): Promise<void> {
+        return this.client.rest.router.deleteReactionEmote(channelId, contentId, emoteId).then(() => void 0);
+    }
+
     /** Update a channel message. */
     update(channelId: string, messageId: string, content: RESTPostChannelMessagesBody | Embed | string): Promise<Message> {
         return this.client.rest.router.updateChannelMessage(channelId, messageId, resolveContentToData(content)).then((data) => {

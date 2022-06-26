@@ -23,6 +23,8 @@ export const constants = {
         DOC_UPDATED: "docUpdated",
         DOC_DELETED: "docDeleted",
         SERVER_CREATED: "serverCreated",
+        MESSAGE_REACTION_CREATED: "messageReactionCreated",
+        MESSAGE_REACTION_DELETED: "messageReactionDeleted",
     },
 } as const;
 export type ClientEvent = typeof constants.clientEvents;

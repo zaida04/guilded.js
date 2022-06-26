@@ -24,6 +24,8 @@ import type {
     DocPayload,
     ListItemPayload,
     ListItemSummaryPayload,
+    WSChannelMessageReactionCreatedPayload,
+    WSChannelMessageReactionDeletedPayload,
 } from "@guildedjs/guilded-api-typings";
 import type { Member, MemberBan } from "./Member";
 import type { CacheStructure } from "../cache";
@@ -32,6 +34,7 @@ import type { Webhook } from "./Webhook";
 import { ClientUser } from "./User";
 import type { Channel } from "./channels";
 import { GlobalServerManager } from "../managers/global/ServerManager";
+import { GlobalReactionManager } from "../managers/global/ReactionManager";
 
 export class Client extends (EventEmitter as unknown as new () => TypedEmitter<ClientEvents>) {
     /** The time in milliseconds since the Client connected */
@@ -62,6 +65,7 @@ export class Client extends (EventEmitter as unknown as new () => TypedEmitter<C
     bans = new GlobalGuildBanManager(this);
     webhooks = new GlobalWebhookManager(this);
     servers = new GlobalServerManager(this);
+    reactions = new GlobalReactionManager(this);
 
     /** The user belonging to this bot */
     user: ClientUser | null = null;
@@ -126,6 +130,7 @@ interface ClientOptions {
         cacheWebhooks?: boolean;
         cacheChannels?: boolean;
         cacheServers?: boolean;
+        cacheMessageReactions?: boolean;
     };
 }
 
@@ -137,6 +142,8 @@ type ClientEvents = {
     messageCreated: (message: Message) => unknown;
     messageUpdated: (message: Message, oldMessage: Message | null) => unknown;
     messageDeleted: (message: Message | WSChatMessageDeletedPayload["d"]) => unknown;
+    messageReactionCreated: (reaction: WSChannelMessageReactionCreatedPayload["d"]) => unknown;
+    messageReactionDeleted: (reaction: WSChannelMessageReactionDeletedPayload["d"]) => unknown;
     channelCreated: (channel: Channel) => unknown;
     channelUpdated: (channel: Channel, oldChannel: Channel | null) => unknown;
     channelDeleted: (channel: Channel) => unknown;
