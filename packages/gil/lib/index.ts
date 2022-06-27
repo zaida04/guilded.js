@@ -17,3 +17,4 @@ export * from "./structures/Inhibitor";
 export * from "./structures/Monitor";
 export * from "./structures/Task";
 export * from "./utils/walk";
+export * from "guilded.js";
