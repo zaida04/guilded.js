@@ -35,7 +35,7 @@ export const ASSET_BUILDER = {
 export const buildMemberKey = (serverId: string, memberId: string): string => {
     return `${serverId}:${memberId}`;
 };
-export const buildMessageReactionKey = (messageId: string, userId: string, emoteId: string) => {
+export const buildMessageReactionKey = (messageId: string, userId: string, emoteId: number) => {
     return `${messageId}:${userId}:${emoteId}`;
 };
 export const buildReactionKey = (userId: string, emoteId: string) => {
