@@ -1,4 +1,4 @@
-import type { CalendarEventPayload, MentionsPayload } from "@guildedjs/guilded-api-typings";
+import type { CalendarEventCancellationPayload, CalendarEventPayload, MentionsPayload } from "@guildedjs/guilded-api-typings";
 import { Base } from "./Base";
 import type { Client } from "./Client";
 import type { User } from "./User";
@@ -16,6 +16,7 @@ export class CalendarEvent extends Base<CalendarEventPayload, number> {
     duration?: number;
     isPrivate?: boolean;
     mentions?: MentionsPayload;
+    cancellation?: CalendarEventCancellationPayload;
     readonly _createdAt: number;
     readonly createdBy: string;
 
@@ -72,6 +73,10 @@ export class CalendarEvent extends Base<CalendarEventPayload, number> {
 
         if ("mentions" in data && typeof data.mentions !== "undefined") {
             this.mentions = data.mentions;
+        }
+
+        if ("cancellation" in data && typeof data.cancellation !== "undefined") {
+            this.cancellation = data.cancellation;
         }
 
         return this;

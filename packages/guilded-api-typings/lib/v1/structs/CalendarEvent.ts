@@ -35,5 +35,5 @@ export interface CalendarEventPayload {
     createdAt: string;
     /** The ID of the user who created this event */
     createdBy: string;
-    cancellation: CalendarEventCancellationPayload;
+    cancellation?: CalendarEventCancellationPayload;
 }
