@@ -7,16 +7,14 @@ export class GlobalCalendarManager extends Base<number, CalendarEvent> {
     /** Create a calendar event. */
     create(channelId: string, options: RESTPostCalendarEventBody): Promise<CalendarEvent> {
         return this.client.rest.router.createCalendarEvent(channelId, options).then((data) => {
-            const newCalendarEvent = new CalendarEvent(this.client, data.calendarEvent);
-            return newCalendarEvent;
+            return new CalendarEvent(this.client, data.calendarEvent);
         });
     }
 
     /** Get a single calendar event. */
     fetch(channelId: string, calendarEventId: number): Promise<CalendarEvent> {
         return this.client.rest.router.getCalendarEvent(channelId, calendarEventId).then((data) => {
-            const newCalendarEvent = new CalendarEvent(this.client, data.calendarEvent);
-            return newCalendarEvent;
+            return new CalendarEvent(this.client, data.calendarEvent);
         });
     }
 
@@ -25,8 +23,7 @@ export class GlobalCalendarManager extends Base<number, CalendarEvent> {
         return this.client.rest.router.getCalendarEvents(channelId, options).then((data) => {
             const calendarEvents = new Collection<number, CalendarEvent>();
             for (const calendarEvent of data.calendarEvents) {
-                const newCalendarEvent = new CalendarEvent(this.client, calendarEvent);
-                calendarEvents.set(newCalendarEvent.id, newCalendarEvent);
+                calendarEvents.set(calendarEvent.id, new CalendarEvent(this.client, calendarEvent));
             }
 
             return calendarEvents;
@@ -36,8 +33,7 @@ export class GlobalCalendarManager extends Base<number, CalendarEvent> {
     /** Update a calendar event. */
     update(channelId: string, calendarEventId: number, options: RESTPatchCalendarEventBody): Promise<CalendarEvent> {
         return this.client.rest.router.updateCalendarEvent(channelId, calendarEventId, options).then((data) => {
-            const newCalendarEvent = new CalendarEvent(this.client, data.calendarEvent);
-            return newCalendarEvent;
+            return new CalendarEvent(this.client, data.calendarEvent);
         });
     }
 
