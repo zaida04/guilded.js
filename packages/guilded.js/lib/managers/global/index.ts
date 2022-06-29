@@ -1,4 +1,5 @@
 export * from "./CacheableStructManager";
+export * from "./CalendarManager";
 export * from "./ChannelManager";
 export * from "./DocManager";
 export * from "./ForumManager";

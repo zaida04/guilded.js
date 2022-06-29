@@ -1,5 +1,8 @@
 export const constants = {
     clientEvents: {
+        CALENDAR_EVENT_CREATED: "calendarEventCreated",
+        CALENDAR_EVENT_UPDATED: "calendarEventUpdated",
+        CALENDAR_EVENT_DELETED: "calendarEventDeleted",
         MESSAGE_CREATED: "messageCreated",
         MESSAGE_UPDATED: "messageUpdated",
         MESSAGE_DELETED: "messageDeleted",
