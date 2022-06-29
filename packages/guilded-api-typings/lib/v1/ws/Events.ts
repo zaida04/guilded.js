@@ -8,6 +8,9 @@ export enum WSOpCodes {
 }
 
 export const WebSocketEvents = {
+    CalendarEventCreated: "CalendarEventCreated",
+    CalendarEventUpdated: "CalendarEventUpdated",
+    CalendarEventDeleted: "CalendarEventDeleted",
     ChatMessageCreated: "ChatMessageCreated",
     ChatMessageUpdated: "ChatMessageUpdated",
     ChatMessageDeleted: "ChatMessageDeleted",

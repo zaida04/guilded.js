@@ -1,3 +1,4 @@
+export * from "./CalendarEvent";
 export * from "./Channel";
 export * from "./Doc";
 export * from "./Events";
