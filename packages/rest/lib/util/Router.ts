@@ -1,4 +1,5 @@
 import type {
+    RESTDeleteCalendarEventResult,
     RESTDeleteChannelMessageResult,
     RESTDeleteChannelResult,
     RESTDeleteDocResult,
@@ -11,6 +12,9 @@ import type {
     RESTDeleteMemberRoleResult,
     RESTDeleteReactionResult,
     RESTDeleteServerWebhookResult,
+    RESTGetCalendarEventResult,
+    RESTGetCalendarEventsBody,
+    RESTGetCalendarEventsResult,
     RESTGetChannelMessageResult,
     RESTGetChannelMessagesQuery,
     RESTGetChannelMessagesResult,
@@ -29,8 +33,12 @@ import type {
     RESTGetServerWebhookResult,
     RESTGetServerWebhooksQuery,
     RESTGetServerWebhooksResult,
+    RESTPatchCalendarEventBody,
+    RESTPatchCalendarEventResult,
     RESTPatchChannelBody,
     RESTPatchChannelResult,
+    RESTPostCalendarEventBody,
+    RESTPostCalendarEventResult,
     RESTPostChannelMessagesBody,
     RESTPostChannelMessagesResult,
     RESTPostChannelsBody,
@@ -114,6 +122,31 @@ export class Router {
     /** Delete a channel message. */
     deleteChannelMessage(channelId: string, messageId: string): Promise<RESTDeleteChannelMessageResult> {
         return this.rest.delete<RESTDeleteChannelMessageResult>(ROUTES.channelMessage(channelId, messageId));
+    }
+
+    /** Get a single calendar event. */
+    getCalendarEvent(channelId: string, calendarEventId: number): Promise<RESTGetCalendarEventResult> {
+        return this.rest.post<RESTPostCalendarEventResult>(ROUTES.calendarEvent(channelId, calendarEventId));
+    }
+
+    /** Get all calendar events in a specific channel. */
+    getCalendarEvents(channelId: string, options: RESTGetCalendarEventsBody): Promise<RESTGetCalendarEventsResult> {
+        return this.rest.post<RESTGetCalendarEventsResult, RESTGetCalendarEventsBody>(ROUTES.calendarEvents(channelId), options);
+    }
+
+    /** Create a calendar event. */
+    createCalendarEvent(channelId: string, options: RESTPostCalendarEventBody): Promise<RESTPostCalendarEventResult> {
+        return this.rest.post<RESTPostCalendarEventResult, RESTPostCalendarEventBody>(ROUTES.calendarEvents(channelId), options);
+    }
+
+    /** Update an existing calendar event. */
+    updateCalendarEvent(channelId: string, calendarEventId: number, options: RESTPatchCalendarEventBody): Promise<RESTPatchCalendarEventResult> {
+        return this.rest.post<RESTPatchCalendarEventResult, RESTPatchCalendarEventBody>(ROUTES.calendarEvent(channelId, calendarEventId), options);
+    }
+
+    /** Delete a calendar event. */
+    deleteCalendarEvent(channelId: string, calendarEventId: number): Promise<RESTDeleteCalendarEventResult> {
+        return this.rest.post<RESTDeleteCalendarEventResult>(ROUTES.calendarEvent(channelId, calendarEventId));
     }
 
     /** Get a list of the roles assigned to a member using the id of the member. */
