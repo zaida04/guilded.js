@@ -35,6 +35,7 @@ import { ClientUser } from "./User";
 import type { Channel } from "./channels";
 import { GlobalServerManager } from "../managers/global/ServerManager";
 import { GlobalReactionManager } from "../managers/global/ReactionManager";
+import type { CalendarEvent } from "./CalendarEvent";
 
 export class Client extends (EventEmitter as unknown as new () => TypedEmitter<ClientEvents>) {
     /** The time in milliseconds since the Client connected */
@@ -139,6 +140,9 @@ type ClientEvents = {
     debug: (data: any) => unknown;
     exit: () => unknown;
     error: (reason: string, err: Error | null) => unknown;
+    calendarEventCreated: (calendarEvent: CalendarEvent) => unknown;
+    calendarEventUpdated: (calendarEvent: CalendarEvent) => unknown;
+    calendarEventDeleted: (calendarEvent: CalendarEvent) => unknown;
     messageCreated: (message: Message) => unknown;
     messageUpdated: (message: Message, oldMessage: Message | null) => unknown;
     messageDeleted: (message: Message | WSChatMessageDeletedPayload["d"]) => unknown;
