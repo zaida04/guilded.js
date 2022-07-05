@@ -1,14 +1,7 @@
 {
     "cleanOutputDir": true,
-    "entryPointStrategy": "resolve",
-    "entryPoints": [
-        "packages/gil/lib/index.ts",
-        "packages/guilded-api-typings/lib/index.ts",
-        "packages/guilded.js/lib/index.ts",
-        "packages/rest/lib/index.ts",
-        "packages/webhook-client/lib/index.ts",
-        "packages/ws/lib/index.ts"
-    ],
+    "entryPointStrategy": "packages",
+    "entryPoints": ["packages/gil", "packages/guilded-api-typings", "packages/guilded.js", "packages/rest", "packages/webhook-client", "packages/ws"],
     "exclude": ["**/node_modules/**", "**/dist/**", "**/*.test.ts", "packages/**/tests/**", "**/*.js", "**/*.d.ts"],
     "excludeExternals": true,
     "hideGenerator": true,
