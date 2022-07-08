@@ -5,7 +5,7 @@ if (!HTTPFetch) {
 
 import { stringify } from "qs";
 
-import packageDetails from "../package.json";
+const packageDetails = require("../package.json");
 import { GuildedAPIError } from "./errors/GuildedAPIError";
 import { PermissionsError } from "./errors/PermissionsError";
 import type { RestOptions } from "./typings";
