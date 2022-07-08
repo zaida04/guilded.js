@@ -56,11 +56,7 @@ export class RestManager {
 
         if (!request.ok) {
             if (request.status === 429) {
-                let retryAfterTime = Number(request.headers.get("Retry-After"));
-
-                if (isNaN(retryAfterTime)) {
-                    retryAfterTime = 35;
-                }
+                const retryAfterTime = Number(request.headers.get("Retry-After") ?? 35);
 
                 if (retryCount >= (this.options?.maxRatelimitRetryLimit ?? 3)) {
                     throw new Error("MAX REQUEST RATELIMIT RETRY LIMIT REACHED.");
