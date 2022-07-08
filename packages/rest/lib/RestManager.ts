@@ -5,6 +5,7 @@ if (!HTTPFetch) {
 
 import { stringify } from "qs";
 
+import packageDetails from "../package.json";
 import { GuildedAPIError } from "./errors/GuildedAPIError";
 import { PermissionsError } from "./errors/PermissionsError";
 import type { RestOptions } from "./typings";
@@ -41,6 +42,7 @@ export class RestManager {
             body: data.body ? JSON.stringify(data.body) : undefined,
             headers: {
                 "content-type": "application/json",
+                "User-Agent": `@guildedjs-rest/${packageDetails.version} Node.js v${process.version}`,
                 ...headers,
             },
             method: data.method,
