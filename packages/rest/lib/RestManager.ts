@@ -3,6 +3,7 @@ if (!HTTPFetch) {
     HTTPFetch = require("node-fetch");
 }
 
+import EventEmitter from "events";
 import { stringify } from "qs";
 
 const packageDetails = require("../package.json");
@@ -23,6 +24,9 @@ export class RestManager {
 
     /** The router with all the helper methods. */
     readonly router = new Router(this);
+
+    /** Logging emitter */
+    readonly emitter = new EventEmitter();
 
     constructor(public readonly options: RestOptions) {}
 
@@ -49,16 +53,16 @@ export class RestManager {
         };
 
         const queryAppendedURL = data.query ? `${data.path}?${stringify(data.query)}` : data.path;
-        let request;
+        let response;
         try {
-            request = await HTTPFetch(this.baseURL + queryAppendedURL, requestOptions);
+            response = await HTTPFetch(this.baseURL + queryAppendedURL, requestOptions);
         } catch (e: any) {
             throw new Error(`Error while making API call, ${e.message.toString()}`);
         }
 
-        if (!request.ok) {
-            if (request.status === 429) {
-                const retryAfterTime = Number(request.headers.get("Retry-After") ?? 35);
+        if (!response.ok) {
+            if (response.status === 429) {
+                const retryAfterTime = Number(response.headers.get("Retry-After") ?? 35);
 
                 if (retryCount >= (this.options?.maxRatelimitRetryLimit ?? 3)) {
                     throw new Error("MAX REQUEST RATELIMIT RETRY LIMIT REACHED.");
@@ -67,14 +71,21 @@ export class RestManager {
                 return this.make<T, B, Q>(data, authenticated, retryCount++);
             }
 
-            const parsedRequest = await request.json().catch(() => ({ message: "Cannot parse JSON Error Response." }));
-            if (request.status === 403 && parsedRequest.code === "ForbiddenError") {
-                throw new PermissionsError(parsedRequest.message, data.method, data.path, parsedRequest.meta?.missingPermissions);
+            const parsedResponse = await response.json().catch(() => ({ message: "Cannot parse JSON Error Response." }));
+            if (response.status === 403 && parsedResponse.code === "ForbiddenError") {
+                throw new PermissionsError(parsedResponse.message, data.method, data.path, parsedResponse.meta?.missingPermissions);
             }
-            throw new GuildedAPIError(parsedRequest.message, data.method, data.path, request.status);
+            throw new GuildedAPIError(parsedResponse.message, data.method, data.path, response.status);
         }
 
-        return [request, request.json().catch(() => ({})) as Promise<T>];
+        this.emitter.emit("response", {
+            requestOptions: {
+                ...requestOptions,
+                Authorization: undefined,
+            },
+            response,
+        });
+        return [response, response.json().catch(() => ({})) as Promise<T>];
     }
 
     public get<T extends JSONB, Q = RequestBodyObject>(path: string, query?: Q, authenticated = true): Promise<T> {
