@@ -24,7 +24,7 @@ export class WebSocketManager {
     lastPingedAt = 0;
 
     /** The last message id received. Used in the event of resuming connections. */
-    messageId: string | null = null;
+    lastMessageId: string | null = null;
 
     /** The date since the last initial connection was established. */
     connectedAt: Date | null = null;
@@ -50,6 +50,7 @@ export class WebSocketManager {
         this.socket = new WebSocket(this.wsURL, {
             headers: {
                 Authorization: `Bearer ${this.token}`,
+                "guilded-last-message-id": this.lastMessageId ?? undefined,
             },
         });
 
@@ -109,7 +110,7 @@ export class WebSocketManager {
         }
 
         // SAVE THE ID IF AVAILABLE. USED FOR RESUMING CONNECTIONS.
-        if (EVENT_DATA.s) this.messageId = EVENT_DATA.s;
+        if (EVENT_DATA.s) this.lastMessageId = EVENT_DATA.s;
 
         switch (EVENT_DATA.op) {
             // Normal event based packets
@@ -119,6 +120,9 @@ export class WebSocketManager {
             // Auto handled by ws lib
             case WSOpCodes.WELCOME:
                 this.emitter.emit("ready", (EVENT_DATA as WSWelcomePayload).d.user);
+                break;
+            case WSOpCodes.RESUME:
+                this.lastMessageId = null;
                 break;
             default:
                 this.emitter.emit("unknown", "unknown opcode", packet);
