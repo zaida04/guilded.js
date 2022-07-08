@@ -46,11 +46,15 @@ export class WebSocketManager {
         return this.reconnectAttemptAmount >= (this.options.reconnectAttemptLimit ?? Infinity);
     }
 
+    get shouldRequestMissedEvents(): boolean {
+        return this.options.replayMissedEvents !== false;
+    }
+
     connect(): void {
         this.socket = new WebSocket(this.wsURL, {
             headers: {
                 Authorization: `Bearer ${this.token}`,
-                "guilded-last-message-id": this.lastMessageId ?? undefined,
+                "guilded-last-message-id": this.shouldRequestMissedEvents ? this.lastMessageId ?? undefined : undefined,
             },
         });
 
@@ -159,6 +163,8 @@ export interface WebSocketOptions {
     autoConnectOnErr?: boolean;
     /** Limit of how many times a reconnection should be attempted */
     reconnectAttemptLimit?: number;
+    /** Whether the manager should request missed events on reconnect */
+    replayMissedEvents?: boolean;
 }
 
 // eslint-disable-next-line @typescript-eslint/consistent-type-definitions
