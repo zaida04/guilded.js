@@ -5,7 +5,7 @@ import type { MaybePromise } from "../../typings";
 import type { Base } from "../Base";
 import type { Client } from "../Client";
 
-export abstract class Collector<T extends Base> {
+export abstract class Collector<T extends CollectableStructure> {
     /** successfully collected entries */
     readonly entries = new Collection<T["id"], T>();
     /** whether the collector is actively collecting elements */
@@ -64,7 +64,7 @@ export abstract class Collector<T extends Base> {
     abstract _cleanup(): void;
 }
 
-export type CollectorEvents<T extends Base> = {
+export type CollectorEvents<T extends CollectableStructure> = {
     collect: (entry: T) => unknown;
     end: (entries: Collection<T["id"], T>, reason: CollectorEndReasons) => unknown;
 };
@@ -74,7 +74,8 @@ export enum CollectorEndReasons {
     TIME = "TIME_EXPIRED",
 }
 
-type CollectorReturnValue<T extends Base> = { reason: CollectorEndReasons; entries: Collection<T["id"], T> };
+type CollectorReturnValue<T extends CollectableStructure> = { reason: CollectorEndReasons; entries: Collection<T["id"], T> };
+type CollectableStructure = { id: string };
 
 export interface CollectorOptions<T> {
     /** a function that determines whether an entry is collected or not */
