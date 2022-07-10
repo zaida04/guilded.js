@@ -31,7 +31,7 @@ export class BotClient extends Client {
     prefixes = new Map<string, string>();
 
     /** The message collectors that are pending. */
-    messageCollectors = new Collection<string, MessageCollector>();
+    messageCollectors = new Collection<string, GilMessageCollector>();
 
     /** The path that the end users commands,monitors, inhibitors and others will be located. */
     sourceFolderPath = this.options.sourceFolderPath || path.join(process.cwd(), "src/");
@@ -352,7 +352,7 @@ export interface CollectMessagesOptions {
     filter: (message: Message) => boolean;
 }
 
-export interface MessageCollector extends CollectMessagesOptions {
+export interface GilMessageCollector extends CollectMessagesOptions {
     resolve: (value: Message[] | PromiseLike<Message[]>) => void;
     reject: (reason?: any) => void;
     /** Where the messages are stored if the amount to collect is more than 1. */
