@@ -20,7 +20,7 @@ export abstract class Collector<T extends CollectableStructure> {
             this.resolve = resolve;
             this.maxTimeout = setTimeout(() => resolve({ reason: CollectorEndReasons.TIME, entries: this.entries }), this.options.timeLimit);
             this.hookEvents();
-            this.isActive = true
+            this.isActive = true;
         });
     }
 
@@ -34,6 +34,7 @@ export abstract class Collector<T extends CollectableStructure> {
                 this.maxTimeout = null;
                 this.resolve!({ reason: CollectorEndReasons.MAX, entries: this.entries });
                 this._cleanup();
+                this.isActive = false;
             }
             return true;
         }
