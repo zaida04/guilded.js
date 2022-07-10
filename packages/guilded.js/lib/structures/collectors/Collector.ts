@@ -1,6 +1,4 @@
 import Collection from "@discordjs/collection";
-import EventEmitter from "node:events";
-import type TypedEmitter from "typed-emitter";
 import type { MaybePromise } from "../../typings";
 import type { Base } from "../Base";
 import type { Client } from "../Client";
@@ -10,8 +8,6 @@ export abstract class Collector<T extends CollectableStructure> {
     readonly entries = new Collection<T["id"], T>();
     /** whether the collector is actively collecting elements */
     isActive = false;
-    /** private event emitter used for keeping track of collection */
-    private emitter = new EventEmitter() as TypedEmitter<CollectorEvents<T>>;
     /** method to resolve the promise this collector has when instantiated */
     protected resolve: ((value: CollectorReturnValue<T>) => void) | null = null;
     /** timeout for max time */
@@ -63,11 +59,6 @@ export abstract class Collector<T extends CollectableStructure> {
     abstract hookEvents(): void;
     abstract _cleanup(): void;
 }
-
-export type CollectorEvents<T extends CollectableStructure> = {
-    collect: (entry: T) => unknown;
-    end: (entries: Collection<T["id"], T>, reason: CollectorEndReasons) => unknown;
-};
 
 export enum CollectorEndReasons {
     MAX = "MAX_AMOUNT",
