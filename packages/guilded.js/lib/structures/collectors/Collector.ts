@@ -43,16 +43,16 @@ export abstract class Collector<T extends CollectableStructure> {
 
     // https://github.com/discordjs/discord.js/blob/f0b68d57368d7ac3db97925df68c11a945ccd84c/packages/discord.js/src/client/BaseClient.js#L47
     protected incrementMaxEventListeners(): number {
-        const incrementedAmount = this.emitter.getMaxListeners() + 1;
-        this.emitter.setMaxListeners(incrementedAmount);
+        const incrementedAmount = this.client.getMaxListeners() + 1;
+        this.client.setMaxListeners(incrementedAmount);
         return incrementedAmount;
     }
 
     // https://github.com/discordjs/discord.js/blob/f0b68d57368d7ac3db97925df68c11a945ccd84c/packages/discord.js/src/client/BaseClient.js#L58
     protected decrementMaxEventListeners(): number {
-        const decrementAmount = this.emitter.getMaxListeners() - 1;
+        const decrementAmount = this.client.getMaxListeners() - 1;
         if (decrementAmount !== 0) {
-            this.emitter.setMaxListeners(decrementAmount);
+            this.client.setMaxListeners(decrementAmount);
             return decrementAmount;
         }
         return 0;
