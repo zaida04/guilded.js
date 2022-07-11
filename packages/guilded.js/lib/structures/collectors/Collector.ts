@@ -1,6 +1,5 @@
 import Collection from "@discordjs/collection";
 import type { MaybePromise } from "../../typings";
-import type { Base } from "../Base";
 import type { Client } from "../Client";
 
 export abstract class Collector<T extends CollectableStructure> {
