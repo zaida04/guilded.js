@@ -12,7 +12,7 @@ import { GlobalMessageManager } from "../managers/global/MessageManager";
 import { GlobalRoleManager } from "../managers/global/RoleManager";
 import { GlobalUserManager } from "../managers/global/UserManager";
 import { GlobalGuildBanManager } from "../managers/global/GuildBanManager";
-import type { Message } from "./Message";
+import type { Message, MessageReaction } from "./Message";
 import type TypedEmitter from "typed-emitter";
 import type {
     WSChatMessageDeletedPayload,
@@ -146,8 +146,8 @@ type ClientEvents = {
     messageCreated: (message: Message) => unknown;
     messageUpdated: (message: Message, oldMessage: Message | null) => unknown;
     messageDeleted: (message: Message | WSChatMessageDeletedPayload["d"]) => unknown;
-    messageReactionCreated: (reaction: WSChannelMessageReactionCreatedPayload["d"]) => unknown;
-    messageReactionDeleted: (reaction: WSChannelMessageReactionDeletedPayload["d"]) => unknown;
+    messageReactionCreated: (reaction: MessageReaction) => unknown;
+    messageReactionDeleted: (reaction: MessageReaction | WSChannelMessageReactionDeletedPayload["d"]) => unknown;
     channelCreated: (channel: Channel) => unknown;
     channelUpdated: (channel: Channel, oldChannel: Channel | null) => unknown;
     channelDeleted: (channel: Channel) => unknown;

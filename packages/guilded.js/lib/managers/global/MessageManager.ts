@@ -5,6 +5,7 @@ import Collection from "@discordjs/collection";
 import type { Embed } from "../../structures/Embed";
 import { resolveContentToData } from "../../util";
 import type { MessageContent } from "../../typings";
+import { CollectorOptions, MessageCollector } from "../../structures";
 
 export class GlobalMessageManager extends CacheableStructManager<string, Message> {
     /** Get a list of the latest 50 messages from a channel. */
@@ -70,5 +71,15 @@ export class GlobalMessageManager extends CacheableStructManager<string, Message
     /** Delete a channel message. */
     delete(channelId: string, messageId: string): Promise<void> {
         return this.client.rest.router.deleteChannelMessage(channelId, messageId).then(() => void 0);
+    }
+
+    async awaitMessages(channelId: string, options: CollectorOptions<Message>) {
+        return new MessageCollector(this.client, {
+            ...options,
+            filter: (item) => {
+                if (item.channelId !== channelId) return false;
+                return options.filter?.(item) ?? true;
+            },
+        }).start();
     }
 }

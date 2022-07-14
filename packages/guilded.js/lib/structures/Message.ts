@@ -1,9 +1,15 @@
-import type { ChatMessagePayload, RESTPostChannelMessagesBody, MentionsPayload } from "@guildedjs/guilded-api-typings";
+import type {
+    ChatMessagePayload,
+    RESTPostChannelMessagesBody,
+    MentionsPayload,
+    WSChannelMessageReactionCreatedPayload,
+    EmotePayload,
+} from "@guildedjs/guilded-api-typings";
 import type { Client } from "./Client";
 import { Base } from "./Base";
 import type { User } from "./User";
 import type { Member } from "./Member";
-import { buildMemberKey } from "../util";
+import { buildMemberKey, buildReactionKey } from "../util";
 import { Embed } from "./Embed";
 import type { Channel } from "./channels";
 import type { MessageContent } from "../typings";
@@ -14,8 +20,6 @@ export enum MessageType {
 }
 
 export class Message extends Base<ChatMessagePayload> {
-    /** The id of the message. */
-    readonly id: string;
     /** The ID of the channel */
     readonly channelId: string;
     /** The ID of the server this message belongs to */
@@ -50,7 +54,6 @@ export class Message extends Base<ChatMessagePayload> {
     constructor(client: Client, data: ChatMessagePayload) {
         super(client, data);
 
-        this.id = data.id;
         this.channelId = data.channelId;
         this.content = data.content ?? "";
         this.serverId = data.serverId ?? null;
@@ -158,3 +161,25 @@ export class Message extends Base<ChatMessagePayload> {
         return this.client.messages.delete(this.channelId, this.id);
     }
 }
+
+export class MessageReaction extends Base<FlattenedReactionData> {
+    readonly channelId: string;
+    readonly messageId: string;
+    readonly createdBy: string;
+    readonly emote: EmotePayload;
+    readonly serverId: string;
+
+    constructor(client: Client, data: FlattenedReactionData) {
+        const formedId = buildReactionKey(data.createdBy, data.emote.id);
+        super(client, { ...data, id: formedId });
+
+        this.id = formedId;
+        this.channelId = data.channelId;
+        this.messageId = data.messageId;
+        this.createdBy = data.createdBy;
+        this.emote = data.emote;
+        this.serverId = data.serverId;
+    }
+}
+
+type FlattenedReactionData = WSChannelMessageReactionCreatedPayload["d"]["reaction"] & { serverId: string };
