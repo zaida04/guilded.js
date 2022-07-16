@@ -25,7 +25,7 @@ client.login();
 
 ## 📝 About
 
-`guilded.js` is a library written in TypeScript usable in either TypeScript or JavaScript projects. It provides structures, abstraction, and utilities for interaction between the guilded API and your userbot. It includes the other various pieces that make up the Guilded.JS collection of packages.
+`guilded.js` is a library written in TypeScript usable in either TypeScript or JavaScript projects. It provides structures, abstraction, and utilities for interaction between the guilded API and your bot. It includes the other various pieces that make up the Guilded.JS collection of packages.
 
 ## 📥 Installation
 
