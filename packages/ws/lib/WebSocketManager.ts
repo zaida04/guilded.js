@@ -51,11 +51,11 @@ export class WebSocketManager {
     }
 
     connect(): void {
+        const headers: Record<string, string> = { Authorization: `Bearer ${this.token}` };
+        if (this.shouldRequestMissedEvents && this.lastMessageId) headers["guilded-last-message-id"] = this.lastMessageId;
+
         this.socket = new WebSocket(this.wsURL, {
-            headers: {
-                Authorization: `Bearer ${this.token}`,
-                "guilded-last-message-id": this.shouldRequestMissedEvents ? this.lastMessageId ?? undefined : undefined,
-            },
+            headers,
         });
 
         this.socket.on("open", this.onSocketOpen.bind(this));
