@@ -1,6 +1,6 @@
 {
     "name": "guilded.js",
-    "version": "0.13.3",
+    "version": "0.13.6",
     "description": "A Node.js library for the Guilded.gg (https://www.guilded.gg/) API written in TypeScript, usable in either JavaScript or TypeScript projects.",
     "author": "Zaid \"Nico\" <contact@nico.engineer>",
     "license": "MIT",
@@ -63,7 +63,7 @@
         "dist",
         "types"
     ],
-    "homepage": "https://github.com/guildedjs/guilded.js/tree/main/packages/guilded.js#readme",
+    "homepage": "https://github.com/guildedjs/guilded.js/blob/main/packages/guilded.js/README.md",
     "repository": {
         "type": "git",
         "url": "git+https://github.com/guildedjs/guilded.js.git"
