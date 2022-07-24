@@ -24,7 +24,10 @@ export async function* walk(dir: string): AsyncGenerator<any, any, unknown> {
         // if (d.isDirectory()) yield* walk(entry);
         if (d.isDirectory()) directories.push(entry);
 
+        // Skip any non-js/ts file
         if (![".js", ".ts"].some((suffix) => entry.endsWith(suffix))) continue;
+        // since declaration files end with ts they need to be ignored as well
+        else if (entry.endsWith(".d.ts")) continue;
         else if (d.isFile()) yield [d.name, require(entry)];
     }
 
