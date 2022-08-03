@@ -18,8 +18,8 @@ export interface RESTGetChannelMessagesResult {
     messages: ChatMessagePayload[];
 }
 export interface RESTGetChannelMessagesQuery {
-    before?: string;
-    after?: string;
+    before?: string; // Uses ISO8601 timestamp
+    after?: string; // Uses ISO8601 timestamp
     limit?: number;
     includePrivate?: boolean;
 }
