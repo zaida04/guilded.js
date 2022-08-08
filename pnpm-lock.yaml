@@ -66,13 +66,13 @@ importers:
 
   packages/gil:
     specifiers:
-      '@discordjs/collection': ^0.8.0
+      '@discordjs/collection': ^1.0.1
       colorette: ^2.0.19
       dotenv: ^16.0.1
       guilded.js: workspace:*
       typescript: 4.7.4
     dependencies:
-      '@discordjs/collection': 0.8.0
+      '@discordjs/collection': 1.0.1
       colorette: 2.0.19
       guilded.js: link:../guilded.js
     devDependencies:
@@ -87,7 +87,7 @@ importers:
 
   packages/guilded.js:
     specifiers:
-      '@discordjs/collection': ^0.8.0
+      '@discordjs/collection': ^1.0.1
       '@guildedjs/guilded-api-typings': workspace:*
       '@guildedjs/rest': workspace:*
       '@guildedjs/webhook-client': workspace:*
@@ -96,7 +96,7 @@ importers:
       typed-emitter: 2.1.0
       typescript: 4.7.4
     dependencies:
-      '@discordjs/collection': 0.8.0
+      '@discordjs/collection': 1.0.1
       '@guildedjs/rest': link:../rest
       '@guildedjs/webhook-client': link:../webhook-client
       '@guildedjs/ws': link:../ws
@@ -544,10 +544,9 @@ packages:
       '@jridgewell/trace-mapping': 0.3.9
     dev: true
 
-  /@discordjs/collection/0.8.0:
-    resolution: {integrity: sha512-TFsm3ZPXnASn/9qlCLPTYHIuP9awO20MSFtjVcS5TO/7KnRPdBv02++1LV59GCaY64lVP2NgOhRrNBLPHsGeBA==}
+  /@discordjs/collection/1.0.1:
+    resolution: {integrity: sha512-5V/wswzR3r2RVYXLxxg4TvrAnBhVCNgHTXhC+OUtLoriJ072rPMHo+Iw1SS1vrCckp8Es40XM411+WkNRPaXFw==}
     engines: {node: '>=16.9.0'}
-    deprecated: no longer supported
     dev: false
 
   /@eslint/eslintrc/1.3.0:
