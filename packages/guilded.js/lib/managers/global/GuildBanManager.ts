@@ -1,4 +1,4 @@
-import Collection from "@discordjs/collection";
+import { Collection } from "@discordjs/collection";
 import { MemberBan } from "../../structures/Member";
 import { CacheableStructManager } from "./CacheableStructManager";
 import { buildMemberKey } from "../../util";

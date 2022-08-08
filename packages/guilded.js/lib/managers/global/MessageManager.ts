@@ -1,7 +1,7 @@
 import type { RESTPostChannelMessagesBody, RESTGetChannelMessagesQuery, EmbedPayload } from "@guildedjs/guilded-api-typings";
 import { Message } from "../../structures/Message";
 import { CacheableStructManager } from "./CacheableStructManager";
-import Collection from "@discordjs/collection";
+import { Collection } from "@discordjs/collection";
 import type { Embed } from "../../structures/Embed";
 import { resolveContentToData } from "../../util";
 import type { MessageContent } from "../../typings";

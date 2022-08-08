@@ -1,4 +1,4 @@
-import Collection from "@discordjs/collection";
+import { Collection } from "@discordjs/collection";
 import { bgBlue, bgGreen, bgYellow, black } from "colorette";
 import { Client, Message } from "guilded.js";
 import path from "path";

@@ -1,4 +1,4 @@
-import Collection from "@discordjs/collection";
+import { Collection } from "@discordjs/collection";
 import type { ListItemPayload, ListItemSummaryPayload } from "@guildedjs/guilded-api-typings";
 import { Channel } from "./Channel";
 

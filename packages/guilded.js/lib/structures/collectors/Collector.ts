@@ -1,4 +1,4 @@
-import Collection from "@discordjs/collection";
+import { Collection } from "@discordjs/collection";
 import type { MaybePromise } from "../../typings";
 import type { Client } from "../Client";
 

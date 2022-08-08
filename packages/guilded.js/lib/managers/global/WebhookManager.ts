@@ -1,4 +1,4 @@
-import Collection from "@discordjs/collection";
+import { Collection } from "@discordjs/collection";
 import type { RESTPostServerWebhooksBody, RESTPutServerWebhookBody } from "@guildedjs/guilded-api-typings";
 import { Webhook } from "../../structures/Webhook";
 import { CacheableStructManager } from "./CacheableStructManager";
