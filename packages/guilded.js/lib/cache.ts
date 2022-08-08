@@ -1,4 +1,4 @@
-import Collection from "@discordjs/collection";
+import { Collection } from "@discordjs/collection";
 
 export interface CacheStructure<K, V> {
     get: (key: K) => V | Promise<V>;

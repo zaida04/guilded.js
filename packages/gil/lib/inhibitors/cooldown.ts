@@ -1,4 +1,4 @@
-import Collection from "@discordjs/collection";
+import { Collection } from "@discordjs/collection";
 import type { Message } from "guilded.js";
 
 import type { Command } from "../structures/Command";

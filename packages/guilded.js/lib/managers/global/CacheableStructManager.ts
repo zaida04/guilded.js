@@ -1,4 +1,4 @@
-import Collection from "@discordjs/collection";
+import { Collection } from "@discordjs/collection";
 import type { Client } from "../../structures/Client";
 
 export class CacheableStructManager<K, V> {

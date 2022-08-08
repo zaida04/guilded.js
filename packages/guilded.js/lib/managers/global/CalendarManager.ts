@@ -1,4 +1,4 @@
-import Collection from "@discordjs/collection";
+import { Collection } from "@discordjs/collection";
 import type { RESTGetCalendarEventsBody, RESTPatchCalendarEventBody, RESTPostCalendarEventBody } from "@guildedjs/guilded-api-typings";
 import { Base } from "../../structures";
 import { CalendarEvent } from "../../structures/CalendarEvent";

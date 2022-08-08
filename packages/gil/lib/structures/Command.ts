@@ -1,4 +1,4 @@
-import type Collection from "@discordjs/collection";
+import type { Collection } from "@discordjs/collection";
 import type { Message } from "guilded.js";
 
 import type { BotClient } from "../BotClient";
