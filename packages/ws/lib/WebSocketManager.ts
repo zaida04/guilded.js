@@ -46,17 +46,27 @@ export class WebSocketManager {
         return this.reconnectAttemptAmount >= (this.options.reconnectAttemptLimit ?? Infinity);
     }
 
-    get shouldRequestMissedEvents(): boolean {
+    get shouldReplayMissedEvents(): boolean {
         return this.options.replayMissedEvents !== false;
+    }
+
+    get shouldRequestMissedEvents(): boolean {
+        return this.shouldReplayMissedEvents && this.lastMessageId !== null;
     }
 
     connect(): void {
         const headers: Record<string, string> = { Authorization: `Bearer ${this.token}` };
-        if (this.shouldRequestMissedEvents && this.lastMessageId) headers["guilded-last-message-id"] = this.lastMessageId;
+        if (this.shouldRequestMissedEvents) headers["guilded-last-message-id"] = this.lastMessageId!;
 
-        this.socket = new WebSocket(this.wsURL, {
-            headers,
-        });
+        try {
+            this.socket = new WebSocket(this.wsURL, {
+                headers,
+            });
+        } catch (e) {
+            if (!this.shouldRequestMissedEvents) throw e;
+            this.lastMessageId = null;
+            return this.connect();
+        }
 
         this.socket.on("open", this.onSocketOpen.bind(this));
         this.socket.on("ping", this.onSocketPing.bind(this));
