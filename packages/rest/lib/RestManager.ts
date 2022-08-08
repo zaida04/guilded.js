@@ -60,14 +60,6 @@ export class RestManager {
             throw new Error(`Error while making API call, ${e.message.toString()}`);
         }
 
-        this.emitter.emit("response", {
-            requestOptions: {
-                ...requestOptions,
-                Authorization: undefined,
-            },
-            response: response.clone(),
-        });
-
         if (!response.ok) {
             if (response.status === 429) {
                 const retryAfterTime = Number(response.headers.get("Retry-After") ?? 35);
