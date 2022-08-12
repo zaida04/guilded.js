@@ -46,7 +46,7 @@ export class TeamMemberEventHandler extends GatewayEventHandler {
     teamMemberUnbanned(data: WSTeamMemberUnbannedPayload): boolean {
         const memberKey = buildMemberKey(data.d.serverId, data.d.serverMemberBan.user.id);
         const existingMemberBan = this.client.bans.cache.get(memberKey);
-        if (existingMemberBan && this.client.options.cache?.removeMemberOnLeave) this.client.bans.cache.delete(existingMemberBan.id);
+        if (existingMemberBan && this.client.options.cache?.removeMemberBanOnUnban) this.client.bans.cache.delete(existingMemberBan.id);
         const existingMember = this.client.members.cache.get(memberKey);
         if (existingMember) existingMember._update({ banned: false });
         return this.client.emit(constants.clientEvents.MEMBER_UNBANNED, existingMemberBan ?? data.d);

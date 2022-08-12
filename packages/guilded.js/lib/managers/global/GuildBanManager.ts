@@ -48,7 +48,7 @@ export class GlobalGuildBanManager extends CacheableStructManager<string, Member
         return this.client.rest.router.unbanMember(serverId, userId).then((data) => {
             const memberKey = buildMemberKey(serverId, userId);
             const existingBan = this.client.bans.cache.get(memberKey);
-            if (this.client.options.cache?.removeMemberOnLeave || removeBanIfCached) this.client.bans.cache.delete(memberKey);
+            if (this.client.options.cache?.removeMemberBanOnUnban || removeBanIfCached) this.client.bans.cache.delete(memberKey);
             return existingBan ?? null;
         });
     }
