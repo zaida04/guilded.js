@@ -35,7 +35,6 @@ export class GlobalCalendarManager extends CacheableStructManager<number, Calend
             for (const calendarEvent of data.calendarEvents) {
                 calendarEvents.set(calendarEvent.id, new CalendarEvent(this.client, calendarEvent));
             }
-
             return calendarEvents;
         });
     }
@@ -48,12 +47,10 @@ export class GlobalCalendarManager extends CacheableStructManager<number, Calend
     }
 
     /** Delete a calendar event. */
-    delete(channelId: string, calendarEventId: number): Promise<void> {
-        return this.client.rest.router.deleteCalendarEvent(channelId, calendarEventId).then((data) => {
-            /* Delete from Cache???
-            this.client.calendars.cache.delete(calendarEventId);
-            */
-            return void 0;
+    delete(channelId: string, calendarEventId: number): Promise<CalendarEvent | void> {
+        return this.client.rest.router.deleteCalendarEvent(channelId, calendarEventId).then((data) => {  
+            const cachedCalendar = this.cache.get(calendarEventId);
+            return cachedCalendar ?? void 0;
         });
     }
 }
