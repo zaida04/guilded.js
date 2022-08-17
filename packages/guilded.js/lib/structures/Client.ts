@@ -12,6 +12,7 @@ import { GlobalMessageManager } from "../managers/global/MessageManager";
 import { GlobalRoleManager } from "../managers/global/RoleManager";
 import { GlobalUserManager } from "../managers/global/UserManager";
 import { GlobalGuildBanManager } from "../managers/global/GuildBanManager";
+import { GlobalCalendarManager } from "../managers/global/CalendarManager";
 import type { Message, MessageReaction } from "./Message";
 import type TypedEmitter from "typed-emitter";
 import type {
@@ -67,6 +68,7 @@ export class Client extends (EventEmitter as unknown as new () => TypedEmitter<C
     webhooks = new GlobalWebhookManager(this);
     servers = new GlobalServerManager(this);
     reactions = new GlobalReactionManager(this);
+    calendars = new GlobalCalendarManager(this);
 
     /** The user belonging to this bot */
     user: ClientUser | null = null;
@@ -127,11 +129,13 @@ interface ClientOptions {
         removeMemberOnLeave?: boolean;
         removeMemberBanOnUnban?: boolean;
         removeChannelOnDelete?: boolean;
+        removeCalendarsOnDelete?: boolean;
         cacheMemberBans?: boolean;
         cacheWebhooks?: boolean;
         cacheChannels?: boolean;
         cacheServers?: boolean;
         cacheMessageReactions?: boolean;
+        cacheCalendars?: boolean;
     };
 }
 
@@ -141,7 +145,7 @@ type ClientEvents = {
     exit: () => unknown;
     error: (reason: string, err: Error | null) => unknown;
     calendarEventCreated: (calendarEvent: CalendarEvent) => unknown;
-    calendarEventUpdated: (calendarEvent: CalendarEvent) => unknown;
+    calendarEventUpdated: (calendarEvent: CalendarEvent, oldCalendar: CalendarEvent | null) => unknown;
     calendarEventDeleted: (calendarEvent: CalendarEvent) => unknown;
     messageCreated: (message: Message) => unknown;
     messageUpdated: (message: Message, oldMessage: Message | null) => unknown;
