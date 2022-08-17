@@ -129,6 +129,7 @@ interface ClientOptions {
         removeMemberOnLeave?: boolean;
         removeMemberBanOnUnban?: boolean;
         removeChannelOnDelete?: boolean;
+        removeCalendarsOnDelete?: boolean;
         cacheMemberBans?: boolean;
         cacheWebhooks?: boolean;
         cacheChannels?: boolean;
