@@ -26,7 +26,7 @@ export class CalendarEventHandler extends GatewayEventHandler {
         const existingCalendar = this.client.calendars.cache.get(data.d.calendarEvent.id);
         const deleteCalendar = existingCalendar?._update(data.d.calendarEvent);
         const newCalendarEvent = new CalendarEvent(this.client, data.d.calendarEvent);
-        if (this.client.options.cache?.removeMemberOnLeave) this.client.calendars.cache.delete(newCalendarEvent.id);
+        if (this.client.options.cache?.removeCalendarsOnDelete) this.client.calendars.cache.delete(newCalendarEvent.id);
         return this.client.emit(constants.clientEvents.CALENDAR_EVENT_DELETED, newCalendarEvent);
     }
 }
