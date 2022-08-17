@@ -23,7 +23,7 @@ export class GlobalCalendarManager extends CacheableStructManager<number, Calend
         }
         return this.client.rest.router.getCalendarEvent(channelId, calendarEventId).then((data) => {
             const newCalendar = new CalendarEvent(this.client, data.calendarEvent);
-            this.client.calendars.cache.set(newCalendar.id, newCalendar);
+            if (this.shouldCacheCalendar) this.client.calendars.cache.set(newCalendar.id, newCalendar);
             return newCalendar;
         });
     }
@@ -33,7 +33,9 @@ export class GlobalCalendarManager extends CacheableStructManager<number, Calend
         return this.client.rest.router.getCalendarEvents(channelId, options).then((data) => {
             const calendarEvents = new Collection<number, CalendarEvent>();
             for (const calendarEvent of data.calendarEvents) {
-                calendarEvents.set(calendarEvent.id, new CalendarEvent(this.client, calendarEvent));
+                const newCalendar = new CalendarEvent(this.client, calendarEvent);
+                calendarEvents.set(newCalendar.id, newCalendar);
+                if (this.shouldCacheCalendar) this.client.calendars.cache.set(newCalendar.id, newCalendar);
             }
             return calendarEvents;
         });
