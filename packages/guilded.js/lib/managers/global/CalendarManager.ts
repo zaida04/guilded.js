@@ -1,11 +1,15 @@
 import { Collection } from "@discordjs/collection";
-import type { RESTGetCalendarEventsBody, RESTPatchCalendarEventBody, RESTPostCalendarEventBody } from "@guildedjs/guilded-api-typings";
+import type { RESTGetCalendarEventsBody, RESTPatchCalendarEventBody, RESTPostCalendarEventBody, RESTPatchCalendarEventRsvpBody } from "@guildedjs/guilded-api-typings";
 import { CacheableStructManager } from "./CacheableStructManager";
-import { CalendarEvent } from "../../structures/CalendarEvent";
+import { CalendarEvent, CalendarEventRsvp } from "../../structures/CalendarEvent";
 
 export class GlobalCalendarManager extends CacheableStructManager<number, CalendarEvent> {
     get shouldCacheCalendar() {
         return this.client.options?.cache?.cacheCalendars !== false;
+    }
+
+    get shouldCacheCalendarRSVPs() {
+        return this.client.options?.cache?.cacheCalendarsRSVPs !== false;
     }
 
     /** Create a calendar event. */
@@ -53,6 +57,45 @@ export class GlobalCalendarManager extends CacheableStructManager<number, Calend
         return this.client.rest.router.deleteCalendarEvent(channelId, calendarEventId).then((data) => {  
             const cachedCalendar = this.cache.get(calendarEventId);
             return cachedCalendar ?? void 0;
+        });
+    }
+
+    /** Fetch rsvps for a calendar event */
+    fetchManyRSVPs(channelId: string, calendarEventId: number): Promise<Collection<string, CalendarEventRsvp>> {
+        return this.client.rest.router.getCalendarEventRsvps(channelId, calendarEventId).then((data) => {
+            const rsvpEvents = new Collection<string, CalendarEventRsvp>();
+            for (const rsvpEvent of data.calendarEventRsvps) {
+                if (this.shouldCacheCalendar && this.shouldCacheCalendarRSVPs) {
+                    const cachedCalendar = this.cache.get(calendarEventId);
+                    cachedCalendar?.rsvps.set(rsvpEvent.userId, new CalendarEventRsvp(this.client, rsvpEvent));
+                }
+                rsvpEvents.set(rsvpEvent.userId, new CalendarEventRsvp(this.client, rsvpEvent));
+            }
+            return rsvpEvents;
+        });
+    }
+
+    /** Create or Update a rsvp for a calendar event */
+    updateRSVP(channelId: string, calendarEventId: number, userId: string, options: RESTPatchCalendarEventRsvpBody): Promise<CalendarEventRsvp> {
+        return this.client.rest.router.updateCalendarEventRvsp(channelId, calendarEventId, userId, options).then((data) => {
+            console.log(data);
+            if (this.shouldCacheCalendar && this.shouldCacheCalendarRSVPs) {
+                const cachedCalendar = this.cache.get(calendarEventId);
+                cachedCalendar?.rsvps.set(data.calendarEventRsvp.userId, new CalendarEventRsvp(this.client, data.calendarEventRsvp));
+            }
+            return new CalendarEventRsvp(this.client, data.calendarEventRsvp);
+        });
+    }
+    
+    /** Delete a rsvp for a calendar event */
+    deleteRSVP(channelId: string, calendarEventId: number, userId: string): Promise<CalendarEventRsvp | void> {
+        return this.client.rest.router.deleteCalendarEventRvsp(channelId, calendarEventId, userId).then((data) => {
+            if (this.shouldCacheCalendar && this.shouldCacheCalendarRSVPs) {
+                const cachedCalendar = this.cache.get(calendarEventId);
+                const rsvp = cachedCalendar?.rsvps?.get(userId);
+                return rsvp ?? void 0;
+            }
+            return void 0;
         });
     }
 }
