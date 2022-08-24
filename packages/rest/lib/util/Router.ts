@@ -165,7 +165,10 @@ export class Router {
         userId: string,
         options: RESTPatchCalendarEventRsvpBody,
     ): Promise<RESTPatchCalendarEventRsvpResult> {
-        return this.rest.put<RESTPatchCalendarEventRsvpResult>(ROUTES.calendarEventRsvp(channelId, calendarEventId, userId), options);
+        return this.rest.put<RESTPatchCalendarEventRsvpResult, RESTPatchCalendarEventRsvpBody>(
+            ROUTES.calendarEventRsvp(channelId, calendarEventId, userId),
+            options,
+        );
     }
 
     /** Delete a rsvp user from a calendar event */

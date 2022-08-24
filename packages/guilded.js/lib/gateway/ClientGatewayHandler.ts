@@ -46,7 +46,7 @@ import { CalendarEventHandler, CalendarEventRsvpHandler } from "./handler/Calend
 
 export class ClientGatewayHandler {
     calendarEventHandler = new CalendarEventHandler(this.client);
-    CalendarEventRsvpHandler = new CalendarEventRsvpHandler(this.client);
+    calendarEventRsvpHandler = new CalendarEventRsvpHandler(this.client);
     messageHandler = new MessageEventHandler(this.client);
     teamHandler = new TeamEventHandler(this.client);
     teamMemberHandler = new TeamMemberEventHandler(this.client);
@@ -60,9 +60,9 @@ export class ClientGatewayHandler {
         [WebSocketEvents.CalendarEventCreated]: (data) => this.calendarEventHandler.calendarEventCreated(data as WSCalendarEventCreated),
         [WebSocketEvents.CalendarEventDeleted]: (data) => this.calendarEventHandler.calendarEventDeleted(data as WSCalendarEventDeleted),
         [WebSocketEvents.CalendarEventUpdated]: (data) => this.calendarEventHandler.calendarEventUpdated(data as WSCalendarEventUpdated),
-        [WebSocketEvents.CalendarEventRsvpUpdated]: (data) => this.CalendarEventRsvpHandler.calendarEventRsvpUpdated(data as WSCalendarEventRsvpUpdated),
-        [WebSocketEvents.CalendarEventRsvpManyUpdated]: (data) => this.CalendarEventRsvpHandler.calendarEventRsvpManyUpdated(data as WSCalendarEventRsvpManyUpdated),
-        [WebSocketEvents.CalendarEventRsvpDeleted]: (data) => this.CalendarEventRsvpHandler.calendarEventRsvpDeleted(data as WSCalendarEventRsvpDeleted),
+        [WebSocketEvents.CalendarEventRsvpUpdated]: (data) => this.calendarEventRsvpHandler.calendarEventRsvpUpdated(data as WSCalendarEventRsvpUpdated),
+        [WebSocketEvents.CalendarEventRsvpManyUpdated]: (data) => this.calendarEventRsvpHandler.calendarEventRsvpManyUpdated(data as WSCalendarEventRsvpManyUpdated),
+        [WebSocketEvents.CalendarEventRsvpDeleted]: (data) => this.calendarEventRsvpHandler.calendarEventRsvpDeleted(data as WSCalendarEventRsvpDeleted),
         [WebSocketEvents.ChatMessageCreated]: (data) => this.messageHandler.messageCreated(data as WSChatMessageCreatedPayload),
         [WebSocketEvents.ChatMessageDeleted]: (data) => this.messageHandler.messageDeleted(data as WSChatMessageDeletedPayload),
         [WebSocketEvents.ChatMessageUpdated]: (data) => this.messageHandler.messageUpdated(data as WSChatMessageUpdatedPayload),

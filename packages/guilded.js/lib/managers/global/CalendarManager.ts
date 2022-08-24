@@ -78,7 +78,6 @@ export class GlobalCalendarManager extends CacheableStructManager<number, Calend
     /** Create or Update a rsvp for a calendar event */
     updateRSVP(channelId: string, calendarEventId: number, userId: string, options: RESTPatchCalendarEventRsvpBody): Promise<CalendarEventRsvp> {
         return this.client.rest.router.updateCalendarEventRvsp(channelId, calendarEventId, userId, options).then((data) => {
-            console.log(data);
             if (this.shouldCacheCalendar && this.shouldCacheCalendarRSVPs) {
                 const cachedCalendar = this.cache.get(calendarEventId);
                 cachedCalendar?.rsvps.set(data.calendarEventRsvp.userId, new CalendarEventRsvp(this.client, data.calendarEventRsvp));
