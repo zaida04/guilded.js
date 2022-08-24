@@ -14,6 +14,7 @@ import type {
     RESTDeleteReactionResult,
     RESTDeleteServerWebhookResult,
     RESTGetCalendarEventResult,
+    RESTGetCalendarEventRsvpResult,
     RESTGetCalendarEventRsvpsResult,
     RESTGetCalendarEventsBody,
     RESTGetCalendarEventsResult,
@@ -153,12 +154,17 @@ export class Router {
         return this.rest.delete<RESTDeleteCalendarEventResult>(ROUTES.calendarEvent(channelId, calendarEventId));
     }
 
+    /** Get a single RSVP from a calendar event */
+    getCalendarEventRsvp(channelId: string, calendarEventId: number, userId: string): Promise<RESTGetCalendarEventRsvpResult> {
+        return this.rest.get<RESTGetCalendarEventRsvpResult>(ROUTES.calendarEventRsvp(channelId, calendarEventId, userId));
+    }
+
     /** Get RSVPs from a calendar event */
     getCalendarEventRsvps(channelId: string, calendarEventId: number): Promise<RESTGetCalendarEventRsvpsResult> {
         return this.rest.get<RESTGetCalendarEventRsvpsResult>(ROUTES.calendarEventRsvps(channelId, calendarEventId));
     }
 
-    /** Update a rsvp user from a calendar event */
+    /** Update an rsvp user from a calendar event */
     updateCalendarEventRvsp(
         channelId: string,
         calendarEventId: number,
@@ -171,7 +177,7 @@ export class Router {
         );
     }
 
-    /** Delete a rsvp user from a calendar event */
+    /** Delete an rsvp user from a calendar event */
     deleteCalendarEventRvsp(channelId: string, calendarEventId: number, userId: string): Promise<RESTDeleteCalendarEventRsvpResult> {
         return this.rest.delete<RESTDeleteCalendarEventRsvpResult>(ROUTES.calendarEventRsvp(channelId, calendarEventId, userId));
     }

@@ -73,6 +73,14 @@ export interface RESTGetCalendarEventRsvpsResult {
 }
 
 /**
+ * GET
+ * /channels/:channelId/events/:calendarEventId/rsvps/:userId
+ */
+export interface RESTGetCalendarEventRsvpResult {
+    calendarEventRsvp: CalendarEventRsvpPayload;
+}
+
+/**
  * PATCH
  * /channels/:channelId/events/:calendarEventId/rsvps/:userId
  */

@@ -48,15 +48,33 @@ export class GlobalCalendarManager extends CacheableStructManager<number, Calend
     /** Update a calendar event. */
     update(channelId: string, calendarEventId: number, options: RESTPatchCalendarEventBody): Promise<CalendarEvent> {
         return this.client.rest.router.updateCalendarEvent(channelId, calendarEventId, options).then((data) => {
-            return new CalendarEvent(this.client, data.calendarEvent);
+            const existingCalendar = this.cache.get(calendarEventId);
+            if (existingCalendar) return existingCalendar._update(data.calendarEvent);
+
+            const newCalendar = new CalendarEvent(this.client, data.calendarEvent);
+            if (this.shouldCacheCalendar) this.cache.set(newCalendar.id, newCalendar);
+            return newCalendar;
         });
     }
 
     /** Delete a calendar event. */
     delete(channelId: string, calendarEventId: number): Promise<CalendarEvent | void> {
-        return this.client.rest.router.deleteCalendarEvent(channelId, calendarEventId).then((data) => {  
+        return this.client.rest.router.deleteCalendarEvent(channelId, calendarEventId).then((data) => {
             const cachedCalendar = this.cache.get(calendarEventId);
             return cachedCalendar ?? void 0;
+        });
+    }
+
+    /** Get a single rsvp from a caldenar event */
+    fetchRSVP(channelId: string, calendarEventId: number, userId: string, force?: boolean): Promise<CalendarEventRsvp> {
+        if (!force) {
+            const existingRSVP = this.client.calendars.cache.get(calendarEventId)?.rsvps?.get(userId);
+            if (existingRSVP) return Promise.resolve(existingRSVP);
+        }
+        return this.client.rest.router.getCalendarEventRsvp(channelId, calendarEventId, userId).then((data) => {
+            const newRSVP = new CalendarEventRsvp(this.client, data.calendarEventRsvp);
+            if (this.shouldCacheCalendar && this.shouldCacheCalendarRSVPs) this.cache.get(newRSVP.calendarEventId)?.rsvps?.set(newRSVP.userId, newRSVP);
+            return newRSVP;
         });
     }
 
@@ -67,7 +85,7 @@ export class GlobalCalendarManager extends CacheableStructManager<number, Calend
             for (const rsvpEvent of data.calendarEventRsvps) {
                 if (this.shouldCacheCalendar && this.shouldCacheCalendarRSVPs) {
                     const cachedCalendar = this.cache.get(calendarEventId);
-                    cachedCalendar?.rsvps.set(rsvpEvent.userId, new CalendarEventRsvp(this.client, rsvpEvent));
+                    cachedCalendar?.rsvps?.set(rsvpEvent.userId, new CalendarEventRsvp(this.client, rsvpEvent));
                 }
                 rsvpEvents.set(rsvpEvent.userId, new CalendarEventRsvp(this.client, rsvpEvent));
             }
@@ -75,18 +93,19 @@ export class GlobalCalendarManager extends CacheableStructManager<number, Calend
         });
     }
 
-    /** Create or Update a rsvp for a calendar event */
+    /** Create or update an rsvp for a calendar event */
     updateRSVP(channelId: string, calendarEventId: number, userId: string, options: RESTPatchCalendarEventRsvpBody): Promise<CalendarEventRsvp> {
         return this.client.rest.router.updateCalendarEventRvsp(channelId, calendarEventId, userId, options).then((data) => {
-            if (this.shouldCacheCalendar && this.shouldCacheCalendarRSVPs) {
-                const cachedCalendar = this.cache.get(calendarEventId);
-                cachedCalendar?.rsvps.set(data.calendarEventRsvp.userId, new CalendarEventRsvp(this.client, data.calendarEventRsvp));
-            }
-            return new CalendarEventRsvp(this.client, data.calendarEventRsvp);
+            const existingRSVP = this.cache.get(calendarEventId)?.rsvps?.get(userId);
+            if (existingRSVP) return existingRSVP?._update(data.calendarEventRsvp);
+
+            const newRSVP = new CalendarEventRsvp(this.client, data.calendarEventRsvp);
+            if (this.shouldCacheCalendar && this.shouldCacheCalendarRSVPs) this.cache.get(calendarEventId)?.rsvps?.set(userId, newRSVP);
+            return newRSVP;
         });
     }
-    
-    /** Delete a rsvp for a calendar event */
+
+    /** Delete an rsvp for a calendar event */
     deleteRSVP(channelId: string, calendarEventId: number, userId: string): Promise<CalendarEventRsvp | void> {
         return this.client.rest.router.deleteCalendarEventRvsp(channelId, calendarEventId, userId).then((data) => {
             if (this.shouldCacheCalendar && this.shouldCacheCalendarRSVPs) {
