@@ -28,9 +28,9 @@ export class CalendarEvent extends Base<CalendarEventPayload, number> {
     isPrivate?: boolean;
     mentions?: MentionsPayload;
     cancellation?: CalendarEventCancellationPayload;
-    /** The number of RSVPs to allow before waitlisting RSVPs (min 1) */
+    /** The number of rsvps to allow before waitlisting rsvps (min 1) */
     rsvpLimit?: number | null;
-    /** A collection of cached RSVPs for this calendar event */
+    /** A collection of cached rsvps for this calendar event */
     rsvps: Collection<string, CalendarEventRsvp>;
     /** The ISO 8601 timestamp that the event was created at */
     readonly _createdAt: number;
@@ -123,15 +123,15 @@ export class CalendarEventRsvp extends Base<CalendarEventRsvpPayload, string>{
         readonly serverId: string;
         /** The ID of the user */
         readonly userId: string;
-        /** The status of the RSVP ("going", "maybe", "declined", "invited", "waitlisted", or "not responded") */
+        /** The status of the rsvp ("going", "maybe", "declined", "invited", "waitlisted", or "not responded") */
         status: string;
-        /** The ID of the user who created this RSVP */
+        /** The ID of the user who created this rsvp */
         readonly createdBy: string;
-        /** The ISO 8601 timestamp that the RSVP was created at */
+        /** The ISO 8601 timestamp that the rsvp was created at */
         readonly _createdAt: number;
-        /** The ID of the user who updated this RSVP */
+        /** The ID of the user who updated this rsvp */
         updatedBy?: string | null;
-        /** The ISO 8601 timestamp that the RSVP was updated at, if relevant */
+        /** The ISO 8601 timestamp that the rsvp was updated at, if relevant */
         updatedAt?: string | null;
 
     constructor(client: Client, data: CalendarEventRsvpPayload) {

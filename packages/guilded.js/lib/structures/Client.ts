@@ -137,7 +137,7 @@ interface ClientOptions {
         cacheServers?: boolean;
         cacheMessageReactions?: boolean;
         cacheCalendars?: boolean;
-        cacheCalendarsRSVPs?: boolean;
+        cacheCalendarsRsvps?: boolean;
     };
 }
 

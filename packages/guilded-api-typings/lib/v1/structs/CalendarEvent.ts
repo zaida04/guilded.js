@@ -24,7 +24,7 @@ export interface CalendarEventPayload {
     url?: string;
     /** The color of the event when viewed in the calendar (min 0; max 16777215) */
     color?: number;
-    /** The number of RSVPs to allow before waitlisting RSVPs (min 1) */
+    /** The number of rsvps to allow before waitlisting rsvps (min 1) */
     rsvpLimit?: number;
     /** The ISO 8601 timestamp that the event starts at */
     startsAt: string;
@@ -52,14 +52,14 @@ export interface CalendarEventRsvpPayload {
     serverId: string;
     /** The ID of the user */
     userId: string;
-    /** The status of the RSVP ("going", "maybe", "declined", "invited", "waitlisted", or "not responded")*/
+    /** The status of the rsvp ("going", "maybe", "declined", "invited", "waitlisted", or "not responded")*/
     status: string;
-    /** The ID of the user who created this RSVP */
+    /** The ID of the user who created this rsvp */
     createdBy: string;
-    /** The ISO 8601 timestamp that the RSVP was created at */
+    /** The ISO 8601 timestamp that the rsvp was created at */
     createdAt: string;
-    /** The ID of the user who updated this RSVP */
+    /** The ID of the user who updated this rsvp */
     updatedBy?: string;
-    /** The ISO 8601 timestamp that the RSVP was updated at, if relevant */
+    /** The ISO 8601 timestamp that the rsvp was updated at, if relevant */
     updatedAt?: string;
 }

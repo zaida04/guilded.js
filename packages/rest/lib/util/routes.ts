@@ -13,7 +13,7 @@ export const ROUTES = {
     calendarEvents: (channelId: string) => `/channels/${channelId}/events` as const,
     calendarEvent: (channelId: string, calendarEventId: number) => `/channels/${channelId}/events/${calendarEventId}` as const,
 
-    // CalendarRSVP Endpoints
+    // CalendarRsvp Endpoints
     calendarEventRsvps: (channelId: string, calendarEventId: number) => `/channels/${channelId}/events/${calendarEventId}/rsvps` as const,
     calendarEventRsvp: (channelId: string, calendarEventId: number, userId: string) =>
         `/channels/${channelId}/events/${calendarEventId}/rsvps/${userId}` as const,

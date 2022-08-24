@@ -154,12 +154,12 @@ export class Router {
         return this.rest.delete<RESTDeleteCalendarEventResult>(ROUTES.calendarEvent(channelId, calendarEventId));
     }
 
-    /** Get a single RSVP from a calendar event */
+    /** Get a single rsvp from a calendar event */
     getCalendarEventRsvp(channelId: string, calendarEventId: number, userId: string): Promise<RESTGetCalendarEventRsvpResult> {
         return this.rest.get<RESTGetCalendarEventRsvpResult>(ROUTES.calendarEventRsvp(channelId, calendarEventId, userId));
     }
 
-    /** Get RSVPs from a calendar event */
+    /** Get rsvps from a calendar event */
     getCalendarEventRsvps(channelId: string, calendarEventId: number): Promise<RESTGetCalendarEventRsvpsResult> {
         return this.rest.get<RESTGetCalendarEventRsvpsResult>(ROUTES.calendarEventRsvps(channelId, calendarEventId));
     }

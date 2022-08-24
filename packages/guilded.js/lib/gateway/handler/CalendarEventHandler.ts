@@ -33,11 +33,11 @@ export class CalendarEventHandler extends GatewayEventHandler {
 export class CalendarEventRsvpHandler extends GatewayEventHandler {
     calendarEventRsvpUpdated(data: WSCalendarEventRsvpUpdated): boolean {
         const existingCalendar = this.client.calendars.cache.get(data.d.calendarEventRsvp.calendarEventId);
-        const existingCalendarRSVP = existingCalendar?.rsvps?.get(data.d.calendarEventRsvp.userId);
-        const oldCalendarRSVP = existingCalendarRSVP?._clone();
-        const updatedCalendarRSVP = existingCalendarRSVP?._update(data.d.calendarEventRsvp) ?? new CalendarEventRsvp(this.client, data.d.calendarEventRsvp);
-        if (this.client.calendars.shouldCacheCalendar && this.client.calendars.shouldCacheCalendarRSVPs && !existingCalendarRSVP) existingCalendar?.rsvps?.set(updatedCalendarRSVP.userId, updatedCalendarRSVP);
-        return this.client.emit(constants.clientEvents.CALENDAR_EVENT_RSVP_UPDATED, updatedCalendarRSVP, oldCalendarRSVP ?? null);
+        const existingCalendarRsvp = existingCalendar?.rsvps?.get(data.d.calendarEventRsvp.userId);
+        const oldCalendarRsvp = existingCalendarRsvp?._clone();
+        const updatedCalendarRsvp = existingCalendarRsvp?._update(data.d.calendarEventRsvp) ?? new CalendarEventRsvp(this.client, data.d.calendarEventRsvp);
+        if (this.client.calendars.shouldCacheCalendar && this.client.calendars.shouldCacheCalendarRsvps && !existingCalendarRsvp) existingCalendar?.rsvps?.set(updatedCalendarRsvp.userId, updatedCalendarRsvp);
+        return this.client.emit(constants.clientEvents.CALENDAR_EVENT_RSVP_UPDATED, updatedCalendarRsvp, oldCalendarRsvp ?? null);
     }
 
     calendarEventRsvpManyUpdated(data: WSCalendarEventRsvpManyUpdated): boolean {
@@ -47,7 +47,7 @@ export class CalendarEventRsvpHandler extends GatewayEventHandler {
             const existingCalendarRsvp = existingCalendar?.rsvps?.get(rsvp.userId);
             const newCalendarRsvp = existingCalendarRsvp?._update(rsvp) ?? new CalendarEventRsvp(this.client, rsvp);
             rsvpCollection.set(rsvp.userId, newCalendarRsvp);
-            if (this.client.calendars.shouldCacheCalendar && this.client.calendars.shouldCacheCalendarRSVPs && !existingCalendarRsvp) {
+            if (this.client.calendars.shouldCacheCalendar && this.client.calendars.shouldCacheCalendarRsvps && !existingCalendarRsvp) {
                 existingCalendar?.rsvps?.set(rsvp.userId, newCalendarRsvp);
             }
         }
@@ -56,8 +56,8 @@ export class CalendarEventRsvpHandler extends GatewayEventHandler {
 
     calendarEventRsvpDeleted(data: WSCalendarEventRsvpDeleted): boolean {
         const existingCalendar = this.client.calendars.cache.get(data.d.calendarEventRsvp.calendarEventId);
-        const existingCalendarRSVP = existingCalendar?.rsvps?.get(data.d.calendarEventRsvp.userId);
-        const deletedCalendarRsvp = existingCalendarRSVP?._update(data.d.calendarEventRsvp) ?? new CalendarEventRsvp(this.client, data.d.calendarEventRsvp);
+        const existingCalendarRsvp = existingCalendar?.rsvps?.get(data.d.calendarEventRsvp.userId);
+        const deletedCalendarRsvp = existingCalendarRsvp?._update(data.d.calendarEventRsvp) ?? new CalendarEventRsvp(this.client, data.d.calendarEventRsvp);
         if (this.client.options.cache?.removeCalendarRsvpOnDelete) {
             const currentCalendar = this.client.calendars.cache.get(data.d.calendarEventRsvp.calendarEventId);
             currentCalendar?.rsvps?.delete(data.d.calendarEventRsvp.userId);
