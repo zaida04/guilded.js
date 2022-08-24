@@ -1,4 +1,4 @@
-import type { CalendarEventPayload } from "../structs/CalendarEvent";
+import type { CalendarEventPayload, CalendarEventRsvpPayload } from "../structs/CalendarEvent";
 
 /**
  * POST
@@ -13,6 +13,7 @@ export interface RESTPostCalendarEventBody {
     color?: number;
     duration?: number;
     isPrivate?: boolean;
+    rsvpLimit?: number;
 }
 export interface RESTPostCalendarEventResult {
     calendarEvent: CalendarEventPayload;
@@ -62,3 +63,36 @@ export interface RESTPatchCalendarEventResult {
  * /channels/:channelId/events/:calendarEventId
  */
 export type RESTDeleteCalendarEventResult = never;
+
+/**
+ * GET
+ * /channels/:channelId/events/:calendarEventId/rsvps
+ */
+export interface RESTGetCalendarEventRsvpsResult {
+    calendarEventRsvps: CalendarEventRsvpPayload[];
+}
+
+/**
+ * GET
+ * /channels/:channelId/events/:calendarEventId/rsvps/:userId
+ */
+export interface RESTGetCalendarEventRsvpResult {
+    calendarEventRsvp: CalendarEventRsvpPayload;
+}
+
+/**
+ * PATCH
+ * /channels/:channelId/events/:calendarEventId/rsvps/:userId
+ */
+export interface RESTPatchCalendarEventRsvpBody {
+    status: string;
+}
+export interface RESTPatchCalendarEventRsvpResult {
+    calendarEventRsvp: CalendarEventRsvpPayload;
+}
+
+/**
+ * DELETE
+ * /channels/:channelId/events/:calendarEventId/rsvps/:userId
+ */
+export type RESTDeleteCalendarEventRsvpResult = never;

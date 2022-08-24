@@ -36,7 +36,7 @@ import { ClientUser } from "./User";
 import type { Channel } from "./channels";
 import { GlobalServerManager } from "../managers/global/ServerManager";
 import { GlobalReactionManager } from "../managers/global/ReactionManager";
-import type { CalendarEvent } from "./CalendarEvent";
+import type { CalendarEvent, CalendarEventRsvp } from "./CalendarEvent";
 
 export class Client extends (EventEmitter as unknown as new () => TypedEmitter<ClientEvents>) {
     /** The time in milliseconds since the Client connected */
@@ -130,12 +130,14 @@ interface ClientOptions {
         removeMemberBanOnUnban?: boolean;
         removeChannelOnDelete?: boolean;
         removeCalendarsOnDelete?: boolean;
+        removeCalendarRsvpOnDelete?: boolean;
         cacheMemberBans?: boolean;
         cacheWebhooks?: boolean;
         cacheChannels?: boolean;
         cacheServers?: boolean;
         cacheMessageReactions?: boolean;
         cacheCalendars?: boolean;
+        cacheCalendarsRsvps?: boolean;
     };
 }
 
@@ -147,6 +149,9 @@ type ClientEvents = {
     calendarEventCreated: (calendarEvent: CalendarEvent) => unknown;
     calendarEventUpdated: (calendarEvent: CalendarEvent, oldCalendar: CalendarEvent | null) => unknown;
     calendarEventDeleted: (calendarEvent: CalendarEvent) => unknown;
+    calendarRsvpUpdated: (CalendarEventRsvp: CalendarEventRsvp, oldCalendarRsvp: CalendarEventRsvp | null) => unknown;
+    calendarRsvpManyUpdated: (CalendarRsvpsEvent: Map<string, CalendarEventRsvp>) => unknown;
+    calendarRsvpDeleted: (CalendarEventRsvp: CalendarEventRsvp) => unknown;
     messageCreated: (message: Message) => unknown;
     messageUpdated: (message: Message, oldMessage: Message | null) => unknown;
     messageDeleted: (message: Message | WSChatMessageDeletedPayload["d"]) => unknown;

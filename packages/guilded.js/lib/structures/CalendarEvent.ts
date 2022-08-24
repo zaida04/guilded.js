@@ -1,23 +1,40 @@
-import type { CalendarEventCancellationPayload, CalendarEventPayload, MentionsPayload } from "@guildedjs/guilded-api-typings";
+import type { CalendarEventCancellationPayload, CalendarEventPayload, MentionsPayload, CalendarEventRsvpPayload } from "@guildedjs/guilded-api-typings";
 import { Base } from "./Base";
 import type { Client } from "./Client";
 import type { User } from "./User";
+import { Collection } from "@discordjs/collection";
 
 export class CalendarEvent extends Base<CalendarEventPayload, number> {
+    /** The ID of the calendar event (min 1) */
     readonly id: number;
+    /** The ID of the server */
     readonly serverId: string;
+    /** The ID of the channel */
     readonly channelId: string;
+    /** The name of the event (min length 1; max length 60) */
     name: string;
-    description?: string;
-    location?: string;
-    url?: string;
-    color?: number;
+    /**  The description of the event (min length 1; max length 8000) */
+    description?: string | null;
+    /** The location of the event (min length 1; max length 8000) */
+    location?: string | null;
+    /** A URL to associate with the event */
+    url?: string | null;
+    /** The color of the event when viewing in the calendar (min 0; max 16777215) */
+    color?: number | null;
+    /** The ISO 8601 timestamp that the event starts at */
     startsAt: string;
-    duration?: number;
+    /** The duration of the event in minutes (min 1) */
+    duration?: number | null;
     isPrivate?: boolean;
     mentions?: MentionsPayload;
     cancellation?: CalendarEventCancellationPayload;
+    /** The number of rsvps to allow before waitlisting rsvps (min 1) */
+    rsvpLimit?: number | null;
+    /** A collection of cached rsvps for this calendar event */
+    rsvps: Collection<string, CalendarEventRsvp>;
+    /** The ISO 8601 timestamp that the event was created at */
     readonly _createdAt: number;
+    /** The ID of the user who created this event */
     readonly createdBy: string;
 
     constructor(client: Client, data: CalendarEventPayload) {
@@ -25,12 +42,20 @@ export class CalendarEvent extends Base<CalendarEventPayload, number> {
 
         this.id = data.id;
         this.serverId = data.serverId;
-        this.name = data.name;
-        this.startsAt = data.startsAt;
         this.channelId = data.channelId;
+        this.name = data.name;
+        this.description = data.description ?? null;
+        this.location = data.location ?? null;
+        this.url = data.url ?? null;
+        this.color = data.color ?? null;
+        this.startsAt = data.startsAt;
+        this.duration = data.duration ?? null;
+        this.isPrivate = data.isPrivate ?? false;
         this._createdAt = Date.parse(data.createdAt);
         this.createdBy = data.createdBy;
-
+        this.rsvpLimit = data.rsvpLimit ?? null;
+        this.rsvps = new Collection();
+        
         this._update(data);
     }
 
@@ -77,6 +102,74 @@ export class CalendarEvent extends Base<CalendarEventPayload, number> {
 
         if ("cancellation" in data && typeof data.cancellation !== "undefined") {
             this.cancellation = data.cancellation;
+        }
+
+        if ("rsvpLimit" in data && typeof data.rsvpLimit !== "undefined") {
+            this.rsvpLimit = data.rsvpLimit ?? null;
+        }
+        
+        return this;
+    }
+}
+
+export class CalendarEventRsvp extends Base<CalendarEventRsvpPayload, string>{
+        /** Custom Id generated for the rsvp */
+        readonly id: string;
+        /** The ID of the calendar event (min 1) */
+        readonly calendarEventId: number;
+        /** The ID of the channel */
+        readonly channelId: string;
+        /** The ID of the server */
+        readonly serverId: string;
+        /** The ID of the user */
+        readonly userId: string;
+        /** The status of the rsvp ("going", "maybe", "declined", "invited", "waitlisted", or "not responded") */
+        status: string;
+        /** The ID of the user who created this rsvp */
+        readonly createdBy: string;
+        /** The ISO 8601 timestamp that the rsvp was created at */
+        readonly _createdAt: number;
+        /** The ID of the user who updated this rsvp */
+        updatedBy?: string | null;
+        /** The ISO 8601 timestamp that the rsvp was updated at, if relevant */
+        updatedAt?: string | null;
+
+    constructor(client: Client, data: CalendarEventRsvpPayload) {
+        super(client, data);
+
+        this.id = data.calendarEventId + '-' + data.userId;
+        this.calendarEventId = data.calendarEventId;
+        this.channelId = data.channelId;
+        this.serverId = data.serverId;
+        this.userId = data.userId;
+        this.status = data.status;
+        this.createdBy = data.createdBy;
+        this._createdAt = Date.parse(data.createdAt);
+        this.updatedBy = null;
+        this.updatedAt = null;
+
+        this._update(data);
+    }
+
+    get author(): User | null {
+        return this.client.users.cache.get(this.createdBy) ?? null;
+    }
+
+    get createdAt(): Date {
+        return new Date(this._createdAt);
+    }
+
+    _update(data: Partial<CalendarEventRsvpPayload>): this {
+        if ("updatedAt" in data && typeof data.updatedAt !== "undefined") {
+            this.updatedAt = data.updatedAt ?? null;
+        }
+
+        if ("updatedBy" in data && typeof data.updatedBy !== "undefined") {
+            this.updatedBy = data.updatedBy ?? null;
+        }
+
+        if ("status" in data && typeof data.status !== "undefined") {
+            this.status = data.status;
         }
 
         return this;

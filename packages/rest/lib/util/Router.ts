@@ -1,5 +1,6 @@
 import type {
     RESTDeleteCalendarEventResult,
+    RESTDeleteCalendarEventRsvpResult,
     RESTDeleteChannelMessageResult,
     RESTDeleteChannelResult,
     RESTDeleteDocResult,
@@ -13,6 +14,8 @@ import type {
     RESTDeleteReactionResult,
     RESTDeleteServerWebhookResult,
     RESTGetCalendarEventResult,
+    RESTGetCalendarEventRsvpResult,
+    RESTGetCalendarEventRsvpsResult,
     RESTGetCalendarEventsBody,
     RESTGetCalendarEventsResult,
     RESTGetChannelMessageResult,
@@ -35,6 +38,8 @@ import type {
     RESTGetServerWebhooksResult,
     RESTPatchCalendarEventBody,
     RESTPatchCalendarEventResult,
+    RESTPatchCalendarEventRsvpBody,
+    RESTPatchCalendarEventRsvpResult,
     RESTPatchChannelBody,
     RESTPatchChannelResult,
     RESTPostCalendarEventBody,
@@ -147,6 +152,34 @@ export class Router {
     /** Delete a calendar event. */
     deleteCalendarEvent(channelId: string, calendarEventId: number): Promise<RESTDeleteCalendarEventResult> {
         return this.rest.delete<RESTDeleteCalendarEventResult>(ROUTES.calendarEvent(channelId, calendarEventId));
+    }
+
+    /** Get a single rsvp from a calendar event */
+    getCalendarEventRsvp(channelId: string, calendarEventId: number, userId: string): Promise<RESTGetCalendarEventRsvpResult> {
+        return this.rest.get<RESTGetCalendarEventRsvpResult>(ROUTES.calendarEventRsvp(channelId, calendarEventId, userId));
+    }
+
+    /** Get rsvps from a calendar event */
+    getCalendarEventRsvps(channelId: string, calendarEventId: number): Promise<RESTGetCalendarEventRsvpsResult> {
+        return this.rest.get<RESTGetCalendarEventRsvpsResult>(ROUTES.calendarEventRsvps(channelId, calendarEventId));
+    }
+
+    /** Update an rsvp user from a calendar event */
+    updateCalendarEventRvsp(
+        channelId: string,
+        calendarEventId: number,
+        userId: string,
+        options: RESTPatchCalendarEventRsvpBody,
+    ): Promise<RESTPatchCalendarEventRsvpResult> {
+        return this.rest.put<RESTPatchCalendarEventRsvpResult, RESTPatchCalendarEventRsvpBody>(
+            ROUTES.calendarEventRsvp(channelId, calendarEventId, userId),
+            options,
+        );
+    }
+
+    /** Delete an rsvp user from a calendar event */
+    deleteCalendarEventRvsp(channelId: string, calendarEventId: number, userId: string): Promise<RESTDeleteCalendarEventRsvpResult> {
+        return this.rest.delete<RESTDeleteCalendarEventRsvpResult>(ROUTES.calendarEventRsvp(channelId, calendarEventId, userId));
     }
 
     /** Get a list of the roles assigned to a member using the id of the member. */

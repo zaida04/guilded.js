@@ -1,4 +1,4 @@
-import type { CalendarEventPayload } from "../structs/CalendarEvent";
+import type { CalendarEventPayload, CalendarEventRsvpPayload } from "../structs/CalendarEvent";
 import type { SkeletonWSPayload, WSEvent } from "./Events";
 
 export interface WSCalendarEventCreated extends SkeletonWSPayload {
@@ -21,4 +21,28 @@ export interface WSCalendarEventDeleted extends SkeletonWSPayload {
         calendarEvent: CalendarEventPayload;
     };
     t: WSEvent["CalendarEventDeleted"];
+}
+
+export interface WSCalendarEventRsvpUpdated extends SkeletonWSPayload {
+    d: {
+        serverId: string;
+        calendarEventRsvp: CalendarEventRsvpPayload;
+    };
+    t: WSEvent["CalendarEventRsvpUpdated"];
+}
+
+export interface WSCalendarEventRsvpManyUpdated extends SkeletonWSPayload {
+    d: {
+        serverId: string;
+        calendarEventRsvps: CalendarEventRsvpPayload[];
+    };
+    t: WSEvent["CalendarEventRsvpManyUpdated"];
+}
+
+export interface WSCalendarEventRsvpDeleted extends SkeletonWSPayload {
+    d: {
+        serverId: string;
+        calendarEventRsvp: CalendarEventRsvpPayload;
+    };
+    t: WSEvent["CalendarEventRsvpDeleted"];
 }
