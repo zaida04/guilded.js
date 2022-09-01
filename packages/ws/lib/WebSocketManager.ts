@@ -39,7 +39,7 @@ export class WebSocketManager {
 
     /** The url that will be used to connect. Prioritizes proxy url and if not available uses the default base url for guidled. */
     get wsURL(): string {
-        return this.options.proxyURL ?? `wss://api.guilded.gg/v${this.version}/websocket`;
+        return this.options.proxyURL ?? `wss://www.guilded.gg/websocket/v${this.version}`;
     }
 
     get reconnectAttemptExceeded(): boolean {
