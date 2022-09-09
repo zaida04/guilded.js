@@ -34,7 +34,12 @@ import type {
     WSCalendarEventUpdated,
     WSCalendarEventRsvpUpdated,
     WSCalendarEventRsvpManyUpdated,
-    WSCalendarEventRsvpDeleted
+    WSCalendarEventRsvpDeleted,
+    WSForumTopicCreated,
+    WSForumTopicDeleted,
+    WSForumTopicUpdated,
+    WSForumTopicPinned,
+    WSForumTopicUnpinned
 } from "@guildedjs/guilded-api-typings";
 import { WebSocketEvents } from "@guildedjs/guilded-api-typings";
 import { TeamWebhookEventHandler } from "./handler/TeamWebhookEventHandler";
@@ -43,6 +48,7 @@ import { TeamChannelEventHandler } from "./handler/TeamChannelEventHandler";
 import { DocEventHandler } from "./handler/DocEventHandler";
 import { ReactionEventHandler } from "./handler/ReactionEventHandler";
 import { CalendarEventHandler, CalendarEventRsvpHandler } from "./handler/CalendarEventHandler";
+import { ForumEventHandler } from "./handler/ForumEventHandler";
 
 export class ClientGatewayHandler {
     calendarEventHandler = new CalendarEventHandler(this.client);
@@ -55,6 +61,7 @@ export class ClientGatewayHandler {
     teamChannelHandler = new TeamChannelEventHandler(this.client);
     docHandler = new DocEventHandler(this.client);
     reactionHandler = new ReactionEventHandler(this.client);
+    forumHandler = new ForumEventHandler(this.client);
 
     readonly eventToHandlerMap: Record<keyof WSEvent, (data: SkeletonWSPayload) => boolean> = {
         [WebSocketEvents.CalendarEventCreated]: (data) => this.calendarEventHandler.calendarEventCreated(data as WSCalendarEventCreated),
@@ -89,8 +96,18 @@ export class ClientGatewayHandler {
             this.reactionHandler.messageReactionCreated(data as WSChannelMessageReactionCreatedPayload),
         [WebSocketEvents.ChannelMessageReactionDeleted]: (data) =>
             this.reactionHandler.messageReactionDeleted(data as WSChannelMessageReactionDeletedPayload),
+        [WebSocketEvents.ForumTopicCreated]: (data) => 
+            this.forumHandler.ForumTopicCreated(data as WSForumTopicCreated),
+        [WebSocketEvents.ForumTopicDeleted]: (data) => 
+            this.forumHandler.ForumTopicDeleted(data as WSForumTopicDeleted),
+        [WebSocketEvents.ForumTopicUpdated]: (data) => 
+            this.forumHandler.ForumTopicUpdated(data as WSForumTopicUpdated),
+        [WebSocketEvents.ForumTopicPinned]: (data) => 
+            this.forumHandler.ForumTopicPinned(data as WSForumTopicPinned),
+        [WebSocketEvents.ForumTopicUnpinned]: (data) =>
+            this.forumHandler.ForumTopicUnpinned(data as WSForumTopicUnpinned)
     };
-
+ 
     constructor(public readonly client: Client) {}
     handleWSMessage(event: keyof WSEvent, data: SkeletonWSPayload): void {
         this.eventToHandlerMap[event]?.(data) ?? this.client.emit("unknownGatewayEvent", data);

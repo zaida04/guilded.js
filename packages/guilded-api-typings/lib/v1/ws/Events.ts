@@ -39,6 +39,11 @@ export const WebSocketEvents = {
     DocDeleted: "DocDeleted",
     ChannelMessageReactionCreated: "ChannelMessageReactionCreated",
     ChannelMessageReactionDeleted: "ChannelMessageReactionDeleted",
+    ForumTopicCreated: "ForumTopicCreated",
+    ForumTopicUpdated: "ForumTopicUpdated",
+    ForumTopicDeleted: "ForumTopicDeleted",
+    ForumTopicPinned: "ForumTopicPinned",
+    ForumTopicUnpinned: "ForumTopicUnpinned",
 } as const;
 export type WSEvent = typeof WebSocketEvents;
 

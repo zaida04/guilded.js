@@ -2,6 +2,7 @@ export * from "./CalendarEvent";
 export * from "./Channel";
 export * from "./Doc";
 export * from "./Events";
+export * from "./Forum";
 export * from "./List";
 export * from "./Member";
 export * from "./Message";

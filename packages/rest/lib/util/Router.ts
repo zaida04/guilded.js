@@ -4,6 +4,8 @@ import type {
     RESTDeleteChannelMessageResult,
     RESTDeleteChannelResult,
     RESTDeleteDocResult,
+    RESTDeleteForumTopicPinResult,
+    RESTDeleteForumTopicResult,
     RESTDeleteGroupMemberResult,
     RESTDeleteListItemCompleteResult,
     RESTDeleteListItemResult,
@@ -24,6 +26,9 @@ import type {
     RESTGetChannelResult,
     RESTGetDocResult,
     RESTGetDocsResult,
+    RESTGetForumTopicResult,
+    RESTGetForumTopicsQuery,
+    RESTGetForumTopicsResult,
     RESTGetListItemResult,
     RESTGetListItemsResult,
     RESTGetMemberBanResult,
@@ -42,6 +47,8 @@ import type {
     RESTPatchCalendarEventRsvpResult,
     RESTPatchChannelBody,
     RESTPatchChannelResult,
+    RESTPatchForumTopicBody,
+    RESTPatchForumTopicResult,
     RESTPostCalendarEventBody,
     RESTPostCalendarEventResult,
     RESTPostChannelMessagesBody,
@@ -66,6 +73,7 @@ import type {
     RESTPutChannelMessageResult,
     RESTPutDocBody,
     RESTPutDocResult,
+    RESTPutForumTopicPinResult,
     RESTPutGroupMemberResult,
     RESTPutListItemBody,
     RESTPutListItemResult,
@@ -204,7 +212,37 @@ export class Router {
 
     /** Create a topic in a forum */
     createForumTopic(channelId: string, options: RESTPostForumTopicBody): Promise<RESTPostForumTopicResult> {
-        return this.rest.post<RESTPostForumTopicResult, RESTPostForumTopicBody>(ROUTES.forumTopic(channelId), options);
+        return this.rest.post<RESTPostForumTopicResult, RESTPostForumTopicBody>(ROUTES.forumTopics(channelId), options);
+    }
+
+    /** Get all topics in a forum */
+    getForumTopics(channelId: string, options: RESTGetForumTopicsQuery): Promise<RESTGetForumTopicsResult> {
+        return this.rest.get<RESTGetForumTopicsResult, RESTGetForumTopicsQuery>(ROUTES.forumTopics(channelId), options);
+    }
+
+    /** Get a topic in a forum */
+    getForumTopic(channelId: string, forumThreadId: string): Promise<RESTGetForumTopicResult> {
+        return this.rest.get<RESTGetForumTopicResult>(ROUTES.forumTopic(channelId, forumThreadId));
+    }
+
+    /** Update a topic in a forum */
+    updateForumTopic(channelId: string, forumThreadId: string, options: RESTPatchForumTopicBody): Promise<RESTPatchForumTopicResult> {
+        return this.rest.patch<RESTPatchForumTopicResult, RESTPatchForumTopicBody>(ROUTES.forumTopic(channelId, forumThreadId), options);
+    }
+
+    /** Delete a topic in a forum */
+    deleteForumTpoic(channelId: string, forumThreadId: string): Promise<RESTDeleteForumTopicResult> {
+        return this.rest.delete<RESTDeleteForumTopicResult>(ROUTES.forumTopic(channelId, forumThreadId));
+    }
+
+    /** Pin a topic in a forum */
+    pinForumTopic(channelId: string, forumThreadId: string): Promise<RESTPutForumTopicPinResult> {
+        return this.rest.put<RESTPutForumTopicPinResult>(ROUTES.forumTopic(channelId, forumThreadId));
+    }
+
+    /** Pin a topic in a forum */
+    unpinForumTopic(channelId: string, forumThreadId: string): Promise<RESTDeleteForumTopicPinResult> {
+        return this.rest.put<RESTDeleteForumTopicPinResult>(ROUTES.forumTopic(channelId, forumThreadId));
     }
 
     /** Create a list item. */

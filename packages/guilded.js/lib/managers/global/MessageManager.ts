@@ -8,6 +8,10 @@ import type { MessageContent } from "../../typings";
 import { CollectorOptions, MessageCollector } from "../../structures";
 
 export class GlobalMessageManager extends CacheableStructManager<string, Message> {
+    get shouldCacheMessage() {
+        return this.client.options.cache?.cacheMessages !== false;
+    }
+
     /** Get a list of the latest 50 messages from a channel. */
     fetchMany(channelId: string, options: RESTGetChannelMessagesQuery): Promise<Collection<string, Message>> {
         return this.client.rest.router.getChannelMessages(channelId, options).then((data) => {
