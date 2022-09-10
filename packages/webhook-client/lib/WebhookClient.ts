@@ -12,9 +12,16 @@ export class WebhookClient {
 
     public token: string;
 
+    public username: string | null;
+
+    public avatarURL: string | null;
+
     private rest: RestManager;
 
-    public constructor(webhookConnection: string | { id: string; token: string }) {
+    public constructor(
+        webhookConnection: string | { id: string; token: string },
+        { username, avatarURL }: { username?: string; avatarURL?: string },
+    ) {
         if (!webhookConnection) {
             throw new TypeError(`Must provide Webhook connection info in either string or object. Received ${webhookConnection}.`);
         }
@@ -34,13 +41,17 @@ export class WebhookClient {
         }
         this.URL = `https://media.guilded.gg/webhooks/${this.id}/${this.token}`;
         this.rest = new RestManager({ proxyURL: this.URL, token: this.token });
+        this.username = username ?? null;
+        this.avatarURL = avatarURL ?? null;
     }
 
-    public send(content: string, embeds?: Embed[]): Promise<WebhookExecuteResponse> {
+    public send(content: string, embeds?: Embed[], options?: { username?: string; avatarURL?: string }): Promise<WebhookExecuteResponse> {
         return this.rest
             .post<RESTPostWebhookResult>("", {
                 content,
                 embeds,
+                username: options?.username ?? this.username ?? undefined,
+                avatar_url: options?.avatarURL ?? this.avatarURL ?? undefined,
             })
             .then((data) => {
                 const parsedContent = parseMessage(data.content);
