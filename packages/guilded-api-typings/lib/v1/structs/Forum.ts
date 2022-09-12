@@ -18,13 +18,13 @@ export interface ForumTopicPayload {
     /** The ID of the webhook who created this forum topic, if it was created by a webhook */
     createdByWebhookId?: string;
     /** When, if at all, this forum topic was updated */
-    updatedAt: string;
+    updatedAt?: string;
     /** When, if at all, this forum topic was bumped */
-    bumpedAt: string;
+    bumpedAt?: string;
     /** Whether this forum topic is pinned */
-    isPinned: boolean;
+    isPinned?: boolean;
     /** The mentions within this forum topic */
-    mentions: MentionsPayload;
+    mentions?: MentionsPayload;
 }
 
 export type ForumTopicSummaryPayload = Pick<
