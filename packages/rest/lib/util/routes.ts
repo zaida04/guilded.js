@@ -30,7 +30,9 @@ export const ROUTES = {
     memberBans: (serverId: string) => `/servers/${serverId}/bans` as const,
 
     // Forum Endpoints
-    forumTopic: (channelId: string) => `/channels/${channelId}/topics` as const,
+    forumTopics: (channelId: string) => `/channels/${channelId}/topics` as const,
+    forumTopic: (channelId: string, forumTopicId: string) => `/channels/${channelId}/topics/${forumTopicId}` as const,
+    forumTopicPin: (channelId: string, forumTopicId: string) => `/channels/${channelId}/topics/${forumTopicId}/pin` as const,
 
     // List Endpoints
     listItems: (channelId: string) => `/channels/${channelId}/items` as const,

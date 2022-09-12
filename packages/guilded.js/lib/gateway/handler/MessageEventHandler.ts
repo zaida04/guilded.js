@@ -10,7 +10,7 @@ export class MessageEventHandler extends GatewayEventHandler {
         if (existingMessage) return this.client.emit(constants.clientEvents.MESSAGE_CREATED, existingMessage);
 
         const newMessage = new Message(this.client, data.d.message);
-        this.client.messages.cache.set(newMessage.id, newMessage);
+        if (this.client.messages.shouldCacheMessage) this.client.messages.cache.set(newMessage.id, newMessage);
         return this.client.emit(constants.clientEvents.MESSAGE_CREATED, newMessage);
     }
     messageUpdated(data: WSChatMessageUpdatedPayload): boolean {
@@ -26,6 +26,6 @@ export class MessageEventHandler extends GatewayEventHandler {
     messageDeleted(data: WSChatMessageDeletedPayload): boolean {
         const getCachedMessage = this.client.messages.cache.get(data.d.message.id);
         getCachedMessage?._update({ deletedAt: data.d.message.deletedAt });
-        return this.client.emit(constants.clientEvents.MESSAGE_DELETED, getCachedMessage || data.d);
+        return this.client.emit(constants.clientEvents.MESSAGE_DELETED, getCachedMessage ?? data.d);
     }
 }

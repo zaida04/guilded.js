@@ -31,7 +31,7 @@ client.login();
 
 <a href="https://npmjs.org/package/guilded.js"><img src="https://nodei.co/npm/guilded.js.png" alt="NPM"></a>
 
-**Recommended that you use node v12+**
+**Recommended that you use node v16+**
 
 -   `npm install guilded.js`
 -   `yarn add guilded.js`

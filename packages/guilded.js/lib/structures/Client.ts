@@ -4,7 +4,7 @@ import { EventEmitter } from "node:events";
 import { ClientGatewayHandler } from "../gateway/ClientGatewayHandler";
 import { GlobalChannelManager } from "../managers/global/ChannelManager";
 import { GlobalDocManager } from "../managers/global/DocManager";
-import { GlobalForumManager } from "../managers/global/ForumManager";
+import { GlobalForumTopicManager } from "../managers/global/ForumManager";
 import { GlobalGroupManager } from "../managers/global/GroupManager";
 import { GlobalListItemManager } from "../managers/global/ListManager";
 import { GlobalMemberManager } from "../managers/global/MemberManager";
@@ -37,6 +37,7 @@ import type { Channel } from "./channels";
 import { GlobalServerManager } from "../managers/global/ServerManager";
 import { GlobalReactionManager } from "../managers/global/ReactionManager";
 import type { CalendarEvent, CalendarEventRsvp } from "./CalendarEvent";
+import type { ForumTopic } from "./Forum";
 
 export class Client extends (EventEmitter as unknown as new () => TypedEmitter<ClientEvents>) {
     /** The time in milliseconds since the Client connected */
@@ -57,7 +58,7 @@ export class Client extends (EventEmitter as unknown as new () => TypedEmitter<C
     /** Managers for structures */
     channels = new GlobalChannelManager(this);
     docs = new GlobalDocManager(this);
-    forums = new GlobalForumManager(this);
+    topics = new GlobalForumTopicManager(this);
     groups = new GlobalGroupManager(this);
     lists = new GlobalListItemManager(this);
     members = new GlobalMemberManager(this);
@@ -135,6 +136,8 @@ interface ClientOptions {
         cacheWebhooks?: boolean;
         cacheChannels?: boolean;
         cacheServers?: boolean;
+        cacheMessages?: boolean;
+        cacheForumTopics?: boolean;
         cacheMessageReactions?: boolean;
         cacheCalendars?: boolean;
         cacheCalendarsRsvps?: boolean;
@@ -173,6 +176,11 @@ type ClientEvents = {
     memberUpdated: (member: Member | WSTeamMemberUpdatedPayload["d"], oldMember: Member | null) => unknown;
     memberBanned: (member: MemberBan | WSTeamMemberBannedPayload["d"]) => unknown;
     memberUnbanned: (member: MemberBan | WSTeamMemberUnbannedPayload["d"]) => unknown;
+    forumTopicCreated: (topic: ForumTopic) => unknown;
+    forumTopicUpdated: (topic: ForumTopic, oldTopic: ForumTopic | null) => unknown;
+    forumTopicDeleted: (topic: ForumTopic) => unknown;
+    forumTopicPinned: (topic: ForumTopic) => unknown;
+    forumTopicUnpinned: (topic: ForumTopic) => unknown;
     serverCreated: (server: { serverId: string }) => unknown;
     webhookCreated: (webhook: Webhook) => unknown;
     webhookUpdated: (webhook: Webhook, oldWebhook: Webhook | null) => unknown;

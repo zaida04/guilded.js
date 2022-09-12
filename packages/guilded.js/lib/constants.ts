@@ -31,6 +31,11 @@ export const constants = {
         SERVER_CREATED: "serverCreated",
         MESSAGE_REACTION_CREATED: "messageReactionCreated",
         MESSAGE_REACTION_DELETED: "messageReactionDeleted",
+        FORUM_TOPIC_CREATED: "forumTopicCreated",
+        FORUM_TOPIC_DELETED: "forumTopicDeleted",
+        FORUM_TOPIC_UPDATED: "forumTopicUpdated",
+        FORUM_TOPIC_PINNED: "forumTopicPinned",
+        FORUM_TOPIC_UNPINNED: "forumTopicUnpinned",
     },
 } as const;
 export type ClientEvent = typeof constants.clientEvents;

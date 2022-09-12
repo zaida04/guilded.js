@@ -8,6 +8,11 @@ export class ForumChannel extends Channel {
 
     /** Create a topic in a forum */
     createTopic(title: string, content: string): Promise<ForumTopicPayload> {
-        return this.client.forums.createTopic(this.id, { title, content });
+        return this.client.topics.createForumTopic(this.id, { title, content });
+    }
+
+    /** Delete a topic in a forum */
+    deleteTopic(id: string): Promise<void> {
+        return this.client.topics.deleteForumTopic(this.id, id);
     }
 }
