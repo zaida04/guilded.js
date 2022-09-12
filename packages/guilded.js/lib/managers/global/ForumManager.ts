@@ -30,7 +30,7 @@ export class GlobalForumTopicManager extends CacheableStructManager<number, Foru
 
     /** Delete a topic in a forum */
     deleteForumTopic(channelId: string, forumThreadId: string) {
-        return this.client.rest.router.deleteForumTpoic(channelId, forumThreadId);
+        return this.client.rest.router.deleteForumTopic(channelId, forumThreadId);
     }
 
     /** Pin a topic in a forum */

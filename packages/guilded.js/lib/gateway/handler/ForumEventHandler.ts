@@ -16,7 +16,7 @@ import { ForumTopic } from "../../structures/Forum";
 import { GatewayEventHandler } from "./GatewayEventHandler";
 
 export class ForumEventHandler extends GatewayEventHandler {
-    ForumTopicCreated(data: WSForumTopicCreated) {
+    forumTopicCreated(data: WSForumTopicCreated) {
         // This is in the case that a REST request beats us to adding the topic in the cache.
         const existingTopic = this.client.topics.cache.get(data.d.forumTopic.id);
         if (existingTopic) return this.client.emit(constants.clientEvents.FORUM_TOPIC_CREATED, existingTopic);
@@ -25,7 +25,7 @@ export class ForumEventHandler extends GatewayEventHandler {
         if(this.client.topics.shouldCacheForumTopic) this.client.topics.cache.set(newTopic.id, newTopic);
         return this.client.emit(constants.clientEvents.FORUM_TOPIC_CREATED, newTopic);
     }
-    ForumTopicUpdated(data: WSForumTopicUpdated) {
+    forumTopicUpdated(data: WSForumTopicUpdated) {
         const getCachedtopic = this.client.topics.cache.get(data.d.forumTopic.id);
         if (!getCachedtopic) {
             const newtopic = new ForumTopic(this.client, data.d.forumTopic);
@@ -35,17 +35,17 @@ export class ForumEventHandler extends GatewayEventHandler {
         getCachedtopic._update(data.d.forumTopic);
         return this.client.emit(constants.clientEvents.FORUM_TOPIC_UPDATED, getCachedtopic, frozenOldtopic);
     }
-    ForumTopicDeleted(data: WSForumTopicDeleted) {
+    forumTopicDeleted(data: WSForumTopicDeleted) {
         const getCachedtopic = this.client.topics.cache.get(data.d.forumTopic.id);
         getCachedtopic?._update({ _deletedAt: new Date() });
         return this.client.emit(constants.clientEvents.FORUM_TOPIC_DELETED, getCachedtopic ?? new ForumTopic(this.client, data.d.forumTopic));
     }
-    ForumTopicPinned(data: WSForumTopicPinned) {
+    forumTopicPinned(data: WSForumTopicPinned) {
         const getCachedtopic = this.client.topics.cache.get(data.d.forumTopic.id);
         getCachedtopic?._update({ isPinned: true });
         return this.client.emit(constants.clientEvents.FORUM_TOPIC_PINNED, getCachedtopic ?? new ForumTopic(this.client, data.d.forumTopic));
     }
-    ForumTopicUnpinned(data: WSForumTopicUnpinned) {
+    forumTopicUnpinned(data: WSForumTopicUnpinned) {
         const getCachedtopic = this.client.topics.cache.get(data.d.forumTopic.id);
         getCachedtopic?._update({ isPinned: false });
         return this.client.emit(constants.clientEvents.FORUM_TOPIC_UNPINNED, getCachedtopic ?? new ForumTopic(this.client, data.d.forumTopic));

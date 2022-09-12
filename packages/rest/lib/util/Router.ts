@@ -231,7 +231,7 @@ export class Router {
     }
 
     /** Delete a topic in a forum */
-    deleteForumTpoic(channelId: string, forumThreadId: string): Promise<RESTDeleteForumTopicResult> {
+    deleteForumTopic(channelId: string, forumThreadId: string): Promise<RESTDeleteForumTopicResult> {
         return this.rest.delete<RESTDeleteForumTopicResult>(ROUTES.forumTopic(channelId, forumThreadId));
     }
 

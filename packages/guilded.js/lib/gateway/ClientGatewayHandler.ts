@@ -97,15 +97,15 @@ export class ClientGatewayHandler {
         [WebSocketEvents.ChannelMessageReactionDeleted]: (data) =>
             this.reactionHandler.messageReactionDeleted(data as WSChannelMessageReactionDeletedPayload),
         [WebSocketEvents.ForumTopicCreated]: (data) => 
-            this.forumHandler.ForumTopicCreated(data as WSForumTopicCreated),
+            this.forumHandler.forumTopicCreated(data as WSForumTopicCreated),
         [WebSocketEvents.ForumTopicDeleted]: (data) => 
-            this.forumHandler.ForumTopicDeleted(data as WSForumTopicDeleted),
+            this.forumHandler.forumTopicDeleted(data as WSForumTopicDeleted),
         [WebSocketEvents.ForumTopicUpdated]: (data) => 
-            this.forumHandler.ForumTopicUpdated(data as WSForumTopicUpdated),
+            this.forumHandler.forumTopicUpdated(data as WSForumTopicUpdated),
         [WebSocketEvents.ForumTopicPinned]: (data) => 
-            this.forumHandler.ForumTopicPinned(data as WSForumTopicPinned),
+            this.forumHandler.forumTopicPinned(data as WSForumTopicPinned),
         [WebSocketEvents.ForumTopicUnpinned]: (data) =>
-            this.forumHandler.ForumTopicUnpinned(data as WSForumTopicUnpinned)
+            this.forumHandler.forumTopicUnpinned(data as WSForumTopicUnpinned)
     };
  
     constructor(public readonly client: Client) {}
