@@ -21,7 +21,7 @@
     },
     "devDependencies": {
         "@changesets/cli": "^2.24.2",
-        "@sapphire/eslint-config": "4.3.7",
+        "@sapphire/eslint-config": "4.3.8",
         "@types/chai": "4.3.3",
         "@types/mocha": "9.1.1",
         "@types/node": "16.11.47",
