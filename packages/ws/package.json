@@ -1,6 +1,6 @@
 {
     "name": "@guildedjs/ws",
-    "version": "1.4.8",
+    "version": "1.4.9",
     "description": "Module of guilded.js that handles WS connections",
     "author": "Zaid \"Nico\" <contact@nico.engineer>",
     "license": "MIT",
