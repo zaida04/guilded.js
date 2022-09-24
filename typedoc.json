@@ -1,8 +1,8 @@
 {
     "cleanOutputDir": true,
     "entryPointStrategy": "packages",
-    "entryPoints": ["packages/gil", "packages/guilded-api-typings", "packages/guilded.js", "packages/rest", "packages/webhook-client", "packages/ws"],
-    "exclude": ["**/node_modules/**", "**/dist/**", "**/*.test.ts", "packages/**/tests/**", "**/*.js", "**/*.d.ts"],
+    "entryPoints": ["packages/*"],
+    "exclude": ["**/node_modules/**", "**/dist/**", "**/*.test.ts", "**/*.d.ts"],
     "excludeExternals": true,
     "hideGenerator": true,
     "lightHighlightTheme": "github-light",

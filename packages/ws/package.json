@@ -6,7 +6,9 @@
     "license": "MIT",
     "types": "types/index.d.ts",
     "main": "dist/index.js",
-    "typedocMain": "lib/index.ts",
+    "typedoc": {
+        "entryPoint": "lib/index.ts"
+    },
     "scripts": {
         "build": "tsc && gen-esm-wrapper . ./dist/index.mjs",
         "prepublishOnly": "rimraf dist/ && rimraf types/ && pnpm run build"
