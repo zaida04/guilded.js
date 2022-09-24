@@ -55,8 +55,10 @@ export type RESTDeleteServerWebhookResult = never;
  * /webhooks/:webhookId/:webhookToken
  */
 export interface RESTPostWebhookBody {
-    content: string;
-    embeds: APIEmbed[];
+    content?: string;
+    embeds?: APIEmbed[];
+    username?: string;
+    avatar_url?: string;
 }
 
 export type RESTPostWebhookResult = WebhookContentPayload;

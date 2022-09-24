@@ -1,4 +1,4 @@
-import type { RESTPostWebhookResult } from "@guildedjs/guilded-api-typings";
+import type { RESTPostWebhookBody, RESTPostWebhookResult } from "@guildedjs/guilded-api-typings";
 import type { APIContent } from "@guildedjs/guilded-api-typings/dist/v1/structs/Webhook";
 import { RestManager } from "@guildedjs/rest";
 
@@ -45,14 +45,23 @@ export class WebhookClient {
         this.avatarURL = avatarURL ?? null;
     }
 
-    public send(content: string, embeds?: Embed[], options?: { username?: string; avatarURL?: string }): Promise<WebhookExecuteResponse> {
+    public send(
+        content: string | RESTPostWebhookBody,
+        embeds?: Embed[],
+        options?: { username?: string; avatarURL?: string },
+    ): Promise<WebhookExecuteResponse> {
         return this.rest
-            .post<RESTPostWebhookResult>("", {
-                content,
-                embeds,
-                username: options?.username ?? this.username ?? undefined,
-                avatar_url: options?.avatarURL ?? this.avatarURL ?? undefined,
-            })
+            .post<RESTPostWebhookResult, RESTPostWebhookBody>(
+                "",
+                typeof content === "object"
+                    ? content
+                    : {
+                          content,
+                          embeds: embeds?.map((x) => x.toJSON()),
+                          username: options?.username ?? this.username ?? undefined,
+                          avatar_url: options?.avatarURL ?? this.avatarURL ?? undefined,
+                      },
+            )
             .then((data) => {
                 const parsedContent = parseMessage(data.content);
                 return {
