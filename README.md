@@ -52,7 +52,7 @@ client.login();
 
 ## 📃 Documentation
 
-Documentation is viewable here: https://guilded.js.org
+Documentation is viewable here: https://guilded.js.org  
 A general purpose guide is available here: https://guilded-js.gitbook.io/api-docs/
 
 <!--END GETTING STARTED-->
