@@ -13,7 +13,7 @@ export abstract class Collector<T extends CollectableStructure> {
     protected maxTimeout: NodeJS.Timeout | null = null;
 
     constructor(public readonly client: Client, public options: Partial<CollectorOptions<T>>) {
-        if (!this.options.timeLimit) throw new Error("You must specify a time limit in milliseconds for this collector.");
+        if (!options.timeLimit) throw new Error("You must specify a time limit in milliseconds for this collector.");
     }
 
     start(): Promise<CollectorReturnValue<T>> {
