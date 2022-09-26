@@ -3,6 +3,9 @@ on:
     push:
         branches:
             - main
+        paths:
+            - "packages/**"
+            - "typedoc.json"
     workflow_dispatch:
 jobs:
     docs:

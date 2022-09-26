@@ -1,5 +1,12 @@
 name: CI workflows
-on: [push, pull_request]
+on:
+    push:
+        branches:
+            - main
+        paths:
+            - "packages/**"
+            - "typedoc.json"
+    pull_request:
 
 jobs:
     ci-workflow:
