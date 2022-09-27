@@ -1,8 +1,9 @@
-import type { RESTPostWebhookBody, RESTPostWebhookResult } from "@guildedjs/guilded-api-typings";
+import type { APIEmbed, RESTPostWebhookBody, RESTPostWebhookResult } from "@guildedjs/guilded-api-typings";
 import type { APIContent } from "@guildedjs/guilded-api-typings/dist/v1/structs/Webhook";
 import { RestManager } from "@guildedjs/rest";
+import FormData from "form-data";
 
-import type { Embed } from "./Embed";
+import { Embed } from "./Embed";
 import { type parsedMessage, parseMessage } from "./messageUtil";
 
 export class WebhookClient {
@@ -46,31 +47,34 @@ export class WebhookClient {
     }
 
     public send(
-        content: string | RESTPostWebhookBody,
-        embeds?: Embed[],
-        options?: { username?: string; avatarURL?: string },
+        content: string,
+        embeds?: (Embed | APIEmbed)[],
+        options?: { files?: Buffer[]; username?: string; avatarURL?: string },
     ): Promise<WebhookExecuteResponse> {
-        return this.rest
-            .post<RESTPostWebhookResult, RESTPostWebhookBody>(
-                "",
-                typeof content === "object"
-                    ? content
-                    : {
-                          content,
-                          embeds: embeds?.map((x) => x.toJSON()),
-                          username: options?.username ?? this.username ?? undefined,
-                          avatar_url: options?.avatarURL ?? this.avatarURL ?? undefined,
-                      },
-            )
-            .then((data) => {
-                const parsedContent = parseMessage(data.content);
-                return {
-                    ...data,
-                    content: parsedContent.parsedText,
-                    parsedContent,
-                    rawContent: data.content,
-                } as WebhookExecuteResponse;
-            });
+        const baseBody = {
+            content,
+            embeds: embeds?.map((x) => (x instanceof Embed ? x.toJSON() : x)),
+            username: options?.username ?? this.username ?? undefined,
+            avatar_url: options?.avatarURL ?? this.avatarURL ?? undefined,
+        };
+
+        let body: FormData | RESTPostWebhookBody = baseBody;
+        const formData = new FormData();
+        if (options?.files?.length) {
+            options.files.forEach((value, index) => formData.append(`files[${index}]`, value));
+            formData.append("payload_json", baseBody);
+            body = formData;
+        }
+
+        return this.rest.post<RESTPostWebhookResult, RESTPostWebhookBody | FormData>("", body).then((data) => {
+            const parsedContent = parseMessage(data.content);
+            return {
+                ...data,
+                content: parsedContent.parsedText,
+                parsedContent,
+                rawContent: data.content,
+            } as WebhookExecuteResponse;
+        });
     }
 }
 

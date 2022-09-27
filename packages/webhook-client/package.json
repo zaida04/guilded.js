@@ -18,7 +18,8 @@
         "typescript": "4.8.3"
     },
     "dependencies": {
-        "@guildedjs/rest": "workspace:*"
+        "@guildedjs/rest": "workspace:*",
+        "form-data": "^4.0.0"
     },
     "contributors": [
         {

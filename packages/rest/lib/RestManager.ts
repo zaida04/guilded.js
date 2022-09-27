@@ -7,6 +7,8 @@ import EventEmitter from "events";
 import { stringify } from "qs";
 
 const packageDetails = require("../package.json");
+import FormData from "form-data";
+
 import { GuildedAPIError } from "./errors/GuildedAPIError";
 import { PermissionsError } from "./errors/PermissionsError";
 import type { RestOptions } from "./typings";
@@ -42,12 +44,22 @@ export class RestManager {
     ): Promise<[Response, Promise<T>]> {
         const headers: HeadersInit = {};
         if (authenticated) headers.Authorization = `Bearer ${this.token}`;
+
+        let body: Buffer | string | undefined = undefined;
+        if (data.body instanceof FormData) {
+            body ??= data.body.getBuffer();
+            Object.assign(headers, { ...data.body.getHeaders() });
+        } else {
+            body ??= JSON.stringify(body);
+        }
+
         const requestOptions = {
-            body: data.body ? JSON.stringify(data.body) : undefined,
+            body,
             headers: {
                 "content-type": "application/json",
                 "User-Agent": `@guildedjs-rest/${packageDetails.version} Node.js v${process.version}`,
                 ...headers,
+                ...data.headers,
             },
             method: data.method,
         };
@@ -141,7 +153,9 @@ export interface MakeOptions<B = Record<string, any>, Q = RequestBodyObject> {
     method: string;
     query?: Q;
     path: string;
-    body?: B;
+    body?: B | FormData;
+    isFormData?: boolean;
+    headers?: Record<string, string>;
 }
 export type JSONB = Record<string, any>;
 export type RequestBodyObject = JSONB | undefined;
