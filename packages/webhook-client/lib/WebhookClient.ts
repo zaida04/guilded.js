@@ -1,10 +1,10 @@
-import type { APIEmbed, RESTPostWebhookBody, RESTPostWebhookResult } from "@guildedjs/guilded-api-typings";
-import type { APIContent } from "@guildedjs/guilded-api-typings/dist/v1/structs/Webhook";
+import type { APIContent, APIEmbed, RESTPostWebhookBody, RESTPostWebhookResult } from "@guildedjs/guilded-api-typings";
 import { RestManager } from "@guildedjs/rest";
 import FormData from "form-data";
 
 import { Embed } from "./Embed";
 import { type parsedMessage, parseMessage } from "./messageUtil";
+import type { MessageAttachment, MessageContent } from "./util";
 
 export class WebhookClient {
     public URL: string;
@@ -21,7 +21,7 @@ export class WebhookClient {
 
     public constructor(
         webhookConnection: string | { id: string; token: string },
-        { username, avatarURL }: { username?: string; avatarURL?: string },
+        { username, avatarURL }: { username?: string; avatarURL?: string } = {},
     ) {
         if (!webhookConnection) {
             throw new TypeError(`Must provide Webhook connection info in either string or object. Received ${webhookConnection}.`);
@@ -47,22 +47,31 @@ export class WebhookClient {
     }
 
     public send(
-        content: string,
+        content: MessageContent,
         embeds?: (Embed | APIEmbed)[],
-        options?: { files?: Buffer[]; username?: string; avatarURL?: string },
+        options?: { files?: MessageAttachment[]; username?: string; avatarURL?: string },
     ): Promise<WebhookExecuteResponse> {
-        const baseBody = {
-            content,
-            embeds: embeds?.map((x) => (x instanceof Embed ? x.toJSON() : x)),
-            username: options?.username ?? this.username ?? undefined,
-            avatar_url: options?.avatarURL ?? this.avatarURL ?? undefined,
-        };
+        const contentIsObject = typeof content === "object";
+        const resEmbeds = transformEmbedToAPIEmbed((contentIsObject ? content.embeds : embeds) ?? []);
+        const resFiles = contentIsObject ? content.files : options?.files;
+
+        const baseBody: RESTPostWebhookBody = contentIsObject
+            ? {
+                  ...content,
+                  embeds: resEmbeds,
+              }
+            : {
+                  content,
+                  embeds: resEmbeds,
+                  username: options?.username ?? this.username ?? undefined,
+                  avatar_url: options?.avatarURL ?? this.avatarURL ?? undefined,
+              };
 
         let body: FormData | RESTPostWebhookBody = baseBody;
         const formData = new FormData();
-        if (options?.files?.length) {
-            options.files.forEach((value, index) => formData.append(`files[${index}]`, value));
-            formData.append("payload_json", baseBody);
+        if (resFiles?.length) {
+            resFiles?.forEach((value, index) => formData.append(`files[${index}]`, value.content, { filename: value.name, filepath: value.path }));
+            formData.append("payload_json", JSON.stringify(baseBody), { contentType: "application/json" });
             body = formData;
         }
 
@@ -77,6 +86,8 @@ export class WebhookClient {
         });
     }
 }
+
+const transformEmbedToAPIEmbed = (embeds: (Embed | APIEmbed)[]): APIEmbed[] => embeds.map((x) => (x instanceof Embed ? x.toJSON() : x));
 
 export interface WebhookExecuteResponse extends Omit<RESTPostWebhookResult, "content"> {
     content: string;

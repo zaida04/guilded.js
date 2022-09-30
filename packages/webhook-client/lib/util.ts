@@ -1,4 +1,7 @@
+import type { APIEmbed, RESTPostWebhookBody } from "@guildedjs/guilded-api-typings";
+
 import { COLORS } from "./consts";
+import type { Embed } from "./Embed";
 
 /**
  * Copyright 2015 - 2021 Amish Shah
@@ -18,3 +21,10 @@ export function resolveColor(color: string | number | [number, number, number]):
 
     return color;
 }
+
+export interface MessageAttachment {
+    content?: Buffer;
+    name: string;
+    path?: string;
+}
+export type MessageContent = (RESTPostWebhookBody & { embeds?: (Embed | APIEmbed)[]; files?: MessageAttachment[] }) | string;
