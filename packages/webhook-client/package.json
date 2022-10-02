@@ -19,7 +19,6 @@
     },
     "dependencies": {
         "@guildedjs/rest": "workspace:*",
-        "@guildedjs/webhook-client": "^0.3.13",
         "form-data": "^4.0.0"
     },
     "contributors": [
