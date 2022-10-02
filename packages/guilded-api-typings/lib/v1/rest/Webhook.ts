@@ -59,6 +59,7 @@ export interface RESTPostWebhookBody {
     embeds?: APIEmbed[];
     username?: string;
     avatar_url?: string;
+    payload_json?: Pick<RESTPostWebhookBody, "content" | "avatar_url" | "username" | "embeds">;
 }
 
 export type RESTPostWebhookResult = WebhookContentPayload;

@@ -1,9 +1,10 @@
-import type { RESTPostWebhookBody, RESTPostWebhookResult } from "@guildedjs/guilded-api-typings";
-import type { APIContent } from "@guildedjs/guilded-api-typings/dist/v1/structs/Webhook";
+import type { APIContent, APIEmbed, RESTPostWebhookBody, RESTPostWebhookResult } from "@guildedjs/guilded-api-typings";
 import { RestManager } from "@guildedjs/rest";
+import FormData from "form-data";
 
-import type { Embed } from "./Embed";
+import { Embed } from "./Embed";
 import { type parsedMessage, parseMessage } from "./messageUtil";
+import type { MessageAttachment, MessageContent } from "./util";
 
 export class WebhookClient {
     public URL: string;
@@ -20,7 +21,7 @@ export class WebhookClient {
 
     public constructor(
         webhookConnection: string | { id: string; token: string },
-        { username, avatarURL }: { username?: string; avatarURL?: string },
+        { username, avatarURL }: { username?: string; avatarURL?: string } = {},
     ) {
         if (!webhookConnection) {
             throw new TypeError(`Must provide Webhook connection info in either string or object. Received ${webhookConnection}.`);
@@ -46,33 +47,47 @@ export class WebhookClient {
     }
 
     public send(
-        content: string | RESTPostWebhookBody,
-        embeds?: Embed[],
-        options?: { username?: string; avatarURL?: string },
+        content: MessageContent,
+        embeds?: (Embed | APIEmbed)[],
+        options?: { files?: MessageAttachment[]; username?: string; avatarURL?: string },
     ): Promise<WebhookExecuteResponse> {
-        return this.rest
-            .post<RESTPostWebhookResult, RESTPostWebhookBody>(
-                "",
-                typeof content === "object"
-                    ? content
-                    : {
-                          content,
-                          embeds: embeds?.map((x) => x.toJSON()),
-                          username: options?.username ?? this.username ?? undefined,
-                          avatar_url: options?.avatarURL ?? this.avatarURL ?? undefined,
-                      },
-            )
-            .then((data) => {
-                const parsedContent = parseMessage(data.content);
-                return {
-                    ...data,
-                    content: parsedContent.parsedText,
-                    parsedContent,
-                    rawContent: data.content,
-                } as WebhookExecuteResponse;
-            });
+        const contentIsObject = typeof content === "object";
+        const resEmbeds = transformEmbedToAPIEmbed((contentIsObject ? content.embeds : embeds) ?? []);
+        const resFiles = contentIsObject ? content.files : options?.files;
+
+        const baseBody: RESTPostWebhookBody = contentIsObject
+            ? {
+                  ...content,
+                  embeds: resEmbeds,
+              }
+            : {
+                  content,
+                  embeds: resEmbeds,
+                  username: options?.username ?? this.username ?? undefined,
+                  avatar_url: options?.avatarURL ?? this.avatarURL ?? undefined,
+              };
+
+        let body: FormData | RESTPostWebhookBody = baseBody;
+        const formData = new FormData();
+        if (resFiles?.length) {
+            resFiles.forEach((value, index) => formData.append(`files[${index}]`, value.content, { filename: value.name, filepath: value.path }));
+            formData.append("payload_json", JSON.stringify(baseBody), { contentType: "application/json" });
+            body = formData;
+        }
+
+        return this.rest.post<RESTPostWebhookResult, RESTPostWebhookBody | FormData>("", body).then((data) => {
+            const parsedContent = parseMessage(data.content);
+            return {
+                ...data,
+                content: parsedContent.parsedText,
+                parsedContent,
+                rawContent: data.content,
+            } as WebhookExecuteResponse;
+        });
     }
 }
+
+const transformEmbedToAPIEmbed = (embeds: (Embed | APIEmbed)[]): APIEmbed[] => embeds.map((x) => (x instanceof Embed ? x.toJSON() : x));
 
 export interface WebhookExecuteResponse extends Omit<RESTPostWebhookResult, "content"> {
     content: string;
