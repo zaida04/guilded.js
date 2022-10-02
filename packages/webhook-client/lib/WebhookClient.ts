@@ -70,7 +70,7 @@ export class WebhookClient {
         let body: FormData | RESTPostWebhookBody = baseBody;
         const formData = new FormData();
         if (resFiles?.length) {
-            resFiles?.forEach((value, index) => formData.append(`files[${index}]`, value.content, { filename: value.name, filepath: value.path }));
+            resFiles.forEach((value, index) => formData.append(`files[${index}]`, value.content, { filename: value.name, filepath: value.path }));
             formData.append("payload_json", JSON.stringify(baseBody), { contentType: "application/json" });
             body = formData;
         }
