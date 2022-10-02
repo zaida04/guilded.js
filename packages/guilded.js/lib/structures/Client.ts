@@ -144,7 +144,7 @@ interface ClientOptions {
     };
 }
 
-type ClientEvents = {
+export type ClientEvents = {
     ready: () => unknown;
     debug: (data: any) => unknown;
     exit: () => unknown;

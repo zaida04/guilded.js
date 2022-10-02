@@ -11,6 +11,8 @@ export abstract class Collector<T extends CollectableStructure> {
     protected resolve: ((value: CollectorReturnValue<T>) => void) | null = null;
     /** timeout for max time */
     protected maxTimeout: NodeJS.Timeout | null = null;
+    /** bound function for item receiving */
+    protected boundItemReceiver = this.itemReceived.bind(this);
 
     constructor(public readonly client: Client, public options: Partial<CollectorOptions<T>>) {
         if (!options.timeLimit) throw new Error("You must specify a time limit in milliseconds for this collector.");
