@@ -129,12 +129,10 @@ importers:
     specifiers:
       '@guildedjs/guilded-api-typings': workspace:*
       '@guildedjs/rest': workspace:*
-      '@guildedjs/webhook-client': ^0.3.13
       form-data: ^4.0.0
       typescript: 4.8.3
     dependencies:
       '@guildedjs/rest': link:../rest
-      '@guildedjs/webhook-client': 0.3.13
       form-data: 4.0.0
     devDependencies:
       '@guildedjs/guilded-api-typings': link:../guilded-api-typings
@@ -576,23 +574,6 @@ packages:
     transitivePeerDependencies:
       - supports-color
     dev: true
-
-  /@guildedjs/rest/2.8.7:
-    resolution: {integrity: sha512-mUsQingDz+4pOAh2pbIlsNoz7okTjHPXfxhSfQgtNzwRVTcSkZpuLA0WutWlmLREp37tZIzIeLT57zr7IZLJlA==}
-    dependencies:
-      node-fetch: 2.6.7
-      qs: 6.11.0
-    transitivePeerDependencies:
-      - encoding
-    dev: false
-
-  /@guildedjs/webhook-client/0.3.13:
-    resolution: {integrity: sha512-Ajy/enriTWyBw5S3Ppcj7H2lazSrz01lNdBAw+U2R4Sjt+orpqnRddTpTp4E81HouyRmyWCMPyeQ5XP6ayb2ew==}
-    dependencies:
-      '@guildedjs/rest': 2.8.7
-    transitivePeerDependencies:
-      - encoding
-    dev: false
 
   /@humanwhocodes/config-array/0.10.7:
     resolution: {integrity: sha512-MDl6D6sBsaV452/QSdX+4CXIjZhIcI0PELsxUjk4U828yd58vk3bTIvk/6w5FY+4hIy9sLW0sfrV7K7Kc++j/w==}
