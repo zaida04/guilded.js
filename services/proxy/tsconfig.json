@@ -1,0 +1,26 @@
+{
+    "$schema": "https://json.schemastore.org/tsconfig.json",
+    "compilerOptions": {
+        "strict": true,
+        "alwaysStrict": true,
+        "moduleResolution": "node",
+        "module": "CommonJS",
+        "importsNotUsedAsValues": "error",
+        "lib": ["ESNext", "DOM"],
+        "typeRoots": ["node_modules/@types"],
+        "types": ["node"],
+        "sourceMap": true,
+        "incremental": true,
+        "esModuleInterop": true,
+        "skipLibCheck": true,
+        "allowSyntheticDefaultImports": true,
+        "resolveJsonModule": true,
+        "outDir": "./dist",
+        "target": "ES2021",
+        "pretty": false,
+        "declaration": false,
+        "declarationMap": false
+    },
+    "exclude": ["dist/**"],
+    "include": ["./src/**/*.ts"]
+}
