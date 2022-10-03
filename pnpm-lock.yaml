@@ -7,7 +7,7 @@ importers:
       '@changesets/cli': ^2.24.4
       '@sapphire/eslint-config': 4.3.8
       '@types/chai': 4.3.3
-      '@types/mocha': 9.1.1
+      '@types/mocha': 10.0.0
       '@types/node': 16.11.60
       '@types/rimraf': 3.0.2
       '@typescript-eslint/eslint-plugin': 5.38.0
@@ -38,7 +38,7 @@ importers:
       '@changesets/cli': 2.24.4
       '@sapphire/eslint-config': 4.3.8
       '@types/chai': 4.3.3
-      '@types/mocha': 9.1.1
+      '@types/mocha': 10.0.0
       '@types/node': 16.11.60
       '@types/rimraf': 3.0.2
       '@typescript-eslint/eslint-plugin': 5.38.0_4gkcvl6qsi23tqqawfqgcwtp54
@@ -780,8 +780,8 @@ packages:
     resolution: {integrity: sha512-jhuKLIRrhvCPLqwPcx6INqmKeiA5EWrsCOPhrlFSrbrmU4ZMPjj5Ul/oLCMDO98XRUIwVm78xICz4EPCektzeQ==}
     dev: true
 
-  /@types/mocha/9.1.1:
-    resolution: {integrity: sha512-Z61JK7DKDtdKTWwLeElSEBcWGRLY8g95ic5FoQqI9CMx0ns/Ghep3B4DfcEimiKMvtamNVULVNKEsiwV3aQmXw==}
+  /@types/mocha/10.0.0:
+    resolution: {integrity: sha512-rADY+HtTOA52l9VZWtgQfn4p+UDVM2eDVkMZT1I6syp0YKxW2F9v+0pbRZLsvskhQv/vMb6ZfCay81GHbz5SHg==}
     dev: true
 
   /@types/node-fetch/2.6.2:

@@ -23,7 +23,7 @@
         "@changesets/cli": "^2.24.4",
         "@sapphire/eslint-config": "4.3.8",
         "@types/chai": "4.3.3",
-        "@types/mocha": "9.1.1",
+        "@types/mocha": "10.0.0",
         "@types/node": "16.11.60",
         "@types/rimraf": "3.0.2",
         "@typescript-eslint/eslint-plugin": "5.38.0",
