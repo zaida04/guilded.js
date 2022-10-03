@@ -1,6 +1,6 @@
 {
     "name": "@guildedjs/proxy-service",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "description": "Service for proxying HTTP requests.",
     "author": "Zaid \"Nico\" <contact@nico.engineer>",
     "license": "MIT",
