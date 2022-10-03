@@ -1,29 +1,25 @@
 {
-    "name": "guilded.js",
-    "version": "0.13.18",
-    "description": "A Node.js library for the Guilded.gg (https://www.guilded.gg/) API written in TypeScript, usable in either JavaScript or TypeScript projects.",
+    "name": "@guildedjs/proxy-service",
+    "version": "1.0.1",
+    "description": "Service for proxying HTTP requests.",
     "author": "Zaid \"Nico\" <contact@nico.engineer>",
     "license": "MIT",
-    "types": "types/index.d.ts",
-    "main": "dist/index.js",
-    "typedoc": {
-        "entryPoint": "lib/index.ts"
-    },
+    "main": "./dist/index.js",
     "scripts": {
-        "build": "tsc && gen-esm-wrapper . ./dist/index.mjs",
-        "prepublishOnly": "rimraf dist/ && rimraf types/ && pnpm run build"
+        "build": "tsc",
+        "docker:build": "docker build -t guildedjs/proxy-service:latest -f ./Dockerfile ../../",
+        "docker:start": "docker run --env-file=.env -p 3456:3456 guildedjs/proxy-service",
+        "docker:dev": "npm run docker:build && npm run docker:start",
+        "start": "node dist/index.js",
+        "dev": "nodemon"
     },
     "devDependencies": {
-        "@guildedjs/guilded-api-typings": "workspace:*",
         "@types/node": "16.11.60",
         "typescript": "4.8.3"
     },
     "dependencies": {
-        "@discordjs/collection": "^1.1.0",
         "@guildedjs/rest": "workspace:*",
-        "@guildedjs/webhook-client": "workspace:*",
-        "@guildedjs/ws": "workspace:*",
-        "typed-emitter": "2.1.0"
+        "dotenv": "^16.0.3"
     },
     "contributors": [
         {
@@ -47,31 +43,18 @@
             "url": "https://github.com/DaStormer"
         }
     ],
-    "exports": {
-        ".": {
-            "require": "./dist/index.js",
-            "import": "./dist/index.mjs"
-        },
-        "./": "./"
-    },
     "keywords": [
         "guilded",
-        "guilded-api",
-        "guilded.gg",
         "guildedjs",
-        "guilded.js"
+        "guilded.js",
+        "guilded-api"
     ],
-    "files": [
-        "dist",
-        "types"
-    ],
-    "homepage": "https://github.com/guildedjs/guilded.js/blob/main/packages/guilded.js/README.md",
+    "homepage": "https://github.com/guildedjs/guilded.js/tree/main/packages/rest#readme",
     "repository": {
         "type": "git",
         "url": "git+https://github.com/guildedjs/guilded.js.git"
     },
     "bugs": {
         "url": "https://github.com/guildedjs/guilded.js/issues"
-    },
-    "gitHead": "eee38a19e0bfa812d7136cc78a6bc99e0b402b0c"
+    }
 }

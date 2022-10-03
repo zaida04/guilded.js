@@ -7,6 +7,7 @@ coverage/
 .npmrc
 *.tsbuildinfo
 *.log
+*.env
 
 .vscode/
 .idea/

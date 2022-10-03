@@ -41,15 +41,16 @@ export class RestManager {
         data: MakeOptions<B, Q>,
         authenticated = true,
         retryCount = 0,
-    ): Promise<[Response, Promise<T>]> {
+        { returnAsText = true, bodyIsJSON = true }: { returnAsText?: boolean; bodyIsJSON?: boolean } = {},
+    ): Promise<[Response, Promise<T | string>]> {
         const headers: HeadersInit = {};
         if (authenticated) headers.Authorization = `Bearer ${this.token}`;
 
-        let body: Buffer | string | undefined = undefined;
+        let body: BodyInit | undefined = data.body as BodyInit;
         if (data.body instanceof FormData) {
             body ??= data.body.getBuffer();
             Object.assign(headers, { ...data.body.getHeaders() });
-        } else {
+        } else if (bodyIsJSON) {
             body ??= JSON.stringify(body);
         }
 
@@ -90,7 +91,7 @@ export class RestManager {
             throw new GuildedAPIError(parsedResponse.message, data.method, data.path, response.status);
         }
 
-        return [response, response.json().catch(() => ({})) as Promise<T>];
+        return [response, returnAsText ? response.text() : (response.json().catch(() => ({})) as Promise<T>)];
     }
 
     public get<T extends JSONB, Q = RequestBodyObject>(path: string, query?: Q, authenticated = true): Promise<T> {
@@ -101,7 +102,7 @@ export class RestManager {
                 query,
             },
             authenticated,
-        ).then((x) => x[1]);
+        ).then((x) => x[1] as Promise<T>);
     }
 
     public post<T extends JSONB, B = RequestBodyObject>(path: string, body?: B, authenticated = true): Promise<T> {
@@ -112,7 +113,7 @@ export class RestManager {
                 path,
             },
             authenticated,
-        ).then((x) => x[1]);
+        ).then((x) => x[1] as Promise<T>);
     }
 
     public delete<T extends JSONB, B = RequestBodyObject>(path: string, body?: B, authenticated = true): Promise<T> {
@@ -123,7 +124,7 @@ export class RestManager {
                 path,
             },
             authenticated,
-        ).then((x) => x[1]);
+        ).then((x) => x[1] as Promise<T>);
     }
 
     public patch<T extends JSONB, B = RequestBodyObject>(path: string, body: B, authenticated = true): Promise<T> {
@@ -134,7 +135,7 @@ export class RestManager {
                 path,
             },
             authenticated,
-        ).then((x) => x[1]);
+        ).then((x) => x[1] as Promise<T>);
     }
 
     public put<T extends JSONB, B = RequestBodyObject>(path: string, body?: B, authenticated = true): Promise<T> {
@@ -145,7 +146,7 @@ export class RestManager {
                 path,
             },
             authenticated,
-        ).then((x) => x[1]);
+        ).then((x) => x[1] as Promise<T>);
     }
 }
 
