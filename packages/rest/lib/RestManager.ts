@@ -41,17 +41,17 @@ export class RestManager {
         data: MakeOptions<B, Q>,
         authenticated = true,
         retryCount = 0,
-        { returnAsText = true, bodyIsJSON = true }: { returnAsText?: boolean; bodyIsJSON?: boolean } = {},
+        { returnAsText = false, bodyIsJSON = true }: { returnAsText?: boolean; bodyIsJSON?: boolean } = {},
     ): Promise<[Response, Promise<T | string>]> {
         const headers: HeadersInit = {};
         if (authenticated) headers.Authorization = `Bearer ${this.token}`;
 
         let body: BodyInit | undefined = data.body as BodyInit;
         if (data.body instanceof FormData) {
-            body ??= data.body.getBuffer();
+            body = data.body.getBuffer();
             Object.assign(headers, { ...data.body.getHeaders() });
         } else if (bodyIsJSON) {
-            body ??= JSON.stringify(body);
+            body = JSON.stringify(body);
         }
 
         const requestOptions = {
