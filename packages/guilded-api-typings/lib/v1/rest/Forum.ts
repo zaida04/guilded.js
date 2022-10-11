@@ -25,6 +25,18 @@ export type RESTPutForumTopicPinResult = never;
 export type RESTDeleteForumTopicPinResult = never;
 
 /**
+ * PUT
+ * /channels/:channelId/topics/:forumTopicId/lock
+ */
+export type RESTPutForumTopicLockResult = never;
+
+/**
+ * DELETE
+ * /channels/:channelId/topics/:forumTopicId/lock
+ */
+export type RESTDeleteForumTopicLockResult = never;
+
+/**
  * POST
  * /channels/:channelId/topics
  */

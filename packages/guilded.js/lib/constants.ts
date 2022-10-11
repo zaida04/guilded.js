@@ -36,6 +36,8 @@ export const constants = {
         FORUM_TOPIC_UPDATED: "forumTopicUpdated",
         FORUM_TOPIC_PINNED: "forumTopicPinned",
         FORUM_TOPIC_UNPINNED: "forumTopicUnpinned",
+        FORUM_TOPIC_LOCKED: "forumTopicLocked",
+        FORUM_TOPIC_UNLOCKED: "forumTopicUnlocked",
     },
 } as const;
 export type ClientEvent = typeof constants.clientEvents;

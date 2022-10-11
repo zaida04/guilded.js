@@ -1,17 +1,13 @@
 import type {
-    WSListItemUncompleted,
-    WSListItemCompleted,
-    WSListItemCreated,
-    WSListItemUpdated,
-    WSListItemDeleted,
     WSForumTopicCreated,
     WSForumTopicUpdated,
     WSForumTopicDeleted,
     WSForumTopicPinned,
     WSForumTopicUnpinned,
+    WSForumTopicLocked,
+    WSForumTopicUnlocked,
 } from "@guildedjs/guilded-api-typings";
 import { constants } from "../../constants";
-import type { ListChannel } from "../../structures";
 import { ForumTopic } from "../../structures/Forum";
 import { GatewayEventHandler } from "./GatewayEventHandler";
 
@@ -26,28 +22,38 @@ export class ForumEventHandler extends GatewayEventHandler {
         return this.client.emit(constants.clientEvents.FORUM_TOPIC_CREATED, newTopic);
     }
     forumTopicUpdated(data: WSForumTopicUpdated) {
-        const getCachedtopic = this.client.topics.cache.get(data.d.forumTopic.id);
-        if (!getCachedtopic) {
-            const newtopic = new ForumTopic(this.client, data.d.forumTopic);
-            return this.client.emit(constants.clientEvents.FORUM_TOPIC_UPDATED, newtopic, null);
+        const getCachedTopic = this.client.topics.cache.get(data.d.forumTopic.id);
+        if (!getCachedTopic) {
+            const newTopic = new ForumTopic(this.client, data.d.forumTopic);
+            return this.client.emit(constants.clientEvents.FORUM_TOPIC_UPDATED, newTopic, null);
         }
-        const frozenOldtopic = Object.freeze(getCachedtopic._clone());
-        getCachedtopic._update(data.d.forumTopic);
-        return this.client.emit(constants.clientEvents.FORUM_TOPIC_UPDATED, getCachedtopic, frozenOldtopic);
+        const frozenOldTopic = Object.freeze(getCachedTopic._clone());
+        getCachedTopic._update(data.d.forumTopic);
+        return this.client.emit(constants.clientEvents.FORUM_TOPIC_UPDATED, getCachedTopic, frozenOldTopic);
     }
     forumTopicDeleted(data: WSForumTopicDeleted) {
-        const getCachedtopic = this.client.topics.cache.get(data.d.forumTopic.id);
-        getCachedtopic?._update({ _deletedAt: new Date() });
-        return this.client.emit(constants.clientEvents.FORUM_TOPIC_DELETED, getCachedtopic ?? new ForumTopic(this.client, data.d.forumTopic));
+        const getCachedTopic = this.client.topics.cache.get(data.d.forumTopic.id);
+        getCachedTopic?._update({ _deletedAt: new Date() });
+        return this.client.emit(constants.clientEvents.FORUM_TOPIC_DELETED, getCachedTopic ?? new ForumTopic(this.client, data.d.forumTopic));
     }
     forumTopicPinned(data: WSForumTopicPinned) {
-        const getCachedtopic = this.client.topics.cache.get(data.d.forumTopic.id);
-        getCachedtopic?._update({ isPinned: true });
-        return this.client.emit(constants.clientEvents.FORUM_TOPIC_PINNED, getCachedtopic ?? new ForumTopic(this.client, data.d.forumTopic));
+        const getCachedTopic = this.client.topics.cache.get(data.d.forumTopic.id);
+        getCachedTopic?._update({ isPinned: true });
+        return this.client.emit(constants.clientEvents.FORUM_TOPIC_PINNED, getCachedTopic ?? new ForumTopic(this.client, data.d.forumTopic));
     }
     forumTopicUnpinned(data: WSForumTopicUnpinned) {
-        const getCachedtopic = this.client.topics.cache.get(data.d.forumTopic.id);
-        getCachedtopic?._update({ isPinned: false });
-        return this.client.emit(constants.clientEvents.FORUM_TOPIC_UNPINNED, getCachedtopic ?? new ForumTopic(this.client, data.d.forumTopic));
+        const getCachedTopic = this.client.topics.cache.get(data.d.forumTopic.id);
+        getCachedTopic?._update({ isPinned: false });
+        return this.client.emit(constants.clientEvents.FORUM_TOPIC_UNPINNED, getCachedTopic ?? new ForumTopic(this.client, data.d.forumTopic));
+    }
+    forumTopicLocked(data: WSForumTopicLocked) {
+        const getCachedTopic = this.client.topics.cache.get(data.d.forumTopic.id);
+        getCachedTopic?._update({ isLocked: true });
+        return this.client.emit(constants.clientEvents.FORUM_TOPIC_LOCKED, getCachedTopic ?? new ForumTopic(this.client, data.d.forumTopic));
+    }
+    forumTopicUnlocked(data: WSForumTopicUnlocked) {
+        const getCachedTopic = this.client.topics.cache.get(data.d.forumTopic.id);
+        getCachedTopic?._update({ isLocked: false });
+        return this.client.emit(constants.clientEvents.FORUM_TOPIC_UNLOCKED, getCachedTopic ?? new ForumTopic(this.client, data.d.forumTopic));
     }
 }

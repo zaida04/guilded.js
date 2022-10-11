@@ -23,6 +23,8 @@ export interface ForumTopicPayload {
     bumpedAt?: string;
     /** Whether this forum topic is pinned */
     isPinned?: boolean;
+    /** Whether this forum topic is locked */
+    isLocked?: boolean;
     /** The mentions within this forum topic */
     mentions?: MentionsPayload;
 }

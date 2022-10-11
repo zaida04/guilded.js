@@ -42,4 +42,14 @@ export class GlobalForumTopicManager extends CacheableStructManager<number, Foru
     unpinForumTopic(channelId: string, forumThreadId: string) {
         return this.client.rest.router.unpinForumTopic(channelId, forumThreadId);
     }
+
+    /** Lock a topic in a forum */
+    lockForumTopic(channelId: string, forumThreadId: string) {
+        return this.client.rest.router.lockForumTopic(channelId, forumThreadId);
+    }
+
+    /** Unlock a topic in a forum */
+    unlockForumTopic(channelId: string, forumThreadId: string) {
+        return this.client.rest.router.unlockForumTopic(channelId, forumThreadId);
+    }
 }

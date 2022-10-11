@@ -40,3 +40,19 @@ export interface WSForumTopicUnpinned extends SkeletonWSPayload {
     };
     t: WSEvent["ForumTopicUnpinned"];
 }
+
+export interface WSForumTopicLocked extends SkeletonWSPayload {
+    d: {
+        serverId: string;
+        forumTopic: ForumTopicPayload;
+    };
+    t: WSEvent["ForumTopicLocked"];
+}
+
+export interface WSForumTopicUnlocked extends SkeletonWSPayload {
+    d: {
+        serverId: string;
+        forumTopic: ForumTopicPayload;
+    };
+    t: WSEvent["ForumTopicUnlocked"];
+}
