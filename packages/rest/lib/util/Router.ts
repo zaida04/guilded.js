@@ -4,6 +4,7 @@ import type {
     RESTDeleteChannelMessageResult,
     RESTDeleteChannelResult,
     RESTDeleteDocResult,
+    RESTDeleteForumTopicLockResult,
     RESTDeleteForumTopicPinResult,
     RESTDeleteForumTopicResult,
     RESTDeleteGroupMemberResult,
@@ -73,6 +74,7 @@ import type {
     RESTPutChannelMessageResult,
     RESTPutDocBody,
     RESTPutDocResult,
+    RESTPutForumTopicLockResult,
     RESTPutForumTopicPinResult,
     RESTPutGroupMemberResult,
     RESTPutListItemBody,
@@ -243,6 +245,16 @@ export class Router {
     /** Pin a topic in a forum */
     unpinForumTopic(channelId: string, forumThreadId: string): Promise<RESTDeleteForumTopicPinResult> {
         return this.rest.put<RESTDeleteForumTopicPinResult>(ROUTES.forumTopic(channelId, forumThreadId));
+    }
+
+    /** Lock a topic in a forum */
+    lockForumTopic(channelId: string, forumThreadId: string): Promise<RESTPutForumTopicLockResult> {
+        return this.rest.put<RESTPutForumTopicLockResult>(ROUTES.forumTopic(channelId, forumThreadId));
+    }
+
+    /** Unlock a topic in a forum */
+    unlockForumTopic(channelId: string, forumThreadId: string): Promise<RESTDeleteForumTopicLockResult> {
+        return this.rest.put<RESTDeleteForumTopicLockResult>(ROUTES.forumTopic(channelId, forumThreadId));
     }
 
     /** Create a list item. */

@@ -44,6 +44,8 @@ export const WebSocketEvents = {
     ForumTopicDeleted: "ForumTopicDeleted",
     ForumTopicPinned: "ForumTopicPinned",
     ForumTopicUnpinned: "ForumTopicUnpinned",
+    ForumTopicLocked: "ForumTopicLocked",
+    ForumTopicUnlocked: "ForumTopicUnlocked",
 } as const;
 export type WSEvent = typeof WebSocketEvents;
 

@@ -13,6 +13,7 @@ export class ForumTopic extends Base<ForumTopicPayload, number> {
     _bumpedAt!: number | null;
     _deletedAt: number | null;
     isPinned: boolean;
+    isLocked: boolean;
     content!: string;
     mentions!: MentionsPayload
 
@@ -24,6 +25,7 @@ export class ForumTopic extends Base<ForumTopicPayload, number> {
         this.createdByWebhookId = data.createdByWebhookId ?? null;
         this.createdBy = data.createdBy;
         this.isPinned = false;
+        this.isLocked = false;
         this._deletedAt = null;
 
         this._update(data);
@@ -60,6 +62,10 @@ export class ForumTopic extends Base<ForumTopicPayload, number> {
         
         if ("isPinned" in data && typeof data.isPinned !== "undefined") {
             this.isPinned = data.isPinned;
+        }
+
+        if ("isLocked" in data && typeof data.isLocked !== "undefined") {
+            this.isLocked = data.isLocked;
         }
 
         if ("title" in data && typeof data.title !== "undefined") {

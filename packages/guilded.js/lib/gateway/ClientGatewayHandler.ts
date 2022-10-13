@@ -39,7 +39,9 @@ import type {
     WSForumTopicDeleted,
     WSForumTopicUpdated,
     WSForumTopicPinned,
-    WSForumTopicUnpinned
+    WSForumTopicUnpinned,
+    WSForumTopicLocked,
+    WSForumTopicUnlocked,
 } from "@guildedjs/guilded-api-typings";
 import { WebSocketEvents } from "@guildedjs/guilded-api-typings";
 import { TeamWebhookEventHandler } from "./handler/TeamWebhookEventHandler";
@@ -105,7 +107,11 @@ export class ClientGatewayHandler {
         [WebSocketEvents.ForumTopicPinned]: (data) => 
             this.forumHandler.forumTopicPinned(data as WSForumTopicPinned),
         [WebSocketEvents.ForumTopicUnpinned]: (data) =>
-            this.forumHandler.forumTopicUnpinned(data as WSForumTopicUnpinned)
+            this.forumHandler.forumTopicUnpinned(data as WSForumTopicUnpinned),
+        [WebSocketEvents.ForumTopicLocked]: (data) => 
+            this.forumHandler.forumTopicLocked(data as WSForumTopicLocked),
+        [WebSocketEvents.ForumTopicUnlocked]: (data) =>
+            this.forumHandler.forumTopicUnlocked(data as WSForumTopicUnlocked)
     };
  
     constructor(public readonly client: Client) {}
