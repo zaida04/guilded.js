@@ -22,6 +22,7 @@ export const WebSocketEvents = {
     TeamMemberUpdated: "TeamMemberUpdated",
     TeamMemberBanned: "TeamMemberBanned",
     TeamMemberUnbanned: "TeamMemberUnbanned",
+    BotTeamMembershipCreated: "BotTeamMembershipCreated",
     // This is intentional. Legacy change on Guilded's end.
     teamRolesUpdated: "teamRolesUpdated",
     TeamWebhookCreated: "TeamWebhookCreated",
