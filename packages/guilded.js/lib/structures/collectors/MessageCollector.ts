@@ -10,6 +10,6 @@ export class MessageCollector extends Collector<Message> {
 
     _cleanup(): void {
         this.decrementMaxEventListeners();
-        this.client.removeListener(constants.clientEvents.MESSAGE_CREATED, this.itemReceived);
+        this.client.removeListener(constants.clientEvents.MESSAGE_CREATED, this.boundItemReceiver);
     }
 }
