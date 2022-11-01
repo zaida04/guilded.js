@@ -1,4 +1,4 @@
-import type { TeamMemberBanPayload, TeamMemberPayload, TeamMemberRoleIdsPayload } from "../structs";
+import type { ServerPayload, TeamMemberBanPayload, TeamMemberPayload, TeamMemberRoleIdsPayload } from "../structs";
 import type { SkeletonWSPayload, WSEvent } from "./Events";
 
 export interface WSTeamMemberJoinedPayload extends SkeletonWSPayload {
@@ -52,4 +52,12 @@ export interface WSTeamRolesUpdatedPayload extends SkeletonWSPayload {
         memberRoleIds: TeamMemberRoleIdsPayload[];
     };
     t: WSEvent["teamRolesUpdated"];
+}
+
+export interface WSBotTeamMembershipCreated extends SkeletonWSPayload {
+    d: {
+        createdBy: string;
+        server: ServerPayload;
+    };
+    t: WSEvent["BotTeamMembershipCreated"];
 }

@@ -13,31 +13,13 @@ import { GlobalRoleManager } from "../managers/global/RoleManager";
 import { GlobalUserManager } from "../managers/global/UserManager";
 import { GlobalGuildBanManager } from "../managers/global/GuildBanManager";
 import { GlobalCalendarManager } from "../managers/global/CalendarManager";
-import type { Message, MessageReaction } from "./Message";
 import type TypedEmitter from "typed-emitter";
-import type {
-    WSChatMessageDeletedPayload,
-    WSTeamMemberBannedPayload,
-    WSTeamMemberRemovedPayload,
-    WSTeamMemberUnbannedPayload,
-    WSTeamMemberUpdatedPayload,
-    TeamMemberRoleIdsPayload,
-    DocPayload,
-    ListItemPayload,
-    ListItemSummaryPayload,
-    WSChannelMessageReactionCreatedPayload,
-    WSChannelMessageReactionDeletedPayload,
-} from "@guildedjs/guilded-api-typings";
-import type { Member, MemberBan } from "./Member";
 import type { CacheStructure } from "../cache";
 import { GlobalWebhookManager } from "../managers/global/WebhookManager";
-import type { Webhook } from "./Webhook";
 import { ClientUser } from "./User";
-import type { Channel } from "./channels";
 import { GlobalServerManager } from "../managers/global/ServerManager";
 import { GlobalReactionManager } from "../managers/global/ReactionManager";
-import type { CalendarEvent, CalendarEventRsvp } from "./CalendarEvent";
-import type { ForumTopic } from "./Forum";
+import type { ClientEvents } from "../typings";
 
 export class Client extends (EventEmitter as unknown as new () => TypedEmitter<ClientEvents>) {
     /** The time in milliseconds since the Client connected */
@@ -143,49 +125,3 @@ interface ClientOptions {
         cacheCalendarsRsvps?: boolean;
     };
 }
-
-export type ClientEvents = {
-    ready: () => unknown;
-    debug: (data: any) => unknown;
-    exit: () => unknown;
-    error: (reason: string, err: Error | null) => unknown;
-    calendarEventCreated: (calendarEvent: CalendarEvent) => unknown;
-    calendarEventUpdated: (calendarEvent: CalendarEvent, oldCalendar: CalendarEvent | null) => unknown;
-    calendarEventDeleted: (calendarEvent: CalendarEvent) => unknown;
-    calendarRsvpUpdated: (CalendarEventRsvp: CalendarEventRsvp, oldCalendarRsvp: CalendarEventRsvp | null) => unknown;
-    calendarRsvpManyUpdated: (CalendarRsvpsEvent: Map<string, CalendarEventRsvp>) => unknown;
-    calendarRsvpDeleted: (CalendarEventRsvp: CalendarEventRsvp) => unknown;
-    messageCreated: (message: Message) => unknown;
-    messageUpdated: (message: Message, oldMessage: Message | null) => unknown;
-    messageDeleted: (message: Message | WSChatMessageDeletedPayload["d"]) => unknown;
-    messageReactionCreated: (reaction: MessageReaction) => unknown;
-    messageReactionDeleted: (reaction: MessageReaction | WSChannelMessageReactionDeletedPayload["d"]) => unknown;
-    channelCreated: (channel: Channel) => unknown;
-    channelUpdated: (channel: Channel, oldChannel: Channel | null) => unknown;
-    channelDeleted: (channel: Channel) => unknown;
-    docCreated: (doc: DocPayload) => unknown;
-    docUpdated: (newDoc: DocPayload, oldDoc: DocPayload | null) => unknown;
-    docDeleted: (doc: DocPayload) => unknown;
-    listItemCreated: (item: ListItemPayload) => unknown;
-    listItemUpdated: (newItem: ListItemPayload, oldItem: ListItemPayload | ListItemSummaryPayload | null) => unknown;
-    listItemDeleted: (item: ListItemPayload) => unknown;
-    listItemCompleted: (item: ListItemPayload) => unknown;
-    listItemUncompleted: (item: ListItemPayload) => unknown;
-    memberJoined: (member: Member) => unknown;
-    memberRemoved: (member: Member | WSTeamMemberRemovedPayload["d"]) => unknown;
-    memberUpdated: (member: Member | WSTeamMemberUpdatedPayload["d"], oldMember: Member | null) => unknown;
-    memberBanned: (member: MemberBan | WSTeamMemberBannedPayload["d"]) => unknown;
-    memberUnbanned: (member: MemberBan | WSTeamMemberUnbannedPayload["d"]) => unknown;
-    forumTopicCreated: (topic: ForumTopic) => unknown;
-    forumTopicUpdated: (topic: ForumTopic, oldTopic: ForumTopic | null) => unknown;
-    forumTopicDeleted: (topic: ForumTopic) => unknown;
-    forumTopicPinned: (topic: ForumTopic) => unknown;
-    forumTopicUnpinned: (topic: ForumTopic) => unknown;
-    forumTopicLocked: (topic: ForumTopic) => unknown;
-    forumTopicUnlocked: (topic: ForumTopic) => unknown;
-    serverCreated: (server: { serverId: string }) => unknown;
-    webhookCreated: (webhook: Webhook) => unknown;
-    webhookUpdated: (webhook: Webhook, oldWebhook: Webhook | null) => unknown;
-    rolesUpdated: (members: (Member | (TeamMemberRoleIdsPayload & { serverId: string }))[], oldMembers: Member[]) => unknown;
-    unknownGatewayEvent: (data: any) => unknown;
-};
