@@ -1,5 +1,5 @@
 import { User } from "../../structures";
-import { Member, PartialMember } from "../../structures/Member";
+import { Member, MemberBan, PartialMember } from "../../structures/Member";
 import { CacheableStructManager } from "./CacheableStructManager";
 import { Collection } from "@discordjs/collection";
 import type { SocialLink, UserSocialLink } from "@guildedjs/guilded-api-typings";
@@ -38,6 +38,11 @@ export class GlobalMemberManager extends CacheableStructManager<string, Member> 
         return this.client.rest.router
             .kickMember(serverId, memberId)
             .then((_) => this.client.members.cache.get(buildMemberKey(serverId, memberId)) ?? null);
+    }
+    
+    /** Ban a member from a server */
+    ban(serverId: string, userId: string): Promise<MemberBan | null> {
+        return this.client.bans.ban(serverId, userId);
     }
 
     /** Get a list of the roles assigned to a member using the id of the member. */
