@@ -65,7 +65,13 @@ export class WebSocketManager {
         } catch (e) {
             if (!this.shouldRequestMissedEvents) throw e;
             this.lastMessageId = null;
-            return this.connect();
+
+            this._handleDisconnect();
+            if (e instanceof Error) {
+                this.emitter.emit("error", e.message, e);
+            }
+            this.emitter.emit("exit", "Gateway connection permanently closed BEFORE connection establishable due to error.");
+            return;
         }
 
         this.socket.on("open", this.onSocketOpen.bind(this));
@@ -80,21 +86,13 @@ export class WebSocketManager {
         this.socket.on("error", (err) => {
             this._debug("Gateway connection errored.");
             this.emitter.emit("error", "Gateway Error", err);
-            if (!(this.options.autoConnectOnErr ?? true) || this.reconnectAttemptExceeded) {
-                this.reconnectAttemptAmount++;
-                return this.connect();
-            }
-            this.destroy();
+            this._handleDisconnect();
             this.emitter.emit("exit", "Gateway connection permanently closed due to error.");
         });
 
         this.socket.on("close", (code, reason) => {
             this._debug(`Gateway connection terminated with code ${code} for reason: ${reason.toString()}`);
-            if ((this.options.autoConnectOnErr ?? true) && !this.reconnectAttemptExceeded) {
-                this.reconnectAttemptAmount++;
-                return this.connect();
-            }
-            this.destroy();
+            this._handleDisconnect();
             this.emitter.emit("exit", "Gateway connection permanently closed.");
         });
     }
@@ -104,6 +102,14 @@ export class WebSocketManager {
         this.socket.removeAllListeners();
         if (this.socket.OPEN) this.socket.close();
         this.isAlive = false;
+    }
+
+    _handleDisconnect(): void {
+        if (!(this.options.autoConnectOnErr ?? true) || this.reconnectAttemptExceeded) {
+            this.reconnectAttemptAmount++;
+            return this.connect();
+        }
+        return this.destroy();
     }
 
     _debug(str: any): boolean {
