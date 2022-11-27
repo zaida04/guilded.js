@@ -1,21 +1,21 @@
 import type { ServerChannelPayload } from "../structs";
 import type { SkeletonWSPayload, WSEvent } from "./Events";
 
-export interface WSTeamChannelCreated extends SkeletonWSPayload {
+export interface WSServerChannelCreated extends SkeletonWSPayload {
     d: {
         serverId: string;
         channel: ServerChannelPayload;
     };
     t: WSEvent["ServerChannelCreated"];
 }
-export interface WSTeamChannelUpdated extends SkeletonWSPayload {
+export interface WSServerChannelUpdated extends SkeletonWSPayload {
     d: {
         serverId: string;
         channel: ServerChannelPayload;
     };
     t: WSEvent["ServerChannelUpdated"];
 }
-export interface WSTeamChannelDeleted extends SkeletonWSPayload {
+export interface WSServerChannelDeleted extends SkeletonWSPayload {
     d: {
         serverId: string;
         channel: ServerChannelPayload;

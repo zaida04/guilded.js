@@ -1,7 +1,7 @@
 import type { Client } from "../structures/Client";
 import { MessageEventHandler } from "./handler/MessageEventHandler";
-import { TeamEventHandler } from "./handler/TeamEventHandler";
-import { TeamMemberEventHandler } from "./handler/TeamMemberEventHandler";
+import { ServerEventHandler } from "./handler/ServerEventHandler";
+import { ServerMemberEventHandler } from "./handler/ServerMemberEventHandler";
 import type {
 	SkeletonWSPayload,
 	WSChatMessageCreatedPayload,
@@ -16,17 +16,17 @@ import type {
 	WSListItemDeleted,
 	WSListItemUncompleted,
 	WSListItemUpdated,
-	WSTeamChannelCreated,
-	WSTeamChannelDeleted,
-	WSTeamChannelUpdated,
-	WSTeamMemberBannedPayload,
-	WSTeamMemberJoinedPayload,
-	WSTeamMemberRemovedPayload,
-	WSTeamMemberUnbannedPayload,
-	WSTeamMemberUpdatedPayload,
-	WSTeamRolesUpdatedPayload,
-	WSTeamWebhookCreatedPayload,
-	WSTeamWebhookUpdatedPayload,
+	WSServerChannelCreated,
+	WSServerChannelDeleted,
+	WSServerChannelUpdated,
+	WSServerMemberBannedPayload,
+	WSServerMemberJoinedPayload,
+	WSServerMemberRemovedPayload,
+	WSServerMemberUnbannedPayload,
+	WSServerMemberUpdatedPayload,
+	WSServerRolesUpdatedPayload,
+	WSServerWebhookCreatedPayload,
+	WSServerWebhookUpdatedPayload,
 	WSChannelMessageReactionCreatedPayload,
 	WSChannelMessageReactionDeletedPayload,
 	WSCalendarEventCreated,
@@ -42,12 +42,12 @@ import type {
 	WSForumTopicUnpinned,
 	WSForumTopicLocked,
 	WSForumTopicUnlocked,
-	WSBotTeamMembershipCreated,
+	WSBotServerMembershipCreated,
 } from "@guildedjs/guilded-api-typings";
 import { WebSocketEvents } from "@guildedjs/guilded-api-typings";
-import { TeamWebhookEventHandler } from "./handler/TeamWebhookEventHandler";
+import { ServerWebhookEventHandler } from "./handler/ServerWebhookEventHandler";
 import { ListEventHandler } from "./handler/ListEventHandler";
-import { TeamChannelEventHandler } from "./handler/TeamChannelEventHandler";
+import { ServerChannelEventHandler } from "./handler/ServerChannelEventHandler";
 import { DocEventHandler } from "./handler/DocEventHandler";
 import { ReactionEventHandler } from "./handler/ReactionEventHandler";
 import { CalendarEventHandler, CalendarEventRsvpHandler } from "./handler/CalendarEventHandler";
@@ -58,11 +58,11 @@ export class ClientGatewayHandler {
 	calendarEventHandler = new CalendarEventHandler(this.client);
 	calendarEventRsvpHandler = new CalendarEventRsvpHandler(this.client);
 	messageHandler = new MessageEventHandler(this.client);
-	teamHandler = new TeamEventHandler(this.client);
-	teamMemberHandler = new TeamMemberEventHandler(this.client);
-	teamWebhookHandler = new TeamWebhookEventHandler(this.client);
+	ServerHandler = new ServerEventHandler(this.client);
+	ServerMemberHandler = new ServerMemberEventHandler(this.client);
+	ServerWebhookHandler = new ServerWebhookEventHandler(this.client);
 	listHandler = new ListEventHandler(this.client);
-	teamChannelHandler = new TeamChannelEventHandler(this.client);
+	ServerChannelHandler = new ServerChannelEventHandler(this.client);
 	docHandler = new DocEventHandler(this.client);
 	reactionHandler = new ReactionEventHandler(this.client);
 	forumHandler = new ForumEventHandler(this.client);
@@ -81,15 +81,15 @@ export class ClientGatewayHandler {
 		[WebSocketEvents.ChatMessageCreated]: (data) => this.messageHandler.messageCreated(data as WSChatMessageCreatedPayload),
 		[WebSocketEvents.ChatMessageDeleted]: (data) => this.messageHandler.messageDeleted(data as WSChatMessageDeletedPayload),
 		[WebSocketEvents.ChatMessageUpdated]: (data) => this.messageHandler.messageUpdated(data as WSChatMessageUpdatedPayload),
-		[WebSocketEvents.ServerMemberJoined]: (data) => this.teamMemberHandler.teamMemberJoined(data as WSTeamMemberJoinedPayload),
-		[WebSocketEvents.ServerMemberRemoved]: (data) => this.teamMemberHandler.teamMemberRemoved(data as WSTeamMemberRemovedPayload),
-		[WebSocketEvents.ServerMemberUpdated]: (data) => this.teamMemberHandler.teamMemberUpdated(data as WSTeamMemberUpdatedPayload),
-		[WebSocketEvents.ServerRolesUpdated]: (data) => this.teamHandler.teamRolesUpdated(data as WSTeamRolesUpdatedPayload),
-		[WebSocketEvents.ServerMemberBanned]: (data) => this.teamMemberHandler.teamMemberBanned(data as WSTeamMemberBannedPayload),
-		[WebSocketEvents.ServerMemberUnbanned]: (data) => this.teamMemberHandler.teamMemberUnbanned(data as WSTeamMemberUnbannedPayload),
-		[WebSocketEvents.ServerWebhookCreated]: (data) => this.teamWebhookHandler.teamWebhookCreated(data as WSTeamWebhookCreatedPayload),
-		[WebSocketEvents.ServerWebhookUpdated]: (data) => this.teamWebhookHandler.teamWebhookUpdated(data as WSTeamWebhookUpdatedPayload),
-		[WebSocketEvents.BotServerMembershipCreated]: (data) => this.botHandler.botTeamMembershipCreated(data as WSBotTeamMembershipCreated),
+		[WebSocketEvents.ServerMemberJoined]: (data) => this.ServerMemberHandler.ServerMemberJoined(data as WSServerMemberJoinedPayload),
+		[WebSocketEvents.ServerMemberRemoved]: (data) => this.ServerMemberHandler.ServerMemberRemoved(data as WSServerMemberRemovedPayload),
+		[WebSocketEvents.ServerMemberUpdated]: (data) => this.ServerMemberHandler.ServerMemberUpdated(data as WSServerMemberUpdatedPayload),
+		[WebSocketEvents.ServerRolesUpdated]: (data) => this.ServerHandler.ServerRolesUpdated(data as WSServerRolesUpdatedPayload),
+		[WebSocketEvents.ServerMemberBanned]: (data) => this.ServerMemberHandler.ServerMemberBanned(data as WSServerMemberBannedPayload),
+		[WebSocketEvents.ServerMemberUnbanned]: (data) => this.ServerMemberHandler.ServerMemberUnbanned(data as WSServerMemberUnbannedPayload),
+		[WebSocketEvents.ServerWebhookCreated]: (data) => this.ServerWebhookHandler.ServerWebhookCreated(data as WSServerWebhookCreatedPayload),
+		[WebSocketEvents.ServerWebhookUpdated]: (data) => this.ServerWebhookHandler.ServerWebhookUpdated(data as WSServerWebhookUpdatedPayload),
+		[WebSocketEvents.BotServerMembershipCreated]: (data) => this.botHandler.botServerMembershipCreated(data as WSBotServerMembershipCreated),
 		[WebSocketEvents.ListItemCompleted]: (data) => this.listHandler.listItemCompleted(data as WSListItemCompleted),
 		[WebSocketEvents.ListItemUncompleted]: (data) => this.listHandler.listItemUncompleted(data as WSListItemUncompleted),
 		[WebSocketEvents.ListItemCreated]: (data) => this.listHandler.listItemCreated(data as WSListItemCreated),
@@ -98,9 +98,9 @@ export class ClientGatewayHandler {
 		[WebSocketEvents.DocCreated]: (data) => this.docHandler.docCreated(data as WSDocCreated),
 		[WebSocketEvents.DocDeleted]: (data) => this.docHandler.docDeleted(data as WSDocDeleted),
 		[WebSocketEvents.DocUpdated]: (data) => this.docHandler.docUpdated(data as WSDocUpdated),
-		[WebSocketEvents.ServerChannelCreated]: (data) => this.teamChannelHandler.teamChannelCreated(data as WSTeamChannelCreated),
-		[WebSocketEvents.ServerChannelDeleted]: (data) => this.teamChannelHandler.teamChannelDeleted(data as WSTeamChannelDeleted),
-		[WebSocketEvents.ServerChannelUpdated]: (data) => this.teamChannelHandler.teamChannelUpdated(data as WSTeamChannelUpdated),
+		[WebSocketEvents.ServerChannelCreated]: (data) => this.ServerChannelHandler.ServerChannelCreated(data as WSServerChannelCreated),
+		[WebSocketEvents.ServerChannelDeleted]: (data) => this.ServerChannelHandler.ServerChannelDeleted(data as WSServerChannelDeleted),
+		[WebSocketEvents.ServerChannelUpdated]: (data) => this.ServerChannelHandler.ServerChannelUpdated(data as WSServerChannelUpdated),
 		[WebSocketEvents.ChannelMessageReactionCreated]: (data) =>
 			this.reactionHandler.messageReactionCreated(data as WSChannelMessageReactionCreatedPayload),
 		[WebSocketEvents.ChannelMessageReactionDeleted]: (data) =>
