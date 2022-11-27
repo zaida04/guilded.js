@@ -6,7 +6,7 @@ export interface WSTeamWebhookCreatedPayload extends SkeletonWSPayload {
         serverId: string;
         webhook: WebhookPayload;
     };
-    t: WSEvent["TeamWebhookCreated"];
+    t: WSEvent["ServerWebhookCreated"];
 }
 
 export interface WSTeamWebhookUpdatedPayload extends SkeletonWSPayload {
@@ -14,5 +14,5 @@ export interface WSTeamWebhookUpdatedPayload extends SkeletonWSPayload {
         serverId: string;
         webhook: WebhookPayload;
     };
-    t: WSEvent["TeamWebhookUpdated"];
+    t: WSEvent["ServerWebhookUpdated"];
 }

@@ -6,7 +6,7 @@ export interface WSTeamMemberJoinedPayload extends SkeletonWSPayload {
         serverId: string;
         member: TeamMemberPayload;
     };
-    t: WSEvent["TeamMemberJoined"];
+    t: WSEvent["ServerMemberJoined"];
 }
 
 export interface WSTeamMemberRemovedPayload extends SkeletonWSPayload {
@@ -16,7 +16,7 @@ export interface WSTeamMemberRemovedPayload extends SkeletonWSPayload {
         isKick: boolean;
         isBan: boolean;
     };
-    t: WSEvent["TeamMemberRemoved"];
+    t: WSEvent["ServerMemberRemoved"];
 }
 
 export interface WSTeamMemberUpdatedPayload extends SkeletonWSPayload {
@@ -27,7 +27,7 @@ export interface WSTeamMemberUpdatedPayload extends SkeletonWSPayload {
             nickname: string;
         };
     };
-    t: WSEvent["TeamMemberUpdated"];
+    t: WSEvent["ServerMemberUpdated"];
 }
 
 export interface WSTeamMemberBannedPayload extends SkeletonWSPayload {
@@ -35,7 +35,7 @@ export interface WSTeamMemberBannedPayload extends SkeletonWSPayload {
         serverId: string;
         serverMemberBan: TeamMemberBanPayload;
     };
-    t: WSEvent["TeamMemberBanned"];
+    t: WSEvent["ServerMemberBanned"];
 }
 
 export interface WSTeamMemberUnbannedPayload extends SkeletonWSPayload {
@@ -43,7 +43,7 @@ export interface WSTeamMemberUnbannedPayload extends SkeletonWSPayload {
         serverId: string;
         serverMemberBan: TeamMemberBanPayload;
     };
-    t: WSEvent["TeamMemberUnbanned"];
+    t: WSEvent["ServerMemberUnbanned"];
 }
 
 export interface WSTeamRolesUpdatedPayload extends SkeletonWSPayload {
@@ -51,7 +51,7 @@ export interface WSTeamRolesUpdatedPayload extends SkeletonWSPayload {
         serverId: string;
         memberRoleIds: TeamMemberRoleIdsPayload[];
     };
-    t: WSEvent["teamRolesUpdated"];
+    t: WSEvent["ServerRolesUpdated"];
 }
 
 export interface WSBotTeamMembershipCreated extends SkeletonWSPayload {
@@ -59,5 +59,5 @@ export interface WSBotTeamMembershipCreated extends SkeletonWSPayload {
         createdBy: string;
         server: ServerPayload;
     };
-    t: WSEvent["BotTeamMembershipCreated"];
+    t: WSEvent["BotServerMembershipCreated"];
 }

@@ -6,19 +6,19 @@ export interface WSTeamChannelCreated extends SkeletonWSPayload {
         serverId: string;
         channel: ServerChannelPayload;
     };
-    t: WSEvent["TeamChannelCreated"];
+    t: WSEvent["ServerChannelCreated"];
 }
 export interface WSTeamChannelUpdated extends SkeletonWSPayload {
     d: {
         serverId: string;
         channel: ServerChannelPayload;
     };
-    t: WSEvent["TeamChannelUpdated"];
+    t: WSEvent["ServerChannelUpdated"];
 }
 export interface WSTeamChannelDeleted extends SkeletonWSPayload {
     d: {
         serverId: string;
         channel: ServerChannelPayload;
     };
-    t: WSEvent["TeamChannelDeleted"];
+    t: WSEvent["ServerChannelDeleted"];
 }
