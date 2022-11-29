@@ -4,7 +4,7 @@ import { Webhook } from "../../structures/Webhook";
 import { GatewayEventHandler } from "./GatewayEventHandler";
 
 export class ServerWebhookEventHandler extends GatewayEventHandler {
-	ServerWebhookCreated(data: WSServerWebhookCreatedPayload): boolean {
+	serverWebhookCreated(data: WSServerWebhookCreatedPayload): boolean {
 		const existingWebhook = this.client.webhooks.cache.get(data.d.webhook.id);
 		if (existingWebhook) return this.client.emit(constants.clientEvents.WEBHOOK_CREATED, existingWebhook);
 
@@ -13,7 +13,7 @@ export class ServerWebhookEventHandler extends GatewayEventHandler {
 		return this.client.emit(constants.clientEvents.WEBHOOK_CREATED, newWebhook);
 	}
 
-	ServerWebhookUpdated(data: WSServerWebhookUpdatedPayload): boolean {
+	serverWebhookUpdated(data: WSServerWebhookUpdatedPayload): boolean {
 		const getCachedWebhook = this.client.webhooks.cache.get(data.d.webhook.id);
 		if (!getCachedWebhook) {
 			const newWebhook = new Webhook(this.client, data.d.webhook);

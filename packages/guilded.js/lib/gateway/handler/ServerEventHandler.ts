@@ -4,7 +4,7 @@ import { GatewayEventHandler } from "./GatewayEventHandler";
 import { buildMemberKey } from "../../util";
 
 export class ServerEventHandler extends GatewayEventHandler {
-	ServerRolesUpdated(data: WSServerRolesUpdatedPayload): boolean {
+	serverRolesUpdated(data: WSServerRolesUpdatedPayload): boolean {
 		const newMembers = [];
 		const oldMembers = [];
 		for (const m of data.d.memberRoleIds) {
