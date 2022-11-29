@@ -27,7 +27,7 @@ export class BotClient extends Client {
     /** All your bot's tasks will be available here */
     tasks = new Collection<string, Task>();
 
-    /** The bot's prefixes per team. <teamId, prefix> */
+    /** The bot's prefixes per server. <serverId, prefix> */
     prefixes = new Map<string, string>();
 
     /** The message collectors that are pending. */
@@ -186,7 +186,7 @@ export class BotClient extends Client {
             if (monitor.ignoreOthers && message.createdByBotId !== this.user?.botId) return;
             if (monitor.ignoreEdits && message.updatedAt && message.updatedAt !== message.createdAt) return;
             // TODO: When the api supports using dm channels
-            // if (monitor.ignoreDM && !message.teamId) return;
+            // if (monitor.ignoreDM && !message.serverId) return;
             void monitor.execute(message);
         });
     }

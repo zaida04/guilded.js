@@ -1,4 +1,4 @@
-import type { TeamMemberBanPayload, TeamMemberPayload, TeamMemberSummaryPayload } from "../structs";
+import type { ServerMemberBanPayload, ServerMemberPayload, ServerMemberSummaryPayload } from "../structs";
 
 /**
  * PUT
@@ -22,7 +22,7 @@ export type RESTDeleteMemberNicknameResult = never;
  * /servers/:serverId/members/:userId
  */
 export interface RESTGetMemberResult {
-    member: TeamMemberPayload;
+    member: ServerMemberPayload;
 }
 
 /**
@@ -30,7 +30,7 @@ export interface RESTGetMemberResult {
  * /servers/:serverId/members
  */
 export interface RESTGetMembersResult {
-    members: TeamMemberSummaryPayload[];
+    members: ServerMemberSummaryPayload[];
 }
 
 /**
@@ -44,7 +44,7 @@ export type RESTDeleteMemberResult = never;
  * /servers/:serverId/bans/:userId
  */
 export interface RESTGetMemberBanResult {
-    serverMemberBan: TeamMemberBanPayload;
+    serverMemberBan: ServerMemberBanPayload;
 }
 
 /**
@@ -55,7 +55,7 @@ export interface RESTPostMemberBanBody {
     reason?: string;
 }
 export interface RESTPostMemberBanResult {
-    serverMemberBan: TeamMemberBanPayload;
+    serverMemberBan: ServerMemberBanPayload;
 }
 
 /**
@@ -69,5 +69,5 @@ export type RESTDeleteMemberBanResult = never;
  * /servers/:serverId/bans
  */
 export interface RESTGetMemberBansResult {
-    serverMemberBans: TeamMemberBanPayload[];
+    serverMemberBans: ServerMemberBanPayload[];
 }

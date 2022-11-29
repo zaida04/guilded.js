@@ -1,15 +1,15 @@
-import type { ServerPayload, TeamMemberBanPayload, TeamMemberPayload, TeamMemberRoleIdsPayload } from "../structs";
+import type { ServerMemberBanPayload, ServerMemberPayload, ServerMemberRoleIdsPayload, ServerPayload } from "../structs";
 import type { SkeletonWSPayload, WSEvent } from "./Events";
 
-export interface WSTeamMemberJoinedPayload extends SkeletonWSPayload {
+export interface WSServerMemberJoinedPayload extends SkeletonWSPayload {
     d: {
         serverId: string;
-        member: TeamMemberPayload;
+        member: ServerMemberPayload;
     };
     t: WSEvent["ServerMemberJoined"];
 }
 
-export interface WSTeamMemberRemovedPayload extends SkeletonWSPayload {
+export interface WSServerMemberRemovedPayload extends SkeletonWSPayload {
     d: {
         serverId: string;
         userId: string;
@@ -19,7 +19,7 @@ export interface WSTeamMemberRemovedPayload extends SkeletonWSPayload {
     t: WSEvent["ServerMemberRemoved"];
 }
 
-export interface WSTeamMemberUpdatedPayload extends SkeletonWSPayload {
+export interface WSServerMemberUpdatedPayload extends SkeletonWSPayload {
     d: {
         serverId: string;
         userInfo: {
@@ -30,31 +30,31 @@ export interface WSTeamMemberUpdatedPayload extends SkeletonWSPayload {
     t: WSEvent["ServerMemberUpdated"];
 }
 
-export interface WSTeamMemberBannedPayload extends SkeletonWSPayload {
+export interface WSServerMemberBannedPayload extends SkeletonWSPayload {
     d: {
         serverId: string;
-        serverMemberBan: TeamMemberBanPayload;
+        serverMemberBan: ServerMemberBanPayload;
     };
     t: WSEvent["ServerMemberBanned"];
 }
 
-export interface WSTeamMemberUnbannedPayload extends SkeletonWSPayload {
+export interface WSServerMemberUnbannedPayload extends SkeletonWSPayload {
     d: {
         serverId: string;
-        serverMemberBan: TeamMemberBanPayload;
+        serverMemberBan: ServerMemberBanPayload;
     };
     t: WSEvent["ServerMemberUnbanned"];
 }
 
-export interface WSTeamRolesUpdatedPayload extends SkeletonWSPayload {
+export interface WSServerRolesUpdatedPayload extends SkeletonWSPayload {
     d: {
         serverId: string;
-        memberRoleIds: TeamMemberRoleIdsPayload[];
+        memberRoleIds: ServerMemberRoleIdsPayload[];
     };
     t: WSEvent["ServerRolesUpdated"];
 }
 
-export interface WSBotTeamMembershipCreated extends SkeletonWSPayload {
+export interface WSBotServerMembershipCreated extends SkeletonWSPayload {
     d: {
         createdBy: string;
         server: ServerPayload;

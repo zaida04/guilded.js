@@ -47,7 +47,7 @@ export const ROUTES = {
     channelReaction: (channelId: string, contentId: string, emoteId: number) =>
         `/channels/${channelId}/content/${contentId}/emotes/${emoteId}` as const,
 
-    // Team XP Endpoints
+    // Server XP Endpoints
     memberXP: (serverId: string, userId: string) => `/servers/${serverId}/members/${userId}/xp` as const,
     roleXP: (serverId: string, roleId: string) => `/servers/${serverId}/roles/${roleId}/xp` as const,
 

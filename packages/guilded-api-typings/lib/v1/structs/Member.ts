@@ -1,6 +1,6 @@
 import type { UserPayload, UserSummaryPayload } from "./User";
 
-export interface TeamMemberPayload {
+export interface ServerMemberPayload {
     user: UserPayload;
     roleIds: number[];
     nickname?: string;
@@ -8,19 +8,19 @@ export interface TeamMemberPayload {
     isOwner?: boolean;
 }
 
-export interface TeamMemberSummaryPayload {
+export interface ServerMemberSummaryPayload {
     user: UserSummaryPayload;
     roleIds: number[];
 }
 
-export interface TeamMemberBanPayload {
+export interface ServerMemberBanPayload {
     user: UserSummaryPayload;
     reason?: string;
     createdBy: string;
     createdAt: string;
 }
 
-export interface TeamMemberRoleIdsPayload {
+export interface ServerMemberRoleIdsPayload {
     userId: string;
     roleIds: number[];
 }
