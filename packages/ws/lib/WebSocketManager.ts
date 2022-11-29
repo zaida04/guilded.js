@@ -17,8 +17,8 @@ export class WebSocketManager {
     /** Whether or not this connection is connected and heartbeating. */
     isAlive = false;
 
-    /** The amount of milliseconds the websocket took to respond to the last ping request. */
-    ping: number | null = null;
+    /** The amount of milliseconds the websocket took to respond to the last ping request. This will be zero before the first heartbeat */
+    ping = 0;
 
     /** The timestamp in milliseconds of the last ping request. */
     lastPingedAt = 0;
