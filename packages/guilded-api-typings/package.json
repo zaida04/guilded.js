@@ -1,6 +1,6 @@
 {
     "name": "@guildedjs/guilded-api-typings",
-    "version": "2.9.0",
+    "version": "3.0.0",
     "description": "Typings for the guilded API",
     "author": "Zaid \"Nico\" <contact@nico.engineer>",
     "license": "MIT",

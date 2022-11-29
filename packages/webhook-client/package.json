@@ -1,6 +1,6 @@
 {
     "name": "@guildedjs/webhook-client",
-    "version": "0.4.2",
+    "version": "0.4.3",
     "description": "Structures and clients for webhooks in Guilded.",
     "author": "Zaid \"Nico\" <contact@nico.engineer>",
     "license": "MIT",
