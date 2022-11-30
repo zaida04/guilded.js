@@ -14,6 +14,6 @@ export type RESTDeleteMemberRoleResult = never;
  * GET
  * /servers/:serverId/members/:userId/roles
  */
-export interface RESTGetMemberRolesResult {
+export type RESTGetMemberRolesResult = {
     roleIds: number[];
 }

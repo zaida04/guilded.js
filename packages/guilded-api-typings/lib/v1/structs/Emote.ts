@@ -1,8 +1,14 @@
-export interface EmotePayload {
-    /** The id of the emote */
+export type EmotePayload = {
+    /**
+     * The id of the emote
+     */
     id: number;
-    /** The name of the emote */
+    /**
+     * The name of the emote
+     */
     name: string;
-    /** The url of the emote image */
+    /**
+     * The url of the emote image
+     */
     url: string;
 }

@@ -1,59 +1,59 @@
-export interface WebhookPayload {
-    id: string;
-    name: string;
-    serverId: string;
+export type WebhookPayload = {
     channelId: string;
     createdAt: string;
     createdBy: string;
     deletedAt?: string;
+    id: string;
+    name: string;
+    serverId: string;
     token?: string;
 }
 
-export interface WebhookContentPayload {
-    id: string;
+export type WebhookContentPayload = {
+    botId: string | null;
     channelId: string;
     content: APIContent;
-    type: string;
-    createdBy: string;
     createdAt: string;
-    webhookId: string;
-    botId: string | null;
-}
-
-export interface APIContent {
-    object: string;
-    document: APIDocument;
-}
-
-interface APILeaf {
-    text: string;
-    marks: APIMark[];
-    object: "leaf" | string;
-}
-
-interface APIMark {
-    data: unknown;
+    createdBy: string;
+    id: string;
     type: string;
+    webhookId: string;
+}
+
+export type APIContent = {
+    document: APIDocument;
     object: string;
 }
 
-interface APIDocument {
+type APILeaf = {
+    marks: APIMark[];
+    object: string | "leaf";
+    text: string;
+}
+
+type APIMark = {
+    data: unknown;
+    object: string;
+    type: string;
+}
+
+type APIDocument = {
     data: unknown;
     nodes: APIDocumentNode[];
     object: string;
 }
 
-interface APIDocumentNode {
+type APIDocumentNode = {
     data: unknown;
-    type: string;
     nodes: APINestedNode[];
     object: string;
+    type: string;
 }
 
-interface APINestedNode {
-    leaves?: APILeaf[];
-    object: string;
+type APINestedNode = {
     data?: unknown;
-    type?: string;
+    leaves?: APILeaf[];
     nodes?: APINestedNode[];
+    object: string;
+    type?: string;
 }

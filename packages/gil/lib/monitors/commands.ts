@@ -1,6 +1,5 @@
 import { bgBlack, bgBlue, bgGreen, bgMagenta, bgYellow, black, green, red, white } from "colorette";
 import type { Message } from "guilded.js";
-
 import type { Command } from "../structures/Command";
 import { Monitor } from "../structures/Monitor";
 
@@ -19,11 +18,12 @@ export class CommandsMonitor extends Monitor {
             // IF THE MESSAGE STARTS WITH BOT MENTION, USE MENTION AS PREFIX
             else if (message.content.startsWith(this.client.botMention)) prefix = this.client.botMention;
         }
+
         // IF NO PREFIX IS USED, CANCEL
         if (!message.content.startsWith(prefix)) return;
 
         // `!ping testing` becomes `ping`
-        const [commandName, ...parameters] = message.content.substring(prefix.length).split(" ");
+        const [commandName, ...parameters] = message.content.slice(prefix.length).split(" ");
 
         // Check if this is a valid command
         const command = this.parseCommand(commandName);
@@ -38,7 +38,7 @@ export class CommandsMonitor extends Monitor {
 
     parsePrefix(serverId?: string | null): string {
         const prefix = serverId ? this.client.prefixes.get(serverId) : this.client.prefix;
-        return prefix || this.client.prefix;
+        return prefix ?? this.client.prefix;
     }
 
     parseCommand(commandName: string): Command | undefined {
@@ -50,11 +50,11 @@ export class CommandsMonitor extends Monitor {
         return this.client.commands.find((cmd) => Boolean(cmd.aliases?.includes(commandName)));
     }
 
-    logCommand(message: Message, type: "Failure" | "Success" | "Trigger" | "Slowmode" | "Missing" | "Inhibit", commandName: string): void {
+    logCommand(message: Message, type: "Failure" | "Inhibit" | "Missing" | "Slowmode" | "Success" | "Trigger", commandName: string): void {
         // TODO: use server name when available in api
-        const serverName = message.serverId || "DM";
+        const serverName = message.serverId ?? "DM";
 
-        const command = `[COMMAND: ${bgYellow(black(commandName || "Unknown"))} - ${bgBlack(
+        const command = `[COMMAND: ${bgYellow(black(commandName ?? "Unknown"))} - ${bgBlack(
             ["Failure", "Slowmode", "Missing"].includes(type) ? red(type) : type === "Success" ? green(type) : white(type),
         )}]`;
 
@@ -72,22 +72,27 @@ export class CommandsMonitor extends Monitor {
             // Parsed args and validated
             const args = await this.parseArguments(message, command, parameters);
             // Some arg that was required was missing and handled already
-            if (!args) return this.logCommand(message, "Missing", command.name);
+            if (!args) {
+                this.logCommand(message, "Missing", command.name);
+                return;
+            }
 
             // If no subcommand execute the command
-            const [argument] = command.arguments || [];
+            const [argument] = command.arguments ?? [];
             const subcommand = argument ? (args[argument.name] as Command) : undefined;
 
             if (!argument || argument.type !== "subcommand" || !subcommand) {
                 // Check subcommand permissions and options
-                if (!(await this.commandAllowed(message, command))) return;
+                if (!(await this.commandAllowed(message, command)))
+                    return;
 
                 await command.execute?.(message, args);
-                return this.logCommand(message, "Success", command.parentCommand ? `${command.parentCommand}-${command.name}` : command.name);
+                this.logCommand(message, "Success", command.parentCommand ? `${command.parentCommand}-${command.name}` : command.name);
+                return;
             }
 
             // A subcommand was asked for in this command
-            if ([subcommand.name, ...(subcommand.aliases || [])].includes(parameters[0])) {
+            if ([subcommand.name, ...(subcommand.aliases ?? [])].includes(parameters[0])) {
                 const subParameters = parameters.slice(1);
                 void this.executeCommand(message, subcommand, subParameters);
             } else {
@@ -99,7 +104,7 @@ export class CommandsMonitor extends Monitor {
         }
     }
 
-    async parseArguments(message: Message, command: Command, parameters: string[]): Promise<false | Record<string, unknown>> {
+    async parseArguments(message: Message, command: Command, parameters: string[]): Promise<Record<string, unknown> | false> {
         const args: { [key: string]: unknown } = {};
         if (!command.arguments) return args;
 
@@ -110,7 +115,7 @@ export class CommandsMonitor extends Monitor {
 
         // Loop over each argument and validate
         for (const argument of command.arguments) {
-            const resolver = this.client.arguments.get(argument.type || "string");
+            const resolver = this.client.arguments.get(argument.type ?? "string");
             if (!resolver) continue;
 
             const result = await resolver.execute(argument, params, message, command);
@@ -121,13 +126,14 @@ export class CommandsMonitor extends Monitor {
                 if (argument.type && ["subcommands", "...strings", "...roles", "...emojis", "...snowflakes"].includes(argument.type)) {
                     break;
                 }
+
                 // Remove a param for the next argument
                 params.shift();
                 continue;
             }
 
             // Invalid arg provided.
-            if (Object.prototype.hasOwnProperty.call(argument, "defaultValue")) {
+            if (Object.hasOwn(argument, "defaultValue")) {
                 args[argument.name] = argument.defaultValue;
             } else if (argument.required !== false) {
                 if (argument.missing) {
@@ -140,7 +146,7 @@ export class CommandsMonitor extends Monitor {
                 // TODO: perm check before sending
                 const question = await this.client.messages.send(message.channelId, {
                     content: `You were missing the **${argument.name}** argument which is required in that command. Please provide the **${
-                        argument.type === "subcommand" ? command.subcommands?.map((sub) => sub.name).join(", ") || "subcommand" : argument.type
+                        argument.type === "subcommand" ? command.subcommands?.map((sub) => sub.name).join(", ") ?? "subcommand" : argument.type
                     }** now.`,
                     replyMessageIds: [message.id],
                 });
@@ -162,7 +168,7 @@ export class CommandsMonitor extends Monitor {
                 }
 
                 missingRequiredArg = true;
-                // @ts-ignore fix this dumb error. TODO: idk why this is erroring
+                // @ts-expect-error fix this dumb error. TODO: idk why this is erroring
                 argument.missing?.(message);
                 break;
             }

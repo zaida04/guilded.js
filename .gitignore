@@ -13,5 +13,7 @@ coverage/
 .idea/
 *.env
 docs/
+!apps/docs
+!apps/docs/next-end.d.ts
 package-lock.json
 CHANGELOG.md

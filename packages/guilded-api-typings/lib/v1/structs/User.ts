@@ -1,15 +1,15 @@
-export interface UserPayload {
-    id: string;
-    type?: "bot" | "user";
-    name: string;
+export type UserPayload = {
     avatar?: string;
     banner?: string;
     createdAt: string;
+    id: string;
+    name: string;
+    type?: "bot" | "user";
 }
 
-export interface UserSummaryPayload {
-    id: string;
-    type?: string;
-    name: string;
+export type UserSummaryPayload = {
     avatar?: string;
+    id: string;
+    name: string;
+    type?: string;
 }

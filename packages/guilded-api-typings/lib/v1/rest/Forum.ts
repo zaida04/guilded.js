@@ -4,12 +4,12 @@ import type { ForumTopicPayload, ForumTopicSummaryPayload } from "../structs/For
  * POST
  * /channels/:channelId/topics
  */
-export interface RESTPostForumTopicResult {
+export type RESTPostForumTopicResult = {
     forumTopic: ForumTopicPayload;
 }
-export interface RESTPostForumTopicBody {
-    title: string;
+export type RESTPostForumTopicBody = {
     content: string;
+    title: string;
 }
 
 /**
@@ -40,11 +40,11 @@ export type RESTDeleteForumTopicLockResult = never;
  * POST
  * /channels/:channelId/topics
  */
-export interface RESTPostForumTopicsBody {
-    title: string;
+export type RESTPostForumTopicsBody = {
     content: string;
+    title: string;
 }
-export interface RESTPostForumTopicsResult {
+export type RESTPostForumTopicsResult = {
     forumTopic: ForumTopicPayload;
 }
 
@@ -52,11 +52,11 @@ export interface RESTPostForumTopicsResult {
  * GET
  * /channels/:channelId/topics
  */
-export interface RESTGetForumTopicsQuery {
+export type RESTGetForumTopicsQuery = {
     before?: string;
     limit?: number;
 }
-export interface RESTGetForumTopicsResult {
+export type RESTGetForumTopicsResult = {
     forumTopics: ForumTopicSummaryPayload[];
 }
 
@@ -64,7 +64,7 @@ export interface RESTGetForumTopicsResult {
  * GET
  * /channels/:channelId/topics/:forumTopicId
  */
-export interface RESTGetForumTopicResult {
+export type RESTGetForumTopicResult = {
     forumTopic: ForumTopicPayload;
 }
 
@@ -72,11 +72,11 @@ export interface RESTGetForumTopicResult {
  * PATCH
  * /channels/:channelId/topics/:forumTopicId
  */
-export interface RESTPatchForumTopicBody {
-    title: string;
+export type RESTPatchForumTopicBody = {
     content: string;
+    title: string;
 }
-export interface RESTPatchForumTopicResult {
+export type RESTPatchForumTopicResult = {
     forumTopic: ForumTopicPayload;
 }
 

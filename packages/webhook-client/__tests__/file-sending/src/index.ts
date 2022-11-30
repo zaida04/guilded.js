@@ -1,6 +1,6 @@
-import { readFileSync } from "fs";
-
+import { readFileSync } from "node:fs";
 import { WebhookClient } from "../../../lib/index";
+
 const client = new WebhookClient("");
 
 void (async (): Promise<unknown> => {

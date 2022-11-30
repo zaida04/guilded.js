@@ -1,7 +1,7 @@
 import type { WebhookPayload } from "../structs";
 import type { SkeletonWSPayload, WSEvent } from "./Events";
 
-export interface WSServerWebhookCreatedPayload extends SkeletonWSPayload {
+export type WSServerWebhookCreatedPayload = SkeletonWSPayload & {
     d: {
         serverId: string;
         webhook: WebhookPayload;
@@ -9,7 +9,7 @@ export interface WSServerWebhookCreatedPayload extends SkeletonWSPayload {
     t: WSEvent["ServerWebhookCreated"];
 }
 
-export interface WSServerWebhookUpdatedPayload extends SkeletonWSPayload {
+export type WSServerWebhookUpdatedPayload = SkeletonWSPayload & {
     d: {
         serverId: string;
         webhook: WebhookPayload;

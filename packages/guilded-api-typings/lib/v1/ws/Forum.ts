@@ -1,58 +1,58 @@
 import type { ForumTopicPayload } from "../structs";
 import type { SkeletonWSPayload, WSEvent } from "./Events";
 
-export interface WSForumTopicCreated extends SkeletonWSPayload {
+export type WSForumTopicCreated = SkeletonWSPayload & {
     d: {
-        serverId: string;
         forumTopic: ForumTopicPayload;
+        serverId: string;
     };
     t: WSEvent["ForumTopicCreated"];
 }
 
-export interface WSForumTopicUpdated extends SkeletonWSPayload {
+export type WSForumTopicUpdated = SkeletonWSPayload & {
     d: {
-        serverId: string;
         forumTopic: ForumTopicPayload;
+        serverId: string;
     };
     t: WSEvent["ForumTopicUpdated"];
 }
 
-export interface WSForumTopicDeleted extends SkeletonWSPayload {
+export type WSForumTopicDeleted = SkeletonWSPayload & {
     d: {
-        serverId: string;
         forumTopic: ForumTopicPayload;
+        serverId: string;
     };
     t: WSEvent["ForumTopicDeleted"];
 }
 
-export interface WSForumTopicPinned extends SkeletonWSPayload {
+export type WSForumTopicPinned = SkeletonWSPayload & {
     d: {
-        serverId: string;
         forumTopic: ForumTopicPayload;
+        serverId: string;
     };
     t: WSEvent["ForumTopicPinned"];
 }
 
-export interface WSForumTopicUnpinned extends SkeletonWSPayload {
+export type WSForumTopicUnpinned = SkeletonWSPayload & {
     d: {
-        serverId: string;
         forumTopic: ForumTopicPayload;
+        serverId: string;
     };
     t: WSEvent["ForumTopicUnpinned"];
 }
 
-export interface WSForumTopicLocked extends SkeletonWSPayload {
+export type WSForumTopicLocked = SkeletonWSPayload & {
     d: {
-        serverId: string;
         forumTopic: ForumTopicPayload;
+        serverId: string;
     };
     t: WSEvent["ForumTopicLocked"];
 }
 
-export interface WSForumTopicUnlocked extends SkeletonWSPayload {
+export type WSForumTopicUnlocked = SkeletonWSPayload & {
     d: {
-        serverId: string;
         forumTopic: ForumTopicPayload;
+        serverId: string;
     };
     t: WSEvent["ForumTopicUnlocked"];
 }

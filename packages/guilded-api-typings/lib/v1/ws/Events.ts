@@ -49,23 +49,23 @@ export const WebSocketEvents = {
 } as const;
 export type WSEvent = typeof WebSocketEvents;
 
-export interface SkeletonWSPayload {
+export type SkeletonWSPayload = {
     d: unknown;
-    s?: string;
     op: WSOpCodes;
+    s?: string;
     t: keyof WSEvent;
 }
 
-export interface WSWelcomePayload extends SkeletonWSPayload {
+export type WSWelcomePayload = SkeletonWSPayload & {
     d: {
         heartbeatIntervalMs: number;
+        lastMessageId: string;
         user: {
-            id: string;
             botId: string;
-            name: string;
             createdAt: string;
             createdBy: string;
+            id: string;
+            name: string;
         };
-        lastMessageId: string;
     };
 }

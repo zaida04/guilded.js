@@ -1,8 +1,7 @@
 import type { APIContent, APIEmbed } from "@guildedjs/guilded-api-typings";
-
 import { Embed } from "./Embed";
 
-export function parseToMessage(input: string | EmbedStructure = "", embed?: EmbedStructure): APIContent {
+export function parseToMessage(input: EmbedStructure | string = "", embed?: EmbedStructure): APIContent {
     return {
         document: {
             data: {},
@@ -49,16 +48,17 @@ export function parseToMessage(input: string | EmbedStructure = "", embed?: Embe
 
 /**
  * Parse a message recieved from Guilded into a more digestable structure
+ *
  * @internal
  */
 export function parseMessage(data: APIContent): parsedMessage {
     const parsedMessageArray: parsedTextResponse[] = [];
     let parsedMessageTextContent = "";
     const mentions: {
-        users: string[];
         channels: string[];
         reactions: string[];
         roles: string[];
+        users: string[];
     } = {
         channels: [],
         reactions: [],
@@ -70,9 +70,9 @@ export function parseMessage(data: APIContent): parsedMessage {
         x.type === "webhookMessage" ? (x.data as { embeds: APIEmbed[] }).embeds.length > 0 : true,
     );
 
-    for (let i = 0; i < messageLinesWithoutEmpty.length; i++) {
-        const messageLine = data.document.nodes[i];
-        if (i) parsedMessageTextContent += "\n";
+    for (let index = 0; index < messageLinesWithoutEmpty.length; index++) {
+        const messageLine = data.document.nodes[index];
+        if (index) parsedMessageTextContent += "\n";
         switch (messageLine.type) {
             case "paragraph": {
                 for (const node of messageLine.nodes) {
@@ -85,13 +85,16 @@ export function parseMessage(data: APIContent): parsedMessage {
                                         type: "text",
                                     });
                                 }
+
                                 parsedMessageTextContent += leaf.text;
                             }
+
                             break;
                         }
+
                         case "inline": {
                             const castedDataNode = node.data as MessageDataNode;
-                            for (const leaf of node.nodes![0].leaves!) {
+                            const leaf = node.nodes![0].leaves![0]
                                 switch (node.type) {
                                     case "mention": {
                                         switch (castedDataNode.mention!.type) {
@@ -104,6 +107,7 @@ export function parseMessage(data: APIContent): parsedMessage {
                                                 });
                                                 break;
                                             }
+
                                             case "role": {
                                                 parsedMessageArray.push({
                                                     content: leaf.text,
@@ -114,8 +118,10 @@ export function parseMessage(data: APIContent): parsedMessage {
                                                 break;
                                             }
                                         }
+
                                         break;
                                     }
+
                                     /* istanbul ignore next */
                                     case "reaction": {
                                         mentions.reactions.push(castedDataNode.reaction!.id);
@@ -126,6 +132,7 @@ export function parseMessage(data: APIContent): parsedMessage {
                                         });
                                         break;
                                     }
+
                                     case "channel": {
                                         mentions.channels.push(castedDataNode.channel!.id);
                                         parsedMessageArray.push({
@@ -136,14 +143,17 @@ export function parseMessage(data: APIContent): parsedMessage {
                                         break;
                                     }
                                 }
+
                                 parsedMessageTextContent += leaf.text;
                                 break;
                             }
-                        }
+                        
                     }
                 }
+
                 break;
             }
+
             /* istanbul ignore next */
             case "block-quote-container": {
                 for (const messageNodes of messageLine.nodes) {
@@ -156,9 +166,11 @@ export function parseMessage(data: APIContent): parsedMessage {
                                         type: "text",
                                     });
                                 }
+
                                 parsedMessageTextContent += node.leaves![0].text;
                                 break;
                             }
+
                             case "inline": {
                                 const castedDataNode = node.data as MessageDataNode;
                                 switch (node.type) {
@@ -173,6 +185,7 @@ export function parseMessage(data: APIContent): parsedMessage {
                                                 });
                                                 break;
                                             }
+
                                             case "role": {
                                                 parsedMessageArray.push({
                                                     content: node.nodes![0].leaves![0].text,
@@ -183,8 +196,10 @@ export function parseMessage(data: APIContent): parsedMessage {
                                                 break;
                                             }
                                         }
+
                                         break;
                                     }
+
                                     case "reaction": {
                                         mentions.reactions.push(castedDataNode.reaction!.id);
                                         parsedMessageArray.push({
@@ -194,6 +209,7 @@ export function parseMessage(data: APIContent): parsedMessage {
                                         });
                                         break;
                                     }
+
                                     case "channel": {
                                         mentions.channels.push(castedDataNode.channel!.id);
                                         parsedMessageArray.push({
@@ -204,14 +220,17 @@ export function parseMessage(data: APIContent): parsedMessage {
                                         break;
                                     }
                                 }
+
                                 parsedMessageTextContent += node.nodes![0].leaves![0].text;
                                 break;
                             }
                         }
                     }
                 }
+
                 break;
             }
+
             case "markdown-plain-text": {
                 if (messageLine.nodes![0].leaves![0].text) {
                     parsedMessageArray.push({
@@ -219,9 +238,11 @@ export function parseMessage(data: APIContent): parsedMessage {
                         type: "text",
                     });
                 }
+
                 parsedMessageTextContent += messageLine.nodes![0].leaves![0].text;
                 break;
             }
+
             case "webhookMessage": {
                 embeds.push(...(messageLine.data as { embeds: APIEmbed[] }).embeds);
                 break;
@@ -239,62 +260,65 @@ export function parseMessage(data: APIContent): parsedMessage {
 
 /**
  * A parsed message
+ *
  * @internal
  */
-export interface parsedMessage {
-    parsedText: string;
-    parsedArr: parsedTextResponse[];
+export type parsedMessage = {
+    embeds: APIEmbed[];
     mentions: {
-        users: string[];
         channels: string[];
         reactions: string[];
         roles: string[];
+        users: string[];
     };
-    embeds: APIEmbed[];
+    parsedArr: parsedTextResponse[];
+    parsedText: string;
 }
 
 /**
  * The mentions this message might contain
+ *
  * @internal
  */
-export interface MessageDataNode {
-    reaction?: {
-        id: string;
-    };
-    mention?: {
-        id: string | number;
-        type: string;
-        matcher: string;
-        name: string;
-        color: string;
-        nickname?: boolean;
-        avatar?: string;
-    };
+export type MessageDataNode = {
     channel?: {
         id: string;
         matcher: string;
         name: string;
     };
+    mention?: {
+        avatar?: string;
+        color: string;
+        id: number | string;
+        matcher: string;
+        name: string;
+        nickname?: boolean;
+        type: string;
+    };
+    reaction?: {
+        id: string;
+    };
 }
 
-export type EmbedStructure = Embed | APIEmbed;
+export type EmbedStructure = APIEmbed | Embed;
 
 /**
  * The parsed text of each leaf in the message
+ *
  * @internal
  */
-export interface parsedTextResponse {
-    type: string;
+export type parsedTextResponse = {
+    channel?: unknown;
     content: string;
     mention?: unknown;
     reaction?: unknown;
-    channel?: unknown;
+    type: string;
 }
 
 /**
  * The message structure of a string -> message object suitable to send to guilded
  */
-export interface enforcedMessageStructure {
-    messageId: string;
+export type enforcedMessageStructure = {
     content: APIContent;
+    messageId: string;
 }

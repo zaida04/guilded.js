@@ -1,20 +1,20 @@
 import type { ChannelType, ServerChannelPayload } from "../structs/Channel";
 
-export interface RESTPostChannelsBody {
-    name: string;
-    topic?: string;
-    isPublic?: boolean;
-    type: ChannelType;
-    serverId: string;
-    groupId?: string;
+export type RESTPostChannelsBody = {
     categoryId?: number;
+    groupId?: string;
+    isPublic?: boolean;
+    name: string;
+    serverId: string;
+    topic?: string;
+    type: ChannelType;
 }
 
-export interface RESTPostChannelsResult {
+export type RESTPostChannelsResult = {
     channel: ServerChannelPayload;
 }
 
-export type RESTPatchChannelBody = Pick<RESTPostChannelsBody, "topic" | "isPublic"> & { name?: string };
+export type RESTPatchChannelBody = Pick<RESTPostChannelsBody, "isPublic" | "topic"> & { name?: string };
 
 export type RESTGetChannelResult = RESTPostChannelsResult;
 export type RESTPatchChannelResult = RESTPostChannelsResult;

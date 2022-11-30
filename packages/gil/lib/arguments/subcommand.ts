@@ -1,5 +1,4 @@
 import type { Message } from "guilded.js";
-
 import { Argument } from "../structures/Argument";
 import type { Command, CommandArgument } from "../structures/Command";
 

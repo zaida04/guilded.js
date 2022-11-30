@@ -1,49 +1,72 @@
 /* eslint-disable @typescript-eslint/no-base-to-string */
-import { SkeletonWSPayload, WSEvent, WSOpCodes, WSWelcomePayload } from "@guildedjs/guilded-api-typings";
-import { EventEmitter } from "events";
+import { EventEmitter } from "node:events";
+import type { SkeletonWSPayload, WSEvent, WSWelcomePayload } from "@guildedjs/guilded-api-typings";
+import { WSOpCodes } from "@guildedjs/guilded-api-typings";
 import type TypedEmitter from "typed-emitter";
 import WebSocket from "ws";
 
 export class WebSocketManager {
-    /** The version of the websocket to connect to. */
+    /**
+     * The version of the websocket to connect to.
+     */
     version = this.options.version ?? 1;
 
-    /** Token used to authenticate requests. */
+    /**
+     * Token used to authenticate requests.
+     */
     token = this.options.token;
 
-    /** The websocket connected to guilded. */
+    /**
+     * The websocket connected to guilded.
+     */
     socket: WebSocket | null = null;
 
-    /** Whether or not this connection is connected and heartbeating. */
+    /**
+     * Whether or not this connection is connected and heartbeating.
+     */
     isAlive = false;
 
-    /** The amount of milliseconds the websocket took to respond to the last ping request. This will be zero before the first heartbeat */
+    /**
+     * The amount of milliseconds the websocket took to respond to the last ping request. This will be zero before the first heartbeat
+     */
     ping = 0;
 
-    /** The timestamp in milliseconds of the last ping request. */
+    /**
+     * The timestamp in milliseconds of the last ping request.
+     */
     lastPingedAt = 0;
 
-    /** The last message id received. Used in the event of resuming connections. */
+    /**
+     * The last message id received. Used in the event of resuming connections.
+     */
     lastMessageId: string | null = null;
 
-    /** The date since the last initial connection was established. */
+    /**
+     * The date since the last initial connection was established.
+     */
     connectedAt: Date | null = null;
 
-    /** Emitter in charge of emitting ws gateway related events */
+    /**
+     * Emitter in charge of emitting ws gateway related events
+     */
     emitter = new EventEmitter() as TypedEmitter<WebsocketManagerEvents>;
 
-    /** Count of how many times a reconnect has been attempted */
+    /**
+     * Count of how many times a reconnect has been attempted
+     */
     reconnectAttemptAmount = 0;
 
     constructor(public readonly options: WebSocketOptions) {}
 
-    /** The url that will be used to connect. Prioritizes proxy url and if not available uses the default base url for guidled. */
+    /**
+     * The url that will be used to connect. Prioritizes proxy url and if not available uses the default base url for guidled.
+     */
     get wsURL(): string {
         return this.options.proxyURL ?? `wss://www.guilded.gg/websocket/v${this.version}`;
     }
 
     get reconnectAttemptExceeded(): boolean {
-        return this.reconnectAttemptAmount >= (this.options.reconnectAttemptLimit ?? Infinity);
+        return this.reconnectAttemptAmount >= (this.options.reconnectAttemptLimit ?? Number.POSITIVE_INFINITY);
     }
 
     get shouldReplayMissedEvents(): boolean {
@@ -62,14 +85,15 @@ export class WebSocketManager {
             this.socket = new WebSocket(this.wsURL, {
                 headers,
             });
-        } catch (e) {
-            if (!this.shouldRequestMissedEvents) throw e;
+        } catch (error) {
+            if (!this.shouldRequestMissedEvents) throw error;
             this.lastMessageId = null;
 
             this._handleDisconnect();
-            if (e instanceof Error) {
-                this.emitter.emit("error", e.message, e);
+            if (error instanceof Error) {
+                this.emitter.emit("error", error.message, error);
             }
+
             this.emitter.emit("exit", "Gateway connection permanently closed BEFORE connection establishable due to error.");
             return;
         }
@@ -107,9 +131,11 @@ export class WebSocketManager {
     _handleDisconnect(): void {
         if ((this.options.autoConnectOnErr ?? true) || !this.reconnectAttemptExceeded) {
             this.reconnectAttemptAmount++;
-            return this.connect();
+            this.connect();
+            return;
         }
-        return this.destroy();
+
+        this.destroy();
     }
 
     _debug(str: any): boolean {
@@ -168,29 +194,41 @@ export class WebSocketManager {
     }
 }
 
-export interface WebSocketOptions {
-    /** The bot's token. */
-    token: string;
-    /** The base url that the websocket will connect to. */
-    proxyURL?: string;
-    /** The version of the websocket to connect to. */
-    version?: 1;
-    /** Whether to try to re-establish connection on error */
+export type WebSocketOptions = {
+    /**
+     * Whether to try to re-establish connection on error
+     */
     autoConnectOnErr?: boolean;
-    /** Limit of how many times a reconnection should be attempted */
+    /**
+     * The base url that the websocket will connect to.
+     */
+    proxyURL?: string;
+    /**
+     * Limit of how many times a reconnection should be attempted
+     */
     reconnectAttemptLimit?: number;
-    /** Whether the manager should request missed events on reconnect */
+    /**
+     * Whether the manager should request missed events on reconnect
+     */
     replayMissedEvents?: boolean;
+    /**
+     * The bot's token.
+     */
+    token: string;
+    /**
+     * The version of the websocket to connect to.
+     */
+    version?: 1;
 }
 
 // eslint-disable-next-line @typescript-eslint/consistent-type-definitions
 type WebsocketManagerEvents = {
-    debug: (data: any) => unknown;
-    raw: (data: any) => unknown;
-    error: (reason: string, err: Error | null, data?: any) => unknown;
-    exit: (info: string) => unknown;
-    unknown: (reason: string, data: any) => unknown;
-    reconnect: () => unknown;
-    gatewayEvent: (event: keyof WSEvent, data: SkeletonWSPayload) => unknown;
-    ready: (user: WSWelcomePayload["d"]["user"]) => unknown;
+    debug(data: any): unknown;
+    error(reason: string, err: Error | null, data?: any): unknown;
+    exit(info: string): unknown;
+    gatewayEvent(event: keyof WSEvent, data: SkeletonWSPayload): unknown;
+    raw(data: any): unknown;
+    ready(user: WSWelcomePayload["d"]["user"]): unknown;
+    reconnect(): unknown;
+    unknown(reason: string, data: any): unknown;
 };

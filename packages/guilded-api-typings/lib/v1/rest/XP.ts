@@ -2,10 +2,10 @@
  * POST
  * /servers/:serverId/members/:userId/xp
  */
-export interface RESTPostUserXpResult {
+export type RESTPostUserXpResult = {
     total: number;
 }
-export interface RESTPostUserXPBody {
+export type RESTPostUserXPBody = {
     amount: number;
 }
 
@@ -13,9 +13,9 @@ export interface RESTPostUserXPBody {
  * POST
  * /servers/:serverId/roles/:roleId/xp
  */
-export interface RESTPostRoleXpResult {
+export type RESTPostRoleXpResult = {
     total: number;
 }
-export interface RESTPostRoleXPBody {
+export type RESTPostRoleXPBody = {
     amount: number;
 }

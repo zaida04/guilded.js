@@ -1,18 +1,20 @@
+import { opendir } from "node:fs/promises";
+import path from "node:path";
 import { yellowBright } from "colorette";
-import { opendir } from "fs/promises";
-import path from "path";
 
-/** Walks through a directory allowing you to process it with a for await loop */
+/**
+ * Walks through a directory allowing you to process it with a for await loop
+ */
 export async function* walk(dir: string): AsyncGenerator<any, any, unknown> {
     const folder = await opendir(dir).catch((error) => {
         if (error.message.startsWith("ENOENT: no such file or directory")) {
             console.log(
                 yellowBright(
-                    `[WARN] Missing folder: ${dir.substring(
-                        dir.lastIndexOf("/"),
+                    `[WARN] Missing folder: ${dir.slice(
+                        Math.max(0, dir.lastIndexOf("/")),
                     )}. To make this warning go away, simply create the folder in your src folder.`,
                 ),
-            );
+            ); 
         } else console.log(error);
     });
     if (!folder) return;
@@ -28,6 +30,7 @@ export async function* walk(dir: string): AsyncGenerator<any, any, unknown> {
         if (![".js", ".ts"].some((suffix) => entry.endsWith(suffix))) continue;
         // since declaration files end with ts they need to be ignored as well
         else if (entry.endsWith(".d.ts")) continue;
+        // eslint-disable-next-line @typescript-eslint/no-require-imports
         else if (d.isFile()) yield [d.name, require(entry)];
     }
 

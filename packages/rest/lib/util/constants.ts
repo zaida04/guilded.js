@@ -1,4 +1,6 @@
-/** The meanings of each of the known guilded api response status codes. */
+/**
+ * The meanings of each of the known guilded api response status codes.
+ */
 export const GUILDED_STATUS_CODES = {
     200: "The request was successful" as const,
     201: "The content was created" as const,

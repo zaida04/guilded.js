@@ -1,5 +1,6 @@
 **/node_modules/**
-dist/
+**/dist/**
+.eslintrc.js
 types/
 *.d.ts
 packages/**/*.js

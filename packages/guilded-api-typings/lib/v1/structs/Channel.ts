@@ -1,18 +1,18 @@
-export interface ServerChannelPayload {
-    id: string;
-    type: ChannelType;
-    name: string;
-    topic?: string;
+export type ServerChannelPayload = {
+    archivedAt?: string;
+    archivedBy?: string;
+    categoryId?: string;
     createdAt: string;
     createdBy: string;
-    updatedAt?: string;
-    serverId: string;
-    parentId?: string;
-    categoryId?: string;
     groupId: string;
+    id: string;
     isPublic?: boolean;
-    archivedBy?: string;
-    archivedAt?: string;
+    name: string;
+    parentId?: string;
+    serverId: string;
+    topic?: string;
+    type: ChannelType;
+    updatedAt?: string;
 }
 
-export type ChannelType = "announcements" | "chat" | "calendar" | "forums" | "media" | "docs" | "voice" | "list" | "scheduling" | "stream";
+export type ChannelType = "announcements" | "calendar" | "chat" | "docs" | "forums" | "list" | "media" | "scheduling" | "stream" | "voice";
