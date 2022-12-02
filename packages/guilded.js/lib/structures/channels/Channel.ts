@@ -105,7 +105,7 @@ export class Channel extends Base {
     }
 
     /** Send a chat message in the channel. */
-    send(content: RESTPostChannelMessagesBody | string) {
+    send(content: MessageContent) {
         return this.client.messages.send(this.id, content);
     }
 }
