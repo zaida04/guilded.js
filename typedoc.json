@@ -8,6 +8,7 @@
     "lightHighlightTheme": "github-light",
     "darkHighlightTheme": "github-dark",
     "name": "Guilded.JS",
+		"json": "./docs/output.json",
     "out": "./docs/",
     "readme": "./README.md",
     "tsconfig": "./tsconfig.json"
