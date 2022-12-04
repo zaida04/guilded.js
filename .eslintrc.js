@@ -73,6 +73,7 @@ module.exports = {
                         ]
                     }
                 ],
+								"react/prop-types": 0,
                 "@next/next/no-html-link-for-pages": [2, path.join(__dirname, "apps", "docs")]
             }
         }

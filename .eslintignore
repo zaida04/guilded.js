@@ -4,3 +4,4 @@
 types/
 *.d.ts
 packages/**/*.js
+apps/**/*.js

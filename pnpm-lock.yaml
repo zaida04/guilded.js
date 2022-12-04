@@ -68,6 +68,7 @@ importers:
       react-code-blocks: 0.0.9-0
       react-dom: 18.2.0
       tailwindcss: ^3.2.4
+      typedoc: 0.23.21
       typescript: 4.9.3
     dependencies:
       next: 13.0.5_biqbaboplfbrettd7655fr4n2y
@@ -80,7 +81,8 @@ importers:
       '@types/react-dom': 18.0.9
       autoprefixer: 10.4.13_postcss@8.4.19
       postcss: 8.4.19
-      tailwindcss: 3.2.4_postcss@8.4.19
+      tailwindcss: 3.2.4
+      typedoc: 0.23.21_typescript@4.9.3
       typescript: 4.9.3
 
   packages/gil:
@@ -5774,12 +5776,10 @@ packages:
       tslib: 2.4.0
     dev: true
 
-  /tailwindcss/3.2.4_postcss@8.4.19:
+  /tailwindcss/3.2.4:
     resolution: {integrity: sha512-AhwtHCKMtR71JgeYDaswmZXhPcW9iuI9Sp2LvZPo9upDZ7231ZJ7eA9RaURbhpXGVlrjX4cFNlB4ieTetEb7hQ==}
     engines: {node: '>=12.13.0'}
     hasBin: true
-    peerDependencies:
-      postcss: ^8.0.9
     dependencies:
       arg: 5.0.2
       chokidar: 3.5.3
