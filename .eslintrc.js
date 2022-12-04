@@ -9,7 +9,7 @@ module.exports = {
         "neon/prettier"
     ],
     "parserOptions": {
-        "project": "./tsconfig.json"
+        "project": "./tsconfig.eslint.json"
     },
     "rules": {
         "@typescript-eslint/unbound-method": "off",
@@ -58,7 +58,10 @@ module.exports = {
                 }
             },
             "parserOptions": {
-                "project": "./tsconfig.json"
+                "project": "./tsconfig.eslint.json",
+								"ecmaFeatures": {
+									"jsx": true
+								}
             },
             "rules": {
                 "react/react-in-jsx-scope": 0,

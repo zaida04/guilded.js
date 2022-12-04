@@ -6,18 +6,16 @@
     "author": "Zaid \"Nico\" <contact@nico.engineer>",
     "scripts": {
         "build": "pnpm recursive run build",
-        "lint": "eslint packages/ scripts/ apps/",
+        "lint": "eslint packages/ scripts/ services/ apps/",
         "lint:fix": "pnpm run lint --fix",
         "docs": "rimraf docs && typedoc && ts-node scripts/post-docs.ts",
         "test": "nyc mocha -r ts-node/register ./packages/**/__tests__/*.test.ts",
         "test:build": "pnpm run build && pnpm run test",
         "prepublishOnly": "pnpm run lint && pnpm recursive run prepublishOnly",
-        "prerelease": "pnpm run changeset && pnpm run changeset:version && pnpm install -r",
         "changeset": "changeset",
         "changeset:version": "changeset version",
         "prepare": "husky install",
-        "prettier": "prettier --write **/*.{ts,js,json,yml,yaml,md}",
-        "reset": "rimraf node_modules/ packages/**/node_modules packages/**/dist packages/**/types"
+        "prettier": "prettier --write **/*.{ts,js,json,yml,yaml,md}"
     },
     "devDependencies": {
         "@changesets/cli": "^2.25.2",

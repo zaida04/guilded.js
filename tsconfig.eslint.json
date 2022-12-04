@@ -1,11 +1,9 @@
 {
     "$schema": "https://json.schemastore.org/tsconfig.json",
     "extends": "./tsconfig.json",
-    "compilerOptions": {
-        "jsx": "preserve"
-    },
     "include": [
         "packages",
+				"apps",
         "services",
         "scripts",
         "examples"
