@@ -105,7 +105,7 @@ export class WebSocketManager {
     }
 
     _handleDisconnect(): void {
-        if (!(this.options.autoConnectOnErr ?? true) || this.reconnectAttemptExceeded) {
+        if ((this.options.autoConnectOnErr ?? true) || !this.reconnectAttemptExceeded) {
             this.reconnectAttemptAmount++;
             return this.connect();
         }
