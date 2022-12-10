@@ -1,6 +1,6 @@
 {
     "name": "@guildedjs/gil",
-    "version": "0.3.0",
+    "version": "0.3.1",
     "description": "Framework for guilded.js that allows you to build bots with ease.",
     "author": "Zaid \"Nico\" <contact@nico.engineer>",
     "license": "MIT",
