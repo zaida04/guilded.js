@@ -134,10 +134,10 @@ importers:
       form-data: ^4.0.0
       typescript: 4.9.3
     dependencies:
+      '@guildedjs/guilded-api-typings': link:../guilded-api-typings
       '@guildedjs/rest': link:../rest
       form-data: 4.0.0
     devDependencies:
-      '@guildedjs/guilded-api-typings': link:../guilded-api-typings
       typescript: 4.9.3
 
   packages/ws:

@@ -14,10 +14,10 @@
         "prepublishOnly": "rimraf dist/ && rimraf types/ && pnpm run build"
     },
     "devDependencies": {
-        "@guildedjs/guilded-api-typings": "workspace:*",
         "typescript": "4.9.3"
     },
     "dependencies": {
+        "@guildedjs/guilded-api-typings": "workspace:*",
         "@guildedjs/rest": "workspace:*",
         "form-data": "^4.0.0"
     },
