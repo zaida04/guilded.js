@@ -1,38 +1,54 @@
+/* eslint-disable @typescript-eslint/no-require-imports */
+import EventEmitter from "node:events";
+import FormData from "form-data";
+import { stringify } from "qs";
+import { GuildedAPIError } from "./errors/GuildedAPIError";
+import { PermissionsError } from "./errors/PermissionsError";
+import type { RestOptions } from "./typings";
+// eslint-disable-next-line import/order
+import { Router } from "./util/Router";
+
 let HTTPFetch = globalThis.fetch;
 if (!HTTPFetch) {
     HTTPFetch = require("node-fetch");
 }
 
-import EventEmitter from "events";
-import { stringify } from "qs";
-
 const packageDetails = require("../package.json");
-import FormData from "form-data";
 
-import { GuildedAPIError } from "./errors/GuildedAPIError";
-import { PermissionsError } from "./errors/PermissionsError";
-import type { RestOptions } from "./typings";
-import { Router } from "./util/Router";
+const sleep = async (ms: number): Promise<unknown> => new Promise((resolve) => setTimeout(resolve, ms));
+
 
 export class RestManager {
-    /** The bot token to be used for making requests. */
+    /**
+     * The bot token to be used for making requests.
+     */
     token = this.options.token;
 
-    /** The version of the API to be used for making requests. By default, this will use the latest version that the library supports. */
+    /**
+     * The version of the API to be used for making requests. By default, this will use the latest version that the library supports.
+     */
     version = this.options.version ?? 1;
 
-    /** The proxy url if it was set. */
+    /**
+     * The proxy url if it was set.
+     */
     proxyURL = this.options.proxyURL;
 
-    /** The router with all the helper methods. */
+    /**
+     * The router with all the helper methods.
+     */
     readonly router = new Router(this);
 
-    /** Logging emitter */
+    /**
+     * Logging emitter
+     */
     readonly emitter = new EventEmitter();
 
     constructor(public readonly options: RestOptions) {}
 
-    /** The base url to send the request to. */
+    /**
+     * The base url to send the request to.
+     */
     get baseURL(): string {
         return this.proxyURL ?? `https://www.guilded.gg/api/v${this.version}`;
     }
@@ -41,7 +57,7 @@ export class RestManager {
         data: MakeOptions<B, Q>,
         authenticated = true,
         retryCount = 0,
-        { returnAsText = false, bodyIsJSON = true }: { returnAsText?: boolean; bodyIsJSON?: boolean } = {},
+        { returnAsText = false, bodyIsJSON = true }: { bodyIsJSON?: boolean, returnAsText?: boolean; } = {},
     ): Promise<[Response, Promise<T | string>]> {
         const headers: HeadersInit = {};
         if (authenticated) headers.Authorization = `Bearer ${this.token}`;
@@ -69,8 +85,8 @@ export class RestManager {
         let response;
         try {
             response = await HTTPFetch(this.baseURL + queryAppendedURL, requestOptions);
-        } catch (e: any) {
-            throw new Error(`Error while making API call, ${e.message.toString()}`);
+        } catch (error: any) {
+            throw new Error(`Error while making API call, ${error.message.toString()}`);
         }
 
         if (!response.ok) {
@@ -80,7 +96,8 @@ export class RestManager {
                 if (retryCount >= (this.options?.maxRatelimitRetryLimit ?? 3)) {
                     throw new Error("MAX REQUEST RATELIMIT RETRY LIMIT REACHED.");
                 }
-                await sleep(retryAfterTime * 1000);
+
+                await sleep(retryAfterTime * 1_000);
                 return this.make<T, B, Q>(data, authenticated, retryCount++);
             }
 
@@ -88,13 +105,14 @@ export class RestManager {
             if (response.status === 403 && parsedResponse.code === "ForbiddenError") {
                 throw new PermissionsError(parsedResponse.message, data.method, data.path, parsedResponse.meta?.missingPermissions);
             }
+
             throw new GuildedAPIError(parsedResponse.message, data.method, data.path, response.status);
         }
 
         return [response, returnAsText ? response.text() : (response.json().catch(() => ({})) as Promise<T>)];
     }
 
-    public get<T extends JSONB, Q = RequestBodyObject>(path: string, query?: Q, authenticated = true): Promise<T> {
+    public async get<T extends JSONB, Q = RequestBodyObject>(path: string, query?: Q, authenticated = true): Promise<T> {
         return this.make<T, never, Q>(
             {
                 method: "GET",
@@ -102,10 +120,10 @@ export class RestManager {
                 query,
             },
             authenticated,
-        ).then((x) => x[1] as Promise<T>);
+        ).then(async (x) => x[1] as Promise<T>);
     }
 
-    public post<T extends JSONB, B = RequestBodyObject>(path: string, body?: B, authenticated = true): Promise<T> {
+    public async post<T extends JSONB, B = RequestBodyObject>(path: string, body?: B, authenticated = true): Promise<T> {
         return this.make<T, B>(
             {
                 body,
@@ -113,10 +131,10 @@ export class RestManager {
                 path,
             },
             authenticated,
-        ).then((x) => x[1] as Promise<T>);
+        ).then(async (x) => x[1] as Promise<T>);
     }
 
-    public delete<T extends JSONB, B = RequestBodyObject>(path: string, body?: B, authenticated = true): Promise<T> {
+    public async delete<T extends JSONB, B = RequestBodyObject>(path: string, body?: B, authenticated = true): Promise<T> {
         return this.make<T, B>(
             {
                 body,
@@ -124,10 +142,10 @@ export class RestManager {
                 path,
             },
             authenticated,
-        ).then((x) => x[1] as Promise<T>);
+        ).then(async (x) => x[1] as Promise<T>);
     }
 
-    public patch<T extends JSONB, B = RequestBodyObject>(path: string, body: B, authenticated = true): Promise<T> {
+    public async patch<T extends JSONB, B = RequestBodyObject>(path: string, body: B, authenticated = true): Promise<T> {
         return this.make<T, B>(
             {
                 body,
@@ -135,10 +153,10 @@ export class RestManager {
                 path,
             },
             authenticated,
-        ).then((x) => x[1] as Promise<T>);
+        ).then(async (x) => x[1] as Promise<T>);
     }
 
-    public put<T extends JSONB, B = RequestBodyObject>(path: string, body?: B, authenticated = true): Promise<T> {
+    public async put<T extends JSONB, B = RequestBodyObject>(path: string, body?: B, authenticated = true): Promise<T> {
         return this.make<T, B>(
             {
                 body,
@@ -146,19 +164,17 @@ export class RestManager {
                 path,
             },
             authenticated,
-        ).then((x) => x[1] as Promise<T>);
+        ).then(async (x) => x[1] as Promise<T>);
     }
 }
 
-export interface MakeOptions<B = Record<string, any>, Q = RequestBodyObject> {
-    method: string;
-    query?: Q;
-    path: string;
+export type MakeOptions<B = Record<string, any>, Q = RequestBodyObject> = {
     body?: B | FormData;
-    isFormData?: boolean;
     headers?: Record<string, string>;
+    isFormData?: boolean;
+    method: string;
+    path: string;
+    query?: Q;
 }
 export type JSONB = Record<string, any>;
 export type RequestBodyObject = JSONB | undefined;
-
-const sleep = (ms: number): Promise<unknown> => new Promise((r) => setTimeout(r, ms));

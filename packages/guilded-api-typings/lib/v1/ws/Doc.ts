@@ -1,24 +1,24 @@
 import type { DocPayload } from "../structs";
 import type { SkeletonWSPayload, WSEvent } from "./Events";
 
-export interface WSDocCreated extends SkeletonWSPayload {
+export type WSDocCreated = SkeletonWSPayload & {
     d: {
-        serverId: string;
         doc: DocPayload;
+        serverId: string;
     };
     t: WSEvent["DocCreated"];
 }
-export interface WSDocUpdated extends SkeletonWSPayload {
+export type WSDocUpdated = SkeletonWSPayload & {
     d: {
-        serverId: string;
         doc: DocPayload;
+        serverId: string;
     };
     t: WSEvent["DocUpdated"];
 }
-export interface WSDocDeleted extends SkeletonWSPayload {
+export type WSDocDeleted = SkeletonWSPayload & {
     d: {
-        serverId: string;
         doc: DocPayload;
+        serverId: string;
     };
     t: WSEvent["DocDeleted"];
 }

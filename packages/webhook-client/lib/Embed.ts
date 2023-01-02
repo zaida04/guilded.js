@@ -1,5 +1,4 @@
 import type { APIEmbed } from "@guildedjs/guilded-api-typings";
-
 import { resolveColor } from "./util";
 
 export class Embed {
@@ -16,9 +15,9 @@ export class Embed {
     public color: number | null;
 
     public footer: {
-        text: string;
         iconURL: string | null;
         proxyIconURL: string | null;
+        text: string;
     } | null;
 
     public image: APIEmbedMediaData | null;
@@ -33,10 +32,10 @@ export class Embed {
     } | null;
 
     public author: {
-        name: string | null;
         iconURL: string | null;
-        url: string | null;
+        name: string | null;
         proxyIconURL: string | null;
+        url: string | null;
     } | null;
 
     public fields: {
@@ -68,36 +67,47 @@ export class Embed {
         if ("color" in data && data.color !== undefined) {
             this.setColor(data.color);
         }
+
         if ("timestamp" in data && data.timestamp !== undefined) {
             this.setTimestamp(data.timestamp);
         }
+
         if ("title" in data && data.title !== undefined) {
             this.setTitle(data.title);
         }
+
         if ("description" in data && data.description !== undefined) {
             this.setDescription(data.description);
         }
+
         if ("url" in data && data.url !== undefined) {
             this.setURL(data.url);
         }
+
         if ("provider" in data && data.provider !== undefined) {
             this.setProvider(data.provider.name, data.provider.url);
         }
+
         if ("footer" in data && data.footer !== undefined) {
             this.setFooter(data.footer.text, data.footer.icon_url, data.footer.proxy_icon_url);
         }
+
         if ("image" in data && data.image !== undefined) {
             this.setImage(data.image.url, data.image.height, data.image.width, data.image.proxy_url);
         }
+
         if ("thumbnail" in data && data.thumbnail !== undefined) {
             this.setThumbnail(data.thumbnail.url, data.thumbnail.height, data.thumbnail.width, data.thumbnail.proxy_url);
         }
+
         if ("author" in data && data.author !== undefined) {
             this.setAuthor(data.author.name, data.author.icon_url, data.author.url, data.author.proxy_icon_url);
         }
+
         if ("fields" in data && data.fields !== undefined) {
             this.addFields(data.fields);
         }
+
         if ("video" in data && data.video !== undefined) {
             this.setVideo(data.video.url, data.video.height, data.video.width, data.video.proxy_url);
         }
@@ -118,7 +128,7 @@ export class Embed {
         return this;
     }
 
-    public setTimestamp(timestamp?: string | number | Date | null): this {
+    public setTimestamp(timestamp?: Date | number | string | null): this {
         if (timestamp === null) {
             this.timestamp = null;
             this.timestampString = null;
@@ -131,7 +141,7 @@ export class Embed {
 
         const parsedTimestamp =
             timestamp instanceof Date ? timestamp : Number.isInteger(timestamp) || typeof timestamp === "string" ? new Date(timestamp) : null;
-        if (!parsedTimestamp || (parsedTimestamp instanceof Date && isNaN(parsedTimestamp.getTime()))) {
+        if (!parsedTimestamp || (parsedTimestamp instanceof Date && Number.isNaN(parsedTimestamp.getTime()))) {
             throw new TypeError("Invalid DateResolvable passed into setTimestamp.");
         }
 
@@ -140,7 +150,7 @@ export class Embed {
         return this;
     }
 
-    public setColor(color?: string | number | [number, number, number] | null): this {
+    public setColor(color?: number | string | [number, number, number] | null): this {
         this.color = color ? resolveColor(color) : null;
         return this;
     }
@@ -182,7 +192,7 @@ export class Embed {
         return this;
     }
 
-    public addFields(fields: { name: string; value: string; inline?: boolean }[]): this {
+    public addFields(fields: { inline?: boolean, name: string; value: string; }[]): this {
         this.fields.push(
             ...fields.map((field) => ({
                 inline: field.inline ?? false,
@@ -265,9 +275,9 @@ export class Embed {
     }
 }
 
-export interface APIEmbedMediaData {
-    url: string;
-    proxyURL: string | null;
+export type APIEmbedMediaData = {
     height: string | null;
+    proxyURL: string | null;
+    url: string;
     width: string | null;
 }

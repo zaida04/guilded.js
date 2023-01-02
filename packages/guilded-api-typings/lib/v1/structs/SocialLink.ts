@@ -1,20 +1,11 @@
-/** The type of social link to retrieve */
+/**
+ * The type of social link to retrieve
+ */
 export type UserSocialLink =
-    | "twitch"
-    | "bnet"
-    | "psn"
-    | "xbox"
-    | "steam"
-    | "origin"
-    | "youtube"
-    | "twitter"
-    | "facebook"
-    | "switch"
-    | "patreon"
-    | "roblox";
+    "bnet" | "facebook" | "origin" | "patreon" | "psn" | "roblox" | "steam" | "switch" | "twitch" | "twitter" | "xbox" | "youtube";
 
-export interface SocialLink {
-    type: string;
-    serviceId?: string;
+export type SocialLink = {
     handle?: string;
+    serviceId?: string;
+    type: string;
 }

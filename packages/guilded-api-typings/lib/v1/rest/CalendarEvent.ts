@@ -4,18 +4,18 @@ import type { CalendarEventPayload, CalendarEventRsvpPayload } from "../structs/
  * POST
  * /channels/:channelId/events
  */
-export interface RESTPostCalendarEventBody {
-    name: string;
-    description?: string;
-    location?: string;
-    startsAt?: string;
-    url?: string;
+export type RESTPostCalendarEventBody = {
     color?: number;
+    description?: string;
     duration?: number;
     isPrivate?: boolean;
+    location?: string;
+    name: string;
     rsvpLimit?: number;
+    startsAt?: string;
+    url?: string;
 }
-export interface RESTPostCalendarEventResult {
+export type RESTPostCalendarEventResult = {
     calendarEvent: CalendarEventPayload;
 }
 
@@ -23,12 +23,12 @@ export interface RESTPostCalendarEventResult {
  * GET
  * /channels/:channelId/events
  */
-export interface RESTGetCalendarEventsBody {
-    before?: string;
+export type RESTGetCalendarEventsBody = {
     after?: string;
+    before?: string;
     limit?: number;
 }
-export interface RESTGetCalendarEventsResult {
+export type RESTGetCalendarEventsResult = {
     calendarEvents: CalendarEventPayload[];
 }
 
@@ -36,7 +36,7 @@ export interface RESTGetCalendarEventsResult {
  * GET
  * /channels/:channelId/events/:calendarEventId
  */
-export interface RESTGetCalendarEventResult {
+export type RESTGetCalendarEventResult = {
     calendarEvent: CalendarEventPayload;
 }
 
@@ -44,17 +44,17 @@ export interface RESTGetCalendarEventResult {
  * PATCH
  * /channels/:channelId/events/:calendarEventsId
  */
-export interface RESTPatchCalendarEventBody {
-    name?: string;
-    description?: string;
-    location?: string;
-    startsAt?: string;
-    url?: string;
+export type RESTPatchCalendarEventBody = {
     color?: number;
+    description?: string;
     duration?: number;
     isPrivate?: boolean;
+    location?: string;
+    name?: string;
+    startsAt?: string;
+    url?: string;
 }
-export interface RESTPatchCalendarEventResult {
+export type RESTPatchCalendarEventResult = {
     calendarEvent: CalendarEventPayload;
 }
 
@@ -68,7 +68,7 @@ export type RESTDeleteCalendarEventResult = never;
  * GET
  * /channels/:channelId/events/:calendarEventId/rsvps
  */
-export interface RESTGetCalendarEventRsvpsResult {
+export type RESTGetCalendarEventRsvpsResult = {
     calendarEventRsvps: CalendarEventRsvpPayload[];
 }
 
@@ -76,7 +76,7 @@ export interface RESTGetCalendarEventRsvpsResult {
  * GET
  * /channels/:channelId/events/:calendarEventId/rsvps/:userId
  */
-export interface RESTGetCalendarEventRsvpResult {
+export type RESTGetCalendarEventRsvpResult = {
     calendarEventRsvp: CalendarEventRsvpPayload;
 }
 
@@ -84,10 +84,10 @@ export interface RESTGetCalendarEventRsvpResult {
  * PATCH
  * /channels/:channelId/events/:calendarEventId/rsvps/:userId
  */
-export interface RESTPatchCalendarEventRsvpBody {
+export type RESTPatchCalendarEventRsvpBody = {
     status: string;
 }
-export interface RESTPatchCalendarEventRsvpResult {
+export type RESTPatchCalendarEventRsvpResult = {
     calendarEventRsvp: CalendarEventRsvpPayload;
 }
 

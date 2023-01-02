@@ -1,4 +1,4 @@
 {
     "$schema": "https://json.schemastore.org/lintstagedrc.schema.json",
-    "*.{js,ts}": "npx eslint --fix --ext ts,js"
+    "*.{ts,tsx,js,jsx}": "eslint --ext .js,.ts,.tsx --fix"
 }

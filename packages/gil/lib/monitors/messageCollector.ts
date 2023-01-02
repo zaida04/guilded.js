@@ -1,5 +1,4 @@
 import type { Message } from "guilded.js";
-
 import { Monitor } from "../structures/Monitor";
 
 export class MessageCollectorMonitor extends Monitor {
@@ -15,7 +14,8 @@ export class MessageCollectorMonitor extends Monitor {
             // Remove the collector
             this.client.messageCollectors.delete(message.createdById);
             // Resolve the collector
-            return collector.resolve([...collector.messages, message]);
+            collector.resolve([...collector.messages, message]);
+            return;
         }
 
         // More messages still need to be collected

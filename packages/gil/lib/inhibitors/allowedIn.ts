@@ -1,5 +1,4 @@
 import type { Message } from "guilded.js";
-
 import type { Command } from "../structures/Command";
 import { Inhibitor } from "../structures/Inhibitor";
 

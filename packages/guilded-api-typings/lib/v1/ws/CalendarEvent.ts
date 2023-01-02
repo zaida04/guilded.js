@@ -1,48 +1,48 @@
 import type { CalendarEventPayload, CalendarEventRsvpPayload } from "../structs/CalendarEvent";
 import type { SkeletonWSPayload, WSEvent } from "./Events";
 
-export interface WSCalendarEventCreated extends SkeletonWSPayload {
+export type WSCalendarEventCreated = SkeletonWSPayload & {
     d: {
-        serverId: string;
         calendarEvent: CalendarEventPayload;
+        serverId: string;
     };
     t: WSEvent["CalendarEventCreated"];
 }
-export interface WSCalendarEventUpdated extends SkeletonWSPayload {
+export type WSCalendarEventUpdated = SkeletonWSPayload & {
     d: {
-        serverId: string;
         calendarEvent: CalendarEventPayload;
+        serverId: string;
     };
     t: WSEvent["CalendarEventUpdated"];
 }
-export interface WSCalendarEventDeleted extends SkeletonWSPayload {
+export type WSCalendarEventDeleted = SkeletonWSPayload & {
     d: {
-        serverId: string;
         calendarEvent: CalendarEventPayload;
+        serverId: string;
     };
     t: WSEvent["CalendarEventDeleted"];
 }
 
-export interface WSCalendarEventRsvpUpdated extends SkeletonWSPayload {
+export type WSCalendarEventRsvpUpdated = SkeletonWSPayload & {
     d: {
-        serverId: string;
         calendarEventRsvp: CalendarEventRsvpPayload;
+        serverId: string;
     };
     t: WSEvent["CalendarEventRsvpUpdated"];
 }
 
-export interface WSCalendarEventRsvpManyUpdated extends SkeletonWSPayload {
+export type WSCalendarEventRsvpManyUpdated = SkeletonWSPayload & {
     d: {
-        serverId: string;
         calendarEventRsvps: CalendarEventRsvpPayload[];
+        serverId: string;
     };
     t: WSEvent["CalendarEventRsvpManyUpdated"];
 }
 
-export interface WSCalendarEventRsvpDeleted extends SkeletonWSPayload {
+export type WSCalendarEventRsvpDeleted = SkeletonWSPayload & {
     d: {
-        serverId: string;
         calendarEventRsvp: CalendarEventRsvpPayload;
+        serverId: string;
     };
     t: WSEvent["CalendarEventRsvpDeleted"];
 }

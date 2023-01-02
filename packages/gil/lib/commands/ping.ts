@@ -1,5 +1,4 @@
 import type { Message } from "guilded.js";
-
 import { Command } from "../structures/Command";
 
 export class PingCommand extends Command {

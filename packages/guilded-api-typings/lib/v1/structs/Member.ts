@@ -1,26 +1,26 @@
 import type { UserPayload, UserSummaryPayload } from "./User";
 
-export interface ServerMemberPayload {
-    user: UserPayload;
-    roleIds: number[];
-    nickname?: string;
-    joinedAt: string;
+export type ServerMemberPayload = {
     isOwner?: boolean;
-}
-
-export interface ServerMemberSummaryPayload {
-    user: UserSummaryPayload;
+    joinedAt: string;
+    nickname?: string;
     roleIds: number[];
+    user: UserPayload;
 }
 
-export interface ServerMemberBanPayload {
+export type ServerMemberSummaryPayload = {
+    roleIds: number[];
     user: UserSummaryPayload;
-    reason?: string;
-    createdBy: string;
+}
+
+export type ServerMemberBanPayload = {
     createdAt: string;
+    createdBy: string;
+    reason?: string;
+    user: UserSummaryPayload;
 }
 
-export interface ServerMemberRoleIdsPayload {
-    userId: string;
+export type ServerMemberRoleIdsPayload = {
     roleIds: number[];
+    userId: string;
 }

@@ -1,38 +1,38 @@
 import type { EmbedPayload } from "./Message";
 
 // embed struct for the client API, webhooks mainly
-export interface APIEmbed extends EmbedPayload {
+export type APIEmbed = EmbedPayload & {
     author?: APIEmbedAuthor;
+    footer?: APIEmbedFooter;
     image?: APIEmbedImage;
+    provider?: APIEmbedProvider;
     thumbnail?: APIEmbedThumbnail;
     video?: APIEmbedVideo;
-    provider?: APIEmbedProvider;
-    footer?: APIEmbedFooter;
 }
 
-export interface APIEmbedFooter {
-    text: string;
+export type APIEmbedFooter = {
     icon_url?: string;
     proxy_icon_url?: string;
+    text: string;
 }
-export interface APIEmbedImage {
-    url: string;
-    proxy_url?: string;
+export type APIEmbedImage = {
     height?: string;
+    proxy_url?: string;
+    url: string;
     width?: string;
 }
 export type APIEmbedThumbnail = APIEmbedImage;
 
 export type APIEmbedVideo = APIEmbedImage;
 
-export interface APIEmbedProvider {
+export type APIEmbedProvider = {
     name?: string;
     url?: string;
 }
 
-export interface APIEmbedAuthor {
-    name: string;
+export type APIEmbedAuthor = {
     icon_url?: string;
-    url?: string;
+    name: string;
     proxy_icon_url?: string;
+    url?: string;
 }

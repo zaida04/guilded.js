@@ -4,33 +4,37 @@ import type { ChatMessagePayload } from "../structs/Message";
  * POST
  * /channels/:channelId/messages
  */
-export interface RESTPostChannelMessagesResult {
+export type RESTPostChannelMessagesResult = {
     message: ChatMessagePayload;
 }
-export type RESTPostChannelMessagesBody = Pick<ChatMessagePayload, "isPrivate" | "replyMessageIds" | "embeds" | "isSilent"> & {
+export type RESTPostChannelMessagesBody = Pick<ChatMessagePayload, "embeds" | "isPrivate" | "isSilent" | "replyMessageIds"> & {
     content?: string;
 };
 /**
  * GET
  * /channels/:channelId/messages
  */
-export interface RESTGetChannelMessagesResult {
+export type RESTGetChannelMessagesResult = {
     messages: ChatMessagePayload[];
 }
-export interface RESTGetChannelMessagesQuery {
-    /** Uses ISO8601 timestamp **/
-    before?: string;
-    /** Uses ISO8601 timestamp **/
+export type RESTGetChannelMessagesQuery = {
+    /**
+     * Uses ISO8601 timestamp
+     */
     after?: string;
-    limit?: number;
+    /**
+     * Uses ISO8601 timestamp
+     */
+    before?: string;
     includePrivate?: boolean;
+    limit?: number;
 }
 
 /**
  * GET
  * /channels/:channelId/messages/:messageId
  */
-export interface RESTGetChannelMessageResult {
+export type RESTGetChannelMessageResult = {
     message: ChatMessagePayload;
 }
 

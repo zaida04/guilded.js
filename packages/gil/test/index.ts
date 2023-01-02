@@ -1,9 +1,8 @@
+import { join } from "node:path";
 import { config } from "dotenv";
-import { join } from "path";
+import { BotClient } from "../lib";
 
 config({ path: join(__dirname, "..", ".env") });
-
-import { BotClient } from "../lib";
 
 const bot = new BotClient({
     token: process.env.TOKEN!,
@@ -11,4 +10,4 @@ const bot = new BotClient({
     sourceFolderPath: __dirname,
 });
 
-void bot.login();
+bot.login();

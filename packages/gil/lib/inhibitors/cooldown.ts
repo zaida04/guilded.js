@@ -1,13 +1,14 @@
 import { Collection } from "@discordjs/collection";
 import type { Message } from "guilded.js";
-
 import type { Command } from "../structures/Command";
 import { Inhibitor } from "../structures/Inhibitor";
 
 export class CooldownInhibitor extends Inhibitor {
     name = "cooldown";
 
-    /** The collection of users that are in cooldown */
+    /**
+     * The collection of users that are in cooldown
+     */
     membersInCooldown = new Collection<string, Cooldown>();
 
     async execute(message: Message, command: Command): Promise<boolean> {
@@ -25,19 +26,20 @@ export class CooldownInhibitor extends Inhibitor {
                     });
                     return true;
                 }
+
                 cooldown.used = 0;
             }
 
             this.membersInCooldown.set(key, {
                 used: cooldown.used + 1,
-                timestamp: Date.now() + command.cooldown.seconds * 1000,
+                timestamp: Date.now() + command.cooldown.seconds * 1_000,
             });
             return false;
         }
 
         this.membersInCooldown.set(key, {
             used: 1,
-            timestamp: Date.now() + command.cooldown.seconds * 1000,
+            timestamp: Date.now() + command.cooldown.seconds * 1_000,
         });
         return false;
     }
@@ -47,11 +49,15 @@ export class CooldownInhibitor extends Inhibitor {
     }
 }
 
-export interface Cooldown {
-    /** The amount of times a command was used. */
-    used: number;
-    /** The timestamp when this command should be available to use again. */
+export type Cooldown = {
+    /**
+     * The timestamp when this command should be available to use again.
+     */
     timestamp: number;
+    /**
+     * The amount of times a command was used.
+     */
+    used: number;
 }
 
 export default CooldownInhibitor;

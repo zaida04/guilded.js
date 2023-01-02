@@ -5,22 +5,22 @@ import type { WebhookContentPayload, WebhookPayload } from "../structs/Webhook";
  * POST
  * /servers/:serverId/webhooks
  */
-export interface RESTPostServerWebhooksResult {
+export type RESTPostServerWebhooksResult = {
     webhook: WebhookPayload;
 }
-export interface RESTPostServerWebhooksBody {
-    name: string;
+export type RESTPostServerWebhooksBody = {
     channelId: string;
+    name: string;
 }
 
 /**
  * GET
  * /servers/:serverId/webhooks
  */
-export interface RESTGetServerWebhooksResult {
+export type RESTGetServerWebhooksResult = {
     webhooks: WebhookPayload[];
 }
-export interface RESTGetServerWebhooksQuery {
+export type RESTGetServerWebhooksQuery = {
     channelId: string;
 }
 
@@ -28,7 +28,7 @@ export interface RESTGetServerWebhooksQuery {
  * GET
  * /servers/:serverId/webhooks/:webhookId
  */
-export interface RESTGetServerWebhookResult {
+export type RESTGetServerWebhookResult = {
     webhook: WebhookPayload;
 }
 
@@ -36,12 +36,12 @@ export interface RESTGetServerWebhookResult {
  * PUT
  * /servers/:serverId/webhooks/:webhookId
  */
-export interface RESTPutServerWebhookResult {
+export type RESTPutServerWebhookResult = {
     webhook: WebhookPayload;
 }
-export interface RESTPutServerWebhookBody {
-    name: string;
+export type RESTPutServerWebhookBody = {
     channelId?: string;
+    name: string;
 }
 
 /**
@@ -54,12 +54,12 @@ export type RESTDeleteServerWebhookResult = never;
  * POST
  * /webhooks/:webhookId/:webhookToken
  */
-export interface RESTPostWebhookBody {
+export type RESTPostWebhookBody = {
+    avatar_url?: string;
     content?: string;
     embeds?: APIEmbed[];
+    payload_json?: Pick<RESTPostWebhookBody, "avatar_url" | "content" | "embeds" | "username">;
     username?: string;
-    avatar_url?: string;
-    payload_json?: Pick<RESTPostWebhookBody, "content" | "avatar_url" | "username" | "embeds">;
 }
 
 export type RESTPostWebhookResult = WebhookContentPayload;

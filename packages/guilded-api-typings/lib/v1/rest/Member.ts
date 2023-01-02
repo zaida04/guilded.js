@@ -4,10 +4,10 @@ import type { ServerMemberBanPayload, ServerMemberPayload, ServerMemberSummaryPa
  * PUT
  * /servers/:serverId/members/:userId/nickname
  */
-export interface RESTPutMemberNicknameResult {
+export type RESTPutMemberNicknameResult = {
     nickname: string;
 }
-export interface RESTPutMemberNicknameBody {
+export type RESTPutMemberNicknameBody = {
     nickname: string;
 }
 
@@ -21,7 +21,7 @@ export type RESTDeleteMemberNicknameResult = never;
  * GET
  * /servers/:serverId/members/:userId
  */
-export interface RESTGetMemberResult {
+export type RESTGetMemberResult = {
     member: ServerMemberPayload;
 }
 
@@ -29,7 +29,7 @@ export interface RESTGetMemberResult {
  * GET
  * /servers/:serverId/members
  */
-export interface RESTGetMembersResult {
+export type RESTGetMembersResult = {
     members: ServerMemberSummaryPayload[];
 }
 
@@ -43,7 +43,7 @@ export type RESTDeleteMemberResult = never;
  * GET
  * /servers/:serverId/bans/:userId
  */
-export interface RESTGetMemberBanResult {
+export type RESTGetMemberBanResult = {
     serverMemberBan: ServerMemberBanPayload;
 }
 
@@ -51,10 +51,10 @@ export interface RESTGetMemberBanResult {
  * POST
  * /servers/:serverId/bans/:userId
  */
-export interface RESTPostMemberBanBody {
+export type RESTPostMemberBanBody = {
     reason?: string;
 }
-export interface RESTPostMemberBanResult {
+export type RESTPostMemberBanResult = {
     serverMemberBan: ServerMemberBanPayload;
 }
 
@@ -68,6 +68,6 @@ export type RESTDeleteMemberBanResult = never;
  * GET
  * /servers/:serverId/bans
  */
-export interface RESTGetMemberBansResult {
+export type RESTGetMemberBansResult = {
     serverMemberBans: ServerMemberBanPayload[];
 }

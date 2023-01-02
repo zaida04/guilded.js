@@ -4,19 +4,19 @@ import type { DocPayload } from "../structs/Doc";
  * POST
  * /channels/:channelId/docs
  */
-export interface RESTPostDocsResult {
+export type RESTPostDocsResult = {
     doc: DocPayload;
 }
-export interface RESTPostDocsBody {
-    title: string;
+export type RESTPostDocsBody = {
     content: string;
+    title: string;
 }
 
 /**
  * GET
  * /channels/:channelId/docs
  */
-export interface RESTGetDocsResult {
+export type RESTGetDocsResult = {
     docs: DocPayload[];
 }
 
@@ -24,7 +24,7 @@ export interface RESTGetDocsResult {
  * GET
  * /channels/:channelId/docs/:docId
  */
-export interface RESTGetDocResult {
+export type RESTGetDocResult = {
     doc: DocPayload;
 }
 
@@ -32,12 +32,12 @@ export interface RESTGetDocResult {
  * PUT
  * /channels/:channelId/docs/:docId
  */
-export interface RESTPutDocResult {
+export type RESTPutDocResult = {
     doc: DocPayload;
 }
-export interface RESTPutDocBody {
-    title: string;
+export type RESTPutDocBody = {
     content: string;
+    title: string;
 }
 
 /**

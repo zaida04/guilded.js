@@ -1,16 +1,16 @@
-export interface ServerPayload {
-    id: string;
-    ownerId: string;
-    type?: ServerType;
-    name: string;
-    url?: string;
+export type ServerPayload = {
     about?: string;
     avatar?: string;
     banner?: string;
-    timezone?: string;
-    isVerified?: boolean;
-    defaultChannelId?: string;
     createdAt: string;
+    defaultChannelId?: string;
+    id: string;
+    isVerified?: boolean;
+    name: string;
+    ownerId: string;
+    timezone?: string;
+    type?: ServerType;
+    url?: string;
 }
 
-export type ServerType = "team" | "organization" | "community" | "clan" | "guild" | "friends" | "streaming" | "other";
+export type ServerType = "clan" | "community" | "friends" | "guild" | "organization" | "other" | "streaming" | "team";
