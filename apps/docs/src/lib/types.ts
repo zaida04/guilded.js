@@ -1,0 +1,1 @@
+export type EntityType = { comment?: { summary: { kind: string, text: string }[] }, name: string }
