@@ -1,6 +1,11 @@
 const colors = require("tailwindcss/colors");
 const { fontFamily } = require('tailwindcss/defaultTheme')
 
+delete colors["lightBlue"];
+delete colors["warmGray"];
+delete colors["trueGray"];
+delete colors["coolGray"];
+delete colors["blueGray"];
 /** @type {import('tailwindcss').Config} */
 module.exports = {
 	content: [
