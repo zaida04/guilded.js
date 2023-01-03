@@ -5,6 +5,9 @@ const nextConfig = {
 	images: {
 		domains: ['raw.githubusercontent.com'],
 	},
+	eslint: {
+		ignoreDuringBuilds: true
+	},
 	webpack: (config) => {
 		// this will override the experiments
 		config.experiments = { ...config.experiments, topLevelAwait: true };

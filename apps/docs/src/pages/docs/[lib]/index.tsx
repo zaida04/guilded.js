@@ -3,10 +3,10 @@ import fetchDocs from "../../../lib/loader";
 
 type Props = { classes: string[], functions: string[], types: string[] }
 export const getStaticProps: GetStaticProps<Props> = async (ctx) => {
-	const { libs } = ctx.params as { libs: string };
+	const { lib: libName } = ctx.params as { lib: string };
 
 	const docs = await fetchDocs();
-	const lib = docs.children!.find(x => x.name === libs)!;
+	const lib = docs.children!.find(x => x.name.includes(libName))!;
 
 	const classes = lib.children!.filter(x => x.kind === 128).map(x => x.name);
 	const functions = lib.children!.filter(x => x.kind === 64).map(x => x.name);
@@ -17,11 +17,10 @@ export const getStaticProps: GetStaticProps<Props> = async (ctx) => {
 export const getStaticPaths: GetStaticPaths = async () => {
 	const docs = await fetchDocs();
 	return {
-		paths: docs.children!.map(x => x.name),
+		paths: docs.children!.map(x => `/docs/${x.name.includes("/") ? x.name.split("/")[1] : x.name}`),
 		fallback: false, // can also be true or 'blocking'
 	}
 }
-
 
 const DocsPackage: NextPage<Props> = (props) => {
 	return <div>

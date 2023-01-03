@@ -5,7 +5,7 @@
     "description": "Overarching repository for the Guilded.JS repository",
     "author": "Zaid \"Nico\" <contact@nico.engineer>",
     "scripts": {
-        "build": "pnpm recursive run build",
+        "build": "pnpm --filter=!docs recursive run build",
         "lint": "eslint packages/ scripts/ services/ apps/",
         "lint:fix": "pnpm run lint --fix",
         "docs": "rimraf docs && typedoc && ts-node scripts/post-docs.ts",
