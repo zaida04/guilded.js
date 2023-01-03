@@ -1,4 +1,5 @@
 import type { GetStaticPropsResult, InferGetStaticPropsType } from "next";
+import Link from "next/link";
 import { CodeBlock, androidstudio } from "react-code-blocks";
 import { Copiable } from "../components/Copiable";
 import { LayoutWrapper } from "../components/LayoutWrapper";
@@ -39,6 +40,13 @@ export default function Home({ buildDate }: InferGetStaticPropsType<typeof getSt
 				</div>
 				<div className="grid place-items-center md:flex md:justify-center">
 					{["npm install guilded.js", "yarn add guilded.js", "pnpm add guilded.js"].map(click => <Copiable key={click} text={click} />)}
+				</div>
+				<div className="pt-2 flex justify-center">
+					<Link href="/docs">
+						<div className="py-2 px-4 bg-guilded rounded-lg transition-transform transform hover:scale-110">
+							<p className="text-xl text-gray font-bold">Read the Docs</p>
+						</div>
+					</Link>
 				</div>
 				<div className="flex justify-center text-lg pt-8 text-white">
 					<div className="w-full md:w-3/5">
