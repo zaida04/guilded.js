@@ -1,5 +1,8 @@
 import type { GetStaticPaths, GetStaticProps, NextPage } from "next";
+import { LayoutWrapper } from "../../../components/LayoutWrapper";
+import { Navbar } from "../../../components/Navbar";
 import fetchDocs from "../../../lib/loader";
+import { getUnscopedPackageName } from "../../../lib/util";
 
 type Props = { classes: string[], functions: string[], types: string[] }
 export const getStaticProps: GetStaticProps<Props> = async (ctx) => {
@@ -17,13 +20,13 @@ export const getStaticProps: GetStaticProps<Props> = async (ctx) => {
 export const getStaticPaths: GetStaticPaths = async () => {
 	const docs = await fetchDocs();
 	return {
-		paths: docs.children!.map(x => `/docs/${x.name.includes("/") ? x.name.split("/")[1] : x.name}`),
+		paths: docs.children!.map(x => `/docs/${getUnscopedPackageName(x.name)}`),
 		fallback: false, // can also be true or 'blocking'
 	}
 }
 
 const DocsPackage: NextPage<Props> = (props) => {
-	return <div>
+	return <LayoutWrapper>
 		{
 			Object.keys(props).map(type =>
 				<div key={type}>
@@ -34,7 +37,7 @@ const DocsPackage: NextPage<Props> = (props) => {
 				</div>
 			)
 		}
-	</div>
+	</LayoutWrapper>
 }
 
 export default DocsPackage

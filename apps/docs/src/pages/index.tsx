@@ -1,8 +1,7 @@
 import type { GetStaticPropsResult, InferGetStaticPropsType } from "next";
 import { CodeBlock, androidstudio } from "react-code-blocks";
-import { CopiableComponent } from "../components/CopiableComponent";
-import { Footer } from "../components/Footer";
-import { Navbar } from "../components/Navbar";
+import { Copiable } from "../components/Copiable";
+import { LayoutWrapper } from "../components/LayoutWrapper";
 
 const exampleCode = `
 	const { Client } = require("guilded.js");
@@ -30,8 +29,7 @@ export const getStaticProps = (): GetStaticPropsResult<{ buildDate: number }> =>
 
 export default function Home({ buildDate }: InferGetStaticPropsType<typeof getStaticProps>) {
 	return (
-		<div>
-			<Navbar />
+		<LayoutWrapper buildDate={buildDate}>
 			<div className="md:mt-8 w-full">
 				<div className="flex justify-center">
 					<h1 className="md:text-8xl text-5xl font-bold mt-12 mb-8">
@@ -40,7 +38,7 @@ export default function Home({ buildDate }: InferGetStaticPropsType<typeof getSt
 					</h1>
 				</div>
 				<div className="grid place-items-center md:flex md:justify-center">
-					{["npm install guilded.js", "yarn add guilded.js", "pnpm add guilded.js"].map(click => <CopiableComponent key={click} text={click} />)}
+					{["npm install guilded.js", "yarn add guilded.js", "pnpm add guilded.js"].map(click => <Copiable key={click} text={click} />)}
 				</div>
 				<div className="flex justify-center text-lg pt-8 text-white">
 					<div className="w-full md:w-3/5">
@@ -51,7 +49,6 @@ export default function Home({ buildDate }: InferGetStaticPropsType<typeof getSt
 					</div>
 				</div>
 			</div>
-			<Footer buildDate={buildDate} />
-		</div>
+		</LayoutWrapper>
 	)
 }
