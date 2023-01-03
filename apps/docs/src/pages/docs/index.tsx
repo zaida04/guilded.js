@@ -12,7 +12,7 @@ export const getStaticProps: GetStaticProps<Props> = async () => {
 
 const Docs: NextPage<Props> = ({ packages }) => {
 	return <LayoutWrapper>
-		<div className="flex items-center flex-col pt-12">
+		<div className="min-h-screen flex items-center flex-col pt-12">
 			<h1 className="text-5xl text-white font-bold pb-4">Packages:</h1>
 			{packages.map(x => <PackageBadge key={x} text={x} />)}
 		</div>

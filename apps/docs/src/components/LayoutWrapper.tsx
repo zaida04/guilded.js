@@ -4,8 +4,6 @@ import { Navbar } from "./Navbar";
 export const LayoutWrapper = ({ buildDate, children }: { buildDate?: number, children: any }) =>
 	<div>
 		<Navbar />
-		<div className="h-screen">
-			{children}
-		</div>
+		{children}
 		<Footer buildDate={buildDate} />
 	</div>

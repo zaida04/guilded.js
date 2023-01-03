@@ -30,7 +30,7 @@ export const getStaticProps = (): GetStaticPropsResult<{ buildDate: number }> =>
 export default function Home({ buildDate }: InferGetStaticPropsType<typeof getStaticProps>) {
 	return (
 		<LayoutWrapper buildDate={buildDate}>
-			<div className="md:mt-8 w-full">
+			<div className="md:mt-8 w-full min-h-screen">
 				<div className="flex justify-center">
 					<h1 className="md:text-8xl text-5xl font-bold mt-12 mb-8">
 						<span className="text-guilded">Guilded</span>
