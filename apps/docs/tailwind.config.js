@@ -19,9 +19,9 @@ module.exports = {
 			},
 			borderColor: {
 				guilded: "#F5C400",
+				slate: "#292B32",
 			},
 			colors: {
-				"dark-gray": "#191B1F",
 				gray: "#191B1F",
 				guilded: "#F5C400",
 				black: "#111820",
