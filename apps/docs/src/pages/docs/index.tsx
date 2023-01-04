@@ -19,7 +19,7 @@ const Docs: NextPage<Props> = ({ packages }) => {
 					<p className="text-xl text-black font-bold">Advanced Docs</p>
 				</div>
 			</a>
-			{packages.map(x => <PackageBadge key={x} text={x} />)}
+			{packages.sort((a, b) => a.length - b.length).map(x => <PackageBadge key={x} text={x} />)}
 
 		</div>
 	</LayoutWrapper>

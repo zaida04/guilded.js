@@ -5,7 +5,7 @@ import fetchDocs from "../../../lib/loader";
 import type { EntityType } from "../../../lib/types";
 import { capitalize, getUnscopedPackageName } from "../../../lib/util";
 
-type Props = { classes: EntityType[], functions: EntityType[], types: EntityType[] }
+type Props = { entities: { classes: EntityType[], functions: EntityType[], types: EntityType[] }, libName: string }
 
 const mapEntity = (entity: Record<string, any>) => ({ name: entity.name, comment: entity.comment ?? null });
 export const getStaticProps: GetStaticProps<Props> = async (ctx) => {
@@ -17,7 +17,7 @@ export const getStaticProps: GetStaticProps<Props> = async (ctx) => {
 	const classes = lib.children!.filter(x => x.kind === 128).map(mapEntity);
 	const functions = lib.children!.filter(x => x.kind === 64).map(mapEntity);
 	const types = lib.children!.filter(x => x.kind === 4_194_304).map(mapEntity);
-	return { "props": { classes, functions, types } }
+	return { "props": { entities: { classes, functions, types }, libName } }
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
@@ -41,15 +41,15 @@ const EntityList = ({ name, entity }: { entity: EntityType[], name: string }) =>
 	</div>
 }
 
-type propKey = keyof Props;
-const DocsPackage: NextPage<Props> = (props) => {
-	const propsKeys = Object.keys(props);
+type propKey = keyof Props["entities"];
+const DocsPackage: NextPage<Props> = ({ entities, libName }) => {
+	const propsKeys = Object.keys(entities);
 
 	return <LayoutWrapper>
 		<div className="my-16 ml-8 md:ml-20 text-white grid grid-cols-none gap-8">
 			{propsKeys
 				.map(entity =>
-					<EntityList entity={props[entity as propKey]} key={entity} name={entity} />
+					<EntityList entity={entities[entity as propKey]} key={entity} name={entity} />
 				)}
 		</div>
 		<div className="flex justify-center">
@@ -58,8 +58,8 @@ const DocsPackage: NextPage<Props> = (props) => {
 		<div className="grid place-content-center mt-32 space-y-4">
 			{propsKeys
 				.map(entity =>
-					props[entity as propKey].map(children =>
-						<EntityChildCard entity={entity} entityChild={children} key={entity} />
+					entities[entity as propKey].map(children =>
+						<EntityChildCard entity={entity} entityChild={children} key={entity} libName={libName} />
 					)
 				)}
 		</div>
