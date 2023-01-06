@@ -68,7 +68,7 @@ export class ClientGatewayHandler {
 	forumHandler = new ForumEventHandler(this.client);
 	botHandler = new BotEventHandler(this.client);
 
-	readonly eventToHandlerMap: Record<keyof WSEvent, (data: SkeletonWSPayload) => boolean> = {
+	readonly eventToHandlerMap: Record<keyof WSEvent, (data: SkeletonWSPayload) => boolean | Promise<boolean>> = {
 		[WebSocketEvents.CalendarEventCreated]: (data) => this.calendarEventHandler.calendarEventCreated(data as WSCalendarEventCreated),
 		[WebSocketEvents.CalendarEventDeleted]: (data) => this.calendarEventHandler.calendarEventDeleted(data as WSCalendarEventDeleted),
 		[WebSocketEvents.CalendarEventUpdated]: (data) => this.calendarEventHandler.calendarEventUpdated(data as WSCalendarEventUpdated),
