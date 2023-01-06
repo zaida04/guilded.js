@@ -11,9 +11,12 @@ export const Copiable = ({ text }: { text: string }) => {
 			setRecentlyCopied(true);
 			setTimeout(() => setRecentlyCopied(false), 750);
 		}}>
-		{recentlyCopied ?
-			<p>Copied! <FontAwesomeIcon icon={faCheck} /></p>
-			: <p>{text} <FontAwesomeIcon icon={faCopy} /></p>
-		}
+		<p>
+			{text}
+			{recentlyCopied ?
+				<FontAwesomeIcon className="ml-2" icon={faCheck} />
+				: <FontAwesomeIcon className="ml-2" icon={faCopy} />
+			}
+		</p>
 	</div>
 }
