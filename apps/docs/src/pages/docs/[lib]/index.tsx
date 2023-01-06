@@ -1,5 +1,6 @@
 import type { GetStaticPaths, GetStaticProps, NextPage } from "next";
 import { EntityChildCard } from "../../../components/EntityCard";
+import { EntityList } from "../../../components/EntityList";
 import { LayoutWrapper } from "../../../components/LayoutWrapper";
 import fetchDocs from "../../../lib/loader";
 import type { EntityType } from "../../../lib/types";
@@ -28,25 +29,13 @@ export const getStaticPaths: GetStaticPaths = async () => {
 	}
 }
 
-const EntityList = ({ name, entity }: { entity: EntityType[], name: string }) => {
-	if (!Object.keys(entity).length) return null;
-
-	return <div>
-		<h1 className="text-guilded text-5xl font-bold pb-6 underline underline-offset-8">{capitalize(name)}</h1>
-		<div className="grid grid-rows-[auto] grid-cols-1 md:grid-cols-3 gap-x-[1rem]">
-			{entity.map(entity =>
-				<a className="text-md md:text-xl hover:text-guilded text-white" href={`#${entity.name}`} key={entity.name}>{entity.name}</a>
-			)}
-		</div>
-	</div>
-}
-
 type propKey = keyof Props["entities"];
 const DocsPackage: NextPage<Props> = ({ entities, libName }) => {
 	const propsKeys = Object.keys(entities);
 
 	return <LayoutWrapper>
 		<div className="my-16 ml-8 md:ml-20 text-white grid grid-cols-none gap-8">
+			<h1 className="text-white text-5xl font-bold pb-6">{capitalize(libName)}</h1>
 			{propsKeys
 				.map(entity =>
 					<EntityList entity={entities[entity as propKey]} key={entity} name={entity} />
