@@ -1,4 +1,4 @@
-FROM node:16-alpine
+FROM node:19-alpine
 LABEL name "guildedjs rest proxy builder"
 WORKDIR /opt/build
 
@@ -16,7 +16,7 @@ RUN pnpm install -r --frozen-lockfile
 COPY ./services/proxy/src/. ./services/proxy/src/
 RUN pnpm run build && rm -rf node_modules/ && pnpm install --prod --ignore-scripts
 
-FROM node:16-alpine
+FROM node:19-alpine
 LABEL name "guildedjs rest proxy"
 WORKDIR /usr/app
 
