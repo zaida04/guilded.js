@@ -1,5 +1,5 @@
-import type { EntityType } from "../lib/types";
-import { capitalize } from "../lib/util";
+import type { EntityType } from "../../lib/types";
+import { capitalize } from "../../lib/util";
 
 export const EntityList = ({ name, entities }: { entities: EntityType[], name: string }) => {
 	if (!Object.keys(entities).length) return null;

@@ -1,5 +1,5 @@
 import type { DeclarationReflection } from "typedoc/dist/lib/models/reflections/declaration";
-import { capitalize } from "../lib/util";
+import { capitalize } from "../../lib/util";
 
 export const Qualities = ({ qualities, name }: { name: string, qualities: DeclarationReflection[] }) => {
 	if (!qualities.length) return null;

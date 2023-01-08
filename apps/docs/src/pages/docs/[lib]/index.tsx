@@ -1,7 +1,7 @@
 import type { GetStaticPaths, GetStaticProps, NextPage } from "next";
-import { EntityChildCard } from "../../../components/EntityCard";
-import { EntityList } from "../../../components/EntityList";
 import { LayoutWrapper } from "../../../components/LayoutWrapper";
+import { EntityChildCard } from "../../../components/entity/EntityCard";
+import { EntityList } from "../../../components/entity/EntityList";
 import fetchDocs from "../../../lib/loader";
 import type { EntityType } from "../../../lib/types";
 import { getUnscopedPackageName } from "../../../lib/util";

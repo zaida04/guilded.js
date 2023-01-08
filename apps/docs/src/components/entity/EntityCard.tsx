@@ -2,7 +2,7 @@ import type { IconDefinition } from "@fortawesome/free-solid-svg-icons";
 import { faICursor, faAtom, faBox } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Link from "next/link";
-import type { EntityType } from "../lib/types";
+import type { EntityType } from "../../lib/types";
 
 const entityTypeToIcon: Record<string, IconDefinition> = { classes: faBox, functions: faAtom, types: faICursor }
 export const EntityChildCard = ({ entity, entityChild, libName }: { entity: string, entityChild: EntityType, libName: string }) => {

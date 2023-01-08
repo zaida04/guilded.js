@@ -2,24 +2,12 @@
 /* eslint-disable sonarjs/no-nested-switch */
 import Link from "next/link";
 import type { DeclarationReflection } from "typedoc/dist/lib/models/reflections/declaration";
-import type { ReferenceType, SomeType } from "typedoc/dist/lib/models/types";
-import type { TypeParameterReflection } from "typedoc/dist/lib/serialization/schema";
-import { RefLink } from "./RefLink";
+import type { Type } from "./util";
+import { unionMap } from "./util";
 
-const unionMap = (input: SomeType): Type => {
-	switch (input.type) {
-		case "literal": return { name: String(input.value) }
-		case "reference": return "id" in input ? { name: input.name, isLink: true } : { name: input.name };
-		case "intrinsic": return { name: input.name };
-		case "reflection": return { name: input.declaration?.name, isLink: true };
-		default: return { name: "unknown" }
-	}
-}
-
-type Type = { isLink?: boolean, name: string };
-const resultTransform = (lib: string) => (type: Type) => {
-	if (type.isLink) return <Link className="hover:underline underline-offset-2" href={`/docs/${lib}/${type.name}`}>{type.name}</Link>
-	else return <span>{type.name}</span>
+const resultTransform = (lib: string) => (type: Type, index: number) => {
+	if (type.isLink) return <Link className="text-guilded hover:underline underline-offset-2" href={`/docs/${type.pkg ?? lib}/${type.name}`} key={index}>{type.name}</Link>
+	else return <span key={index}>{type.name}</span>
 }
 
 export const QualityDisplay = ({ quality, lib }: { lib: string, quality: DeclarationReflection }): JSX.Element | null => {
