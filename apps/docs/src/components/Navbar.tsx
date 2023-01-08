@@ -6,7 +6,7 @@ const topBars = {
     Guide: "https://guilded-js.gitbook.io/api-docs/create-a-basic-bot",
     Github: "https://github.com/guildedjs/guilded.js",
     "Support Server": "https://guilded.gg/guildedjs",
-    "Legacy Docs": "/legacy/docs",
+    "Legacy Docs": "https://guildedjs.github.io/",
 };
 
 export const Navbar = () => {
