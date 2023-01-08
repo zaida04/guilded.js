@@ -42,8 +42,7 @@ const DocksEntity: NextPage<Props> = ({ entity, lib }) => {
 	};
 
 	return <LayoutWrapper>
-		<div className="my-16 ml-8 md:ml-20 grid grid-cols-none gap-8">
-			<h1 className="text-white text-5xl font-bold pb-6">{capitalize(entity.name)}</h1>
+		<div className="my-8 ml-8 md:ml-20 grid grid-cols-none gap-8">
 			{Object.keys(qualities).map(x => <Qualities key={x} name={x} qualities={qualities[x]} />)}
 		</div>
 		<div className="flex justify-center">

@@ -1,43 +1,29 @@
 /* eslint-disable @typescript-eslint/switch-exhaustiveness-check */
 /* eslint-disable sonarjs/no-nested-switch */
+import Link from "next/link";
 import type { DeclarationReflection } from "typedoc/dist/lib/models/reflections/declaration";
 import type { ReferenceType, SomeType } from "typedoc/dist/lib/models/types";
+import type { TypeParameterReflection } from "typedoc/dist/lib/serialization/schema";
 import { RefLink } from "./RefLink";
 
-const unionMap = (lib: string) => (input: SomeType) => {
+const unionMap = (input: SomeType): Type => {
 	switch (input.type) {
-		case "literal": return String(input.value);
-		case "reference": return "id" in input ? <RefLink lib={lib} name={input.name} /> : input.name;
-		case "intrinsic": return input.name;
-		case "reflection": return <RefLink lib={lib} name={input.declaration?.name} />
-		default: return "unknown"
+		case "literal": return { name: String(input.value) }
+		case "reference": return "id" in input ? { name: input.name, isLink: true } : { name: input.name };
+		case "intrinsic": return { name: input.name };
+		case "reflection": return { name: input.declaration?.name, isLink: true };
+		default: return { name: "unknown" }
 	}
 }
 
-const PromiseMapper = ({ signatureType, lib }: { lib: string, signatureType: ReferenceType; }) => <span className="inline">Promise&lt;{
-	signatureType.typeArguments?.map(typeArgument => {
-		const type = typeArgument.type;
-
-		switch (type) {
-			case "intrinsic": {
-				return typeArgument.name;
-			}
-
-			case "reference": {
-				return <RefLink lib={lib} name={typeArgument.name} />
-			}
-
-			case "union": {
-				return typeArgument.types.map(unionMap(lib)).sort((a, b) => b > a ? 1 : -1).join(" or ");
-			}
-
-			default: { return null }
-		}
-	})
-}&gt;</span>
+type Type = { isLink?: boolean, name: string };
+const resultTransform = (lib: string) => (type: Type) => {
+	if (type.isLink) return <Link className="hover:underline underline-offset-2" href={`/docs/${lib}/${type.name}`}>{type.name}</Link>
+	else return <span>{type.name}</span>
+}
 
 export const QualityDisplay = ({ quality, lib }: { lib: string, quality: DeclarationReflection }): JSX.Element | null => {
-	let result: JSX.Element | string = "";
+	let result: { isPromise?: boolean, types: Type[] } | null = null;
 
 	switch (quality.kind) {
 		case 1_024: {
@@ -46,23 +32,24 @@ export const QualityDisplay = ({ quality, lib }: { lib: string, quality: Declara
 
 			switch (qualityType.type) {
 				case "union": {
-					result = qualityType.types.map(unionMap(lib)).sort((a, b) => b > a ? 1 : -1).join(" or ");
+					result = { types: qualityType.types.map(unionMap) };
 					break;
 				}
 
 				case "reference": {
-					result = qualityType.name;
+					result = { types: [{ "name": qualityType.name }] };
 					break;
 				}
 
 				case "reflection": {
 					const entity = qualityType.declaration;
-					result = entity.name === "__type" ? "Object" : <RefLink lib={lib} name={entity.name} />
+					const is__type = entity.name === "__type";
+					result = { types: [{ "name": is__type ? "Object" : entity.name, isLink: !is__type }] }
 					break;
 				}
 
 				case "intrinsic": {
-					result = qualityType.name;
+					result = { types: [{ name: qualityType.name }] };
 					break;
 				}
 			}
@@ -77,18 +64,18 @@ export const QualityDisplay = ({ quality, lib }: { lib: string, quality: Declara
 			const getSignatureType = getSignature.type;
 			switch (getSignatureType?.type) {
 				case "union": {
-					result = getSignatureType.types.map(unionMap(lib)).sort((a, b) => b > a ? -1 : 1).join(" or ");
+					result = { types: getSignatureType.types.map(unionMap) };
 					break;
 				}
 
 				case "reference": {
-					result = getSignatureType.name;
+					result = { types: [{ name: getSignatureType.name }] };
 					break;
 				}
 
 				case "reflection": {
 					const entity = getSignatureType.declaration;
-					result = <RefLink lib={lib} name={entity.name} />
+					result = { types: [{ name: entity.name, isLink: true }] };
 				}
 			}
 
@@ -104,9 +91,9 @@ export const QualityDisplay = ({ quality, lib }: { lib: string, quality: Declara
 			switch (signatureType?.type) {
 				case "reference": {
 					if (signatureType.name === "Promise") {
-						result = <PromiseMapper lib={lib} signatureType={signatureType} />;
+						result = { isPromise: true, types: signatureType.typeArguments!.map(unionMap) }
 					} else {
-						result = signatureType.name;
+						result = { types: [{ name: signatureType.name }] };
 					}
 
 					break;
@@ -121,5 +108,21 @@ export const QualityDisplay = ({ quality, lib }: { lib: string, quality: Declara
 		}
 	}
 
-	return <p className="text-guilded text-xl">Type: {result}</p>
+	if (!result) return null;
+
+	// i like having string in front of null, looks better.
+	result.types.sort((a, b) => {
+		const priorityChars = ["s"];
+		if (priorityChars.some(char => a.name.startsWith(char) && !b.name.startsWith(char))) return -1;
+		if (priorityChars.some(char => b.name.startsWith(char) && !a.name.startsWith(char))) return -1;
+
+		return a.name > b.name ? 1 : -1
+	});
+
+	for (let index = 0; index < result.types.length; index++) {
+		if (index === 0 || index % 2 === 0) continue;
+		result.types.splice(index, 0, { name: "or " });
+	}
+
+	return <div className="text-guilded text-xl flex">Type: <span className="pl-2 flex space-x-2">{result.isPromise && "Promise<"}{result.types.map(resultTransform(lib))}{result.isPromise && ">"}</span></div>
 }

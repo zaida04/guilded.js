@@ -36,8 +36,7 @@ const DocsPackage: NextPage<Props> = ({ entities, libName }) => {
 	const propsKeys = Object.keys(entities);
 
 	return <LayoutWrapper>
-		<div className="my-16 ml-8 md:ml-20 text-white grid grid-cols-none gap-8">
-			<h1 className="text-white text-5xl font-bold pb-6">{capitalize(libName)}</h1>
+		<div className="my-8 ml-8 md:ml-20 text-white grid grid-cols-none gap-8">
 			{propsKeys
 				.map(entity =>
 					<EntityList entities={entities[entity as propKey]} key={entity} name={entity} />
