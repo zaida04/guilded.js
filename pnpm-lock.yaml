@@ -8,7 +8,7 @@ importers:
       '@sapphire/eslint-config': 4.3.8
       '@types/chai': 4.3.4
       '@types/mocha': 9.1.1
-      '@types/node': 16.18.11
+      '@types/node': 18.11.18
       '@types/rimraf': 3.0.2
       chai: 4.3.7
       dotenv: 16.0.3
@@ -34,7 +34,7 @@ importers:
       '@sapphire/eslint-config': 4.3.8
       '@types/chai': 4.3.4
       '@types/mocha': 9.1.1
-      '@types/node': 16.18.11
+      '@types/node': 18.11.18
       '@types/rimraf': 3.0.2
       chai: 4.3.7
       dotenv: 16.0.3
@@ -50,7 +50,7 @@ importers:
       prettier: 2.8.2
       pretty-quick: 3.1.3_prettier@2.8.2
       rimraf: 3.0.2
-      ts-node: 10.9.1_qacynw5b4krdzzrloasmebsynu
+      ts-node: 10.9.1_awa2wsr5thmg3i7jqycphctjfq
       typedoc: 0.23.24_typescript@4.9.4
       typedoc-plugin-remove-references: 0.0.6
       typedoc-plugin-rename-defaults: 0.6.4_typedoc@0.23.24
@@ -121,7 +121,7 @@ importers:
       '@guildedjs/rest': workspace:*
       '@guildedjs/webhook-client': workspace:*
       '@guildedjs/ws': workspace:*
-      '@types/node': 16.18.11
+      '@types/node': 18.11.18
       typed-emitter: 2.1.0
       typescript: 4.9.4
     dependencies:
@@ -132,7 +132,7 @@ importers:
       typed-emitter: 2.1.0
     devDependencies:
       '@guildedjs/guilded-api-typings': link:../guilded-api-typings
-      '@types/node': 16.18.11
+      '@types/node': 18.11.18
       typescript: 4.9.4
 
   packages/rest:
@@ -185,14 +185,14 @@ importers:
   services/proxy:
     specifiers:
       '@guildedjs/rest': workspace:*
-      '@types/node': 16.18.11
+      '@types/node': 18.11.18
       dotenv: ^16.0.3
       typescript: 4.9.4
     dependencies:
       '@guildedjs/rest': link:../../packages/rest
       dotenv: 16.0.3
     devDependencies:
-      '@types/node': 16.18.11
+      '@types/node': 18.11.18
       typescript: 4.9.4
 
 packages:
@@ -1140,10 +1140,6 @@ packages:
 
   /@types/node/12.20.55:
     resolution: {integrity: sha512-J8xLz7q2OFulZ2cyGTLE1TbbZcjpno7FaN6zdJNrgAdrJ+DZzh/uFR6YrTb4C+nXakvud8Q4+rbhoIWlYQbUFQ==}
-    dev: true
-
-  /@types/node/16.18.11:
-    resolution: {integrity: sha512-3oJbGBUWuS6ahSnEq1eN2XrCyf4YsWI8OyCvo7c64zQJNplk3mO84t53o8lfTk+2ji59g5ycfc6qQ3fdHliHuA==}
     dev: true
 
   /@types/node/18.11.18:
@@ -5890,7 +5886,7 @@ packages:
     engines: {node: '>=8'}
     dev: true
 
-  /ts-node/10.9.1_qacynw5b4krdzzrloasmebsynu:
+  /ts-node/10.9.1_awa2wsr5thmg3i7jqycphctjfq:
     resolution: {integrity: sha512-NtVysVPkxxrwFGUUxGYhfux8k78pQB3JqYBXlLRZgdGUqTO5wU/UyHop5p70iEbGhB7q5KmiZiU0Y3KlJrScEw==}
     hasBin: true
     peerDependencies:
@@ -5909,7 +5905,7 @@ packages:
       '@tsconfig/node12': 1.0.11
       '@tsconfig/node14': 1.0.3
       '@tsconfig/node16': 1.0.3
-      '@types/node': 16.18.11
+      '@types/node': 18.11.18
       acorn: 8.8.0
       acorn-walk: 8.2.0
       arg: 4.1.3
