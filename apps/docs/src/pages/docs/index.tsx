@@ -5,7 +5,7 @@ import fetchDocs from "../../lib/loader";
 
 type Props = { packages: string[] }
 export const getStaticProps: GetStaticProps<Props> = async () => {
-	const docs = await fetchDocs();
+	const docs = fetchDocs();
 	const packageNames = docs.children!.map(x => x.name);
 	return { "props": { packages: packageNames } }
 }
