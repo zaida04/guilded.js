@@ -8,7 +8,7 @@
         "build": "pnpm --filter=!docs recursive run build",
         "lint": "eslint packages/ scripts/ services/ apps/",
         "lint:fix": "pnpm run lint --fix",
-        "docs": "rimraf docs && typedoc && ts-node scripts/post-docs.ts",
+        "docs": "rimraf apps/docs/public/legacy/docs && typedoc",
         "test": "nyc mocha -r ts-node/register ./packages/**/__tests__/*.test.ts",
         "test:build": "pnpm run build && pnpm run test",
         "prepublishOnly": "pnpm run lint && pnpm recursive run prepublishOnly",
