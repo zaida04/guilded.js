@@ -4,7 +4,7 @@ import { EntityList } from "../../../components/EntityList";
 import { LayoutWrapper } from "../../../components/LayoutWrapper";
 import fetchDocs from "../../../lib/loader";
 import type { EntityType } from "../../../lib/types";
-import { capitalize, getUnscopedPackageName } from "../../../lib/util";
+import { getUnscopedPackageName } from "../../../lib/util";
 
 type Props = { entities: { classes: EntityType[], functions: EntityType[], types: EntityType[] }, libName: string }
 
@@ -14,7 +14,7 @@ const sortEntity = (a: ReturnType<typeof mapEntity>, b: ReturnType<typeof mapEnt
 export const getStaticProps: GetStaticProps<Props> = async (ctx) => {
 	const { lib: libName } = ctx.params as { lib: string };
 
-	const docs = await fetchDocs();
+	const docs = fetchDocs();
 	const lib = docs.children!.find(x => x.name.includes(libName))!;
 
 	const classes = lib.children!.filter(x => x.kind === 128).map(mapEntity).sort(sortEntity);
@@ -24,7 +24,7 @@ export const getStaticProps: GetStaticProps<Props> = async (ctx) => {
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
-	const docs = await fetchDocs();
+	const docs = fetchDocs();
 	return {
 		paths: docs.children!.map(x => `/docs/${getUnscopedPackageName(x.name)}`),
 		fallback: false, // can also be true or 'blocking'
