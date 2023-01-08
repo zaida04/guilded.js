@@ -1,10 +1,10 @@
 import type { IconDefinition } from "@fortawesome/free-solid-svg-icons";
-import { faBox, faGreaterThan, faBook, faHome } from "@fortawesome/free-solid-svg-icons";
+import { faBox, faBook, faHome } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { capitalize } from "../lib/util";
-import { BreadCrumbSep } from "./customIcons/breadCrumbSep";
+import { BreadCrumbSep } from "./customIcons/BreadCrumbSep";
 
 type Path = { icon?: IconDefinition, isActive?: boolean, name: string, path: string };
 export const Breadcrumb = () => {
