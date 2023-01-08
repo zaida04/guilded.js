@@ -17,8 +17,8 @@ const Docs: NextPage<Props> = ({ packages }) => {
                 <div className="bg-orange-100 border-l-4 border-orange-500 text-orange-700 p-4 w-3/4" role="alert">
                     <p className="font-bold">Be Warned</p>
                     <p>
-                        All the docs pages below "Advanced Docs" are currently in development. There will likely be bugs. If you want a stable version
-                        of the docs, select "Advanced Docs" They're meant to be a simplified version of the typedoc docs, but they will certainly be
+                        All the docs pages below "Advanced Docs" are currently in development. There will likely be bugs. 
+                        They're meant to be a simplified version of the typedoc docs, but they will certainly be
                         lacking for those who are advanced users.{" "}
                         <a href="https://github.com/guildedjs/guilded.js/issues">
                             <b>Please report bugs here!</b>
