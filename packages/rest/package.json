@@ -17,7 +17,7 @@
         "@guildedjs/guilded-api-typings": "workspace:*",
         "@types/node-fetch": "2.6.2",
         "@types/qs": "^6.9.7",
-        "typescript": "4.9.3"
+        "typescript": "4.9.4"
     },
     "dependencies": {
         "form-data": "^4.0.0",
