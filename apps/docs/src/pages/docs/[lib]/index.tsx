@@ -9,15 +9,17 @@ import { capitalize, getUnscopedPackageName } from "../../../lib/util";
 type Props = { entities: { classes: EntityType[], functions: EntityType[], types: EntityType[] }, libName: string }
 
 const mapEntity = (entity: Record<string, any>) => ({ name: entity.name, comment: entity.comment ?? null });
+const sortEntity = (a: ReturnType<typeof mapEntity>, b: ReturnType<typeof mapEntity>) => a.name < b.name ? -1 : 1
+
 export const getStaticProps: GetStaticProps<Props> = async (ctx) => {
 	const { lib: libName } = ctx.params as { lib: string };
 
 	const docs = await fetchDocs();
 	const lib = docs.children!.find(x => x.name.includes(libName))!;
 
-	const classes = lib.children!.filter(x => x.kind === 128).map(mapEntity);
-	const functions = lib.children!.filter(x => x.kind === 64).map(mapEntity);
-	const types = lib.children!.filter(x => x.kind === 4_194_304).map(mapEntity);
+	const classes = lib.children!.filter(x => x.kind === 128).map(mapEntity).sort(sortEntity);
+	const functions = lib.children!.filter(x => x.kind === 64).map(mapEntity).sort(sortEntity);
+	const types = lib.children!.filter(x => x.kind === 4_194_304).map(mapEntity).sort(sortEntity);
 	return { "props": { entities: { classes, functions, types }, libName } }
 }
 
@@ -38,7 +40,7 @@ const DocsPackage: NextPage<Props> = ({ entities, libName }) => {
 			<h1 className="text-white text-5xl font-bold pb-6">{capitalize(libName)}</h1>
 			{propsKeys
 				.map(entity =>
-					<EntityList entity={entities[entity as propKey]} key={entity} name={entity} />
+					<EntityList entities={entities[entity as propKey]} key={entity} name={entity} />
 				)}
 		</div>
 		<div className="flex justify-center">
