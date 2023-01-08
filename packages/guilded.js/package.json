@@ -15,8 +15,8 @@
     },
     "devDependencies": {
         "@guildedjs/guilded-api-typings": "workspace:*",
-        "@types/node": "16.18.3",
-        "typescript": "4.9.3"
+        "@types/node": "16.18.11",
+        "typescript": "4.9.4"
     },
     "dependencies": {
         "@discordjs/collection": "^1.3.0",

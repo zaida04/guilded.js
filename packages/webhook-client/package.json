@@ -14,7 +14,7 @@
         "prepublishOnly": "rimraf dist/ && rimraf types/ && pnpm run build"
     },
     "devDependencies": {
-        "typescript": "4.9.3"
+        "typescript": "4.9.4"
     },
     "dependencies": {
         "@guildedjs/guilded-api-typings": "workspace:*",
