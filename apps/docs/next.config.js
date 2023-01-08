@@ -8,10 +8,6 @@ const nextConfig = {
 	eslint: {
 		ignoreDuringBuilds: true
 	},
-	i18n: {
-		locales: ["en"],
-		defaultLocale: "en",
-	},
 	webpack: (config) => {
 		// this will override the experiments
 		config.experiments = { ...config.experiments, topLevelAwait: true };
