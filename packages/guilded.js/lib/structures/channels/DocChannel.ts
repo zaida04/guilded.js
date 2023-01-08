@@ -1,33 +1,34 @@
 import { Collection } from "@discordjs/collection";
-import type { DocPayload, RESTPostDocsBody, RESTPutDocBody } from "@guildedjs/guilded-api-typings";
+import type { DocPayload, RESTPostDocsBody, RESTPutDocBody, ChannelType } from "@guildedjs/guilded-api-typings";
 import { Channel } from "./Channel";
 
+
 export class DocChannel extends Channel {
-    /** The docs in this channel. */
-    readonly docs = new Collection<number, DocPayload>();
+	/** The docs in this channel. */
+	readonly docs = new Collection<number, DocPayload>();
 
-    /** Create a doc. */
-    createDoc(options: RESTPostDocsBody): Promise<DocPayload> {
-        return this.client.docs.create(this.id, options);
-    }
+	/** Create a doc. */
+	createDoc(options: RESTPostDocsBody): Promise<DocPayload> {
+		return this.client.docs.create(this.id, options);
+	}
 
-    /** Get the docs from this channel. */
-    getDocs(): Promise<DocPayload[]> {
-        return this.client.docs.fetchMany(this.id);
-    }
+	/** Get the docs from this channel. */
+	getDocs(): Promise<DocPayload[]> {
+		return this.client.docs.fetchMany(this.id);
+	}
 
-    /** Get a doc from this channel. */
-    getDoc(docId: number): Promise<DocPayload> {
-        return this.client.docs.fetch(this.id, docId);
-    }
+	/** Get a doc from this channel. */
+	getDoc(docId: number): Promise<DocPayload> {
+		return this.client.docs.fetch(this.id, docId);
+	}
 
-    /** Update a doc in this channel. */
-    updateDoc(docId: number, options: RESTPutDocBody): Promise<DocPayload> {
-        return this.client.docs.update(this.id, docId, options);
-    }
+	/** Update a doc in this channel. */
+	updateDoc(docId: number, options: RESTPutDocBody): Promise<DocPayload> {
+		return this.client.docs.update(this.id, docId, options);
+	}
 
-    /** Delete a doc from this channel. */
-    deleteDoc(docId: number): Promise<void> {
-        return this.client.docs.delete(this.id, docId);
-    }
+	/** Delete a doc from this channel. */
+	deleteDoc(docId: number): Promise<void> {
+		return this.client.docs.delete(this.id, docId);
+	}
 }

@@ -8,78 +8,78 @@ import type { User } from "./User";
  * Object representing received webhook data. This object is NOT to be used to send data to webhooks. That will be WebhookClient
  */
 export class Webhook extends Base<WebhookPayload> {
-    /**
-     * The username belonging to this webhook
-     */
-    name!: string;
+	/**
+	 * The username belonging to this webhook
+	 */
+	name!: string;
 
-    /**
-     * The ID of the channel this webhook belongs to
-     */
-    channelID!: string;
+	/**
+	 * The ID of the channel this webhook belongs to
+	 */
+	channelID!: string;
 
-    /**
-     * The ID of the server this webhook belongs to
-     */
-    readonly serverId: string;
+	/**
+	 * The ID of the server this webhook belongs to
+	 */
+	readonly serverId: string;
 
-    /**
-     * The date in which this webhook was created
-     */
-    _createdAt: number;
+	/**
+	 * The date in which this webhook was created
+	 */
+	_createdAt: number;
 
-    /**
-     * The date this webhook was deleted if it was deleted
-     */
-    _deletedAt: number | null = null;
+	/**
+	 * The date this webhook was deleted if it was deleted
+	 */
+	_deletedAt: number | null = null;
 
-    /**
-     * The user who created this webhook
-     */
-    readonly authorID: string;
+	/**
+	 * The user who created this webhook
+	 */
+	readonly authorID: string;
 
-    /**
-     * The token of this webhook
-     */
-    token!: string | null;
+	/**
+	 * The token of this webhook
+	 */
+	token!: string | null;
 
-    constructor(client: Client, data: WebhookPayload) {
-        super(client, data);
-        this.serverId = data.serverId;
-        this._createdAt = Date.parse(data.createdAt);
-        this.authorID = data.createdBy;
-        this._update(data);
-    }
+	constructor(client: Client, data: WebhookPayload) {
+		super(client, data);
+		this.serverId = data.serverId;
+		this._createdAt = Date.parse(data.createdAt);
+		this.authorID = data.createdBy;
+		this._update(data);
+	}
 
-    get createdAt(): Date {
-        return new Date(this._createdAt);
-    }
+	get createdAt(): Date {
+		return new Date(this._createdAt);
+	}
 
-    get deletedAt(): Date | null {
-        return this._deletedAt ? new Date(this._deletedAt) : null;
-    }
+	get deletedAt(): Date | null {
+		return this._deletedAt ? new Date(this._deletedAt) : null;
+	}
 
-    /** The author of this webhook */
-    get user(): User | null {
-        return this.client.users.cache.get(this.id) ?? null;
-    }
+	/** The author of this webhook */
+	get user(): User | null {
+		return this.client.users.cache.get(this.id) ?? null;
+	}
 
-    _update(data: Partial<WebhookPayload>): this {
-        if ("name" in data && data.name !== undefined) this.name = data.name;
-        if ("channelId" in data && data.channelId !== undefined) this.channelID = data.channelId;
-        if ("token" in data && data.token !== undefined) this.token = data.token ?? null;
-        if ("deletedAt" in data && data.deletedAt !== undefined) {
-            this._deletedAt = data.deletedAt ? Date.parse(data.deletedAt) : null;
-        }
+	_update(data: Partial<WebhookPayload>): this {
+		if ("name" in data && data.name !== undefined) this.name = data.name;
+		if ("channelId" in data && data.channelId !== undefined) this.channelID = data.channelId;
+		if ("token" in data && data.token !== undefined) this.token = data.token ?? null;
+		if ("deletedAt" in data && data.deletedAt !== undefined) {
+			this._deletedAt = data.deletedAt ? Date.parse(data.deletedAt) : null;
+		}
 
-        return this;
-    }
+		return this;
+	}
 
-    update(options: RESTPutServerWebhookBody): Promise<Webhook> {
-        return this.client.webhooks.updateWebhook(this.serverId, this.id, options);
-    }
+	update(options: RESTPutServerWebhookBody): Promise<Webhook> {
+		return this.client.webhooks.update(this.serverId, this.id, options);
+	}
 
-    delete(): Promise<this> {
-        return this.client.webhooks.deleteWebhook(this.serverId, this.id).then(() => this);
-    }
+	delete(): Promise<this> {
+		return this.client.webhooks.delete(this.serverId, this.id).then(() => this);
+	}
 }
