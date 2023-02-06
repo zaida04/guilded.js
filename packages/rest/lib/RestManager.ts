@@ -70,7 +70,7 @@ export class RestManager {
      * Generate obfuscated token. It replaces every char in a non-even index with X. I'm not very creative.
      */
     get obfuscatedToken(): string {
-        return this.token.split("").reduce((prev, curr, index) => index % 2 ? prev + curr : prev + "X", "")
+        return this.token.split("").map(x => "X").join("");
     }
 
     public async make<T extends JSONB, B = RequestBodyObject, Q = never>(
