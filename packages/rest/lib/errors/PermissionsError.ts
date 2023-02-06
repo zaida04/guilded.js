@@ -5,8 +5,7 @@ export class PermissionsError extends GuildedAPIError {
     public constructor(
         msg: string,
         request: RequestOptions,
-        response: ResponseDetails,
-        public readonly missingPermissions?: string[]
+        response: ResponseDetails
     ) {
         super(msg, request, response);
     }
