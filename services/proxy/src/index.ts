@@ -1,5 +1,6 @@
 import { Buffer } from "node:buffer";
 import { createServer } from "node:http";
+import type { HTTPMethods} from "@guildedjs/rest";
 import { GuildedAPIError, RestManager } from "@guildedjs/rest";
 import { config } from "dotenv";
 
@@ -27,7 +28,7 @@ const server = createServer((req, res) => {
 			const [request, requestBody] = await rest.make(
 				{
 					path: req.url!,
-					method: req.method!,
+					method: req.method! as HTTPMethods,
 					body: body.length ? Buffer.concat(body).toString() : undefined,
 				},
 				true,
@@ -43,7 +44,7 @@ const server = createServer((req, res) => {
 			res.end(resBodyParsed);
 		} catch (error) {
 			if (error instanceof GuildedAPIError) {
-				res.statusCode = Number(error.code);
+				res.statusCode = Number(error.response.status);
 				return res.end(JSON.stringify({ error: { message: error.message } }));
 			}
 
