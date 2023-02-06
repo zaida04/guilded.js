@@ -93,7 +93,7 @@ export class RestManager {
                 // This gets changed later on if the request is formdata.
                 "content-type": "application/json",
                 // Used for logging on Guilded end.
-                "User-Agent": `@guildedjs-rest/${packageDetails.version} Node.js v${process.version}`,
+                "User-Agent": `@guildedjs-rest/${packageDetails.version} Node.js ${process.version}`,
                 // Spread the other headers like authentication.
                 ...headers,
                 // Spread any additional headers passed from the method.
@@ -166,8 +166,11 @@ export class RestManager {
             };
 
             // obfuscate token in requestOptions for logging purposes.
-            requestOptions.headers.Authorization = this.obfuscatedToken;
+            requestOptions.headers.Authorization = "[OBFUSCATED]";
             
+            // parse stringified JSON bodies back to JSON (added bonus of being able to check here if anything went wrong during the stringifying with any toJSON overrides)
+            if(bodyIsJSON && typeof requestOptions.body === "string") requestOptions.body = JSON.parse(requestOptions.body);
+
             // Occurs when bot has a permission missing
             if (responseDetails.status === 403) {
                 throw new PermissionsError(errorMessage, requestOptions, responseDetails);
