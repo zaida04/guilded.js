@@ -27,7 +27,7 @@ export type RequestOptions = {
 
 export type ResponseDetails = {
     body: JSONB | string;
-    headers: Headers;
+    headers: Record<string, string>;
     status: number;
 };
 
@@ -151,16 +151,23 @@ export class RestManager {
                 }
             }
 
+            const mapHeadersToObj: Record<string, string> = {};
+            // This is done because Headers isn't stringifiable or iterable without the use of the forEach method.
+            // eslint-disable-next-line unicorn/no-array-for-each
+            response.headers.forEach((v, k) => { 
+                mapHeadersToObj[k] = v 
+            });
+
             // Details response object for error reporting.
             const responseDetails: ResponseDetails = {
                 status: response.status,
-                headers: response.headers,
+                headers: mapHeadersToObj,
                 body: parsedResponse,
             };
 
             // obfuscate token in requestOptions for logging purposes.
             requestOptions.headers.Authorization = this.obfuscatedToken;
-
+            
             // Occurs when bot has a permission missing
             if (responseDetails.status === 403) {
                 throw new PermissionsError(errorMessage, requestOptions, responseDetails);
