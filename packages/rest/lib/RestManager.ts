@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-require-imports */
+import type { Buffer } from "node:buffer";
 import EventEmitter from "node:events";
 import FormData from "form-data";
 import { stringify } from "qs";
@@ -17,6 +18,18 @@ const packageDetails = require("../package.json");
 
 const sleep = async (ms: number): Promise<unknown> => new Promise((resolve) => setTimeout(resolve, ms));
 
+export type RequestOptions = {
+    body?: BodyInit | Buffer;
+    headers: Record<string, string>;
+    method: HTTPMethods;
+    url: string;
+};
+
+export type ResponseDetails = {
+    body: JSONB | string;
+    headers: Record<string, string>;
+    status: number;
+};
 
 export class RestManager {
     /**
@@ -53,60 +66,117 @@ export class RestManager {
         return this.proxyURL ?? `https://www.guilded.gg/api/v${this.version}`;
     }
 
+    /**
+     * Generate obfuscated token. It replaces every char in a non-even index with X. I'm not very creative.
+     */
+    get obfuscatedToken(): string {
+        return this.token.split("").map(x => "X").join("");
+    }
+
     public async make<T extends JSONB, B = RequestBodyObject, Q = never>(
         data: MakeOptions<B, Q>,
         authenticated = true,
         retryCount = 0,
-        { returnAsText = false, bodyIsJSON = true }: { bodyIsJSON?: boolean, returnAsText?: boolean; } = {},
+        { returnAsText = false, bodyIsJSON = true }: { bodyIsJSON?: boolean; returnAsText?: boolean } = {},
     ): Promise<[Response, Promise<T | string>]> {
         const headers: HeadersInit = {};
+        // If this request requires authentication, add the Bearer token as a header.
         if (authenticated) headers.Authorization = `Bearer ${this.token}`;
 
-        let body: BodyInit | undefined = data.body as BodyInit;
-        if (data.body instanceof FormData) {
-            body = data.body.getBuffer();
-            Object.assign(headers, { ...data.body.getHeaders() });
-        } else if (bodyIsJSON) {
-            body = JSON.stringify(body);
-        }
-
-        const requestOptions = {
-            body,
+        // Append stringified query params to the URL. This doesn't append the base URL yet.
+        const queryAppendedURL = data.query ? `${data.path}?${stringify(data.query)}` : data.path;
+        
+        // All options to be sent with the request
+        const requestOptions: RequestOptions = {
+            url: this.baseURL + queryAppendedURL,
             headers: {
+                // This gets changed later on if the request is formdata.
                 "content-type": "application/json",
-                "User-Agent": `@guildedjs-rest/${packageDetails.version} Node.js v${process.version}`,
+                // Used for logging on Guilded end.
+                "User-Agent": `@guildedjs-rest/${packageDetails.version} Node.js ${process.version}`,
+                // Spread the other headers like authentication.
                 ...headers,
+                // Spread any additional headers passed from the method.
                 ...data.headers,
             },
             method: data.method,
         };
 
-        const queryAppendedURL = data.query ? `${data.path}?${stringify(data.query)}` : data.path;
+        // This mostly only applies to Webhook routes that allow you to attach files.
+        if (data.body instanceof FormData) {
+            // Turn the formdata into a buffer.
+            requestOptions.body = data.body.getBuffer();
+            // Merge the formdata generated boundary headers with the request headers. This will replace things like content-type and other conflicting headers.
+            Object.assign(requestOptions.headers, { ...data.body.getHeaders() });
+        } else if (bodyIsJSON) {
+            // Turn JSON data into string.
+            requestOptions.body = JSON.stringify(data.body);
+        }
+
+        // The reason we're hoisting the variable like this is so that we can have error handling for the underlying fetch request.
         let response;
         try {
-            response = await HTTPFetch(this.baseURL + queryAppendedURL, requestOptions);
+            response = await HTTPFetch(requestOptions.url, requestOptions);
         } catch (error: any) {
             throw new Error(`Error while making API call, ${error.message.toString()}`);
         }
 
         if (!response.ok) {
+            // Occurs when ratelimited.
             if (response.status === 429) {
                 const retryAfterTime = Number(response.headers.get("Retry-After") ?? 35);
 
+                // Check if request has failed 3+ times.
                 if (retryCount >= (this.options?.maxRatelimitRetryLimit ?? 3)) {
                     throw new Error("MAX REQUEST RATELIMIT RETRY LIMIT REACHED.");
                 }
 
+                // Make the thread wait the amount of time specified in the Retry-After before retrying request.
                 await sleep(retryAfterTime * 1_000);
-                return this.make<T, B, Q>(data, authenticated, retryCount++);
+                return this.make<T, B, Q>(data, authenticated, ++retryCount);
             }
 
-            const parsedResponse = await response.json().catch(() => ({ message: "Cannot parse JSON Error Response." }));
-            if (response.status === 403 && parsedResponse.code === "ForbiddenError") {
-                throw new PermissionsError(parsedResponse.message, data.method, data.path, parsedResponse.meta?.missingPermissions);
+            // Parse error response as text. The reason this isn't in the try/catch statement is because of the HEAD method not returning json.
+            const rawResponse: string = await response.text().catch(() => "Could not read underlying response body buffer"); // this shouldn't happen
+            let parsedResponse: any | string = rawResponse;
+            let errorMessage: string = parsedResponse;
+
+            if (requestOptions.method !== "HEAD" && response.status !== 204) {
+                // json body won't be returned in these cases, so don't attempt to parse as json
+                try {
+                    parsedResponse = JSON.parse(rawResponse);
+                    errorMessage = parsedResponse.message;
+                } catch {
+                    // response was still malformed somehow; just allow it to be reported as text
+                }
             }
 
-            throw new GuildedAPIError(parsedResponse.message, data.method, data.path, response.status);
+            const mapHeadersToObj: Record<string, string> = {};
+            // This is done because Headers isn't stringifiable or iterable without the use of the forEach method.
+            // eslint-disable-next-line unicorn/no-array-for-each
+            response.headers.forEach((v, k) => { 
+                mapHeadersToObj[k] = v 
+            });
+
+            // Details response object for error reporting.
+            const responseDetails: ResponseDetails = {
+                status: response.status,
+                headers: mapHeadersToObj,
+                body: parsedResponse,
+            };
+
+            // obfuscate token in requestOptions for logging purposes.
+            requestOptions.headers.Authorization = "[OBFUSCATED]";
+            
+            // parse stringified JSON bodies back to JSON (added bonus of being able to check here if anything went wrong during the stringifying with any toJSON overrides)
+            if(bodyIsJSON && typeof requestOptions.body === "string") requestOptions.body = JSON.parse(requestOptions.body);
+
+            // Occurs when bot has a permission missing
+            if (responseDetails.status === 403) {
+                throw new PermissionsError(errorMessage, requestOptions, responseDetails);
+            }
+
+            throw new GuildedAPIError(errorMessage, requestOptions, responseDetails);
         }
 
         return [response, returnAsText ? response.text() : (response.json().catch(() => ({})) as Promise<T>)];
@@ -168,13 +238,14 @@ export class RestManager {
     }
 }
 
-export type MakeOptions<B = Record<string, any>, Q = RequestBodyObject> = {
+export type MakeOptions<B = RequestBodyObject, Q = RequestBodyObject> = {
     body?: B | FormData;
     headers?: Record<string, string>;
     isFormData?: boolean;
-    method: string;
+    method: HTTPMethods;
     path: string;
     query?: Q;
-}
+};
 export type JSONB = Record<string, any>;
+export type HTTPMethods = "DELETE" | "GET" | "HEAD" | "PATCH" | "POST" | "PUT";
 export type RequestBodyObject = JSONB | undefined;
