@@ -50,7 +50,8 @@
     "exports": {
         ".": {
             "require": "./dist/index.js",
-            "import": "./dist/index.mjs"
+            "import": "./dist/index.mjs",
+            "types": "./types/index.d.ts"
         },
         "./": "./"
     },
