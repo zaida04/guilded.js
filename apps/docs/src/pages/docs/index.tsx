@@ -31,7 +31,7 @@ const Docs: NextPage<Props> = ({ packages }) => {
                 <h1 className="text-5xl text-white font-bold pb-4">Packages:</h1>
                 <a href="https://guildedjs.github.io/">
                     <div className="p-3 mt-2 bg-guilded rounded-lg max-w-fit transition-transform transform hover:scale-110">
-                        <p className="text-xl text-black font-bold">Advanced Docs</p>
+                        <p className="text-xl text-black font-bold">Click here for stable docs</p>
                     </div>
                 </a>
                 {packages
