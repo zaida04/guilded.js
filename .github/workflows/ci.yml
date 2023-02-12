@@ -31,11 +31,14 @@ jobs:
             - name: Install dependencies
               run: pnpm install -r
 
-            - name: Run linter
-              run: pnpm run lint
-
             - name: Run TypeScript Compiler
               run: pnpm run build
+
+            - name: Generate TypeDoc output
+              run: pnpm run docs
+
+            - name: Run linter
+              run: pnpm run lint
 
             # - name: Run tests
             #   run: pnpm run test
