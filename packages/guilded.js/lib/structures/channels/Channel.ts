@@ -110,7 +110,7 @@ export class Channel extends Base {
 	}
 }
 
-enum ChannelType {
+export enum ChannelType {
 	Announcements,
 	Chat,
 	Calendar,
@@ -122,7 +122,8 @@ enum ChannelType {
 	Scheduling,
 	Stream,
 }
-const channelTypeToEnumMap: Record<APIChannelType, ChannelType> = {
+
+export const channelTypeToEnumMap: Record<APIChannelType, ChannelType> = {
 	announcements: ChannelType.Announcements,
 	chat: ChannelType.Chat,
 	calendar: ChannelType.Calendar,
