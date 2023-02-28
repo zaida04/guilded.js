@@ -8,3 +8,5 @@ export * from "./User";
 export * from "./Webhook";
 export * from "./Embed";
 export * from "./collectors";
+
+export { MentionsPayload } from "@guildedjs/guilded-api-typings";
