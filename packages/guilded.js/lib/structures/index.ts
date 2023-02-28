@@ -5,8 +5,9 @@ export * from "./Member";
 export * from "./Message";
 export * from "./Role";
 export * from "./User";
+export * from "./Forum";
 export * from "./Webhook";
 export * from "./Embed";
 export * from "./collectors";
 
-export { MentionsPayload } from "@guildedjs/guilded-api-typings";
+export { MentionsPayload, EmbedField, EmbedAuthor, EmbedFooter, EmbedImage } from "@guildedjs/guilded-api-typings";
