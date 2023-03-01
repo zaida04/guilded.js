@@ -5,17 +5,16 @@ import { buildMemberKey } from "../../util";
 
 export class ServerEventHandler extends GatewayEventHandler {
 	serverRolesUpdated(data: WSServerRolesUpdatedPayload): boolean {
-		const newMembers = [];
 		const oldMembers = [];
+		// update members cache
 		for (const m of data.d.memberRoleIds) {
 			const member = this.client.members.cache.get(buildMemberKey(data.d.serverId, m.userId));
-			if (!member) {
-				newMembers.push({ ...m, serverId: data.d.serverId });
-				continue;
+			if (member) {
+				oldMembers.push(member._clone());
+				member._update({ roleIds: m.roleIds });
 			}
-			oldMembers.push(member._clone());
-			newMembers.push(member._update({ roleIds: m.roleIds }));
 		}
-		return this.client.emit(constants.clientEvents.ROLES_UPATED, newMembers, oldMembers);
+
+		return this.client.emit(constants.clientEvents.ROLES_UPATED, { serverId: data.d.serverId, members: data.d.memberRoleIds }, oldMembers);
 	}
 }

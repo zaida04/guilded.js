@@ -76,6 +76,6 @@ export type ClientEvents = {
 	serverCreated: (server: { serverId: string }) => unknown;
 	webhookCreated: (webhook: Webhook) => unknown;
 	webhookUpdated: (webhook: Webhook, oldWebhook: Webhook | null) => unknown;
-	rolesUpdated: (members: (Member | (ServerMemberRoleIdsPayload & { serverId: string }))[], oldMembers: Member[]) => unknown;
+	rolesUpdated: (updatedMembers: { serverId: string, members: ServerMemberRoleIdsPayload[] }, oldMembers: Member[]) => unknown;
 	unknownGatewayEvent: (data: any) => unknown;
 };
