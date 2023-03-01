@@ -50,6 +50,8 @@ export class Message extends Base<ChatMessagePayload> {
     deleted = false;
     /** When the message was deleted, if it was */
     _deletedAt: number | null = null;
+    /** Embeds contained within this message */
+    embeds: Embed[] = [];
 
     constructor(client: Client, data: ChatMessagePayload) {
         super(client, data);
@@ -99,6 +101,10 @@ export class Message extends Base<ChatMessagePayload> {
         if ("deletedAt" in data) {
             this.deleted = true;
             this._deletedAt = Date.parse(data.deletedAt);
+        }
+
+        if ("embeds" in data) {
+            this.embeds = data.embeds?.map(x => new Embed(x)) ?? [];
         }
 
         return this;
