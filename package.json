@@ -42,6 +42,7 @@
 		"typedoc": "0.23.24",
 		"typedoc-plugin-remove-references": "0.0.6",
 		"typedoc-plugin-rename-defaults": "^0.6.4",
+		"typedoc-plugin-resolve-crossmodule-references": "^0.3.3",
 		"typescript": "4.9.4"
 	},
 	"contributors": [

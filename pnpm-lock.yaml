@@ -28,6 +28,7 @@ importers:
       typedoc: 0.23.24
       typedoc-plugin-remove-references: 0.0.6
       typedoc-plugin-rename-defaults: ^0.6.4
+      typedoc-plugin-resolve-crossmodule-references: ^0.3.3
       typescript: 4.9.4
     devDependencies:
       '@changesets/cli': 2.26.0
@@ -54,6 +55,7 @@ importers:
       typedoc: 0.23.24_typescript@4.9.4
       typedoc-plugin-remove-references: 0.0.6
       typedoc-plugin-rename-defaults: 0.6.4_typedoc@0.23.24
+      typedoc-plugin-resolve-crossmodule-references: 0.3.3_typedoc@0.23.24
       typescript: 4.9.4
 
   apps/docs:
@@ -6018,6 +6020,15 @@ packages:
     resolution: {integrity: sha512-0rAeNttAfu6ixbi1yu6d+DqNZN8SfRivj2QbnZ4zVa+5HcCPcmQrlR6WHjNzdDfpkGytiiqPTtRD6pAfW/yACg==}
     peerDependencies:
       typedoc: 0.22.x || 0.23.x
+    dependencies:
+      typedoc: 0.23.24_typescript@4.9.4
+    dev: true
+
+  /typedoc-plugin-resolve-crossmodule-references/0.3.3_typedoc@0.23.24:
+    resolution: {integrity: sha512-ZWWBy2WR8z9a6iXYGlyB3KrpV+JDdZv1mndYU6Eh6mInrfMCrQJi3Y5K9ihMBfuaBGB//le1nEmQLgzU3IO+dw==}
+    engines: {node: '>=14'}
+    peerDependencies:
+      typedoc: '>=0.22 <=0.23'
     dependencies:
       typedoc: 0.23.24_typescript@4.9.4
     dev: true
