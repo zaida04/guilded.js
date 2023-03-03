@@ -64,7 +64,7 @@ export default function Home({ buildDate }: InferGetStaticPropsType<typeof getSt
 						</Link>
 					</div>
 					<div className="flex justify-center text-lg pt-8 text-white">
-						<div className="w-full md:w-3/5">
+						<div className="w-full md:w-4/5">
 							<p className="text-md text-center md:text-start pb-8">{description}</p>
 							<div className="border-gray border-[3.5px] rounded-lg">
 								<CodeBlock language="javascript" showLineNumbers={false} text={exampleCode} theme={androidstudio} />
