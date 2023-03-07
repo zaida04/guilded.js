@@ -1,5 +1,16 @@
 {
+	"$schema": "https://openapi.vercel.sh/vercel.json",
 	"github": {
 		"silent": true
-	}
+	},
+	"rewrites": [
+		{
+			"source": "/guide/:match*",
+			"destination": "https://guilded-js.gitbook.io/api-docs/:match*"
+		},
+		{
+			"source": "/legacy/:match*",
+			"destination": "https://guildedjs.github.io/:match*"
+		}
+	]
 }
