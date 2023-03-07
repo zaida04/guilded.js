@@ -3,7 +3,7 @@ import { useState } from "react";
 
 const topBars = {
     Docs: "/docs",
-    Guide: "https://guilded-js.gitbook.io/api-docs/create-a-basic-bot",
+    Guide: "/guide",
     Github: "https://github.com/guildedjs/guilded.js",
     "Support Server": "https://guilded.gg/guildedjs",
     "Legacy Docs": "https://guildedjs.github.io/",
