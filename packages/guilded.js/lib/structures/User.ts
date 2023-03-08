@@ -45,6 +45,7 @@ export class ClientUser extends User {
     readonly createdBy: string;
     // The bot ID (not to be confused with the user ID) of this bot
     readonly botId: string;
+    
     constructor(client: Client, data: WSWelcomePayload["d"]["user"]) {
         super(client, { ...data, type: "bot" });
         this.createdBy = data.createdBy;

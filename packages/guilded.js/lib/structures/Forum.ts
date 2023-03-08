@@ -2,19 +2,61 @@ import type { ForumTopicPayload, MentionsPayload } from "@guildedjs/guilded-api-
 import { Base } from "./Base";
 import type { Client } from "./Client";
 
+/**
+ * Represents a forum topic in Guilded.
+ */
 export class ForumTopic extends Base<ForumTopicPayload, number> {
+    /**
+     * The server ID of the forum topic.
+     */
     readonly serverId: string;
+    /**
+     * The channel ID of the forum topic.
+     */
     readonly channelId: string;
+    /**
+     * The title of the forum topic.
+     */
     title!: string;
+    /**
+     * The creation date of the forum topic.
+     */
     readonly _createdAt: number;
+    /**
+     * The user ID of the user who created the forum topic.
+     */
     readonly createdBy: string;
+    /**
+     * The webhook ID of the webhook that created the forum topic, or null if it was created by a user.
+     */
     readonly createdByWebhookId: string | null;
+    /**
+     * The date time the forum topic was last updated, or null if it hasn't been updated.
+     */
     _updatedAt!: number | null;
+    /**
+     * The date time the forum topic was last bumped, or null if it hasn't been bumped.
+     */
     _bumpedAt!: number | null;
+    /**
+     * The date time the forum topic was deleted, or null if it hasn't been deleted.
+     */
     _deletedAt: number | null;
+    /**
+     * Whether the forum topic is pinned.
+     */
     isPinned: boolean;
+    /**
+     * Whether the forum topic is locked.
+     */
     isLocked: boolean;
+    /**
+     * The content of the forum topic.
+     */
     content!: string;
+    /**
+     * The mentions in the forum topic.
+     */
     mentions!: MentionsPayload
 
     constructor(client: Client, data: ForumTopicPayload) {
@@ -31,20 +73,28 @@ export class ForumTopic extends Base<ForumTopicPayload, number> {
         this._update(data);
     }
 
+    /**
+     * Gets the creation date of the forum topic.
+     * @returns A Date object
+     */
     get createdAt(): Date {
         return new Date(this._createdAt);
     }
 
+    /**
+     * Gets the date the forum topic was deleted, or null if it hasn't been deleted.
+     * @returns A Date object
+     */
     get deletedAt(): Date | null {
         return this._deletedAt ? new Date(this._deletedAt) : null;
     }
 
+    /**
+     * Gets the date the forum topic was last updated, or null if it hasn't been updated.
+     * @returns A Date object
+     */
     get updatedAt(): Date | null {
         return this._updatedAt ? new Date(this._updatedAt) : null;
-    }
-
-    get bumpedAt(): Date | null {
-        return this._bumpedAt ? new Date(this._bumpedAt) : null;
     }
 
     _update(data: Partial<ForumTopicPayload & { _deletedAt?: Date }>) {
@@ -59,7 +109,7 @@ export class ForumTopic extends Base<ForumTopicPayload, number> {
         if ("bumpedAt" in data && typeof data.bumpedAt !== "undefined") {
             this._bumpedAt = data.bumpedAt ? Date.parse(data.bumpedAt) : null;
         }
-        
+
         if ("isPinned" in data && typeof data.isPinned !== "undefined") {
             this.isPinned = data.isPinned;
         }

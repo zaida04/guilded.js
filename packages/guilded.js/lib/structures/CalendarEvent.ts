@@ -4,6 +4,9 @@ import type { Client } from "./Client";
 import type { User } from "./User";
 import { Collection } from "@discordjs/collection";
 
+/** 
+ * Represents a calendar event on Guilded
+ */
 export class CalendarEvent extends Base<CalendarEventPayload, number> {
     /** The ID of the calendar event (min 1) */
     readonly id: number;
@@ -25,8 +28,11 @@ export class CalendarEvent extends Base<CalendarEventPayload, number> {
     startsAt: string;
     /** The duration of the event in minutes (min 1) */
     duration?: number | null;
+    /** Whether this event is private or not */
     isPrivate?: boolean;
+    /** The mentions in this calendar event */
     mentions?: MentionsPayload;
+    /** The cancellations for this event */
     cancellation?: CalendarEventCancellationPayload;
     /** The number of rsvps to allow before waitlisting rsvps (min 1) */
     rsvpLimit?: number | null;
@@ -59,10 +65,18 @@ export class CalendarEvent extends Base<CalendarEventPayload, number> {
         this._update(data);
     }
 
+    /**
+     * Get the author of this calendar event
+     * @returns The author of this calendar event or null if the author is not cached
+     */
     get author(): User | null {
         return this.client.users.cache.get(this.createdBy) ?? null;
     }
 
+    /**
+     * Get the date this calendar event was created
+     * @returns The date this calendar event was created
+     */
     get createdAt(): Date {
         return new Date(this._createdAt);
     }
@@ -112,6 +126,9 @@ export class CalendarEvent extends Base<CalendarEventPayload, number> {
     }
 }
 
+/**
+ * Represents a calendar event RSVP
+ */
 export class CalendarEventRsvp extends Base<CalendarEventRsvpPayload, string>{
         /** Custom Id generated for the rsvp */
         readonly id: string;
