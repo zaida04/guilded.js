@@ -10,20 +10,62 @@ import type { Message } from "../Message";
 import type { ChannelType as APIChannelType } from "@guildedjs/guilded-api-typings";
 import type { MessageContent } from "../../typings";
 
+/**
+ * Represents a channel in a server on Guilded.
+ */
 export class Channel extends Base {
-	type: ChannelType;
-	name!: string;
-	topic!: string | null;
-	_createdAt: number;
-	createdBy: string;
-	_updatedAt!: number | null;
-	serverId: string;
-	parentId!: string | null;
-	categoryId!: string | null;
-	groupId: string;
-	isPublic!: boolean;
-	archivedBy!: string | null;
-	_archivedAt!: number | null;
+    /**
+     * The type of the channel.
+     */
+    type: ChannelType;
+    /**
+     * The name of the channel.
+     */
+    name!: string;
+    /**
+     * The topic of the channel.
+     */
+    topic!: string | null;
+    /**
+     * The timestamp when the channel was created.
+     */
+    _createdAt: number;
+    /**
+     * The user ID of the user who created the channel.
+     */
+    createdBy: string;
+    /**
+     * The timestamp when the channel was last updated.
+     */
+    _updatedAt!: number | null;
+    /**
+     * The ID of the server that the channel belongs to.
+     */
+    serverId: string;
+    /**
+     * The ID of the parent channel.
+     */
+    parentId!: string | null;
+    /**
+     * The ID of the category that the channel belongs to.
+     */
+    categoryId!: string | null;
+    /**
+     * The ID of the group that the channel belongs to.
+     */
+    groupId: string;
+    /**
+     * Whether the channel is public.
+     */
+    isPublic!: boolean;
+    /**
+     * The user ID of the user who archived the channel.
+     */
+    archivedBy!: string | null;
+    /**
+     * The timestamp when the channel was archived.
+     */
+    _archivedAt!: number | null;
 
 	constructor(client: Client, data: ServerChannelPayload & { deleted?: boolean }) {
 		super(client, data);
@@ -36,14 +78,23 @@ export class Channel extends Base {
 		this._update(data);
 	}
 
+	/**
+     * The timestamp when the channel was created as a Date object.
+     */
 	get createdAt(): Date {
 		return new Date(this._createdAt);
 	}
 
+    /**
+     * The timestamp when the channel was archived as a Date object, or null if the channel is not archived.
+     */
 	get archivedAt(): Date | null {
 		return this._archivedAt ? new Date(this._archivedAt) : null;
 	}
 
+    /**
+     * The timestamp when the channel was last updated as a Date object, or null if the channel has not been updated.
+     */
 	get updatedAt(): Date | null {
 		return this._updatedAt ? new Date(this._updatedAt) : null;
 	}
@@ -84,32 +135,49 @@ export class Channel extends Base {
 		return this;
 	}
 
-	/** Get a list of the latest 100 messages from a channel. */
+    /**
+     * Fetch from the latest 100 messages in the channel.
+     * @param options - Additional options for the message fetch.
+     */
 	fetchMessages(options?: RESTGetChannelMessagesQuery): Promise<Collection<string, Message>> {
 		return this.client.messages.fetchMany(this.id, options ?? {});
 	}
 
-	/** Get details for a specific chat message from a chat channel. */
+    /**
+     * Fetch details for a specific message in the channel.
+     * @param messageId - The ID of the message to fetch.
+     */
 	fetchMessage(messageId: string): Promise<Message> {
 		return this.client.messages.fetch(this.id, messageId);
 	}
 
-	/** Update this channel. */
+    /**
+     * Update the channel with new data.
+     * @param options - The new data for the channel.
+     */
 	update(options: RESTPatchChannelBody) {
 		return this.client.channels.update(this.id, options);
 	}
 
-	/** Delete this channel. */
+    /**
+     * Delete the channel.
+     */
 	delete() {
 		return this.client.channels.delete(this.id);
 	}
 
-	/** Send a chat message in the channel. */
+    /**
+     * Send a message in the channel.
+     * @param content - The content of the message.
+     */
 	send(content: MessageContent) {
 		return this.client.messages.send(this.id, content);
 	}
 }
 
+/**
+ * Enum for mapping channel types to an int for memory saving.
+ */
 export enum ChannelType {
 	Announcements,
 	Chat,
@@ -123,6 +191,9 @@ export enum ChannelType {
 	Stream,
 }
 
+/**
+ * A map of API channel types to channel types.
+ */
 export const channelTypeToEnumMap: Record<APIChannelType, ChannelType> = {
 	announcements: ChannelType.Announcements,
 	chat: ChannelType.Chat,

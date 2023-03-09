@@ -1,9 +1,13 @@
 import type { Client } from "./Client";
 
+/**
+ * The base of all structures in this library. 
+ * All structures that have an ID will extend this class.
+ */
 export class Base<T = { id: string }, R = string> {
-    // Identifier of this structrure
+    /** Identifier of this structrure */
     public id: R;
-    // Bare data of this structure
+    /** Bare data of this structure */
     public raw: T;
 
     constructor(public readonly client: Client, data: { id: R } & T) {

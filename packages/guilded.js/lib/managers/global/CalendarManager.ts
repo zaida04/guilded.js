@@ -3,6 +3,9 @@ import type { RESTGetCalendarEventsBody, RESTPatchCalendarEventBody, RESTPostCal
 import { CacheableStructManager } from "./CacheableStructManager";
 import { CalendarEvent, CalendarEventRsvp } from "../../structures/CalendarEvent";
 
+/**
+ * The manager is used to interact with calendars on a server.
+ */
 export class GlobalCalendarManager extends CacheableStructManager<number, CalendarEvent> {
     get shouldCacheCalendar() {
         return this.client.options?.cache?.cacheCalendars !== false;
@@ -12,14 +15,25 @@ export class GlobalCalendarManager extends CacheableStructManager<number, Calend
         return this.client.options?.cache?.cacheCalendarsRsvps !== false;
     }
 
-    /** Create a calendar event. */
+    /**
+     * Creates a calendar event.
+     * @param channelId The ID of the channel in which to create the event.
+     * @param options The options for the event.
+     * @returns A promise that resolves with the created calendar event.
+     */
     create(channelId: string, options: RESTPostCalendarEventBody): Promise<CalendarEvent> {
         return this.client.rest.router.createCalendarEvent(channelId, options).then((data) => {
             return new CalendarEvent(this.client, data.calendarEvent);
         });
     }
 
-    /** Get a single calendar event. */
+    /**
+     * Fetches a single calendar event.
+     * @param channelId The ID of the channel in which to fetch the event.
+     * @param calendarEventId The ID of the event to fetch.
+     * @param force Whether or not to force a fetch instead of using a cached version.
+     * @returns A promise that resolves with the fetched calendar event.
+     */
     fetch(channelId: string, calendarEventId: number, force?: boolean): Promise<CalendarEvent> {
         if (!force) {
             const existingCalendar = this.client.calendars.cache.get(calendarEventId);
@@ -32,7 +46,12 @@ export class GlobalCalendarManager extends CacheableStructManager<number, Calend
         });
     }
 
-    /** Get multiple calendar events. */
+    /**
+     * Fetches multiple calendar events.
+     * @param channelId The ID of the channel in which to fetch the events.
+     * @param options The options for the fetch.
+     * @returns A promise that resolves with a collection of the fetched calendar events.
+     */
     fetchMany(channelId: string, options: RESTGetCalendarEventsBody): Promise<Collection<number, CalendarEvent>> {
         return this.client.rest.router.getCalendarEvents(channelId, options).then((data) => {
             const calendarEvents = new Collection<number, CalendarEvent>();
@@ -45,7 +64,13 @@ export class GlobalCalendarManager extends CacheableStructManager<number, Calend
         });
     }
 
-    /** Update a calendar event. */
+    /**
+     * Updates a calendar event.
+     * @param channelId The ID of the channel in which the event exists.
+     * @param calendarEventId The ID of the event to update.
+     * @param options The options for the update.
+     * @returns A promise that resolves with the updated calendar event.
+     */
     update(channelId: string, calendarEventId: number, options: RESTPatchCalendarEventBody): Promise<CalendarEvent> {
         return this.client.rest.router.updateCalendarEvent(channelId, calendarEventId, options).then((data) => {
             const existingCalendar = this.cache.get(calendarEventId);
@@ -57,7 +82,12 @@ export class GlobalCalendarManager extends CacheableStructManager<number, Calend
         });
     }
 
-    /** Delete a calendar event. */
+    /**
+     * Delete a calendar event.
+     * @param channelId - The ID of the channel where the calendar event is located.
+     * @param calendarEventId - The ID of the calendar event to delete.
+     * @returns A Promise that resolves with the deleted calendar event or `undefined` if the event was not cached.
+     */
     delete(channelId: string, calendarEventId: number): Promise<CalendarEvent | void> {
         return this.client.rest.router.deleteCalendarEvent(channelId, calendarEventId).then((data) => {
             const cachedCalendar = this.cache.get(calendarEventId);
@@ -65,7 +95,14 @@ export class GlobalCalendarManager extends CacheableStructManager<number, Calend
         });
     }
 
-    /** Get a single rsvp from a caldenar event */
+    /**
+     * Get a single RSVP from a calendar event.
+     * @param channelId - The ID of the channel where the calendar event is located.
+     * @param calendarEventId - The ID of the calendar event to get the RSVP from.
+     * @param userId - The ID of the user who made the RSVP.
+     * @param force - Whether to force a request to the API instead of returning the cached RSVP.
+     * @returns A Promise that resolves with the requested RSVP.
+     */
     fetchRsvp(channelId: string, calendarEventId: number, userId: string, force?: boolean): Promise<CalendarEventRsvp> {
         if (!force) {
             const existingRsvp = this.client.calendars.cache.get(calendarEventId)?.rsvps?.get(userId);
@@ -78,7 +115,12 @@ export class GlobalCalendarManager extends CacheableStructManager<number, Calend
         });
     }
 
-    /** Fetch rsvps for a calendar event */
+    /**
+     * Fetch RSVPs for a calendar event.
+     * @param channelId - The ID of the channel where the calendar event is located.
+     * @param calendarEventId - The ID of the calendar event to fetch RSVPs for.
+     * @returns A Promise that resolves with a collection of RSVPs.
+     */
     fetchManyRsvps(channelId: string, calendarEventId: number): Promise<Collection<string, CalendarEventRsvp>> {
         return this.client.rest.router.getCalendarEventRsvps(channelId, calendarEventId).then((data) => {
             const rsvpEvents = new Collection<string, CalendarEventRsvp>();
@@ -93,7 +135,14 @@ export class GlobalCalendarManager extends CacheableStructManager<number, Calend
         });
     }
 
-    /** Create or update an rsvp for a calendar event */
+    /**
+     * Creates or updates an RSVP for a calendar event.
+     * @param channelId The ID of the channel.
+     * @param calendarEventId The ID of the calendar event.
+     * @param userId The ID of the user.
+     * @param options The options for updating the RSVP.
+     * @returns A promise that resolves with the updated or created RSVP.
+     */
     updateRsvp(channelId: string, calendarEventId: number, userId: string, options: RESTPatchCalendarEventRsvpBody): Promise<CalendarEventRsvp> {
         return this.client.rest.router.updateCalendarEventRvsp(channelId, calendarEventId, userId, options).then((data) => {
             const existingRsvp = this.cache.get(calendarEventId)?.rsvps?.get(userId);
@@ -105,7 +154,13 @@ export class GlobalCalendarManager extends CacheableStructManager<number, Calend
         });
     }
 
-    /** Delete an rsvp for a calendar event */
+    /**
+     * Deletes an RSVP for a calendar event.
+     * @param channelId The ID of the channel.
+     * @param calendarEventId The ID of the calendar event.
+     * @param userId The ID of the user.
+     * @returns A promise that resolves with the deleted RSVP or void if it was not cached.
+     */
     deleteRsvp(channelId: string, calendarEventId: number, userId: string): Promise<CalendarEventRsvp | void> {
         return this.client.rest.router.deleteCalendarEventRvsp(channelId, calendarEventId, userId).then((data) => {
             if (this.shouldCacheCalendar && this.shouldCacheCalendarRsvps) {

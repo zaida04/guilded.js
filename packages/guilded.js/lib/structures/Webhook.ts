@@ -5,7 +5,7 @@ import type { Client } from "./Client";
 import type { User } from "./User";
 
 /**
- * Object representing received webhook data. This object is NOT to be used to send data to webhooks. That will be WebhookClient
+ * Object representing received webhook data. This object is NOT to be used to send data to webhooks. That would be WebhookClient
  */
 export class Webhook extends Base<WebhookPayload> {
 	/**
@@ -51,17 +51,45 @@ export class Webhook extends Base<WebhookPayload> {
 		this._update(data);
 	}
 
+	/**
+	 * Returns the creation date of this webhook
+	 * @returns The creation date of this webhook
+	 */
 	get createdAt(): Date {
 		return new Date(this._createdAt);
 	}
 
+	/**
+	 * Returns the deletion date of this webhook if it was deleted
+	 * @returns The deletion date of this webhook if it was deleted, otherwise null
+	 */
 	get deletedAt(): Date | null {
 		return this._deletedAt ? new Date(this._deletedAt) : null;
 	}
 
-	/** The author of this webhook */
+	/**
+	 * Returns the author of this webhook
+	 * @returns The author of this webhook, or null if the author is not cached
+	 */
 	get user(): User | null {
 		return this.client.users.cache.get(this.id) ?? null;
+	}
+
+	/**
+	 * Updates this webhook with new options
+	 * @param options The new options for this webhook
+	 * @returns A promise that resolves with the updated webhook
+	 */
+	update(options: RESTPutServerWebhookBody): Promise<Webhook> {
+		return this.client.webhooks.update(this.serverId, this.id, options);
+	}
+
+	/**
+	 * Deletes this webhook
+	 * @returns A promise that resolves with this webhook after it has been deleted
+	 */
+	delete(): Promise<this> {
+		return this.client.webhooks.delete(this.serverId, this.id).then(() => this);
 	}
 
 	_update(data: Partial<WebhookPayload>): this {
@@ -73,13 +101,5 @@ export class Webhook extends Base<WebhookPayload> {
 		}
 
 		return this;
-	}
-
-	update(options: RESTPutServerWebhookBody): Promise<Webhook> {
-		return this.client.webhooks.update(this.serverId, this.id, options);
-	}
-
-	delete(): Promise<this> {
-		return this.client.webhooks.delete(this.serverId, this.id).then(() => this);
 	}
 }

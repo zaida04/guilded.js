@@ -76,10 +76,16 @@ export class Message extends Base<ChatMessagePayload> {
         return new Date(this._createdAt);
     }
 
+    /**
+     * Returns the date and time the message was last updated, if relevant.
+     */
     get updatedAt(): Date | null {
         return this._updatedAt ? new Date(this._updatedAt) : null;
     }
 
+    /**
+     * Returns the date and time the message was deleted, if it was.
+     */
     get deletedAt(): Date | null {
         return this._deletedAt ? new Date(this._deletedAt) : null;
     }
@@ -109,72 +115,127 @@ export class Message extends Base<ChatMessagePayload> {
 
         return this;
     }
-
-    /** Get the author of this message */
+    /**
+     * Returns the author of this message, or null if the author is not cached.
+     */
     get author(): User | null {
         return this.client.users.cache.get(this.createdById) ?? null;
     }
 
-    /** The author id of the user who sent this message. */
+    /**
+     * Returns the ID of the user who sent this message.
+     */
     get authorId(): string {
         return this.createdByBotId ?? this.createdByWebhookId ?? this.createdById;
     }
 
-    /** Get the member of this message (if in server) */
+    /**
+     * Returns the member of this message, if the message is in a server, or null otherwise or if the member is not cached.
+     */
     get member(): Member | null {
         return this.serverId ? this.client.members.cache.get(buildMemberKey(this.serverId, this.authorId)) ?? null : null;
     }
 
-    /** Get the channel of this message */
+    /**
+     * Returns the channel that this message belongs to, or null if the channel is not cached.
+     */
     get channel(): Channel | null {
         return this.client.channels.cache.get(this.channelId) ?? null;
     }
 
-    /* Edit message content */
+    /**
+     * Edit message content.
+     * @param newContent - The new content of the message.
+     * @returns A promise that resolves with the updated message.
+     */
     edit(newContent: RESTPostChannelMessagesBody | Embed | string): Promise<Message> {
         return this.client.messages.update(this.channelId, this.id, newContent).then(() => this);
     }
 
-    /** Send a message in the same channel as this message. */
+    /**
+     * Send a message in the same channel as this message.
+     * @param content - The content of the message.
+     */
     send(content: MessageContent) {
         return this.client.messages.send(this.channelId, content);
     }
 
-    /** Send a message that replies to this message. It mentions the user who sent this message. */
+    /**
+     * Send a message that replies to this message. It mentions the user who sent this message.
+     * @param content - The content of the message to send.
+     */
     reply(content: MessageContent) {
         return this.client.messages.send(
             this.channelId,
             typeof content === "string"
                 ? { content, replyMessageIds: [this.id] }
                 : content instanceof Embed
-                ? { embeds: [content] }
-                : { ...content, replyMessageIds: content.replyMessageIds ? [this.id, ...content.replyMessageIds] : [this.id] },
+                    ? { embeds: [content] }
+                    : { ...content, replyMessageIds: content.replyMessageIds ? [this.id, ...content.replyMessageIds] : [this.id] },
         );
     }
 
-    /** Add a reaction emote */
+    /**
+     * Add a reaction emote.
+     * @param emoteId - The ID of the emote to add.
+     * @returns A promise that resolves when the emote has been added.
+     */
     addReaction(emoteId: number): Promise<void> {
         return this.client.rest.router.addReactionEmote(this.channelId, this.id, emoteId).then(() => void 0);
     }
 
-    /** Delete a reaction emote */
+    /**
+     * Delete a reaction emote.
+     * @param emoteId - The ID of the emote to delete.
+     * @returns A promise that resolves when the emote has been deleted.
+     */
     deleteReaction(emoteId: number): Promise<void> {
         return this.client.rest.router.deleteReactionEmote(this.channelId, this.id, emoteId).then(() => void 0);
     }
 
-    /** Delete this message. */
-    delete() {
+    /**
+     * Delete this message.
+     * @returns A promise that resolves when the message has been deleted.
+     */
+    delete(): Promise<void> {
         return this.client.messages.delete(this.channelId, this.id);
     }
 }
 
+/**
+ * Represents a reaction to a message.
+ */
 export class MessageReaction extends Base<FlattenedReactionData> {
+    /**
+     * The ID of the channel where the message was sent.
+     */
     readonly channelId: string;
+
+    /**
+     * The ID of the message this reaction belongs to.
+     */
     readonly messageId: string;
+
+    /**
+     * The ID of the user who created the reaction.
+     */
     readonly createdBy: string;
+
+    /**
+     * The emote associated with this reaction.
+     */
     readonly emote: EmotePayload;
+
+    /**
+     * The ID of the server where the reaction was made.
+     */
     readonly serverId: string;
 
+    /**
+     * Creates a new instance of the MessageReaction class.
+     * @param client The client that instantiated this object.
+     * @param data The data representing the reaction.
+     */
     constructor(client: Client, data: FlattenedReactionData) {
         const formedId = buildReactionKey(data.createdBy, data.emote.id);
         super(client, { ...data, id: formedId });

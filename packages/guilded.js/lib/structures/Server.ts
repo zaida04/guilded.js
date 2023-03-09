@@ -5,6 +5,9 @@ import type { Channel } from "./channels";
 import { buildMemberKey } from "../util";
 import type { Member } from "./Member";
 
+/**
+ * A class representing a Guilded server.
+ */
 export class Server extends Base<ServerPayload> {
     /** The ID of the owner of this server */
     ownerId: string;
@@ -36,18 +39,23 @@ export class Server extends Base<ServerPayload> {
         this._update(data);
     }
 
+
+    /** The date when the server was created. */
     get createdAt(): Date {
         return new Date(this._createdAt);
     }
 
+    /** The URL of the server. */
     get url(): string {
         return `https://www.guilded.gg/${this.shortURL}`;
     }
 
+    /** The owner of the server. */
     get owner(): Member | null {
         return this.client.members.cache.get(buildMemberKey(this.id, this.ownerId)) ?? null;
     }
 
+    /** The default channel of the server. */
     get defaultChannel(): Channel | null {
         return this.defaultChannelId ? this.client.channels.cache.get(this.defaultChannelId) ?? null : null;
     }
@@ -92,6 +100,7 @@ export class Server extends Base<ServerPayload> {
     }
 }
 
+/** The type of a Guilded server. */
 export enum ServerType {
     Team,
     Organization,
@@ -102,6 +111,8 @@ export enum ServerType {
     Streaming,
     Other,
 }
+
+/** A mapping of server types from the API to the client. */
 export const ServerTypeMap: Record<APIServerType, ServerType> = {
     team: ServerType.Team,
     organization: ServerType.Organization,

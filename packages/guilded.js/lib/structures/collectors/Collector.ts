@@ -2,22 +2,32 @@ import { Collection } from "@discordjs/collection";
 import type { MaybePromise } from "../../typings";
 import type { Client } from "../Client";
 
+/**
+ * A collector is just a wrapper over a set of events for collecting a structure.
+ * Commonly used for things like Message or MessageReaction collecting, collectors allow you
+ * to have your code wait until further input from a user.
+ */
 export abstract class Collector<T extends CollectableStructure> {
-    /** successfully collected entries */
+    /** Collection of successfully collected entries */
     readonly entries = new Collection<T["id"], T>();
-    /** whether the collector is actively collecting elements */
+    /** Whether the collector is actively collecting elements */
     isActive = false;
-    /** method to resolve the promise this collector has when instantiated */
+    /** Method to resolve the promise this collector has when instantiated */
     protected resolve: ((value: CollectorReturnValue<T>) => void) | null = null;
-    /** timeout for max time */
+    /** Timeout for max time */
     protected maxTimeout: NodeJS.Timeout | null = null;
-    /** bound function for item receiving */
+    /** Bound function for item receiving */
     protected boundItemReceiver = this.itemReceived.bind(this);
 
     constructor(public readonly client: Client, public options: Partial<CollectorOptions<T>>) {
+        /** Check if timeLimit is specified */
         if (!options.timeLimit) throw new Error("You must specify a time limit in milliseconds for this collector.");
     }
 
+    /**
+     * Start the collector
+     * @returns A promise that resolves with a `CollectorReturnValue` object
+     */
     start(): Promise<CollectorReturnValue<T>> {
         return new Promise((resolve) => {
             this.resolve = resolve;
@@ -27,6 +37,11 @@ export abstract class Collector<T extends CollectableStructure> {
         });
     }
 
+    /**
+     * Receives an item
+     * @param entry - The item received
+     * @returns Whether the item passes the filter function or not
+     */
     async itemReceived(entry: T): Promise<boolean> {
         const elementPassesFilter = (await this.options.filter?.(entry)) ?? true;
         if (elementPassesFilter) {
@@ -44,14 +59,20 @@ export abstract class Collector<T extends CollectableStructure> {
         return false;
     }
 
-    // https://github.com/discordjs/discord.js/blob/f0b68d57368d7ac3db97925df68c11a945ccd84c/packages/discord.js/src/client/BaseClient.js#L47
+    /**
+     * Increment the max number of event listeners for the client
+     * @returns The new max number of event listeners for the client
+     */
     protected incrementMaxEventListeners(): number {
         const incrementedAmount = this.client.getMaxListeners() + 1;
         this.client.setMaxListeners(incrementedAmount);
         return incrementedAmount;
     }
 
-    // https://github.com/discordjs/discord.js/blob/f0b68d57368d7ac3db97925df68c11a945ccd84c/packages/discord.js/src/client/BaseClient.js#L58
+    /**
+     * Decrement the max number of event listeners for the client
+     * @returns The new max number of event listeners for the client
+     */
     protected decrementMaxEventListeners(): number {
         const decrementAmount = this.client.getMaxListeners() - 1;
         if (decrementAmount !== 0) {
@@ -61,18 +82,36 @@ export abstract class Collector<T extends CollectableStructure> {
         return 0;
     }
 
+    /**
+     * Hook events to the collector
+     */
     abstract hookEvents(): void;
+
+    /**
+     * Clean up the collector
+     */
     abstract _cleanup(): void;
 }
 
+/**
+ * Reasons why a collector has ended
+ */
 export enum CollectorEndReasons {
     MAX = "MAX_AMOUNT",
     TIME = "TIME_EXPIRED",
 }
 
+/**
+ * The value returned by a collector when it ends
+ */
 type CollectorReturnValue<T extends CollectableStructure> = { reason: CollectorEndReasons; entries: Collection<T["id"], T> };
+
+/**
+ * The base structure of objects that can be collected by a collector
+ */
 type CollectableStructure = { id: string };
 
+/** options for constructing a collector */
 export interface CollectorOptions<T> {
     /** a function that determines whether an entry is collected or not */
     filter?: (item: T) => MaybePromise<boolean>;
