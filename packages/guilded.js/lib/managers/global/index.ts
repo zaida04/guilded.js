@@ -10,3 +10,7 @@ export * from "./MemberManager";
 export * from "./MessageManager";
 export * from "./RoleManager";
 export * from "./ServerManager";
+export * from "./ReactionManager";
+export * from "./GuildBanManager";
+export * from "./UserManager";
+export * from "./WebhookManager";

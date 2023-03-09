@@ -183,7 +183,7 @@ export class Client extends (EventEmitter as unknown as new () => TypedEmitter<C
 /**
  * Options for constructing the client.
  */
-interface ClientOptions {
+export interface ClientOptions {
 	/**
 	 * The bot's token.
 	 * @remarks The token is required to authenticate with the Guilded API.
