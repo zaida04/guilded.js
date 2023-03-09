@@ -1,4 +1,4 @@
-import type { ForumTopicPayload, MentionsPayload } from "@guildedjs/guilded-api-typings";
+import type { ForumTopicPayload, ForumTopicSummaryPayload, MentionsPayload } from "@guildedjs/guilded-api-typings";
 import { Base } from "./Base";
 import type { Client } from "./Client";
 
@@ -129,5 +129,104 @@ export class ForumTopic extends Base<ForumTopicPayload, number> {
         if ("mentions" in data && typeof data.mentions !== "undefined") {
             this.mentions = data.mentions;
         }
+
+        return this;
     }
+}
+
+//     ""channelId"
+/** A partial summary representation of a forum topic. Can fetch this topic to get full data */
+export class PartialForumTopic extends Base<ForumTopicSummaryPayload, number> {
+	/** 
+     * The ID of the server this role belongs to 
+     */
+	readonly serverId: string;
+    /**
+     * The date time the forum topic was last updated, or null if it hasn't been updated.
+     */
+    _updatedAt!: number | null;
+    /**
+     * The date time the forum topic was last bumped, or null if it hasn't been bumped.
+     */
+    _bumpedAt!: number | null;
+    /**
+     * The title of the forum topic.
+     */
+    title!: string;
+    /**
+     * Whether the forum topic is pinned.
+     */
+    isPinned: boolean;
+    /**
+     * The webhook ID of the webhook that created the forum topic, or null if it was created by a user.
+     */
+    readonly createdByWebhookId: string | null;
+    /**
+     * The creation date of the forum topic.
+     */
+    readonly _createdAt: number;
+    /**
+     * The user ID of the user who created the forum topic.
+     */
+    readonly createdBy: string;
+    /**
+     * The channel ID of the forum topic.
+     */
+    readonly channelId: string;
+
+	constructor(client: Client, data: ForumTopicSummaryPayload) {
+		super(client, data);
+		this.serverId = data.serverId;
+        this.channelId = data.channelId;
+        this._createdAt = Date.parse(data.createdAt);
+        this.createdByWebhookId = data.createdByWebhookId ?? null;
+        this.createdBy = data.createdBy;
+        this.isPinned = false;
+
+        this._update(data);
+	}
+
+    _update(data: Partial<ForumTopicPayload & { _deletedAt?: Date }>) {
+        if ("updatedAt" in data && typeof data.updatedAt !== "undefined") {
+            this._updatedAt = data.updatedAt ? Date.parse(data.updatedAt) : null;
+        }
+
+        if ("bumpedAt" in data && typeof data.bumpedAt !== "undefined") {
+            this._bumpedAt = data.bumpedAt ? Date.parse(data.bumpedAt) : null;
+        }
+
+        if ("isPinned" in data && typeof data.isPinned !== "undefined") {
+            this.isPinned = data.isPinned;
+        }
+
+        if ("title" in data && typeof data.title !== "undefined") {
+            this.title = data.title;
+        }
+
+        return this;
+    }
+
+    /**
+     * Gets the creation date of the forum topic.
+     * @returns A Date object
+     */
+    get createdAt(): Date {
+        return new Date(this._createdAt);
+    }
+
+    /**
+     * Gets the date the forum topic was last updated, or null if it hasn't been updated.
+     * @returns A Date object
+     */
+    get updatedAt(): Date | null {
+        return this._updatedAt ? new Date(this._updatedAt) : null;
+    }
+
+	/** 
+	 * Fetch the full member object of this partial member 
+	 * @returns A promise containing the resolved full member.
+	 */
+	fetch(): Promise<ForumTopic> {
+		return this.client.topics.fetch(this.serverId, this.id);
+	}
 }

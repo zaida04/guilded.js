@@ -1,6 +1,7 @@
 import { Collection } from "@discordjs/collection";
 import type { ForumTopicPayload } from "@guildedjs/guilded-api-typings";
 import { Channel } from "./Channel";
+import type { ForumTopic } from "../Forum";
 
 /**
  * Represents a forum channel in Guilded.
@@ -16,8 +17,8 @@ export class ForumChannel extends Channel {
      * @param content - The content of the new topic.
      * @returns A Promise that resolves with the newly created topic payload.
      */
-    createTopic(title: string, content: string): Promise<ForumTopicPayload> {
-        return this.client.topics.createForumTopic(this.id, { title, content });
+    createTopic(title: string, content: string): Promise<ForumTopic> {
+        return this.client.topics.create(this.id, { title, content });
     }
 
     /**
@@ -26,6 +27,6 @@ export class ForumChannel extends Channel {
      * @returns A Promise that resolves when the topic is deleted.
      */
     deleteTopic(id: string): Promise<void> {
-        return this.client.topics.deleteForumTopic(this.id, id);
+        return this.client.topics.delete(this.id, id);
     }
 }

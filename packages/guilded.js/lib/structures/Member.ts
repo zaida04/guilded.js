@@ -219,7 +219,7 @@ export class MemberBan extends Base<UpgradedServerMemberBanPayload> {
 
 	/**
 	 * Gets the user who banned this member.
-	 * @returns The user who banned this member, or `null` if the user is not found.
+	 * @returns The user who banned this member, or `null` if the user is not cached.
 	 */
 	get author(): User | null {
 		return this.client.users.cache.get(this.createdById) ?? null;
@@ -227,7 +227,7 @@ export class MemberBan extends Base<UpgradedServerMemberBanPayload> {
 
 	/**
 	 * Removes this ban.
-	 * @returns A Promise that resolves to the unbanned member or `null` if the member is not found.
+	 * @returns A Promise that resolves to the unbanned member or `null` if the member is not cached.
 	 */
 	unban(): Promise<MemberBan | null> {
 		return this.client.bans.unban(this.serverId, this.target.id);

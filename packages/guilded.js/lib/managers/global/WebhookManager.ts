@@ -4,11 +4,11 @@ import { Webhook } from "../../structures/Webhook";
 import { CacheableStructManager } from "./CacheableStructManager";
 
 /**
- * A manager for interacting with global webhooks.
+ * A manager for interacting with global webhooks. You can retrieve webhooks from the .cache property
  * @extends CacheableStructManager
  */
 export class GlobalWebhookManager extends CacheableStructManager<string, Webhook> {
-	get _shouldCacheWebhook() {
+	get shouldCacheWebhook() {
 		return this.client.options.cache?.cacheWebhooks !== false;
 	}
 
@@ -24,7 +24,7 @@ export class GlobalWebhookManager extends CacheableStructManager<string, Webhook
 			const existingWebhook = this.client.webhooks.cache.get(data.webhook.id);
 			if (existingWebhook) return existingWebhook;
 			const newWebhook = new Webhook(this.client, data.webhook);
-			if (this._shouldCacheWebhook) this.cache.set(newWebhook.id, newWebhook);
+			if (this.shouldCacheWebhook) this.cache.set(newWebhook.id, newWebhook);
 			return newWebhook;
 		});
 	}
@@ -40,7 +40,7 @@ export class GlobalWebhookManager extends CacheableStructManager<string, Webhook
 			for (const webhook of data.webhooks) {
 				const newWebhook = new Webhook(this.client, webhook);
 				webhooks.set(newWebhook.id, newWebhook);
-				if (this._shouldCacheWebhook) this.cache.set(newWebhook.id, newWebhook);
+				if (this.shouldCacheWebhook) this.cache.set(newWebhook.id, newWebhook);
 			}
 			return webhooks;
 		});
@@ -60,7 +60,7 @@ export class GlobalWebhookManager extends CacheableStructManager<string, Webhook
 		}
 		return this.client.rest.router.getWebhook(serverId, webhookId).then((data) => {
 			const newWebhook = new Webhook(this.client, data.webhook);
-			if (this._shouldCacheWebhook) this.cache.set(newWebhook.id, newWebhook);
+			if (this.shouldCacheWebhook) this.cache.set(newWebhook.id, newWebhook);
 			return newWebhook;
 		});
 	}

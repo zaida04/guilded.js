@@ -7,12 +7,23 @@ import { resolveContentToData } from "../../util";
 import type { MessageContent } from "../../typings";
 import { CollectorOptions, MessageCollector } from "../../structures";
 
+/**
+ * Manager for handling caching and interactions for Messages
+ */
 export class GlobalMessageManager extends CacheableStructManager<string, Message> {
+    /**
+     * Whether or not messages should be cached.
+     */
 	get shouldCacheMessage() {
 		return this.client.options.cache?.cacheMessages !== false;
 	}
 
-	/** Get a list of the latest 50 messages from a channel. */
+    /**
+     * Fetches multiple messages from a channel.
+     * @param channelId The ID of the channel to fetch messages from.
+     * @param options Additional options for the fetch.
+     * @returns A promise that resolves with a collection of messages.
+     */
 	fetchMany(channelId: string, options: RESTGetChannelMessagesQuery): Promise<Collection<string, Message>> {
 		return this.client.rest.router.getChannelMessages(channelId, options).then((data) => {
 			const messages = new Collection<string, Message>();
@@ -24,7 +35,13 @@ export class GlobalMessageManager extends CacheableStructManager<string, Message
 		});
 	}
 
-	/** Get details for a specific chat message from a chat channel. */
+    /**
+     * Fetches a message from a channel.
+     * @param channelId The ID of the channel to fetch the message from.
+     * @param messageId The ID of the message to fetch.
+     * @param force Whether or not to force the fetch.
+     * @returns A promise that resolves with the requested message.
+     */
 	fetch(channelId: string, messageId: string, force?: boolean): Promise<Message> {
 		if (!force) {
 			const existingMessage = this.client.messages.cache.get(messageId);
@@ -37,7 +54,12 @@ export class GlobalMessageManager extends CacheableStructManager<string, Message
 		});
 	}
 
-	/** Send a message in a channel */
+    /**
+     * Sends a message to a channel.
+     * @param channelId The ID of the channel to send the message to.
+     * @param content The content of the message.
+     * @returns A promise that resolves with the created message.
+     */
 	send(channelId: string, content: MessageContent): Promise<Message> {
 		return this.client.rest.router.createChannelMessage(channelId, resolveContentToData(content)).then((data) => {
 			// This is in the case of which the WS gateway beats us to adding the message to the cache. If they haven't, then we do it ourselves.
@@ -49,17 +71,37 @@ export class GlobalMessageManager extends CacheableStructManager<string, Message
 		});
 	}
 
-	/** Add a reaction emote */
+
+    /**
+     * Adds a reaction to a message.
+     * @param channelId The ID of the channel containing the message.
+     * @param contentId The ID of the message to add a reaction to.
+     * @param emoteId The ID of the emote to add as a reaction.
+     * @returns A promise that resolves to nothing when the reaction is added.
+     */
 	addReaction(channelId: string, contentId: string, emoteId: number): Promise<void> {
 		return this.client.reactions.create(channelId, contentId, emoteId)
 	}
 
-	/** Delete a reaction emote */
+    /**
+     * Deletes a reaction from a message.
+     * @param channelId The ID of the channel containing the message.
+     * @param contentId The ID of the message to delete the reaction from.
+     * @param emoteId The ID of the emote to delete as a reaction.
+     * @returns A promise that resolves to nothing when the reaction is deleted.
+     */
 	deleteReaction(channelId: string, contentId: string, emoteId: number): Promise<void> {
 		return this.client.reactions.delete(channelId, contentId, emoteId)
 	}
 
-	/** Update a channel message. */
+
+    /**
+     * Updates a message in a channel.
+     * @param channelId The ID of the channel containing the message.
+     * @param messageId The ID of the message to update.
+     * @param content The new content of the message.
+     * @returns A promise that resolves with the updated message.
+     */
 	update(channelId: string, messageId: string, content: RESTPostChannelMessagesBody | Embed | string): Promise<Message> {
 		return this.client.rest.router.updateChannelMessage(channelId, messageId, resolveContentToData(content)).then((data) => {
 			// This is in the case of which the WS gateway beats us to modifying the message in the cache. If they haven't, then we do it ourselves.
