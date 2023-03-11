@@ -15,12 +15,12 @@ This repo serves as a monorepo that houses several packages, mainly the `guilded
 
 ## 📦 Packages
 
--   `guilded.js` (**[GitHub](https://github.com/guildedjs/guilded.js/tree/main/packages/guilded.js#readme), [NPM](https://www.npmjs.com/package/guilded.js)**) - Main library that ties everything together. Has additional logic for caching.
--   `@guildedjs/gil` (**[GitHub](https://github.com/guildedjs/guilded.js/tree/main/packages/gil#readme), [NPM](https://www.npmjs.com/package/@guildedjs/gil)**) - Framework allowing you to build bots with ease.
--   `@guildedjs/guilded-api-types` (**[GitHub](https://github.com/guildedjs/guilded.js/tree/main/packages/guilded-api-typings#readme), [NPM](https://www.npmjs.com/package/@guildedjs/guilded-api-typings)**) - Interfacing directly with the API without using `guilded.js`? This package provides typings covering the entire API.
--   `@guildedjs/webhook-client` (**[GitHub](https://github.com/guildedjs/guilded.js/tree/main/packages/webhook-client#readme), [NPM](https://www.npmjs.com/package/@guildedjs/webhook-client)**) - Library agnostic client for interacting with webhooks.
--   `@guildedjs/rest` (**[GitHub](https://github.com/guildedjs/guilded.js/tree/main/packages/rest#readme), [NPM](https://www.npmjs.com/package/@guildedjs/rest)**) - Utility for making REST requests to the Guilded API. Includes ratelimit handling.
--   `@guildedjs/ws` (**[GitHub](https://github.com/guildedjs/guilded.js/tree/main/packages/ws#readme), [NPM](https://www.npmjs.com/package/@guildedjs/ws)**) - Utility for connecting to Guilded's WebSocket gateway and receiving events.
+- `guilded.js` (**[GitHub](https://github.com/guildedjs/guilded.js/tree/main/packages/guilded.js#readme), [NPM](https://www.npmjs.com/package/guilded.js)**) - Main library that ties everything together. Has additional logic for caching.
+- `@guildedjs/gil` (**[GitHub](https://github.com/guildedjs/guilded.js/tree/main/packages/gil#readme), [NPM](https://www.npmjs.com/package/@guildedjs/gil)**) - Framework allowing you to build bots with ease.
+- `@guildedjs/guilded-api-types` (**[GitHub](https://github.com/guildedjs/guilded.js/tree/main/packages/guilded-api-typings#readme), [NPM](https://www.npmjs.com/package/@guildedjs/guilded-api-typings)**) - Interfacing directly with the API without using `guilded.js`? This package provides typings covering the entire API.
+- `@guildedjs/webhook-client` (**[GitHub](https://github.com/guildedjs/guilded.js/tree/main/packages/webhook-client#readme), [NPM](https://www.npmjs.com/package/@guildedjs/webhook-client)**) - Library agnostic client for interacting with webhooks.
+- `@guildedjs/rest` (**[GitHub](https://github.com/guildedjs/guilded.js/tree/main/packages/rest#readme), [NPM](https://www.npmjs.com/package/@guildedjs/rest)**) - Utility for making REST requests to the Guilded API. Includes ratelimit handling.
+- `@guildedjs/ws` (**[GitHub](https://github.com/guildedjs/guilded.js/tree/main/packages/ws#readme), [NPM](https://www.npmjs.com/package/@guildedjs/ws)**) - Utility for connecting to Guilded's WebSocket gateway and receiving events.
 
 ## 📥 Installation
 
@@ -28,8 +28,8 @@ This repo serves as a monorepo that houses several packages, mainly the `guilded
 
 **Recommended that you use node v12+**
 
--   `npm install guilded.js`
--   `yarn add guilded.js`
+- `npm install guilded.js`
+- `yarn add guilded.js`
 
 ## ⚡ Usage
 
@@ -42,9 +42,9 @@ const client = new Client({ token: "TOKEN_HERE" });
 
 client.on("ready", () => console.log(`Bot is successfully logged in`));
 client.on("messageCreated", (message) => {
-    if (message.content === "test") {
-        return message.reply("test indeed");
-    }
+  if (message.content === "test") {
+    return message.reply("test indeed");
+  }
 });
 
 client.login();
@@ -52,8 +52,10 @@ client.login();
 
 ## 📃 Documentation
 
-Documentation is viewable here: https://guilded.js.org  
-A general purpose guide is available here: https://guilded-js.gitbook.io/api-docs/
+> ### Looking for all the Client events? See [here](https://guildedjs.github.io/types/guilded_js.ClientEvents.html)
+>
+> Documentation is viewable here: https://guilded.js.org  
+> A general purpose guide is available here: https://guilded-js.gitbook.io/api-docs/
 
 <!--END GETTING STARTED-->
 
