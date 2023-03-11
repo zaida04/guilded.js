@@ -1,5 +1,10 @@
 import { Collection } from "@discordjs/collection";
-import type { DocPayload, RESTPostDocsBody, RESTPutDocBody, ChannelType } from "@guildedjs/guilded-api-typings";
+import type {
+  DocPayload,
+  RESTPostDocsBody,
+  RESTPutDocBody,
+  ChannelType,
+} from "@guildedjs/guilded-api-typings";
 import { Channel } from "./Channel";
 
 /**
@@ -7,53 +12,53 @@ import { Channel } from "./Channel";
  * @extends Channel
  */
 export class DocChannel extends Channel {
-	/**
-	 * The docs in this channel.
-	 */
-	readonly docs = new Collection<number, DocPayload>();
+  /**
+   * The docs in this channel.
+   */
+  readonly docs = new Collection<number, DocPayload>();
 
-	/**
-	 * Create a new doc in this channel.
-	 * @param options - The options for creating the doc.
-	 * @returns A promise that resolves with the created doc.
-	 */
-	createDoc(options: RESTPostDocsBody): Promise<DocPayload> {
-		return this.client.docs.create(this.id, options);
-	}
+  /**
+   * Create a new doc in this channel.
+   * @param options - The options for creating the doc.
+   * @returns A promise that resolves with the created doc.
+   */
+  createDoc(options: RESTPostDocsBody): Promise<DocPayload> {
+    return this.client.docs.create(this.id, options);
+  }
 
-	/**
-	 * Get all the docs from this channel.
-	 * @returns A promise that resolves with an array of all docs.
-	 */
-	getDocs(): Promise<DocPayload[]> {
-		return this.client.docs.fetchMany(this.id);
-	}
+  /**
+   * Get all the docs from this channel.
+   * @returns A promise that resolves with an array of all docs.
+   */
+  getDocs(): Promise<DocPayload[]> {
+    return this.client.docs.fetchMany(this.id);
+  }
 
-	/**
-	 * Get a specific doc from this channel.
-	 * @param docId - The ID of the doc to fetch.
-	 * @returns A promise that resolves with the fetched doc.
-	 */
-	getDoc(docId: number): Promise<DocPayload> {
-		return this.client.docs.fetch(this.id, docId);
-	}
+  /**
+   * Get a specific doc from this channel.
+   * @param docId - The ID of the doc to fetch.
+   * @returns A promise that resolves with the fetched doc.
+   */
+  getDoc(docId: number): Promise<DocPayload> {
+    return this.client.docs.fetch(this.id, docId);
+  }
 
-	/**
-	 * Update a specific doc in this channel.
-	 * @param docId - The ID of the doc to update.
-	 * @param options - The options for updating the doc.
-	 * @returns A promise that resolves with the updated doc.
-	 */
-	updateDoc(docId: number, options: RESTPutDocBody): Promise<DocPayload> {
-		return this.client.docs.update(this.id, docId, options);
-	}
+  /**
+   * Update a specific doc in this channel.
+   * @param docId - The ID of the doc to update.
+   * @param options - The options for updating the doc.
+   * @returns A promise that resolves with the updated doc.
+   */
+  updateDoc(docId: number, options: RESTPutDocBody): Promise<DocPayload> {
+    return this.client.docs.update(this.id, docId, options);
+  }
 
-	/**
-	 * Delete a specific doc from this channel.
-	 * @param docId - The ID of the doc to delete.
-	 * @returns A promise that resolves with no data.
-	 */
-	deleteDoc(docId: number): Promise<void> {
-		return this.client.docs.delete(this.id, docId);
-	}
+  /**
+   * Delete a specific doc from this channel.
+   * @param docId - The ID of the doc to delete.
+   * @returns A promise that resolves with no data.
+   */
+  deleteDoc(docId: number): Promise<void> {
+    return this.client.docs.delete(this.id, docId);
+  }
 }

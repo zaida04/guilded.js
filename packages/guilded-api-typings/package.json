@@ -1,62 +1,63 @@
 {
-    "name": "@guildedjs/guilded-api-typings",
-    "version": "3.0.0",
-    "description": "Typings for the guilded API",
-    "author": "Zaid \"Nico\" <contact@nico.engineer>",
-    "license": "MIT",
-    "types": "dist/index.d.ts",
-    "main": "dist/index.js",
-    "typedoc": {
-        "entryPoint": "lib/index.ts"
+  "name": "@guildedjs/guilded-api-typings",
+  "version": "3.0.0",
+  "description": "Typings for the guilded API",
+  "author": "Zaid \"Nico\" <contact@nico.engineer>",
+  "license": "MIT",
+  "types": "dist/index.d.ts",
+  "main": "dist/index.js",
+  "typedoc": {
+    "entryPoint": "lib/index.ts"
+  },
+  "scripts": {
+    "build": "tsc",
+    "build:typecheck": "tsc --noEmit",
+    "prepublishOnly": "rimraf dist/ && pnpm run build"
+  },
+  "devDependencies": {
+    "typescript": "4.9.4"
+  },
+  "contributors": [
+    {
+      "name": "Zaid \"Nico\"",
+      "email": "contact@nico.engineer",
+      "url": "https://github.com/zaida04"
     },
-    "scripts": {
-        "build": "tsc",
-        "prepublishOnly": "rimraf dist/ && pnpm run build"
+    {
+      "name": "Skillz4Killz",
+      "email": "guildedjs@drskillz.33mail.com",
+      "url": "https://github.com/Skillz4Killz"
     },
-    "devDependencies": {
-        "typescript": "4.9.4"
+    {
+      "name": "Uhuh \"Dylan\"",
+      "email": "dylan@panku.io",
+      "url": "https://github.com/uhuh"
     },
-    "contributors": [
-        {
-            "name": "Zaid \"Nico\"",
-            "email": "contact@nico.engineer",
-            "url": "https://github.com/zaida04"
-        },
-        {
-            "name": "Skillz4Killz",
-            "email": "guildedjs@drskillz.33mail.com",
-            "url": "https://github.com/Skillz4Killz"
-        },
-        {
-            "name": "Uhuh \"Dylan\"",
-            "email": "dylan@panku.io",
-            "url": "https://github.com/uhuh"
-        },
-        {
-            "name": "DaStormer",
-            "email": "dastormer@stormdevelopmentz.xyz",
-            "url": "https://github.com/DaStormer"
-        }
-    ],
-    "keywords": [
-        "guilded",
-        "guildedjs",
-        "guilded.js",
-        "guilded-api",
-        "guilded-api-wrapper",
-        "guilded-wrapper",
-        "guilded-api-typings"
-    ],
-    "files": [
-        "dist"
-    ],
-    "homepage": "https://github.com/guildedjs/guilded.js/tree/main/packages/guilded-api-typings#readme",
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/guildedjs/guilded.js.git"
-    },
-    "bugs": {
-        "url": "https://github.com/guildedjs/guilded.js/issues"
-    },
-    "gitHead": "eee38a19e0bfa812d7136cc78a6bc99e0b402b0c"
+    {
+      "name": "DaStormer",
+      "email": "dastormer@stormdevelopmentz.xyz",
+      "url": "https://github.com/DaStormer"
+    }
+  ],
+  "keywords": [
+    "guilded",
+    "guildedjs",
+    "guilded.js",
+    "guilded-api",
+    "guilded-api-wrapper",
+    "guilded-wrapper",
+    "guilded-api-typings"
+  ],
+  "files": [
+    "dist"
+  ],
+  "homepage": "https://github.com/guildedjs/guilded.js/tree/main/packages/guilded-api-typings#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/guildedjs/guilded.js.git"
+  },
+  "bugs": {
+    "url": "https://github.com/guildedjs/guilded.js/issues"
+  },
+  "gitHead": "eee38a19e0bfa812d7136cc78a6bc99e0b402b0c"
 }
