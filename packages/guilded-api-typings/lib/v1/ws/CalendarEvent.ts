@@ -7,21 +7,21 @@ export type WSCalendarEventCreated = SkeletonWSPayload & {
         serverId: string;
     };
     t: WSEvent["CalendarEventCreated"];
-}
+};
 export type WSCalendarEventUpdated = SkeletonWSPayload & {
     d: {
         calendarEvent: CalendarEventPayload;
         serverId: string;
     };
     t: WSEvent["CalendarEventUpdated"];
-}
+};
 export type WSCalendarEventDeleted = SkeletonWSPayload & {
     d: {
         calendarEvent: CalendarEventPayload;
         serverId: string;
     };
     t: WSEvent["CalendarEventDeleted"];
-}
+};
 
 export type WSCalendarEventRsvpUpdated = SkeletonWSPayload & {
     d: {
@@ -29,7 +29,7 @@ export type WSCalendarEventRsvpUpdated = SkeletonWSPayload & {
         serverId: string;
     };
     t: WSEvent["CalendarEventRsvpUpdated"];
-}
+};
 
 export type WSCalendarEventRsvpManyUpdated = SkeletonWSPayload & {
     d: {
@@ -37,7 +37,7 @@ export type WSCalendarEventRsvpManyUpdated = SkeletonWSPayload & {
         serverId: string;
     };
     t: WSEvent["CalendarEventRsvpManyUpdated"];
-}
+};
 
 export type WSCalendarEventRsvpDeleted = SkeletonWSPayload & {
     d: {
@@ -45,4 +45,4 @@ export type WSCalendarEventRsvpDeleted = SkeletonWSPayload & {
         serverId: string;
     };
     t: WSEvent["CalendarEventRsvpDeleted"];
-}
+};

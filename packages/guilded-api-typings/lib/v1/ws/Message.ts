@@ -7,7 +7,7 @@ export type WSChatMessageCreatedPayload = SkeletonWSPayload & {
         serverId: string;
     };
     t: WSEvent["ChatMessageCreated"];
-}
+};
 
 export type WSChatMessageUpdatedPayload = SkeletonWSPayload & {
     d: {
@@ -15,7 +15,7 @@ export type WSChatMessageUpdatedPayload = SkeletonWSPayload & {
         serverId: string;
     };
     t: WSEvent["ChatMessageUpdated"];
-}
+};
 
 export type WSChatMessageDeletedPayload = SkeletonWSPayload & {
     d: {
@@ -29,4 +29,4 @@ export type WSChatMessageDeletedPayload = SkeletonWSPayload & {
         serverId: string;
     };
     t: WSEvent["ChatMessageDeleted"];
-}
+};

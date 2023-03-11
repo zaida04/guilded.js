@@ -7,7 +7,7 @@ export type WSServerMemberJoinedPayload = SkeletonWSPayload & {
         serverId: string;
     };
     t: WSEvent["ServerMemberJoined"];
-}
+};
 
 export type WSServerMemberRemovedPayload = SkeletonWSPayload & {
     d: {
@@ -17,7 +17,7 @@ export type WSServerMemberRemovedPayload = SkeletonWSPayload & {
         userId: string;
     };
     t: WSEvent["ServerMemberRemoved"];
-}
+};
 
 export type WSServerMemberUpdatedPayload = SkeletonWSPayload & {
     d: {
@@ -28,7 +28,7 @@ export type WSServerMemberUpdatedPayload = SkeletonWSPayload & {
         };
     };
     t: WSEvent["ServerMemberUpdated"];
-}
+};
 
 export type WSServerMemberBannedPayload = SkeletonWSPayload & {
     d: {
@@ -36,7 +36,7 @@ export type WSServerMemberBannedPayload = SkeletonWSPayload & {
         serverMemberBan: ServerMemberBanPayload;
     };
     t: WSEvent["ServerMemberBanned"];
-}
+};
 
 export type WSServerMemberUnbannedPayload = SkeletonWSPayload & {
     d: {
@@ -44,7 +44,7 @@ export type WSServerMemberUnbannedPayload = SkeletonWSPayload & {
         serverMemberBan: ServerMemberBanPayload;
     };
     t: WSEvent["ServerMemberUnbanned"];
-}
+};
 
 export type WSServerRolesUpdatedPayload = SkeletonWSPayload & {
     d: {
@@ -52,7 +52,7 @@ export type WSServerRolesUpdatedPayload = SkeletonWSPayload & {
         serverId: string;
     };
     t: WSEvent["ServerRolesUpdated"];
-}
+};
 
 export type WSBotServerMembershipCreated = SkeletonWSPayload & {
     d: {
@@ -60,4 +60,4 @@ export type WSBotServerMembershipCreated = SkeletonWSPayload & {
         server: ServerPayload;
     };
     t: WSEvent["BotServerMembershipCreated"];
-}
+};

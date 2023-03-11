@@ -7,7 +7,7 @@ export type WSForumTopicCreated = SkeletonWSPayload & {
         serverId: string;
     };
     t: WSEvent["ForumTopicCreated"];
-}
+};
 
 export type WSForumTopicUpdated = SkeletonWSPayload & {
     d: {
@@ -15,7 +15,7 @@ export type WSForumTopicUpdated = SkeletonWSPayload & {
         serverId: string;
     };
     t: WSEvent["ForumTopicUpdated"];
-}
+};
 
 export type WSForumTopicDeleted = SkeletonWSPayload & {
     d: {
@@ -23,7 +23,7 @@ export type WSForumTopicDeleted = SkeletonWSPayload & {
         serverId: string;
     };
     t: WSEvent["ForumTopicDeleted"];
-}
+};
 
 export type WSForumTopicPinned = SkeletonWSPayload & {
     d: {
@@ -31,7 +31,7 @@ export type WSForumTopicPinned = SkeletonWSPayload & {
         serverId: string;
     };
     t: WSEvent["ForumTopicPinned"];
-}
+};
 
 export type WSForumTopicUnpinned = SkeletonWSPayload & {
     d: {
@@ -39,7 +39,7 @@ export type WSForumTopicUnpinned = SkeletonWSPayload & {
         serverId: string;
     };
     t: WSEvent["ForumTopicUnpinned"];
-}
+};
 
 export type WSForumTopicLocked = SkeletonWSPayload & {
     d: {
@@ -47,7 +47,7 @@ export type WSForumTopicLocked = SkeletonWSPayload & {
         serverId: string;
     };
     t: WSEvent["ForumTopicLocked"];
-}
+};
 
 export type WSForumTopicUnlocked = SkeletonWSPayload & {
     d: {
@@ -55,4 +55,4 @@ export type WSForumTopicUnlocked = SkeletonWSPayload & {
         serverId: string;
     };
     t: WSEvent["ForumTopicUnlocked"];
-}
+};

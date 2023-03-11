@@ -6,11 +6,11 @@ import type { DocPayload } from "../structs/Doc";
  */
 export type RESTPostDocsResult = {
     doc: DocPayload;
-}
+};
 export type RESTPostDocsBody = {
     content: string;
     title: string;
-}
+};
 
 /**
  * GET
@@ -18,7 +18,7 @@ export type RESTPostDocsBody = {
  */
 export type RESTGetDocsResult = {
     docs: DocPayload[];
-}
+};
 
 /**
  * GET
@@ -26,7 +26,7 @@ export type RESTGetDocsResult = {
  */
 export type RESTGetDocResult = {
     doc: DocPayload;
-}
+};
 
 /**
  * PUT
@@ -34,11 +34,11 @@ export type RESTGetDocResult = {
  */
 export type RESTPutDocResult = {
     doc: DocPayload;
-}
+};
 export type RESTPutDocBody = {
     content: string;
     title: string;
-}
+};
 
 /**
  * DELETE

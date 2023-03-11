@@ -11,6 +11,6 @@ export type ServerPayload = {
     timezone?: string;
     type?: ServerType;
     url?: string;
-}
+};
 
 export type ServerType = "clan" | "community" | "friends" | "guild" | "organization" | "other" | "streaming" | "team";

@@ -26,6 +26,6 @@ export type MessageAttachment = {
     content?: Buffer;
     name: string;
     path?: string;
-}
-export type MessageContent = string | RESTPostWebhookBody & { embeds?: (APIEmbed | Embed)[]; files?: MessageAttachment[] };
+};
+export type MessageContent = string | (RESTPostWebhookBody & { embeds?: (APIEmbed | Embed)[]; files?: MessageAttachment[] });
 export const transformEmbedToAPIEmbed = (embeds: (APIEmbed | Embed)[]): APIEmbed[] => embeds.map((x) => (x instanceof Embed ? x.toJSON() : x));

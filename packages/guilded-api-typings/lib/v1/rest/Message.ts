@@ -6,7 +6,7 @@ import type { ChatMessagePayload } from "../structs/Message";
  */
 export type RESTPostChannelMessagesResult = {
     message: ChatMessagePayload;
-}
+};
 export type RESTPostChannelMessagesBody = Pick<ChatMessagePayload, "embeds" | "isPrivate" | "isSilent" | "replyMessageIds"> & {
     content?: string;
 };
@@ -16,7 +16,7 @@ export type RESTPostChannelMessagesBody = Pick<ChatMessagePayload, "embeds" | "i
  */
 export type RESTGetChannelMessagesResult = {
     messages: ChatMessagePayload[];
-}
+};
 export type RESTGetChannelMessagesQuery = {
     /**
      * Uses ISO8601 timestamp
@@ -28,7 +28,7 @@ export type RESTGetChannelMessagesQuery = {
     before?: string;
     includePrivate?: boolean;
     limit?: number;
-}
+};
 
 /**
  * GET
@@ -36,7 +36,7 @@ export type RESTGetChannelMessagesQuery = {
  */
 export type RESTGetChannelMessageResult = {
     message: ChatMessagePayload;
-}
+};
 
 /**
  * PUT

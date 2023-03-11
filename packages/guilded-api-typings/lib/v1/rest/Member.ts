@@ -6,10 +6,10 @@ import type { ServerMemberBanPayload, ServerMemberPayload, ServerMemberSummaryPa
  */
 export type RESTPutMemberNicknameResult = {
     nickname: string;
-}
+};
 export type RESTPutMemberNicknameBody = {
     nickname: string;
-}
+};
 
 /**
  * DELETE
@@ -23,7 +23,7 @@ export type RESTDeleteMemberNicknameResult = never;
  */
 export type RESTGetMemberResult = {
     member: ServerMemberPayload;
-}
+};
 
 /**
  * GET
@@ -31,7 +31,7 @@ export type RESTGetMemberResult = {
  */
 export type RESTGetMembersResult = {
     members: ServerMemberSummaryPayload[];
-}
+};
 
 /**
  * DELETE
@@ -45,7 +45,7 @@ export type RESTDeleteMemberResult = never;
  */
 export type RESTGetMemberBanResult = {
     serverMemberBan: ServerMemberBanPayload;
-}
+};
 
 /**
  * POST
@@ -53,10 +53,10 @@ export type RESTGetMemberBanResult = {
  */
 export type RESTPostMemberBanBody = {
     reason?: string;
-}
+};
 export type RESTPostMemberBanResult = {
     serverMemberBan: ServerMemberBanPayload;
-}
+};
 
 /**
  * DELETE
@@ -70,4 +70,4 @@ export type RESTDeleteMemberBanResult = never;
  */
 export type RESTGetMemberBansResult = {
     serverMemberBans: ServerMemberBanPayload[];
-}
+};

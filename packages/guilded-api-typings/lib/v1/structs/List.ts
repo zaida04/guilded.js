@@ -53,7 +53,7 @@ export type ListItemPayload = {
      * The ID of the user who updated this listt item
      */
     updatedBy?: string;
-}
+};
 
 export type ListItemSummaryPayload = Omit<ListItemPayload, "mentions" | "note"> & { note?: Omit<ListNoteContent, "content" | "mentions"> };
 
@@ -64,4 +64,4 @@ export type ListNoteContent = {
     mentions?: MentionsPayload;
     updatedAt?: string;
     updatedBy?: string;
-}
+};

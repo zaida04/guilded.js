@@ -11,4 +11,4 @@ export type EmotePayload = {
      * The url of the emote image
      */
     url: string;
-}
+};

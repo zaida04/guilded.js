@@ -58,6 +58,6 @@ export type Cooldown = {
      * The amount of times a command was used.
      */
     used: number;
-}
+};
 
 export default CooldownInhibitor;

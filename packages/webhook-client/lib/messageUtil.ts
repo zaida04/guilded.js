@@ -94,60 +94,59 @@ export function parseMessage(data: APIContent): parsedMessage {
 
                         case "inline": {
                             const castedDataNode = node.data as MessageDataNode;
-                            const leaf = node.nodes![0].leaves![0]
-                                switch (node.type) {
-                                    case "mention": {
-                                        switch (castedDataNode.mention!.type) {
-                                            case "person": {
-                                                mentions.users.push(castedDataNode.mention!.id as string);
-                                                parsedMessageArray.push({
-                                                    content: leaf.text,
-                                                    mention: castedDataNode.mention,
-                                                    type: "user",
-                                                });
-                                                break;
-                                            }
-
-                                            case "role": {
-                                                parsedMessageArray.push({
-                                                    content: leaf.text,
-                                                    mention: castedDataNode.mention,
-                                                    type: "role",
-                                                });
-                                                mentions.roles.push(castedDataNode.mention!.id.toString());
-                                                break;
-                                            }
+                            const leaf = node.nodes![0].leaves![0];
+                            switch (node.type) {
+                                case "mention": {
+                                    switch (castedDataNode.mention!.type) {
+                                        case "person": {
+                                            mentions.users.push(castedDataNode.mention!.id as string);
+                                            parsedMessageArray.push({
+                                                content: leaf.text,
+                                                mention: castedDataNode.mention,
+                                                type: "user",
+                                            });
+                                            break;
                                         }
 
-                                        break;
+                                        case "role": {
+                                            parsedMessageArray.push({
+                                                content: leaf.text,
+                                                mention: castedDataNode.mention,
+                                                type: "role",
+                                            });
+                                            mentions.roles.push(castedDataNode.mention!.id.toString());
+                                            break;
+                                        }
                                     }
 
-                                    /* istanbul ignore next */
-                                    case "reaction": {
-                                        mentions.reactions.push(castedDataNode.reaction!.id);
-                                        parsedMessageArray.push({
-                                            content: leaf.text,
-                                            reaction: castedDataNode.reaction,
-                                            type: "reaction",
-                                        });
-                                        break;
-                                    }
-
-                                    case "channel": {
-                                        mentions.channels.push(castedDataNode.channel!.id);
-                                        parsedMessageArray.push({
-                                            channel: castedDataNode.channel,
-                                            content: leaf.text,
-                                            type: "channel",
-                                        });
-                                        break;
-                                    }
+                                    break;
                                 }
 
-                                parsedMessageTextContent += leaf.text;
-                                break;
+                                /* istanbul ignore next */
+                                case "reaction": {
+                                    mentions.reactions.push(castedDataNode.reaction!.id);
+                                    parsedMessageArray.push({
+                                        content: leaf.text,
+                                        reaction: castedDataNode.reaction,
+                                        type: "reaction",
+                                    });
+                                    break;
+                                }
+
+                                case "channel": {
+                                    mentions.channels.push(castedDataNode.channel!.id);
+                                    parsedMessageArray.push({
+                                        channel: castedDataNode.channel,
+                                        content: leaf.text,
+                                        type: "channel",
+                                    });
+                                    break;
+                                }
                             }
-                        
+
+                            parsedMessageTextContent += leaf.text;
+                            break;
+                        }
                     }
                 }
 
@@ -273,7 +272,7 @@ export type parsedMessage = {
     };
     parsedArr: parsedTextResponse[];
     parsedText: string;
-}
+};
 
 /**
  * The mentions this message might contain
@@ -298,7 +297,7 @@ export type MessageDataNode = {
     reaction?: {
         id: string;
     };
-}
+};
 
 export type EmbedStructure = APIEmbed | Embed;
 
@@ -313,7 +312,7 @@ export type parsedTextResponse = {
     mention?: unknown;
     reaction?: unknown;
     type: string;
-}
+};
 
 /**
  * The message structure of a string -> message object suitable to send to guilded
@@ -321,4 +320,4 @@ export type parsedTextResponse = {
 export type enforcedMessageStructure = {
     content: APIContent;
     messageId: string;
-}
+};

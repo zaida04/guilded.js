@@ -9,7 +9,7 @@ export type CalendarEventCancellationPayload = {
      * The description of event cancellation (min 1; max 140)
      */
     description?: string;
-}
+};
 
 export type CalendarEventPayload = {
     cancellation?: CalendarEventCancellationPayload;
@@ -74,7 +74,7 @@ export type CalendarEventPayload = {
      * A URL to associate with the event
      */
     url?: string;
-}
+};
 
 export type CalendarEventRsvpPayload = {
     /**
@@ -114,4 +114,4 @@ export type CalendarEventRsvpPayload = {
      * The ID of the user
      */
     userId: string;
-}
+};

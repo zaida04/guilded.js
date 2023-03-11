@@ -5,4 +5,4 @@ import type { SocialLink } from "../structs/SocialLink";
  */
 export type RESTGetMemberSocialLinkResult = {
     socialLink: SocialLink;
-}
+};

@@ -5,11 +5,11 @@ export type UserPayload = {
     id: string;
     name: string;
     type?: "bot" | "user";
-}
+};
 
 export type UserSummaryPayload = {
     avatar?: string;
     id: string;
     name: string;
     type?: string;
-}
+};

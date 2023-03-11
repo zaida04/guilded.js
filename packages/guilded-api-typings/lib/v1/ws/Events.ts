@@ -54,7 +54,7 @@ export type SkeletonWSPayload = {
     op: WSOpCodes;
     s?: string;
     t: keyof WSEvent;
-}
+};
 
 export type WSWelcomePayload = SkeletonWSPayload & {
     d: {
@@ -68,4 +68,4 @@ export type WSWelcomePayload = SkeletonWSPayload & {
             name: string;
         };
     };
-}
+};

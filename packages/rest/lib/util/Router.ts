@@ -180,7 +180,11 @@ export class Router {
     /**
      * Update an existing calendar event.
      */
-    async updateCalendarEvent(channelId: string, calendarEventId: number, options: RESTPatchCalendarEventBody): Promise<RESTPatchCalendarEventResult> {
+    async updateCalendarEvent(
+        channelId: string,
+        calendarEventId: number,
+        options: RESTPatchCalendarEventBody,
+    ): Promise<RESTPatchCalendarEventResult> {
         return this.rest.patch<RESTPatchCalendarEventResult, RESTPatchCalendarEventBody>(ROUTES.calendarEvent(channelId, calendarEventId), options);
     }
 

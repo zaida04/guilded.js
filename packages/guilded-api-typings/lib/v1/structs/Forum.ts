@@ -53,7 +53,7 @@ export type ForumTopicPayload = {
      * When, if at all, this forum topic was updated
      */
     updatedAt?: string;
-}
+};
 
 export type ForumTopicSummaryPayload = Pick<
     ForumTopicPayload,

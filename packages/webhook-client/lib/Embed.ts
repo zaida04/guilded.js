@@ -192,7 +192,7 @@ export class Embed {
         return this;
     }
 
-    public addFields(fields: { inline?: boolean, name: string; value: string; }[]): this {
+    public addFields(fields: { inline?: boolean; name: string; value: string }[]): this {
         this.fields.push(
             ...fields.map((field) => ({
                 inline: field.inline ?? false,
@@ -280,4 +280,4 @@ export type APIEmbedMediaData = {
     proxyURL: string | null;
     url: string;
     width: string | null;
-}
+};

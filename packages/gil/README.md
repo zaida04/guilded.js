@@ -14,6 +14,7 @@ You can install this package from [NPM](https://www.npmjs.com/package/@guildedjs
 -   `yarn add @guildedjs/gil guilded.js`
 
 ## Guide
+
 https://www.guilded.gg/guildedjs/groups/G3p7OAgz/channels/5d6a6aed-3888-4156-9fbd-ebea8313c6e3/docs/312915
 
 ## Contributing

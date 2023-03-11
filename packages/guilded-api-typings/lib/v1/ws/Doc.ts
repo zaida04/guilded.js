@@ -7,18 +7,18 @@ export type WSDocCreated = SkeletonWSPayload & {
         serverId: string;
     };
     t: WSEvent["DocCreated"];
-}
+};
 export type WSDocUpdated = SkeletonWSPayload & {
     d: {
         doc: DocPayload;
         serverId: string;
     };
     t: WSEvent["DocUpdated"];
-}
+};
 export type WSDocDeleted = SkeletonWSPayload & {
     d: {
         doc: DocPayload;
         serverId: string;
     };
     t: WSEvent["DocDeleted"];
-}
+};

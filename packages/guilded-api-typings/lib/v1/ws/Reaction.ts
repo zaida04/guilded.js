@@ -12,7 +12,7 @@ export type WSChannelMessageReactionCreatedPayload = SkeletonWSPayload & {
         serverId: string;
     };
     t: WSEvent["ChannelMessageReactionCreated"];
-}
+};
 
 export type WSChannelMessageReactionDeletedPayload = SkeletonWSPayload & {
     d: {
@@ -25,4 +25,4 @@ export type WSChannelMessageReactionDeletedPayload = SkeletonWSPayload & {
         serverId: string;
     };
     t: WSEvent["ChannelMessageReactionDeleted"];
-}
+};

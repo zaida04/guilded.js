@@ -6,4 +6,4 @@ import type { ServerPayload } from "../structs/Server";
  */
 export type RESTGetServerResult = {
     server: ServerPayload;
-}
+};

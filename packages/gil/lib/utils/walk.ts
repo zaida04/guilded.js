@@ -14,7 +14,7 @@ export async function* walk(dir: string): AsyncGenerator<any, any, unknown> {
                         Math.max(0, dir.lastIndexOf("/")),
                     )}. To make this warning go away, simply create the folder in your src folder.`,
                 ),
-            ); 
+            );
         } else console.log(error);
     });
     if (!folder) return;

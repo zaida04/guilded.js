@@ -7,7 +7,7 @@ export type WSServerWebhookCreatedPayload = SkeletonWSPayload & {
         webhook: WebhookPayload;
     };
     t: WSEvent["ServerWebhookCreated"];
-}
+};
 
 export type WSServerWebhookUpdatedPayload = SkeletonWSPayload & {
     d: {
@@ -15,4 +15,4 @@ export type WSServerWebhookUpdatedPayload = SkeletonWSPayload & {
         webhook: WebhookPayload;
     };
     t: WSEvent["ServerWebhookUpdated"];
-}
+};

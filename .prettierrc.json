@@ -4,5 +4,6 @@
     "printWidth": 150,
     "semi": true,
     "tabWidth": 4,
-    "trailingComma": "all"
+    "trailingComma": "all",
+    "quoteProps": "consistent"
 }

@@ -6,7 +6,7 @@ import type { ListItemPayload, ListItemSummaryPayload } from "../structs/List";
  */
 export type RESTGetListItemsResult = {
     listItems: ListItemSummaryPayload[];
-}
+};
 
 /**
  * GET
@@ -14,7 +14,7 @@ export type RESTGetListItemsResult = {
  */
 export type RESTGetListItemResult = {
     listItem: ListItemPayload;
-}
+};
 
 /**
  * PUT
@@ -23,10 +23,10 @@ export type RESTGetListItemResult = {
 export type RESTPutListItemBody = {
     message: string;
     note?: string;
-}
+};
 export type RESTPutListItemResult = {
     listItem: ListItemPayload;
-}
+};
 
 /**
  * DELETE
@@ -41,10 +41,10 @@ export type RESTDeleteListItemResult = never;
 export type RESTPostListItemBody = {
     message: string;
     note?: string;
-}
+};
 export type RESTPostListItemResult = {
     listItem: ListItemPayload;
-}
+};
 
 /**
  * POST

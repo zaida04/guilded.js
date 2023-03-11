@@ -1,17 +1,12 @@
 const path = require("path");
 
 module.exports = {
-    "root": true,
-    "extends": [
-        "neon/common",
-        "neon/node",
-        "neon/typescript",
-        "neon/prettier"
-    ],
-    "parserOptions": {
-        "project": "./tsconfig.eslint.json"
+    root: true,
+    extends: ["neon/common", "neon/node", "neon/typescript", "neon/prettier"],
+    parserOptions: {
+        project: "./tsconfig.eslint.json",
     },
-    "rules": {
+    rules: {
         "@typescript-eslint/unbound-method": "off",
         "@typescript-eslint/no-var-requires": "off",
         "@typescript-eslint/explicit-function-return-type": "error",
@@ -21,8 +16,8 @@ module.exports = {
             "warn",
             "always",
             {
-                "exceptAfterOverload": true
-            }
+                exceptAfterOverload: true,
+            },
         ],
         "@typescript-eslint/switch-exhaustiveness-check": "off",
         "array-callback-return": "off",
@@ -34,48 +29,34 @@ module.exports = {
         "id-length": "off",
         "no-restricted-globals": "off",
         "n/prefer-global/process": "off",
-        "no-promise-executor-return": "off"
+        "no-promise-executor-return": "off",
     },
-    "overrides": [
+    overrides: [
         {
-            "files": [
-                "apps/**/*.ts",
-                "apps/**/*.tsx"
-            ],
-            "extends": [
-                "neon/common",
-                "neon/browser",
-                "neon/node",
-                "neon/typescript",
-                "neon/react",
-                "neon/next",
-                "neon/edge",
-                "neon/prettier"
-            ],
-            "settings": {
-                "react": {
-                    "version": "detect"
-                }
+            files: ["apps/**/*.ts", "apps/**/*.tsx"],
+            extends: ["neon/common", "neon/browser", "neon/node", "neon/typescript", "neon/react", "neon/next", "neon/edge", "neon/prettier"],
+            settings: {
+                react: {
+                    version: "detect",
+                },
             },
-            "parserOptions": {
-                "project": "./tsconfig.eslint.json",
-								"ecmaFeatures": {
-									"jsx": true
-								}
+            parserOptions: {
+                project: "./tsconfig.eslint.json",
+                ecmaFeatures: {
+                    jsx: true,
+                },
             },
-            "rules": {
+            rules: {
                 "react/react-in-jsx-scope": 0,
                 "react/jsx-filename-extension": [
                     1,
                     {
-                        "extensions": [
-                            ".tsx"
-                        ]
-                    }
+                        extensions: [".tsx"],
+                    },
                 ],
-								"react/prop-types": 0,
-                "@next/next/no-html-link-for-pages": [2, path.join(__dirname, "apps", "docs")]
-            }
-        }
-    ]
-}
+                "react/prop-types": 0,
+                "@next/next/no-html-link-for-pages": [2, path.join(__dirname, "apps", "docs")],
+            },
+        },
+    ],
+};

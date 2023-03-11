@@ -219,7 +219,7 @@ export type WebSocketOptions = {
      * The version of the websocket to connect to.
      */
     version?: 1;
-}
+};
 
 // eslint-disable-next-line @typescript-eslint/consistent-type-definitions
 type WebsocketManagerEvents = {

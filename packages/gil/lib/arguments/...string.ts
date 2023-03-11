@@ -15,4 +15,4 @@ export class RemainingStringArgument extends Argument {
     }
 }
 
-export default RemainingStringArgument
+export default RemainingStringArgument;

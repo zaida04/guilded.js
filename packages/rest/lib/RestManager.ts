@@ -70,7 +70,10 @@ export class RestManager {
      * Generate obfuscated token. It replaces every char in a non-even index with X. I'm not very creative.
      */
     get obfuscatedToken(): string {
-        return this.token.split("").map(x => "X").join("");
+        return this.token
+            .split("")
+            .map((x) => "X")
+            .join("");
     }
 
     public async make<T extends JSONB, B = RequestBodyObject, Q = never>(
@@ -85,7 +88,7 @@ export class RestManager {
 
         // Append stringified query params to the URL. This doesn't append the base URL yet.
         const queryAppendedURL = data.query ? `${data.path}?${stringify(data.query)}` : data.path;
-        
+
         // All options to be sent with the request
         const requestOptions: RequestOptions = {
             url: this.baseURL + queryAppendedURL,
@@ -154,8 +157,8 @@ export class RestManager {
             const mapHeadersToObj: Record<string, string> = {};
             // This is done because Headers isn't stringifiable or iterable without the use of the forEach method.
             // eslint-disable-next-line unicorn/no-array-for-each
-            response.headers.forEach((v, k) => { 
-                mapHeadersToObj[k] = v 
+            response.headers.forEach((v, k) => {
+                mapHeadersToObj[k] = v;
             });
 
             // Details response object for error reporting.
@@ -167,9 +170,9 @@ export class RestManager {
 
             // obfuscate token in requestOptions for logging purposes.
             requestOptions.headers.Authorization = "[OBFUSCATED]";
-            
+
             // parse stringified JSON bodies back to JSON (added bonus of being able to check here if anything went wrong during the stringifying with any toJSON overrides)
-            if(bodyIsJSON && typeof requestOptions.body === "string") requestOptions.body = JSON.parse(requestOptions.body);
+            if (bodyIsJSON && typeof requestOptions.body === "string") requestOptions.body = JSON.parse(requestOptions.body);
 
             // Occurs when bot has a permission missing
             if (responseDetails.status === 403) {

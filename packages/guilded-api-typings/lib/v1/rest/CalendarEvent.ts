@@ -14,10 +14,10 @@ export type RESTPostCalendarEventBody = {
     rsvpLimit?: number;
     startsAt?: string;
     url?: string;
-}
+};
 export type RESTPostCalendarEventResult = {
     calendarEvent: CalendarEventPayload;
-}
+};
 
 /**
  * GET
@@ -27,10 +27,10 @@ export type RESTGetCalendarEventsBody = {
     after?: string;
     before?: string;
     limit?: number;
-}
+};
 export type RESTGetCalendarEventsResult = {
     calendarEvents: CalendarEventPayload[];
-}
+};
 
 /**
  * GET
@@ -38,7 +38,7 @@ export type RESTGetCalendarEventsResult = {
  */
 export type RESTGetCalendarEventResult = {
     calendarEvent: CalendarEventPayload;
-}
+};
 
 /**
  * PATCH
@@ -53,10 +53,10 @@ export type RESTPatchCalendarEventBody = {
     name?: string;
     startsAt?: string;
     url?: string;
-}
+};
 export type RESTPatchCalendarEventResult = {
     calendarEvent: CalendarEventPayload;
-}
+};
 
 /**
  * DELETE
@@ -70,7 +70,7 @@ export type RESTDeleteCalendarEventResult = never;
  */
 export type RESTGetCalendarEventRsvpsResult = {
     calendarEventRsvps: CalendarEventRsvpPayload[];
-}
+};
 
 /**
  * GET
@@ -78,7 +78,7 @@ export type RESTGetCalendarEventRsvpsResult = {
  */
 export type RESTGetCalendarEventRsvpResult = {
     calendarEventRsvp: CalendarEventRsvpPayload;
-}
+};
 
 /**
  * PATCH
@@ -86,10 +86,10 @@ export type RESTGetCalendarEventRsvpResult = {
  */
 export type RESTPatchCalendarEventRsvpBody = {
     status: string;
-}
+};
 export type RESTPatchCalendarEventRsvpResult = {
     calendarEventRsvp: CalendarEventRsvpPayload;
-}
+};
 
 /**
  * DELETE

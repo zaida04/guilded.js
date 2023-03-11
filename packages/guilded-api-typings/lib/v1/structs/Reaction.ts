@@ -19,4 +19,4 @@ export type ContentReactionPayload = {
      * The ID of the server this reaction belongs to
      */
     serverId: string;
-}
+};

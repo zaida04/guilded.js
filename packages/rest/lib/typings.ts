@@ -19,4 +19,4 @@ export type RestOptions = {
      * The version of the API to be used for making requests. By default, this will use the latest version that the library supports.
      */
     version?: 1;
-}
+};

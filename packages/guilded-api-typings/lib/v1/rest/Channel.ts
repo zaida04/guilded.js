@@ -8,11 +8,11 @@ export type RESTPostChannelsBody = {
     serverId: string;
     topic?: string;
     type: ChannelType;
-}
+};
 
 export type RESTPostChannelsResult = {
     channel: ServerChannelPayload;
-}
+};
 
 export type RESTPatchChannelBody = Pick<RESTPostChannelsBody, "isPublic" | "topic"> & { name?: string };
 

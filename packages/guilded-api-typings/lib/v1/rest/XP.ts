@@ -4,10 +4,10 @@
  */
 export type RESTPostUserXpResult = {
     total: number;
-}
+};
 export type RESTPostUserXPBody = {
     amount: number;
-}
+};
 
 /**
  * POST
@@ -15,7 +15,7 @@ export type RESTPostUserXPBody = {
  */
 export type RESTPostRoleXpResult = {
     total: number;
-}
+};
 export type RESTPostRoleXPBody = {
     amount: number;
-}
+};

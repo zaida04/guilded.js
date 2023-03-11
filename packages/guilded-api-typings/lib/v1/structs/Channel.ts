@@ -13,6 +13,6 @@ export type ServerChannelPayload = {
     topic?: string;
     type: ChannelType;
     updatedAt?: string;
-}
+};
 
 export type ChannelType = "announcements" | "calendar" | "chat" | "docs" | "forums" | "list" | "media" | "scheduling" | "stream" | "voice";

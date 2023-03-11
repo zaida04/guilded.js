@@ -16,4 +16,4 @@ export type RESTDeleteMemberRoleResult = never;
  */
 export type RESTGetMemberRolesResult = {
     roleIds: number[];
-}
+};

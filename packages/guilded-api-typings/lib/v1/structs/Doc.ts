@@ -35,4 +35,4 @@ export type DocPayload = {
      * The ID of the user who updated this doc
      */
     updatedBy?: string;
-}
+};

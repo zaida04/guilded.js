@@ -6,11 +6,11 @@ import type { ForumTopicPayload, ForumTopicSummaryPayload } from "../structs/For
  */
 export type RESTPostForumTopicResult = {
     forumTopic: ForumTopicPayload;
-}
+};
 export type RESTPostForumTopicBody = {
     content: string;
     title: string;
-}
+};
 
 /**
  * PUT
@@ -43,10 +43,10 @@ export type RESTDeleteForumTopicLockResult = never;
 export type RESTPostForumTopicsBody = {
     content: string;
     title: string;
-}
+};
 export type RESTPostForumTopicsResult = {
     forumTopic: ForumTopicPayload;
-}
+};
 
 /**
  * GET
@@ -55,10 +55,10 @@ export type RESTPostForumTopicsResult = {
 export type RESTGetForumTopicsQuery = {
     before?: string;
     limit?: number;
-}
+};
 export type RESTGetForumTopicsResult = {
     forumTopics: ForumTopicSummaryPayload[];
-}
+};
 
 /**
  * GET
@@ -66,7 +66,7 @@ export type RESTGetForumTopicsResult = {
  */
 export type RESTGetForumTopicResult = {
     forumTopic: ForumTopicPayload;
-}
+};
 
 /**
  * PATCH
@@ -75,10 +75,10 @@ export type RESTGetForumTopicResult = {
 export type RESTPatchForumTopicBody = {
     content: string;
     title: string;
-}
+};
 export type RESTPatchForumTopicResult = {
     forumTopic: ForumTopicPayload;
-}
+};
 
 /**
  * DELETE

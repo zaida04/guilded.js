@@ -83,8 +83,7 @@ export class CommandsMonitor extends Monitor {
 
             if (!argument || argument.type !== "subcommand" || !subcommand) {
                 // Check subcommand permissions and options
-                if (!(await this.commandAllowed(message, command)))
-                    return;
+                if (!(await this.commandAllowed(message, command))) return;
 
                 await command.execute?.(message, args);
                 this.logCommand(message, "Success", command.parentCommand ? `${command.parentCommand}-${command.name}` : command.name);

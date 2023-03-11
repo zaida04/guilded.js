@@ -3,7 +3,7 @@ import { RestManager } from "@guildedjs/rest";
 import FormData from "form-data";
 import type { Embed } from "./Embed";
 import { type parsedMessage, parseMessage } from "./messageUtil";
-import type { MessageAttachment, MessageContent} from "./util";
+import type { MessageAttachment, MessageContent } from "./util";
 import { transformEmbedToAPIEmbed } from "./util";
 
 export class WebhookClient {
@@ -21,7 +21,7 @@ export class WebhookClient {
 
     public constructor(
         webhookConnection: string | { id: string; token: string },
-        { username, avatarURL }: { avatarURL?: string, username?: string; } = {},
+        { username, avatarURL }: { avatarURL?: string; username?: string } = {},
     ) {
         if (!webhookConnection) {
             throw new TypeError(`Must provide Webhook connection info in either string or object. Received ${webhookConnection}.`);
@@ -52,7 +52,7 @@ export class WebhookClient {
     public async send(
         content: MessageContent,
         embeds?: (APIEmbed | Embed)[],
-        options?: { avatarURL?: string, files?: MessageAttachment[]; username?: string; },
+        options?: { avatarURL?: string; files?: MessageAttachment[]; username?: string },
     ): Promise<WebhookExecuteResponse> {
         const contentIsObject = typeof content === "object";
         const resEmbeds = transformEmbedToAPIEmbed((contentIsObject ? content.embeds : embeds) ?? []);
@@ -73,7 +73,8 @@ export class WebhookClient {
         let body: FormData | RESTPostWebhookBody = baseBody;
         const formData = new FormData();
         if (resFiles?.length) {
-            for (const [index, value] of resFiles.entries()) formData.append(`files[${index}]`, value.content, { filename: value.name, filepath: value.path });
+            for (const [index, value] of resFiles.entries())
+                formData.append(`files[${index}]`, value.content, { filename: value.name, filepath: value.path });
             formData.append("payload_json", JSON.stringify(baseBody), { contentType: "application/json" });
             body = formData;
         }
@@ -94,4 +95,4 @@ export type WebhookExecuteResponse = Omit<RESTPostWebhookResult, "content"> & {
     content: string;
     parsedContent: parsedMessage;
     rawContent: APIContent;
-}
+};

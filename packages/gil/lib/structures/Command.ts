@@ -93,6 +93,6 @@ export type CommandArgument = {
      * The type of the argument you would like. Defaults to string.
      */
     type?: "...string" | "boolean" | "duration" | "number" | "string" | "subcommand";
-}
+};
 
 export default Command;

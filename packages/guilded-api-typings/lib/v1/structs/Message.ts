@@ -59,7 +59,7 @@ export type ChatMessagePayload = {
      * The ISO 8601 timestamp that the message was updated at, if relevant
      */
     updatedAt?: string;
-}
+};
 
 export type EmbedPayload = {
     author?: EmbedAuthor;
@@ -72,25 +72,25 @@ export type EmbedPayload = {
     timestamp?: string;
     title?: string;
     url?: string;
-}
+};
 
 export type EmbedFooter = {
     icon_url?: string;
     text: string;
-}
+};
 export type EmbedImage = {
     url: string;
-}
+};
 export type EmbedAuthor = {
     icon_url?: string;
     name: string;
     url?: string;
-}
+};
 export type EmbedField = {
     inline?: boolean;
     name: string;
     value: string;
-}
+};
 
 export type MentionsPayload = {
     channels?: { id: string }[];
@@ -98,4 +98,4 @@ export type MentionsPayload = {
     here?: boolean;
     roles?: { id: number }[];
     users?: { id: string }[];
-}
+};
