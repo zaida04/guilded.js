@@ -5,3 +5,7 @@ export * from "./typings";
 export * from "./util/constants";
 export * from "./util/Router";
 export * from "./util/routes";
+export * from "./util/color";
+export * from "./util/message";
+export * from "./webhook/WebhookClient";
+export * from "./webhook/WebhookEmbed";

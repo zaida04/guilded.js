@@ -1,8 +1,5 @@
-import type {
-  EmbedPayload,
-  RESTPostChannelMessagesBody,
-} from "@guildedjs/guilded-api-typings";
-import { ROUTES } from "./constants";
+import type { RESTPostChannelMessagesBody } from "@guildedjs/guilded-api-typings";
+import { DOMAINS } from "@guildedjs/rest";
 import { Embed } from "./structures/Embed";
 import type { MessageContent } from "./typings";
 
@@ -40,7 +37,7 @@ const formAssetURL = (
 ): string => {
   const url = new URL(
     `https://${
-      ROUTES.IMAGE_CDN_DOMAIN
+      DOMAINS.IMAGE_CDN_DOMAIN
     }/${route}/${hash}-${size}.${extension.toLowerCase()}`
   );
   if (width) url.searchParams.append("w", width.toString());
@@ -221,5 +218,3 @@ export const resolveContentToData = (
     embeds: content.embeds?.map((x) => (x instanceof Embed ? x.toJSON() : x)),
   };
 };
-
-export { resolveColor } from "@guildedjs/webhook-client";
