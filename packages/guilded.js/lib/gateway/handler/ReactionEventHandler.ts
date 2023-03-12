@@ -11,19 +11,20 @@ export class ReactionEventHandler extends GatewayEventHandler {
   messageReactionCreated(
     data: WSChannelMessageReactionCreatedPayload
   ): boolean {
+    const {
+      d: { reaction, serverId },
+    } = data;
+
     const newReaction = new MessageReaction(this.client, {
-      emote: data.d.reaction.emote,
-      channelId: data.d.reaction.channelId,
-      serverId: data.d.serverId,
-      createdBy: data.d.reaction.createdBy,
-      messageId: data.d.reaction.messageId,
+      ...reaction,
+      serverId,
     });
     if (this.client.reactions.shouldCacheReaction)
       this.client.reactions.cache.set(
         buildMessageReactionKey(
-          data.d.reaction.messageId,
-          data.d.reaction.createdBy,
-          data.d.reaction.emote.id
+          reaction.messageId,
+          reaction.createdBy,
+          reaction.emote.id
         ),
         newReaction
       );
