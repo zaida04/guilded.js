@@ -31,6 +31,14 @@ import type {
 } from "./structures/CalendarEvent";
 import type { ForumTopic } from "./structures/Forum";
 import type { Server } from "./structures/Server";
+import type {
+  MemberRemovedEvent,
+  MemberUnbannedEvent,
+  MemberUpdatedEvent,
+  MessageDeletedEvent,
+  MessageReactionDeletedEvent,
+} from "./events";
+import type { Collection } from "@discordjs/collection";
 
 export interface BareStructureBaseData {
   id: string;
@@ -67,22 +75,18 @@ export type ClientEvents = {
   ) => unknown;
   calendarEventDeleted: (calendarEvent: CalendarEvent) => unknown;
   calendarRsvpUpdated: (
-    CalendarEventRsvp: CalendarEventRsvp,
+    calendarEventRsvp: CalendarEventRsvp,
     oldCalendarRsvp: CalendarEventRsvp | null
   ) => unknown;
   calendarRsvpManyUpdated: (
-    CalendarRsvpsEvent: Map<string, CalendarEventRsvp>
+    calendarRsvpsEvent: Collection<string, CalendarEventRsvp>
   ) => unknown;
-  calendarRsvpDeleted: (CalendarEventRsvp: CalendarEventRsvp) => unknown;
+  calendarRsvpDeleted: (calendarEventRsvp: CalendarEventRsvp) => unknown;
   messageCreated: (message: Message) => unknown;
   messageUpdated: (message: Message, oldMessage: Message | null) => unknown;
-  messageDeleted: (
-    message: Message | WSChatMessageDeletedPayload["d"]
-  ) => unknown;
+  messageDeleted: (event: MessageDeletedEvent) => unknown;
   messageReactionCreated: (reaction: MessageReaction) => unknown;
-  messageReactionDeleted: (
-    reaction: MessageReaction | WSChannelMessageReactionDeletedPayload["d"]
-  ) => unknown;
+  messageReactionDeleted: (event: MessageReactionDeletedEvent) => unknown;
   channelCreated: (channel: Channel) => unknown;
   channelUpdated: (channel: Channel, oldChannel: Channel | null) => unknown;
   channelDeleted: (channel: Channel) => unknown;
@@ -98,20 +102,11 @@ export type ClientEvents = {
   listItemCompleted: (item: ListItemPayload) => unknown;
   listItemUncompleted: (item: ListItemPayload) => unknown;
   memberJoined: (member: Member) => unknown;
-  memberRemoved: (
-    member: Member | WSServerMemberRemovedPayload["d"]
-  ) => unknown;
-  memberUpdated: (
-    member: Member | WSServerMemberUpdatedPayload["d"],
-    oldMember: Member | null
-  ) => unknown;
-  memberBanned: (
-    member: MemberBan | WSServerMemberBannedPayload["d"]
-  ) => unknown;
-  memberUnbanned: (
-    member: MemberBan | WSServerMemberUnbannedPayload["d"]
-  ) => unknown;
-  botServerCreated: (server: Server, user: User | string) => unknown;
+  memberRemoved: (event: MemberRemovedEvent) => unknown;
+  memberUpdated: (event: MemberUpdatedEvent) => unknown;
+  memberBanned: (ban: MemberBan) => unknown;
+  memberUnbanned: (event: MemberUnbannedEvent) => unknown;
+  botServerCreated: (server: Server, user: string) => unknown;
   forumTopicCreated: (topic: ForumTopic) => unknown;
   forumTopicUpdated: (
     topic: ForumTopic,

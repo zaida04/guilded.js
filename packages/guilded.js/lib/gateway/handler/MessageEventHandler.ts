@@ -50,11 +50,11 @@ export class MessageEventHandler extends GatewayEventHandler {
     );
   }
   messageDeleted(data: WSChatMessageDeletedPayload): boolean {
-    const getCachedMessage = this.client.messages.cache.get(data.d.message.id);
-    getCachedMessage?._update({ deletedAt: data.d.message.deletedAt });
-    return this.client.emit(
-      constants.clientEvents.MESSAGE_DELETED,
-      getCachedMessage ?? data.d
-    );
+    this.client.messages.cache
+      .get(data.d.message.id)
+      ?._update({ deletedAt: data.d.message.deletedAt });
+    return this.client.emit(constants.clientEvents.MESSAGE_DELETED, {
+      ...data.d.message,
+    });
   }
 }
