@@ -78,10 +78,12 @@ export class CalendarEventRsvpHandler extends GatewayEventHandler {
     const existingCalendarRsvp = existingCalendar?.rsvps?.get(
       data.d.calendarEventRsvp.userId
     );
+
     const oldCalendarRsvp = existingCalendarRsvp?._clone();
     const updatedCalendarRsvp =
       existingCalendarRsvp?._update(data.d.calendarEventRsvp) ??
       new CalendarEventRsvp(this.client, data.d.calendarEventRsvp);
+
     if (
       this.client.calendars.shouldCacheCalendar &&
       this.client.calendars.shouldCacheCalendarRsvps &&
