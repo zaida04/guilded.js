@@ -3,7 +3,7 @@
     "github": {
         "silent": true
     },
-    "rewrites": [
+    "redirects": [
         {
             "source": "/guide/:match*",
             "destination": "https://guilded-js.gitbook.io/api-docs/:match*"
