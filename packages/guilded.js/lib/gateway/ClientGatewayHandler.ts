@@ -43,6 +43,7 @@ import type {
   WSForumTopicLocked,
   WSForumTopicUnlocked,
   WSBotServerMembershipCreated,
+  WSBotServerMembershipDeleted,
 } from "@guildedjs/guilded-api-typings";
 import { WebSocketEvents } from "@guildedjs/guilded-api-typings";
 import { ServerWebhookEventHandler } from "./handler/ServerWebhookEventHandler";
@@ -140,6 +141,10 @@ export class ClientGatewayHandler {
     [WebSocketEvents.BotServerMembershipCreated]: (data) =>
       this.botHandler.botServerMembershipCreated(
         data as WSBotServerMembershipCreated
+      ),
+    [WebSocketEvents.BotServerMembershipDeleted]: (data) =>
+      this.botHandler.botServerMembershipDeleted(
+        data as WSBotServerMembershipDeleted
       ),
     [WebSocketEvents.ListItemCompleted]: (data) =>
       this.listHandler.listItemCompleted(data as WSListItemCompleted),

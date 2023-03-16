@@ -30,6 +30,7 @@ export const constants = {
     DOC_DELETED: "docDeleted",
     SERVER_CREATED: "serverCreated",
     BOT_SERVER_CREATED: "botServerCreated",
+    BOT_SERVER_DELETED: "botServerDeleted",
     MESSAGE_REACTION_CREATED: "messageReactionCreated",
     MESSAGE_REACTION_DELETED: "messageReactionDeleted",
     FORUM_TOPIC_CREATED: "forumTopicCreated",
