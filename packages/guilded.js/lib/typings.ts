@@ -107,6 +107,7 @@ export type ClientEvents = {
   memberBanned: (ban: MemberBan) => unknown;
   memberUnbanned: (event: MemberUnbannedEvent) => unknown;
   botServerCreated: (server: Server, user: string) => unknown;
+  botServerDeleted: (server: Server, user: string) => unknown;
   forumTopicCreated: (topic: ForumTopic) => unknown;
   forumTopicUpdated: (
     topic: ForumTopic,
