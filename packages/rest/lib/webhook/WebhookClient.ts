@@ -11,15 +11,21 @@ import {
   type MessageAttachment,
   type WebhookMessageContent,
   parseMessage,
- transformEmbedToAPIEmbed } from "../util/message";
+  transformEmbedToAPIEmbed,
+} from "../util/message";
 import type { WebhookEmbed } from "./WebhookEmbed";
 
 export class WebhookClient {
   public URL: string;
+
   public id: string;
+
   public token: string;
+
   public username: string | null;
+
   public avatarURL: string | null;
+
   private readonly rest: RestManager;
 
   public constructor(

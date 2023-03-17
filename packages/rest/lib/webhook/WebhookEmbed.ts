@@ -3,29 +3,41 @@ import { resolveColor } from "../util/color";
 
 export class WebhookEmbed {
   public title: string | null;
+
   public description: string | null;
+
   public url: string | null;
+
   public timestamp: number | null;
+
   public timestampString: string | null;
+
   public color: number | null;
+
   public footer: {
     iconURL: string | null;
     proxyIconURL: string | null;
     text: string;
   } | null;
+
   public image: APIWebhookEmbedMediaData | null;
+
   public thumbnail: APIWebhookEmbedMediaData | null;
+
   public video: APIWebhookEmbedMediaData | null;
+
   public provider: {
     name: string | null;
     url: string | null;
   } | null;
+
   public author: {
     iconURL: string | null;
     name: string | null;
     proxyIconURL: string | null;
     url: string | null;
   } | null;
+
   public fields: {
     inline: boolean | null;
     name: string;
