@@ -67,9 +67,29 @@ export type CalendarEventPayload = {
      */
     serverId: string;
     /**
+     * The ID of the calendar event series. Only shows if the event is repeating
+     */
+    seriesId?: string;
+    /**
+     * The role IDs to restrict the event to (min items 1; must have unique items true)
+     */
+    roleIds?: number[];
+    /**
      * The ISO 8601 timestamp that the event starts at
      */
     startsAt: string;
+    /**
+     * Whether this is a repeating event
+     */
+    repeats?: boolean;
+    /**
+     * Whether this event lasts all day
+     */
+    isAllDay?: boolean;
+    /**
+     * When rsvpLimit is set, users from the waitlist will be added as space becomes available in the event
+     */
+    autofillWaitlist?: boolean;
     /**
      * A URL to associate with the event
      */
