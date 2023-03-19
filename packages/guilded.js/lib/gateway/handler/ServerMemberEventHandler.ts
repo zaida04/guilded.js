@@ -4,6 +4,9 @@ import type {
   WSServerMemberRemovedPayload,
   WSServerMemberBannedPayload,
   WSServerMemberUnbannedPayload,
+  WSServerMemberSocialLinkCreated,
+  WSServerMemberSocialLinkDeleted,
+  WSServerMemberSocialLinkUpdated,
 } from "@guildedjs/guilded-api-typings";
 import { constants } from "../../constants";
 import { Member, MemberBan, User } from "../../structures";
@@ -96,5 +99,32 @@ export class ServerMemberEventHandler extends GatewayEventHandler {
       user,
       serverId,
     });
+  }
+  serverMemberSocialLinkCreated(
+    data: WSServerMemberSocialLinkCreated
+  ): boolean {
+    return this.client.emit(
+      constants.clientEvents.MEMBER_SOCIAL_LINK_CREATED,
+      data.d.serverId,
+      data.d.socialLink
+    );
+  }
+  serverMemberSocialLinkUpdated(
+    data: WSServerMemberSocialLinkUpdated
+  ): boolean {
+    return this.client.emit(
+      constants.clientEvents.MEMBER_SOCIAL_LINK_UPDATED,
+      data.d.serverId,
+      data.d.socialLink
+    );
+  }
+  serverMemberSocialLinkDeleted(
+    data: WSServerMemberSocialLinkDeleted
+  ): boolean {
+    return this.client.emit(
+      constants.clientEvents.MEMBER_SOCIAL_LINK_DELETED,
+      data.d.serverId,
+      data.d.socialLink
+    );
   }
 }

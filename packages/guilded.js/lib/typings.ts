@@ -8,6 +8,7 @@ import type {
   ServerMemberPayload,
   ServerMemberRoleIdsPayload,
   ServerMemberSummaryPayload,
+  SocialLink,
   WSChannelMessageReactionDeletedPayload,
   WSChatMessageDeletedPayload,
   WSServerMemberBannedPayload,
@@ -106,6 +107,18 @@ export type ClientEvents = {
   memberUpdated: (event: MemberUpdatedEvent) => unknown;
   memberBanned: (ban: MemberBan) => unknown;
   memberUnbanned: (event: MemberUnbannedEvent) => unknown;
+  memberSocialLinkCreated: (
+    serverId: string,
+    socialLink: SocialLink
+  ) => unknown;
+  memberSocialLinkUpdated: (
+    serverId: string,
+    socialLink: SocialLink
+  ) => unknown;
+  memberSocialLinkDeleted: (
+    serverId: string,
+    socialLink: SocialLink
+  ) => unknown;
   botServerCreated: (server: Server, user: string) => unknown;
   botServerDeleted: (server: Server, user: string) => unknown;
   forumTopicCreated: (topic: ForumTopic) => unknown;
