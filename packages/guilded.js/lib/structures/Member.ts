@@ -7,10 +7,13 @@ import type {
 } from "../typings";
 import type {
   ServerMemberPayload,
+  SocialLink,
+  UserSocialLink,
   UserSummaryPayload,
 } from "@guildedjs/guilded-api-typings";
 import type { User } from "./User";
 import { buildMemberKey } from "../util";
+import { Collection } from "@discordjs/collection";
 
 export class Member extends Base<UpgradedServerMemberPayload> {
   /** The ID of the server this role belongs to */
@@ -27,6 +30,8 @@ export class Member extends Base<UpgradedServerMemberPayload> {
   banned: boolean;
   /** Whether this member owns the server */
   isOwner: boolean;
+  /** Cached social links of this member */
+  socialLinks: Collection<UserSocialLink, SocialLink>;
 
   constructor(client: Client, data: UpgradedServerMemberPayload) {
     super(client, data);
@@ -35,6 +40,7 @@ export class Member extends Base<UpgradedServerMemberPayload> {
     this.kicked = false;
     this.banned = false;
     this.isOwner = false;
+    this.socialLinks = new Collection();
 
     this._update(data);
   }

@@ -316,5 +316,11 @@ export interface ClientOptions {
      * @default true
      */
     cacheCalendarsRsvps?: boolean;
+
+    /**
+     * Whether to cache member social links.
+     * @default true
+     */
+    cacheSocialLinks?: boolean;
   };
 }

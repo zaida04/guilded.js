@@ -20,6 +20,6 @@ export type SocialLink = {
   createdAt: string;
   handle?: string;
   serviceId?: string;
-  type: string;
+  type: UserSocialLink;
   userId: string;
 };

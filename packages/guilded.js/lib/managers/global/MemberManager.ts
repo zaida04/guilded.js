@@ -17,6 +17,13 @@ export class GlobalMemberManager extends CacheableStructManager<
   Member
 > {
   /**
+   * Whether or not social links should be cached.
+   */
+  get shouldCacheSocialLinks() {
+    return this.client.options.cache?.cacheSocialLinks !== false;
+  }
+
+  /**
    * Fetches a member from a server.
    * @param serverId The ID of the server to fetch the member from.
    * @param memberId The ID of the member to fetch.
@@ -147,10 +154,10 @@ export class GlobalMemberManager extends CacheableStructManager<
   }
 
   /**
-   * Fetch a member's social links
-   * @param serverId The ID of the server to award XP on.
-   * @param memberId The ID of the member to award XP to.
-   * @param type The type of social link to fetch
+   * Fetch a member's social links.
+   * @param serverId The ID of the server.
+   * @param memberId The ID of the member.
+   * @param type The type of social link to fetch.
    * @returns A Promise that resolves with the member's social link.
    */
   fetchSocialLinks(
@@ -160,6 +167,16 @@ export class GlobalMemberManager extends CacheableStructManager<
   ): Promise<SocialLink> {
     return this.client.rest.router
       .getMemberSocialLinks(serverId, memberId, type)
-      .then((data) => data.socialLink);
+      .then((data) => {
+        const existingMember = this.cache.get(
+          buildMemberKey(serverId, memberId)
+        );
+        if (this.shouldCacheSocialLinks)
+          existingMember?.socialLinks.set(
+            data.socialLink.type,
+            data.socialLink
+          );
+        return data.socialLink;
+      });
   }
 }
