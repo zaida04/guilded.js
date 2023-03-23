@@ -44,6 +44,9 @@ import type {
   WSForumTopicUnlocked,
   WSBotServerMembershipCreated,
   WSBotServerMembershipDeleted,
+  WSServerMemberSocialLinkCreated,
+  WSServerMemberSocialLinkUpdated,
+  WSServerMemberSocialLinkDeleted,
 } from "@guildedjs/guilded-api-typings";
 import { WebSocketEvents } from "@guildedjs/guilded-api-typings";
 import { ServerWebhookEventHandler } from "./handler/ServerWebhookEventHandler";
@@ -129,6 +132,18 @@ export class ClientGatewayHandler {
     [WebSocketEvents.ServerMemberUnbanned]: (data) =>
       this.ServerMemberHandler.serverMemberUnbanned(
         data as WSServerMemberUnbannedPayload
+      ),
+    [WebSocketEvents.ServerMemberSocialLinkCreated]: (data) =>
+      this.ServerMemberHandler.serverMemberSocialLinkCreated(
+        data as WSServerMemberSocialLinkCreated
+      ),
+    [WebSocketEvents.ServerMemberSocialLinkUpdated]: (data) =>
+      this.ServerMemberHandler.serverMemberSocialLinkUpdated(
+        data as WSServerMemberSocialLinkUpdated
+      ),
+    [WebSocketEvents.ServerMemberSocialLinkDeleted]: (data) =>
+      this.ServerMemberHandler.serverMemberSocialLinkDeleted(
+        data as WSServerMemberSocialLinkDeleted
       ),
     [WebSocketEvents.ServerWebhookCreated]: (data) =>
       this.ServerWebhookHandler.serverWebhookCreated(

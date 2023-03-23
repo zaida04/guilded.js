@@ -4,6 +4,9 @@ import type {
   WSServerMemberRemovedPayload,
   WSServerMemberBannedPayload,
   WSServerMemberUnbannedPayload,
+  WSServerMemberSocialLinkCreated,
+  WSServerMemberSocialLinkDeleted,
+  WSServerMemberSocialLinkUpdated,
 } from "@guildedjs/guilded-api-typings";
 import { constants } from "../../constants";
 import { Member, MemberBan, User } from "../../structures";
@@ -96,5 +99,62 @@ export class ServerMemberEventHandler extends GatewayEventHandler {
       user,
       serverId,
     });
+  }
+  serverMemberSocialLinkCreated(
+    data: WSServerMemberSocialLinkCreated
+  ): boolean {
+    const {
+      d: { serverId, socialLink },
+    } = data;
+
+    const existingMember = this.client.members.cache.get(
+      buildMemberKey(serverId, socialLink.userId)
+    );
+    if (this.client.members.shouldCacheSocialLinks)
+      existingMember?.socialLinks.set(socialLink.type, socialLink);
+
+    return this.client.emit(
+      constants.clientEvents.MEMBER_SOCIAL_LINK_CREATED,
+      serverId,
+      socialLink
+    );
+  }
+  serverMemberSocialLinkUpdated(
+    data: WSServerMemberSocialLinkUpdated
+  ): boolean {
+    const {
+      d: { serverId, socialLink },
+    } = data;
+
+    const existingMember = this.client.members.cache.get(
+      buildMemberKey(serverId, socialLink.userId)
+    );
+    if (this.client.members.shouldCacheSocialLinks)
+      existingMember?.socialLinks.set(socialLink.type, socialLink);
+
+    return this.client.emit(
+      constants.clientEvents.MEMBER_SOCIAL_LINK_UPDATED,
+      serverId,
+      socialLink
+    );
+  }
+  serverMemberSocialLinkDeleted(
+    data: WSServerMemberSocialLinkDeleted
+  ): boolean {
+    const {
+      d: { serverId, socialLink },
+    } = data;
+
+    const existingMember = this.client.members.cache.get(
+      buildMemberKey(serverId, socialLink.userId)
+    );
+    if (this.client.members.shouldCacheSocialLinks)
+      existingMember?.socialLinks.delete(socialLink.type);
+
+    return this.client.emit(
+      constants.clientEvents.MEMBER_SOCIAL_LINK_DELETED,
+      serverId,
+      socialLink
+    );
   }
 }

@@ -3,6 +3,7 @@ import type {
   ServerMemberPayload,
   ServerMemberRoleIdsPayload,
   ServerPayload,
+  SocialLink,
 } from "../structs";
 import type { SkeletonWSPayload, WSEvent } from "./Events";
 
@@ -73,4 +74,28 @@ export type WSBotServerMembershipDeleted = SkeletonWSPayload & {
     server: ServerPayload;
   };
   t: WSEvent["BotServerMembershipDeleted"];
+};
+
+export type WSServerMemberSocialLinkCreated = SkeletonWSPayload & {
+  d: {
+    serverId: string;
+    socialLink: SocialLink;
+  };
+  t: WSEvent["ServerMemberSocialLinkCreated"];
+};
+
+export type WSServerMemberSocialLinkUpdated = SkeletonWSPayload & {
+  d: {
+    serverId: string;
+    socialLink: SocialLink;
+  };
+  t: WSEvent["ServerMemberSocialLinkUpdated"];
+};
+
+export type WSServerMemberSocialLinkDeleted = SkeletonWSPayload & {
+  d: {
+    serverId: string;
+    socialLink: SocialLink;
+  };
+  t: WSEvent["ServerMemberSocialLinkDeleted"];
 };
