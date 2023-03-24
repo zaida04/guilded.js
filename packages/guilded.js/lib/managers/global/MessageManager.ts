@@ -74,8 +74,8 @@ export class GlobalMessageManager extends CacheableStructManager<
 
   /**
    * Sends a message to a channel.
-   * @param {string} channelId The ID of the channel to send the message to.
-   * @param {MessageContent} content The content of the message.
+   * @param channelId The ID of the channel to send the message to.
+   * @param content The content of the message.
    * @returns A promise that resolves with the created message.
    * @example
    * let replyObj = {
