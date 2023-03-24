@@ -19,8 +19,9 @@ export class GlobalServerManager extends CacheableStructManager<
   /**
    * Fetches a server.
    * @param serverId The ID of the server to fetch.
-   * @param force Whether or not to force a fetch.
+   * @param force Whether or not to force a fetch instead of using the cache.
    * @returns A Promise that resolves with the fetched server.
+   * @example client.servers.fetch(message.serverId)
    */
   fetch(serverId: string, force?: boolean): Promise<Server> {
     if (!force) {

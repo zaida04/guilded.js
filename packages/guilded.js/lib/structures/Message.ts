@@ -164,6 +164,15 @@ export class Message extends Base<ChatMessagePayload> {
   /**
    * Send a message in the same channel as this message.
    * @param content - The content of the message.
+   * @example
+   * let replyObj = {
+   *  content: 'This is text, supports **markdown**.',
+   *  embeds: [{
+   *    title: 'This is an embed title!',
+   *    description: 'A description may go here'
+   *  }]
+   * };
+   * message.send(replyObj)
    */
   send(content: MessageContent) {
     return this.client.messages.send(this.channelId, content);
@@ -172,6 +181,15 @@ export class Message extends Base<ChatMessagePayload> {
   /**
    * Send a message that replies to this message. It mentions the user who sent this message.
    * @param content - The content of the message to send.
+   * @example
+   * let replyObj = {
+   *  content: 'This is text, supports **markdown**.',
+   *  embeds: [{
+   *    title: 'This is an embed title!',
+   *    description: 'A description may go here'
+   *  }]
+   * };
+   * message.reply(replyObj)
    */
   reply(content: MessageContent) {
     return this.client.messages.send(
