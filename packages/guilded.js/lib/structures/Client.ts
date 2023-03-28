@@ -156,6 +156,10 @@ export class Client extends (EventEmitter as unknown as new () => TypedEmitter<C
   /**
    * Connects the bot to the api.
    * @param [opts] The options for connecting to the api.
+   * @example
+   * let client = new Guilded.Client({ token: process.env.GUILDED_TOKEN });
+   * client.on('ready', () => console.log('Logged in!'));
+   * client.login();
    */
   login(opts?: { fresh?: boolean }): void {
     if (opts?.fresh)

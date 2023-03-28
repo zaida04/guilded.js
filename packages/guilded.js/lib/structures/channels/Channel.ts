@@ -174,6 +174,15 @@ export class Channel extends Base {
   /**
    * Send a message in the channel.
    * @param content - The content of the message.
+   * @example
+   * let replyObj = {
+   *  content: 'This is text, supports **markdown**.',
+   *  embeds: [{
+   *    title: 'This is an embed title!',
+   *    description: 'A description may go here'
+   *  }]
+   * };
+   * channel.send(replyObj)
    */
   send(content: MessageContent) {
     return this.client.messages.send(this.id, content);
