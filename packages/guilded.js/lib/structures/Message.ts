@@ -47,8 +47,6 @@ export class Message extends Base<ChatMessagePayload> {
   readonly createdByWebhookId: string | null;
   /** The timestamp that the message was created at. */
   readonly _createdAt: number;
-  /** The server this message belongs to */
-  readonly server: Promise<Server | null>;
   /** The timestamp that the message was updated at, if relevant */
   _updatedAt: number | null;
   /** Whether the message has been deleted */
@@ -60,7 +58,6 @@ export class Message extends Base<ChatMessagePayload> {
 
   constructor(client: Client, data: ChatMessagePayload) {
     super(client, data);
-    this.server = client.servers.fetch(data.serverId || "").catch(() => null);
     this.isReply = !!data.replyMessageIds;
     this.channelId = data.channelId;
     this.content = data.content ?? "";
@@ -148,13 +145,6 @@ export class Message extends Base<ChatMessagePayload> {
   }
 
   /**
-   * Returns the channel that this message belongs to, or null if the channel is can't be fetched.
-   */
-  async channel(): Promise<Channel | null> {
-    return this.client.channels.fetch(this.channelId);
-  }
-
-  /**
    * Edit message content.
    * @param newContent - The new content of the message.
    * @returns A promise that resolves with the updated message.
@@ -185,12 +175,28 @@ export class Message extends Base<ChatMessagePayload> {
   }
   /** Returns the url of this message */
   async url(): Promise<string> {
-    const channel: Channel = await this.client.channels.fetch(this.channelId);
-    const server = await this.server;
+    const channel: Channel | null = await this.channel();
+    const server = await this.server();
     // Will Update once we have a way to get the DM env
     if (!server) return "";
     return `https://www.guilded.gg/${server.name}/groups/${channel.groupId}/channels/${channel.id}/chat?messageId=${this.id}`;
   }
+  /**
+   * Returns the channel that this message belongs to
+   */
+  channel(): Channel | Promise<Channel> {
+    return (
+      this.client.channels.cache.get(this.channelId) ??
+      this.client.channels.fetch(this.channelId)
+    );
+  }
+  server(): Server | Promise<Server | null> {
+    return (
+      this.client.servers.cache.get(this.serverId || "") ??
+      this.client.servers.fetch(this.serverId || "").catch(() => null)
+    );
+  }
+
   /**
    * Send a message that replies to this message. It mentions the user who sent this message.
    * @param content - The content of the message to send.
