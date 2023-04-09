@@ -76,24 +76,6 @@ export class Message extends Base<ChatMessagePayload> {
     this._update(data);
   }
 
-  get createdAt(): Date {
-    return new Date(this._createdAt);
-  }
-
-  /**
-   * Returns the date and time the message was last updated, if relevant.
-   */
-  get updatedAt(): Date | null {
-    return this._updatedAt ? new Date(this._updatedAt) : null;
-  }
-
-  /**
-   * Returns the date and time the message was deleted, if it was.
-   */
-  get deletedAt(): Date | null {
-    return this._deletedAt ? new Date(this._deletedAt) : null;
-  }
-
   /** Update details of this structure */
   _update(data: Partial<ChatMessagePayload> | { deletedAt: string }): this {
     if ("content" in data && typeof data.content !== "undefined") {
@@ -114,11 +96,36 @@ export class Message extends Base<ChatMessagePayload> {
     }
 
     if ("embeds" in data) {
-      this.embeds = data.embeds?.map((x: any) => new Embed(x)) ?? [];
+      this.embeds = data.embeds?.map((x) => new Embed(x)) ?? [];
     }
 
     return this;
   }
+
+  get createdAt(): Date {
+    return new Date(this._createdAt);
+  }
+
+  /**
+   * Returns the date and time the message was last updated, if relevant.
+   */
+  get updatedAt(): Date | null {
+    return this._updatedAt ? new Date(this._updatedAt) : null;
+  }
+
+  /**
+   * Returns the date and time the message was deleted, if it was.
+   */
+  get deletedAt(): Date | null {
+    return this._deletedAt ? new Date(this._deletedAt) : null;
+  }
+
+  /** Returns the url of this message */
+  get url(): string {
+    if (!this.serverId) return "";
+    return `https://www.guilded.gg/chat/${this.channelId}?messageId=${this.id}`;
+  }
+
   /**
    * Returns the author of this message, or null if the author is not cached.
    */
@@ -141,6 +148,19 @@ export class Message extends Base<ChatMessagePayload> {
       ? this.client.members.cache.get(
           buildMemberKey(this.serverId, this.authorId)
         ) ?? null
+      : null;
+  }
+
+  /**
+   * Returns the channel that this message belongs to, or null if the channel is not cached.
+   */
+  get channel(): Channel | null {
+    return this.client.channels.cache.get(this.channelId) ?? null;
+  }
+
+  get server(): Server | null {
+    return this.serverId
+      ? this.client.servers.cache.get(this.serverId) ?? null
       : null;
   }
 
@@ -172,29 +192,6 @@ export class Message extends Base<ChatMessagePayload> {
    */
   send(content: MessageContent) {
     return this.client.messages.send(this.channelId, content);
-  }
-  /** Returns the url of this message */
-  async url(): Promise<string> {
-    const channel: Channel | null = await this.channel();
-    const server = await this.server();
-    // Will Update once we have a way to get the DM env
-    if (!server) return "";
-    return `https://www.guilded.gg/${server.name}/groups/${channel.groupId}/channels/${channel.id}/chat?messageId=${this.id}`;
-  }
-  /**
-   * Returns the channel that this message belongs to
-   */
-  channel(): Channel | Promise<Channel> {
-    return (
-      this.client.channels.cache.get(this.channelId) ??
-      this.client.channels.fetch(this.channelId)
-    );
-  }
-  server(): Server | Promise<Server | null> {
-    return (
-      this.client.servers.cache.get(this.serverId || "") ??
-      this.client.servers.fetch(this.serverId || "").catch(() => null)
-    );
   }
 
   /**
