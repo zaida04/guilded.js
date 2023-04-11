@@ -54,6 +54,10 @@ export class ClientUser extends User {
     this.createdBy = data.createdBy;
     this.botId = data.botId;
   }
+
+  fetch(): Promise<User> {
+    return this.client.users.fetchClient();
+  }
 }
 
 export enum UserType {

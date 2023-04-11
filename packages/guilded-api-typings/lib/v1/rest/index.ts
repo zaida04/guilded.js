@@ -12,3 +12,4 @@ export * from "./Server";
 export * from "./SocialLink";
 export * from "./Webhook";
 export * from "./XP";
+export * from "./User";
