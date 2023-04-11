@@ -11,6 +11,7 @@ import type { User } from "./User";
 import type { Member } from "./Member";
 import { buildMemberKey, buildReactionKey } from "../util";
 import { Embed } from "./Embed";
+import type { Server } from "./Server";
 import type { Channel } from "./channels";
 import type { MessageContent } from "../typings";
 
@@ -38,6 +39,8 @@ export class Message extends Base<ChatMessagePayload> {
   readonly isSilent: boolean;
   /** The ID of the user who created this message (Note: If this event has createdByBotId or createdByWebhookId present, this field will still be populated, but can be ignored. In these cases, the value of this field will always be Ann6LewA) */
   readonly createdById: string;
+  /** Bool value to wether message is a reply or not  */
+  readonly isReply: boolean;
   /** The ID of the bot who created this message, if it was created by a bot */
   readonly createdByBotId: string | null;
   /** The ID of the webhook who created this message, if it was created by a webhook */
@@ -55,7 +58,7 @@ export class Message extends Base<ChatMessagePayload> {
 
   constructor(client: Client, data: ChatMessagePayload) {
     super(client, data);
-
+    this.isReply = !!data.replyMessageIds;
     this.channelId = data.channelId;
     this.content = data.content ?? "";
     this.serverId = data.serverId ?? null;
@@ -71,24 +74,6 @@ export class Message extends Base<ChatMessagePayload> {
       data.type === "system" ? MessageType.System : MessageType.Default;
 
     this._update(data);
-  }
-
-  get createdAt(): Date {
-    return new Date(this._createdAt);
-  }
-
-  /**
-   * Returns the date and time the message was last updated, if relevant.
-   */
-  get updatedAt(): Date | null {
-    return this._updatedAt ? new Date(this._updatedAt) : null;
-  }
-
-  /**
-   * Returns the date and time the message was deleted, if it was.
-   */
-  get deletedAt(): Date | null {
-    return this._deletedAt ? new Date(this._deletedAt) : null;
   }
 
   /** Update details of this structure */
@@ -116,6 +101,31 @@ export class Message extends Base<ChatMessagePayload> {
 
     return this;
   }
+
+  get createdAt(): Date {
+    return new Date(this._createdAt);
+  }
+
+  /**
+   * Returns the date and time the message was last updated, if relevant.
+   */
+  get updatedAt(): Date | null {
+    return this._updatedAt ? new Date(this._updatedAt) : null;
+  }
+
+  /**
+   * Returns the date and time the message was deleted, if it was.
+   */
+  get deletedAt(): Date | null {
+    return this._deletedAt ? new Date(this._deletedAt) : null;
+  }
+
+  /** Returns the url of this message */
+  get url(): string {
+    if (!this.serverId) return "";
+    return `https://www.guilded.gg/chat/${this.channelId}?messageId=${this.id}`;
+  }
+
   /**
    * Returns the author of this message, or null if the author is not cached.
    */
@@ -146,6 +156,12 @@ export class Message extends Base<ChatMessagePayload> {
    */
   get channel(): Channel | null {
     return this.client.channels.cache.get(this.channelId) ?? null;
+  }
+
+  get server(): Server | null {
+    return this.serverId
+      ? this.client.servers.cache.get(this.serverId) ?? null
+      : null;
   }
 
   /**
