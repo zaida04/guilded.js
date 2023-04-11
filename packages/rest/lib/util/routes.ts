@@ -42,6 +42,10 @@ export const ROUTES = {
     `/servers/${serverId}/bans/${userId}` as const,
   memberBans: (serverId: string) => `/servers/${serverId}/bans` as const,
 
+  // User Endpoints
+  user: (userId: string) => `/users/${userId}` as const,
+  me: () => `/users/@me` as const,
+
   // Forum Endpoints
   forumTopics: (channelId: string) => `/channels/${channelId}/topics` as const,
   forumTopic: (channelId: string, forumTopicId: string) =>
