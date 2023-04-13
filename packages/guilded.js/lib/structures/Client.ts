@@ -20,6 +20,7 @@ import { ClientUser } from "./User";
 import { GlobalServerManager } from "../managers/global/ServerManager";
 import { GlobalReactionManager } from "../managers/global/ReactionManager";
 import type { ClientEvents } from "../typings";
+import type { SkeletonWSPayload } from "@guildedjs/guilded-api-typings";
 
 /**
  * The main class for interacting with the api.
@@ -219,6 +220,17 @@ export interface ClientOptions {
      * @remarks If you want to use a custom API url, you can set this property to your custom url.
      */
     proxyURL?: string;
+  };
+
+  /**
+   * Gateway handling options
+   */
+  gateway?: {
+    /**
+     * A boolean returning function that dictates whether an event is discarded
+     * @defaults false
+     */
+    discardEvent?: (event: string, data: SkeletonWSPayload) => boolean;
   };
 
   /**
