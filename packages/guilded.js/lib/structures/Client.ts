@@ -228,7 +228,6 @@ export interface ClientOptions {
   gateway?: {
     /**
      * A boolean returning function that dictates whether an event is discarded
-     * @defaults false
      */
     discardEvent?: (event: string, data: SkeletonWSPayload) => boolean;
   };
