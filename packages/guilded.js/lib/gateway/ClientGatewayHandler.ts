@@ -215,6 +215,9 @@ export class ClientGatewayHandler {
 
   constructor(public readonly client: Client) {}
   handleWSMessage(event: keyof WSEvent, data: SkeletonWSPayload): void {
+    const discardEventOption = this.client.options.gateway?.discardEvent;
+    if (discardEventOption?.(event, data)) return;
+
     this.eventToHandlerMap[event]?.(data) ??
       this.client.emit("unknownGatewayEvent", data);
   }
