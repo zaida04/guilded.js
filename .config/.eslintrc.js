@@ -11,6 +11,7 @@ module.exports = {
         "@typescript-eslint/no-var-requires": "off",
         "@typescript-eslint/explicit-function-return-type": "error",
         "@typescript-eslint/explicit-member-accessibility": "off",
+        "@typescript-eslint/promise-function-async": "off",
         "@typescript-eslint/no-invalid-this": "off",
         "@typescript-eslint/lines-between-class-members": [
             "warn",
