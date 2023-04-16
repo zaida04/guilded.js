@@ -27,6 +27,9 @@ export const ROUTES = {
   ) =>
     `/channels/${channelId}/events/${calendarEventId}/rsvps/${userId}` as const,
 
+  calendarEventRsvpsMany: (channelId: string, calendarEventId: number) =>
+    `/channels/${channelId}/events/${calendarEventId}/rsvps` as const,
+
   // Server Endpoints
   server: (serverId: string) => `/servers/${serverId}` as const,
 

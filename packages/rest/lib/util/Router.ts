@@ -47,6 +47,8 @@ import type {
   RESTPatchCalendarEventResult,
   RESTPatchCalendarEventRsvpBody,
   RESTPatchCalendarEventRsvpResult,
+  RESTPatchCalendarEventRsvpManyBody,
+  RESTPatchCalendarEventRsvpManyResult,
   RESTPatchChannelBody,
   RESTPatchChannelResult,
   RESTPatchForumTopicBody,
@@ -299,6 +301,20 @@ export class Router {
       RESTPatchCalendarEventRsvpResult,
       RESTPatchCalendarEventRsvpBody
     >(ROUTES.calendarEventRsvp(channelId, calendarEventId, userId), options);
+  }
+
+  /**
+   * Update many rsvps from a calendar event
+   */
+  async updateCalendarEventRsvpMany(
+    channelId: string,
+    calendarEventId: number,
+    options: RESTPatchCalendarEventRsvpManyBody
+  ): Promise<RESTPatchCalendarEventRsvpManyResult> {
+    return this.rest.put<
+      RESTPatchCalendarEventRsvpManyResult,
+      RESTPatchCalendarEventRsvpManyBody
+    >(ROUTES.calendarEventRsvpsMany(channelId, calendarEventId), options);
   }
 
   /**

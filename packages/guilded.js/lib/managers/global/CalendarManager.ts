@@ -4,6 +4,7 @@ import type {
   RESTPatchCalendarEventBody,
   RESTPostCalendarEventBody,
   RESTPatchCalendarEventRsvpBody,
+  RESTPatchCalendarEventRsvpManyBody,
 } from "@guildedjs/guilded-api-typings";
 import { CacheableStructManager } from "./CacheableStructManager";
 import {
@@ -233,6 +234,22 @@ export class GlobalCalendarManager extends CacheableStructManager<
           this.cache.get(calendarEventId)?.rsvps?.set(userId, newRsvp);
         return newRsvp;
       });
+  }
+
+  /**
+   * Creates or updates multiple RSVPs for a calendar event.
+   * @param channelId The ID of the channel.
+   * @param calendarEventId The ID of the calendar event.
+   * @param options The options for updating many RSVP.
+   */
+  updateManyRsvp(
+    channelId: string,
+    calendarEventId: number,
+    options: RESTPatchCalendarEventRsvpManyBody
+  ): Promise<void> {
+    return this.client.rest.router
+      .updateCalendarEventRsvpMany(channelId, calendarEventId, options)
+      .then((data) => void 0);
   }
 
   /**
