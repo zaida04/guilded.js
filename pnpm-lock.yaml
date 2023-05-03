@@ -13,7 +13,7 @@ importers:
       husky: 7.0.4
       lint-staged: 13.1.0
       nodemon: ^2.0.20
-      pnpm: 7.22.0
+      pnpm: 8.4.0
       prettier: 2.8.2
       rimraf: 3.0.2
       ts-node: 10.9.1
@@ -32,7 +32,7 @@ importers:
       husky: 7.0.4
       lint-staged: 13.1.0
       nodemon: 2.0.22
-      pnpm: 7.22.0
+      pnpm: 8.4.0
       prettier: 2.8.2
       rimraf: 3.0.2
       ts-node: 10.9.1_awa2wsr5thmg3i7jqycphctjfq
@@ -75,7 +75,7 @@ importers:
       '@types/react-dom': 18.0.10
       autoprefixer: 10.4.14_postcss@8.4.21
       postcss: 8.4.21
-      tailwindcss: 3.3.1
+      tailwindcss: 3.3.1_postcss@8.4.21
       typedoc: 0.23.24_typescript@4.9.4
       typescript: 4.9.4
 
@@ -4239,9 +4239,9 @@ packages:
     engines: {node: '>=4'}
     dev: true
 
-  /pnpm/7.22.0:
-    resolution: {integrity: sha512-dkhne1O1ktNz/Cn/GZU5wnjhP/aNEfmJGW5UdILyDnptgw84jauOf2Mk5jTe3gp4OZWZN1szcBrjyOZ7Uxxilw==}
-    engines: {node: '>=14.6'}
+  /pnpm/8.4.0:
+    resolution: {integrity: sha512-oW5jpFgCmXHIVOU5HZLBWGBtCH7K4JSRdpk7/f+Dtp+KhUsX5NQaWzzYyU9TX7eAsfYMko179133gbUS+JTrMw==}
+    engines: {node: '>=16.14'}
     hasBin: true
     dev: true
 
@@ -5033,10 +5033,12 @@ packages:
       tslib: 2.5.0
     dev: true
 
-  /tailwindcss/3.3.1:
+  /tailwindcss/3.3.1_postcss@8.4.21:
     resolution: {integrity: sha512-Vkiouc41d4CEq0ujXl6oiGFQ7bA3WEhUZdTgXAhtKxSy49OmKs8rEfQmupsfF0IGW8fv2iQkp1EVUuapCFrZ9g==}
     engines: {node: '>=12.13.0'}
     hasBin: true
+    peerDependencies:
+      postcss: ^8.0.9
     dependencies:
       arg: 5.0.2
       chokidar: 3.5.3
