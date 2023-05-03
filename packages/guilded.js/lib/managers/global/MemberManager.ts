@@ -100,6 +100,21 @@ export class GlobalMemberManager extends CacheableStructManager<
   }
 
   /**
+   * Unbans a user from a server.
+   * @param serverId The ID of the server.
+   * @param userId The ID of the user.
+   * @param removeBanIfCached Whether to remove the ban from the cache if it exists.
+   * @returns A Promise that resolves with the unbanned member ban or `null` if it isn't cached.
+   */
+  unban(
+    serverId: string,
+    userId: string,
+    removeBanIfCached = false
+  ): Promise<MemberBan | null> {
+    return this.client.bans.unban(serverId, userId, removeBanIfCached);
+  }
+
+  /**
    * Gets a list of the roles assigned to a member using the ID of the member.
    * @param serverId The ID of the server to get the member roles from.
    * @param memberId The ID of the member to get the roles for.
