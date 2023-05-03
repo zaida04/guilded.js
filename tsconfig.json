@@ -9,7 +9,6 @@
     "pretty": true,
     "module": "CommonJS",
     "target": "ES6",
-    "importsNotUsedAsValues": "error",
     "lib": ["ESNext", "DOM"],
     "typeRoots": ["node_modules/@types"],
     "types": ["node"],
