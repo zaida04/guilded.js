@@ -1,11 +1,6 @@
 import { Collection } from "@discordjs/collection";
-import type {
-  DocPayload,
-  RESTPostDocsBody,
-  RESTPutDocBody,
-  ChannelType,
-} from "@guildedjs/guilded-api-typings";
 import { Channel } from "./Channel";
+import { RestBody, RestPath, Schema } from "@guildedjs/guilded-api-typings";
 
 /**
  * Represents a doc channel on Guilded
@@ -15,14 +10,16 @@ export class DocChannel extends Channel {
   /**
    * The docs in this channel.
    */
-  readonly docs = new Collection<number, DocPayload>();
+  readonly docs = new Collection<number, Schema<"Doc">>();
 
   /**
    * Create a new doc in this channel.
    * @param options - The options for creating the doc.
    * @returns A promise that resolves with the created doc.
    */
-  createDoc(options: RESTPostDocsBody): Promise<DocPayload> {
+  createDoc(
+    options: RestBody<RestPath<"/channels/{channelId}/docs">["post"]>
+  ): Promise<Schema<"Doc">> {
     return this.client.docs.create(this.id, options);
   }
 
@@ -30,16 +27,16 @@ export class DocChannel extends Channel {
    * Get all the docs from this channel.
    * @returns A promise that resolves with an array of all docs.
    */
-  getDocs(): Promise<DocPayload[]> {
+  getDocs(): Promise<Schema<"Doc">[]> {
     return this.client.docs.fetchMany(this.id);
   }
 
   /**
    * Get a specific doc from this channel.
-   * @param docId - The ID of the doc to fetch.
+   * @param docId - The ID ofSchema<"Doc"> the doc to fetch.
    * @returns A promise that resolves with the fetched doc.
    */
-  getDoc(docId: number): Promise<DocPayload> {
+  getDoc(docId: number): Promise<Schema<"Doc">> {
     return this.client.docs.fetch(this.id, docId);
   }
 
@@ -49,7 +46,10 @@ export class DocChannel extends Channel {
    * @param options - The options for updating the doc.
    * @returns A promise that resolves with the updated doc.
    */
-  updateDoc(docId: number, options: RESTPutDocBody): Promise<DocPayload> {
+  updateDoc(
+    docId: number,
+    options: RestBody<RestPath<"/channels/{channelId}/docs/{docId}">["put"]>
+  ): Promise<Schema<"Doc">> {
     return this.client.docs.update(this.id, docId, options);
   }
 

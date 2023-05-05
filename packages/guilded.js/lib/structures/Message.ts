@@ -1,10 +1,3 @@
-import type {
-  ChatMessagePayload,
-  RESTPostChannelMessagesBody,
-  MentionsPayload,
-  WSChannelMessageReactionCreatedPayload,
-  EmotePayload,
-} from "@guildedjs/guilded-api-typings";
 import type { Client } from "./Client";
 import { Base } from "./Base";
 import type { User } from "./User";
@@ -14,13 +7,19 @@ import { Embed } from "./Embed";
 import type { Server } from "./Server";
 import type { Channel } from "./channels";
 import type { MessageContent } from "../typings";
+import {
+  RestBody,
+  RestPath,
+  Schema,
+  WSPayload,
+} from "@guildedjs/guilded-api-typings";
 
 export enum MessageType {
   Default,
   System,
 }
 
-export class Message extends Base<ChatMessagePayload> {
+export class Message extends Base<Schema<"ChatMessage">> {
   /** The ID of the channel */
   readonly channelId: string;
   /** The ID of the server this message belongs to */
@@ -30,7 +29,7 @@ export class Message extends Base<ChatMessagePayload> {
   /** The content of the message */
   content: string;
   /** The mentions within this message */
-  mentions?: MentionsPayload;
+  mentions?: Schema<"Mentions">;
   /** The ID of the messages that this is replying to. */
   readonly replyMessageIds: string[] = [];
   /** If set, this message will only be seen by those mentioned or replied to. */
@@ -41,8 +40,6 @@ export class Message extends Base<ChatMessagePayload> {
   readonly createdById: string;
   /** Bool value to wether message is a reply or not  */
   readonly isReply: boolean;
-  /** The ID of the bot who created this message, if it was created by a bot */
-  readonly createdByBotId: string | null;
   /** The ID of the webhook who created this message, if it was created by a webhook */
   readonly createdByWebhookId: string | null;
   /** The timestamp that the message was created at. */
@@ -56,7 +53,7 @@ export class Message extends Base<ChatMessagePayload> {
   /** Embeds contained within this message */
   embeds: Embed[] = [];
 
-  constructor(client: Client, data: ChatMessagePayload) {
+  constructor(client: Client, data: Schema<"ChatMessage">) {
     super(client, data);
     this.isReply = !!data.replyMessageIds;
     this.channelId = data.channelId;
@@ -64,7 +61,6 @@ export class Message extends Base<ChatMessagePayload> {
     this.serverId = data.serverId ?? null;
     this.replyMessageIds = data.replyMessageIds ?? [];
     this.createdById = data.createdBy;
-    this.createdByBotId = data.createdByBotId ?? null;
     this.createdByWebhookId = data.createdByWebhookId ?? null;
     this._createdAt = Date.parse(data.createdAt);
     this._updatedAt = null;
@@ -77,7 +73,7 @@ export class Message extends Base<ChatMessagePayload> {
   }
 
   /** Update details of this structure */
-  _update(data: Partial<ChatMessagePayload> | { deletedAt: string }): this {
+  _update(data: Partial<Schema<"ChatMessage">> | { deletedAt: string }): this {
     if ("content" in data && typeof data.content !== "undefined") {
       this.content = data.content;
     }
@@ -137,7 +133,7 @@ export class Message extends Base<ChatMessagePayload> {
    * Returns the ID of the user who sent this message.
    */
   get authorId(): string {
-    return this.createdByBotId ?? this.createdByWebhookId ?? this.createdById;
+    return this.createdByWebhookId ?? this.createdById;
   }
 
   /**
@@ -169,9 +165,7 @@ export class Message extends Base<ChatMessagePayload> {
    * @param newContent - The new content of the message.
    * @returns A promise that resolves with the updated message.
    */
-  edit(
-    newContent: RESTPostChannelMessagesBody | Embed | string
-  ): Promise<Message> {
+  edit(newContent: MessageContent): Promise<Message> {
     return this.client.messages
       .update(this.channelId, this.id, newContent)
       .then(() => this);
@@ -276,7 +270,7 @@ export class MessageReaction extends Base<FlattenedReactionData> {
   /**
    * The emote associated with this reaction.
    */
-  readonly emote: EmotePayload;
+  readonly emote: Schema<"Emote">;
 
   /**
    * The ID of the server where the reaction was made.
@@ -302,6 +296,6 @@ export class MessageReaction extends Base<FlattenedReactionData> {
 }
 
 type FlattenedReactionData =
-  WSChannelMessageReactionCreatedPayload["d"]["reaction"] & {
+  WSPayload<"ChannelMessageReactionCreated">["reaction"] & {
     serverId: string;
   };

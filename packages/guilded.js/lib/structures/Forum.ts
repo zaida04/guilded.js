@@ -1,15 +1,11 @@
-import type {
-  ForumTopicPayload,
-  ForumTopicSummaryPayload,
-  MentionsPayload,
-} from "@guildedjs/guilded-api-typings";
+import { Schema } from "@guildedjs/guilded-api-typings";
 import { Base } from "./Base";
 import type { Client } from "./Client";
 
 /**
  * Represents a forum topic in Guilded.
  */
-export class ForumTopic extends Base<ForumTopicPayload, number> {
+export class ForumTopic extends Base<Schema<"ForumTopic">, number> {
   /**
    * The server ID of the forum topic.
    */
@@ -30,10 +26,6 @@ export class ForumTopic extends Base<ForumTopicPayload, number> {
    * The user ID of the user who created the forum topic.
    */
   readonly createdBy: string;
-  /**
-   * The webhook ID of the webhook that created the forum topic, or null if it was created by a user.
-   */
-  readonly createdByWebhookId: string | null;
   /**
    * The date time the forum topic was last updated, or null if it hasn't been updated.
    */
@@ -61,14 +53,13 @@ export class ForumTopic extends Base<ForumTopicPayload, number> {
   /**
    * The mentions in the forum topic.
    */
-  mentions!: MentionsPayload;
+  mentions!: Schema<"Mentions">;
 
-  constructor(client: Client, data: ForumTopicPayload) {
+  constructor(client: Client, data: Schema<"ForumTopic">) {
     super(client, data);
     this.serverId = data.serverId;
     this.channelId = data.channelId;
     this._createdAt = Date.parse(data.createdAt);
-    this.createdByWebhookId = data.createdByWebhookId ?? null;
     this.createdBy = data.createdBy;
     this.isPinned = false;
     this.isLocked = false;
@@ -101,7 +92,7 @@ export class ForumTopic extends Base<ForumTopicPayload, number> {
     return this._updatedAt ? new Date(this._updatedAt) : null;
   }
 
-  _update(data: Partial<ForumTopicPayload & { _deletedAt?: Date }>) {
+  _update(data: Partial<Schema<"ForumTopic"> & { _deletedAt?: Date }>) {
     if ("updatedAt" in data && typeof data.updatedAt !== "undefined") {
       this._updatedAt = data.updatedAt ? Date.parse(data.updatedAt) : null;
     }
@@ -140,7 +131,10 @@ export class ForumTopic extends Base<ForumTopicPayload, number> {
 
 //     ""channelId"
 /** A partial summary representation of a forum topic. Can fetch this topic to get full data */
-export class PartialForumTopic extends Base<ForumTopicSummaryPayload, number> {
+export class PartialForumTopic extends Base<
+  Schema<"ForumTopicSummary">,
+  number
+> {
   /**
    * The ID of the server this role belongs to
    */
@@ -162,10 +156,6 @@ export class PartialForumTopic extends Base<ForumTopicSummaryPayload, number> {
    */
   isPinned: boolean;
   /**
-   * The webhook ID of the webhook that created the forum topic, or null if it was created by a user.
-   */
-  readonly createdByWebhookId: string | null;
-  /**
    * The creation date of the forum topic.
    */
   readonly _createdAt: number;
@@ -178,19 +168,18 @@ export class PartialForumTopic extends Base<ForumTopicSummaryPayload, number> {
    */
   readonly channelId: string;
 
-  constructor(client: Client, data: ForumTopicSummaryPayload) {
+  constructor(client: Client, data: Schema<"ForumTopicSummary">) {
     super(client, data);
     this.serverId = data.serverId;
     this.channelId = data.channelId;
     this._createdAt = Date.parse(data.createdAt);
-    this.createdByWebhookId = data.createdByWebhookId ?? null;
     this.createdBy = data.createdBy;
     this.isPinned = false;
 
     this._update(data);
   }
 
-  _update(data: Partial<ForumTopicPayload & { _deletedAt?: Date }>) {
+  _update(data: Partial<Schema<"ForumTopic"> & { _deletedAt?: Date }>) {
     if ("updatedAt" in data && typeof data.updatedAt !== "undefined") {
       this._updatedAt = data.updatedAt ? Date.parse(data.updatedAt) : null;
     }

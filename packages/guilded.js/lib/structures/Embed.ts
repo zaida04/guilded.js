@@ -1,4 +1,8 @@
-import type { APIEmbed, EmbedPayload } from "@guildedjs/guilded-api-typings";
+import type {
+  APIEmbed,
+  EmbedPayload,
+  Schema,
+} from "@guildedjs/guilded-api-typings";
 import { resolveColor } from "@guildedjs/rest";
 
 export class Embed {
@@ -26,7 +30,7 @@ export class Embed {
   } | null;
   private timestampString: string | null;
 
-  constructor(data?: Partial<APIEmbed>) {
+  constructor(data?: Partial<Schema<"ChatEmbed">>) {
     this.footer = null;
     this.image = null;
     this.thumbnail = null;
@@ -43,7 +47,7 @@ export class Embed {
     if (data) this._update(data);
   }
 
-  _update(data: Partial<APIEmbed>): void {
+  _update(data: Partial<Schema<"ChatEmbed">>): void {
     if ("color" in data) this.setColor(data.color);
     if ("timestamp" in data) this.setTimestamp(data.timestamp);
     if ("title" in data) this.setTitle(data.title);

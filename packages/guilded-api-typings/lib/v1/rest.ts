@@ -3,14 +3,13 @@
  * Do not make direct changes to the file.
  */
 
-
 /** WithRequired type helpers */
 type WithRequired<T, K extends keyof T> = T & { [P in K]-?: T[P] };
 
 export interface paths {
   "/channels/{channelId}/messages": {
     /**
-     * Get channel messages 
+     * Get channel messages
      * @description Results returned will be ordered ascending by the message's `createdAt`. `before` and `after` will filter based on the message's `createdAt`
      */
     get: operations["ChannelMessageReadMany"];
@@ -19,7 +18,7 @@ export interface paths {
   };
   "/channels/{channelId}/messages/{messageId}": {
     /**
-     * Get a channel message 
+     * Get a channel message
      * @description Get details for a specific chat message from a chat channel.
      */
     get: operations["ChannelMessageRead"];
@@ -30,12 +29,12 @@ export interface paths {
   };
   "/channels/{channelId}/content/{contentId}/emotes/{emoteId}": {
     /**
-     * [deprecated] Create reaction 
+     * [deprecated] Create reaction
      * @description [deprecated] Please use [this route](/docs/api/reactions/ChannelMessageReactionCreate) instead
      */
     put: operations["ContentReactionCreate"];
     /**
-     * [deprecated] Delete reaction 
+     * [deprecated] Delete reaction
      * @description [deprecated] Please use [this route](/docs/api/reactions/ChannelMessageReactionDelete) instead
      */
     delete: operations["ContentReactionDelete"];
@@ -54,7 +53,7 @@ export interface paths {
   };
   "/servers/{serverId}/roles/{roleId}/xp": {
     /**
-     * Award XP to role 
+     * Award XP to role
      * @description Award XP to all members with a particular role.
      */
     post: operations["ServerXpForRoleCreate"];
@@ -67,7 +66,7 @@ export interface paths {
   };
   "/servers/{serverId}/members/{userId}/roles": {
     /**
-     * Get member roles 
+     * Get member roles
      * @description Get a list of the roles assigned to a member
      */
     get: operations["RoleMembershipReadMany"];
@@ -128,7 +127,7 @@ export interface paths {
     /** Get a list item */
     get: operations["ListItemRead"];
     /**
-     * [deprecated] Update a list item 
+     * [deprecated] Update a list item
      * @description Deprecating this route in favor of the *patch* route
      */
     put: operations["ListItemUpdateDeprecated"];
@@ -155,31 +154,31 @@ export interface paths {
   };
   "/channels": {
     /**
-     * Create a channel 
+     * Create a channel
      * @description Only server channels are supported at this time (coming soon™: DM Channels!)
      */
     post: operations["ChannelCreate"];
   };
   "/channels/{channelId}": {
     /**
-     * Get a channel 
+     * Get a channel
      * @description Only server channels are supported at this time (coming soon™: DM Channels!)
      */
     get: operations["ChannelRead"];
     /**
-     * Delete a channel 
+     * Delete a channel
      * @description Only server channels are supported at this time (coming soon™: DM Channels!)
      */
     delete: operations["ChannelDelete"];
     /**
-     * Update a channel 
+     * Update a channel
      * @description Only server channels are supported at this time (coming soon™: DM Channels!)
      */
     patch: operations["ChannelUpdate"];
   };
   "/channels/{channelId}/docs": {
     /**
-     * Get docs 
+     * Get docs
      * @description Results returned will be ordered descending by the doc's `updatedAt`. `before` will filter based on the doc's `updatedAt`
      */
     get: operations["DocReadMany"];
@@ -198,14 +197,14 @@ export interface paths {
     /** Get a server member */
     get: operations["ServerMemberRead"];
     /**
-     * Kick a server member 
+     * Kick a server member
      * @description This route can be used to leave servers by passing in your own user ID or `@me` for `userId`
      */
     delete: operations["ServerMemberDelete"];
   };
   "/servers/{serverId}/members": {
     /**
-     * Get members of a server 
+     * Get members of a server
      * @description Results returned will be ordered ascending by the member's `joinedAt`
      */
     get: operations["ServerMemberReadMany"];
@@ -214,12 +213,12 @@ export interface paths {
     /** Get a server ban */
     get: operations["ServerMemberBanRead"];
     /**
-     * Create a server ban 
+     * Create a server ban
      * @description Also known as banning a server member
      */
     post: operations["ServerMemberBanCreate"];
     /**
-     * Delete a server ban 
+     * Delete a server ban
      * @description Also known as unbanning a server member
      */
     delete: operations["ServerMemberBanDelete"];
@@ -230,7 +229,7 @@ export interface paths {
   };
   "/servers/{serverId}/webhooks": {
     /**
-     * Get a server's webhooks 
+     * Get a server's webhooks
      * @description Get a list of webhooks from a server.
      */
     get: operations["WebhookReadMany"];
@@ -247,19 +246,19 @@ export interface paths {
   };
   "/servers/{serverId}": {
     /**
-     * Get a server 
+     * Get a server
      * @description Fetch various information about a given server. Currently, the bot must be a member of the server in order to fetch its information.
      */
     get: operations["ServerRead"];
   };
   "/channels/{channelId}/events": {
     /**
-     * Get calendar events 
+     * Get calendar events
      * @description Results returned will be ordered ascending by the event's `startsAt`. `before` and `after` will filter based on the event's `startsAt`
      */
     get: operations["CalendarEventReadMany"];
     /**
-     * Create a calendar event 
+     * Create a calendar event
      * @description We currently do not have a way to surface the `repeatInfo` after event series are updated. Stay tuned!
      */
     post: operations["CalendarEventCreate"];
@@ -270,7 +269,7 @@ export interface paths {
     /** Delete a calendar event */
     delete: operations["CalendarEventDelete"];
     /**
-     * Update a calendar event 
+     * Update a calendar event
      * @description We currently do not have a way to surface the `repeatInfo` after event series are updated. Stay tuned!
      */
     patch: operations["CalendarEventUpdate"];
@@ -291,7 +290,7 @@ export interface paths {
   };
   "/users/{userId}": {
     /**
-     * Get a user 
+     * Get a user
      * @description **Note** - at this time, you can only retrieve your own user
      */
     get: operations["UserRead"];
@@ -362,7 +361,7 @@ export interface paths {
   };
   "/channels/{channelId}/announcements": {
     /**
-     * Get announcements 
+     * Get announcements
      * @description Results returned will be ordered ascending by the announcement's `createdAt`. `before` will filter based on the announcement's `createdAt`
      */
     get: operations["AnnouncementReadMany"];
@@ -379,7 +378,7 @@ export interface paths {
   };
   "/users/{userId}/servers": {
     /**
-     * Get a users servers 
+     * Get a users servers
      * @description **Note** - at this time, you can only retrieve your own servers
      */
     get: operations["UserServerReadMany"];
@@ -480,73 +479,73 @@ export interface components {
      */
     ChatMessage: {
       /**
-       * Message ID 
-       * Format: uuid 
+       * Message ID
+       * Format: uuid
        * @description The ID of the message
        */
       id: string;
       /**
-       * Type 
-       * @description The type of chat message. "system" messages are generated by Guilded, while "default" messages are user or bot-generated. 
+       * Type
+       * @description The type of chat message. "system" messages are generated by Guilded, while "default" messages are user or bot-generated.
        * @enum {string}
        */
       type: "default" | "system";
       /**
-       * Server ID 
+       * Server ID
        * @description The ID of the server
        */
       serverId?: string;
       /**
-       * Group ID 
+       * Group ID
        * @description The ID of the group
        */
       groupId?: string;
       /**
-       * Channel ID 
-       * Format: uuid 
+       * Channel ID
+       * Format: uuid
        * @description The ID of the channel
        */
       channelId: string;
       /**
-       * Content 
-       * Format: markdown 
+       * Content
+       * Format: markdown
        * @description The content of the message
        */
       content?: string;
-      embeds?: (components["schemas"]["ChatEmbed"])[];
+      embeds?: components["schemas"]["ChatEmbed"][];
       /** @description Message IDs that were replied to */
-      replyMessageIds?: (string)[];
+      replyMessageIds?: string[];
       /**
-       * Is private 
+       * Is private
        * @description If set, this message will only be seen by those mentioned or replied to
        */
       isPrivate?: boolean;
       /**
-       * Is silent 
-       * @description If set, this message did not notify mention or reply recipients 
+       * Is silent
+       * @description If set, this message did not notify mention or reply recipients
        * @default false
        */
       isSilent?: boolean;
       mentions?: components["schemas"]["Mentions"];
       /**
-       * Created at 
-       * Format: date-time 
+       * Created at
+       * Format: date-time
        * @description The ISO 8601 timestamp that the message was created at
        */
       createdAt: string;
       /**
-       * Created by 
+       * Created by
        * @description The ID of the user who created this message (Note: If this event has `createdByWebhookId` present, this field will still be populated, but can be ignored. In this case, the value of this field will always be Ann6LewA)
        */
       createdBy: string;
       /**
-       * Created by Webhook ID 
+       * Created by Webhook ID
        * @description The ID of the webhook who created this message, if it was created by a webhook
        */
       createdByWebhookId?: string;
       /**
-       * Updated at 
-       * Format: date-time 
+       * Updated at
+       * Format: date-time
        * @description The ISO 8601 timestamp that the message was updated at, if relevant
        */
       updatedAt?: string;
@@ -565,26 +564,26 @@ export interface components {
      */
     ChatMessageReaction: {
       /**
-       * Channel ID 
-       * Format: uuid 
+       * Channel ID
+       * Format: uuid
        * @description The ID of the channel
        */
       channelId: string;
       /**
-       * User ID 
+       * User ID
        * @description The ID of the user who added the reaction
        */
       createdBy: string;
       emote: components["schemas"]["Emote"];
       /**
-       * Message ID 
-       * Format: uuid 
+       * Message ID
+       * Format: uuid
        * @description The ID of the message
        */
       messageId: string;
     };
     /**
-     * @description Rich content sections optionally associated with chat messages. Properties with "webhook-markdown" support allow for the following: link, italic, bold, strikethrough, underline, inline code, block code, reaction, and mention. 
+     * @description Rich content sections optionally associated with chat messages. Properties with "webhook-markdown" support allow for the following: link, italic, bold, strikethrough, underline, inline code, block code, reaction, and mention.
      * @example {
      *   "title": "embed title",
      *   "description": "embeds support a **different** __subset__ *of* markdown than other markdown fields. <@Ann6LewA>\n\n [links](https://www.guilded.gg) ```\ncheck this code out```\n\n:pizza: time!! ttyl",
@@ -626,17 +625,17 @@ export interface components {
      */
     ChatEmbed: {
       /**
-       * Format: webhook-markdown 
+       * Format: webhook-markdown
        * @description Main header of the embed
        */
       title?: string;
       /**
-       * Format: webhook-markdown 
+       * Format: webhook-markdown
        * @description Subtext of the embed
        */
       description?: string;
       /**
-       * Format: uri 
+       * Format: uri
        * @description URL to linkify the `title` field with
        */
       url?: string;
@@ -645,7 +644,7 @@ export interface components {
       /** @description A small section at the bottom of the embed */
       footer?: {
         /**
-         * Format: media-uri 
+         * Format: media-uri
          * @description URL of a small image to put in the footer
          */
         icon_url?: string;
@@ -653,14 +652,14 @@ export interface components {
         text: string;
       };
       /**
-       * Format: date-time 
+       * Format: date-time
        * @description A timestamp to put in the footer
        */
       timestamp?: string;
       /** @description An image to the right of the embed's content */
       thumbnail?: {
         /**
-         * Format: media-uri 
+         * Format: media-uri
          * @description URL of the image
          */
         url?: string;
@@ -668,7 +667,7 @@ export interface components {
       /** @description The main picture to associate with the embed */
       image?: {
         /**
-         * Format: media-uri 
+         * Format: media-uri
          * @description URL of the image
          */
         url?: string;
@@ -678,34 +677,34 @@ export interface components {
         /** @description Name of the author */
         name?: string;
         /**
-         * Format: uri 
+         * Format: uri
          * @description URL to linkify the author's `name` field
          */
         url?: string;
         /**
-         * Format: media-uri 
+         * Format: media-uri
          * @description URL of a small image to display to the left of the author's `name`
          */
         icon_url?: string;
       };
       /** @description Table-like cells to add to the embed */
-      fields?: ({
-          /**
-           * Format: webhook-markdown 
-           * @description Header of the table-like cell
-           */
-          name: string;
-          /**
-           * Format: webhook-markdown 
-           * @description Subtext of the table-like cell
-           */
-          value: string;
-          /**
-           * @description If the field should wrap or not 
-           * @default false
-           */
-          inline?: boolean;
-        })[];
+      fields?: {
+        /**
+         * Format: webhook-markdown
+         * @description Header of the table-like cell
+         */
+        name: string;
+        /**
+         * Format: webhook-markdown
+         * @description Subtext of the table-like cell
+         */
+        value: string;
+        /**
+         * @description If the field should wrap or not
+         * @default false
+         */
+        inline?: boolean;
+      }[];
     };
     /**
      * @example {
@@ -718,13 +717,26 @@ export interface components {
      */
     SocialLink: {
       /**
-       * Social link type 
-       * @description The type of social link that Guilded supports. Depending on this value, `handle` or `serviceId` may or may not be present 
+       * Social link type
+       * @description The type of social link that Guilded supports. Depending on this value, `handle` or `serviceId` may or may not be present
        * @enum {string}
        */
-      type: "twitch" | "bnet" | "psn" | "xbox" | "steam" | "origin" | "youtube" | "twitter" | "facebook" | "switch" | "patreon" | "roblox" | "epic";
+      type:
+        | "twitch"
+        | "bnet"
+        | "psn"
+        | "xbox"
+        | "steam"
+        | "origin"
+        | "youtube"
+        | "twitter"
+        | "facebook"
+        | "switch"
+        | "patreon"
+        | "roblox"
+        | "epic";
       /**
-       * User ID 
+       * User ID
        * @description The ID of the user that the social link is associated with
        */
       userId: string;
@@ -733,14 +745,14 @@ export interface components {
       /** @description The unique ID that represents this member's social link within the external service */
       serviceId?: string;
       /**
-       * Created at 
-       * Format: date-time 
+       * Created at
+       * Format: date-time
        * @description The ISO 8601 timestamp that the social link was created at
        */
       createdAt: string;
     };
     /**
-     * @description Metadata of who or what is mentioned in content 
+     * @description Metadata of who or what is mentioned in content
      * @example {
      *   "users": [
      *     {
@@ -763,46 +775,46 @@ export interface components {
      */
     Mentions: {
       /**
-       * Users 
+       * Users
        * @description Info on mentioned users
        */
-      users?: ({
-          /**
-           * User ID 
-           * @description The ID of the user
-           */
-          id: string;
-        })[];
+      users?: {
+        /**
+         * User ID
+         * @description The ID of the user
+         */
+        id: string;
+      }[];
       /**
-       * Channels 
+       * Channels
        * @description Info on mentioned channels
        */
-      channels?: ({
-          /**
-           * Channel ID 
-           * Format: uuid 
-           * @description The ID of the channel
-           */
-          id: string;
-        })[];
+      channels?: {
+        /**
+         * Channel ID
+         * Format: uuid
+         * @description The ID of the channel
+         */
+        id: string;
+      }[];
       /**
-       * Roles 
+       * Roles
        * @description Info on mentioned roles
        */
-      roles?: ({
-          /**
-           * Role ID 
-           * @description The ID of the role
-           */
-          id: number;
-        })[];
+      roles?: {
+        /**
+         * Role ID
+         * @description The ID of the role
+         */
+        id: number;
+      }[];
       /**
-       * Everyone 
+       * Everyone
        * @description If @everyone was mentioned
        */
       everyone?: boolean;
       /**
-       * Here 
+       * Here
        * @description If @here was mentioned
        */
       here?: boolean;
@@ -821,33 +833,33 @@ export interface components {
       /** @description The ID of the forum topic comment */
       id: number;
       /**
-       * Content 
-       * Format: markdown 
+       * Content
+       * Format: markdown
        * @description The content of the forum topic comment
        */
       content: string;
       /**
-       * Created at 
-       * Format: date-time 
+       * Created at
+       * Format: date-time
        * @description The ISO 8601 timestamp that the forum topic comment was created at
        */
       createdAt: string;
       /**
-       * Updated at 
-       * Format: date-time 
+       * Updated at
+       * Format: date-time
        * @description The ISO 8601 timestamp that the forum topic comment was updated at, if relevant
        */
       updatedAt?: string;
       /**
-       * Channel ID 
-       * Format: uuid 
+       * Channel ID
+       * Format: uuid
        * @description The ID of the channel
        */
       channelId: string;
       /** @description The ID of the forum topic */
       forumTopicId: number;
       /**
-       * Created by 
+       * Created by
        * @description The ID of the user who created this forum topic comment (Note: If this event has `createdByWebhookId` present, this field will still be populated, but can be ignored. In this case, the value of this field will always be Ann6LewA)
        */
       createdBy: string;
@@ -867,13 +879,13 @@ export interface components {
      */
     ForumTopicReaction: {
       /**
-       * Channel ID 
-       * Format: uuid 
+       * Channel ID
+       * Format: uuid
        * @description The ID of the channel
        */
       channelId: string;
       /**
-       * User ID 
+       * User ID
        * @description The ID of the user who added the reaction
        */
       createdBy: string;
@@ -896,13 +908,13 @@ export interface components {
      */
     ForumTopicCommentReaction: {
       /**
-       * Channel ID 
-       * Format: uuid 
+       * Channel ID
+       * Format: uuid
        * @description The ID of the channel
        */
       channelId: string;
       /**
-       * User ID 
+       * User ID
        * @description The ID of the user who added the reaction
        */
       createdBy: string;
@@ -927,57 +939,57 @@ export interface components {
       /** @description The ID of the forum topic */
       id: number;
       /**
-       * Server ID 
+       * Server ID
        * @description The ID of the server
        */
       serverId: string;
       /**
-       * Channel ID 
-       * Format: uuid 
+       * Channel ID
+       * Format: uuid
        * @description The ID of the channel
        */
       channelId: string;
       /**
-       * Title 
+       * Title
        * @description The title of the forum topic
        */
       title: string;
       /**
-       * Created at 
-       * Format: date-time 
+       * Created at
+       * Format: date-time
        * @description The ISO 8601 timestamp that the forum topic was created at
        */
       createdAt: string;
       /**
-       * Created by 
+       * Created by
        * @description The ID of the user who created this forum topic (Note: If this event has `createdByWebhookId` present, this field will still be populated, but can be ignored. In this case, the value of this field will always be Ann6LewA)
        */
       createdBy: string;
       /**
-       * Updated at 
-       * Format: date-time 
+       * Updated at
+       * Format: date-time
        * @description The ISO 8601 timestamp that the forum topic was updated at, if relevant
        */
       updatedAt?: string;
       /**
-       * Bumped at 
-       * Format: date-time 
+       * Bumped at
+       * Format: date-time
        * @description The ISO 8601 timestamp that the forum topic was bumped at. This timestamp is updated whenever there is any activity on the posts within the forum topic.
        */
       bumpedAt?: string;
       /**
-       * Is pinned 
+       * Is pinned
        * @default false
        */
       isPinned?: boolean;
       /**
-       * Is locked 
+       * Is locked
        * @default false
        */
       isLocked?: boolean;
       /**
-       * Content 
-       * Format: markdown 
+       * Content
+       * Format: markdown
        * @description The content of the forum topic
        */
       content: string;
@@ -997,51 +1009,51 @@ export interface components {
       /** @description The ID of the forum topic */
       id: number;
       /**
-       * Server ID 
+       * Server ID
        * @description The ID of the server
        */
       serverId: string;
       /**
-       * Channel ID 
-       * Format: uuid 
+       * Channel ID
+       * Format: uuid
        * @description The ID of the channel
        */
       channelId: string;
       /**
-       * Title 
+       * Title
        * @description The title of the forum topic
        */
       title: string;
       /**
-       * Created at 
-       * Format: date-time 
+       * Created at
+       * Format: date-time
        * @description The ISO 8601 timestamp that the forum topic was created at
        */
       createdAt: string;
       /**
-       * Created by 
+       * Created by
        * @description The ID of the user who created this forum topic (Note: If this event has `createdByWebhookId` present, this field will still be populated, but can be ignored. In this case, the value of this field will always be Ann6LewA)
        */
       createdBy: string;
       /**
-       * Updated at 
-       * Format: date-time 
+       * Updated at
+       * Format: date-time
        * @description The ISO 8601 timestamp that the forum topic was updated at, if relevant
        */
       updatedAt?: string;
       /**
-       * Bumped at 
-       * Format: date-time 
+       * Bumped at
+       * Format: date-time
        * @description The ISO 8601 timestamp that the forum topic was bumped at. This timestamp is updated whenever there is any activity on the posts within the forum topic.
        */
       bumpedAt?: string;
       /**
-       * Is pinned 
+       * Is pinned
        * @default false
        */
       isPinned?: boolean;
       /**
-       * Is locked 
+       * Is locked
        * @default false
        */
       isLocked?: boolean;
@@ -1063,98 +1075,98 @@ export interface components {
      */
     ListItem: {
       /**
-       * Format: uuid 
+       * Format: uuid
        * @description The ID of the list item
        */
       id: string;
       /**
-       * Server ID 
+       * Server ID
        * @description The ID of the server
        */
       serverId: string;
       /**
-       * Channel ID 
-       * Format: uuid 
+       * Channel ID
+       * Format: uuid
        * @description The ID of the channel
        */
       channelId: string;
       /**
-       * Message 
-       * Format: markdown 
+       * Message
+       * Format: markdown
        * @description The message of the list item
        */
       message: string;
       mentions?: components["schemas"]["Mentions"];
       /**
-       * Created at 
-       * Format: date-time 
+       * Created at
+       * Format: date-time
        * @description The ISO 8601 timestamp that the list item was created at
        */
       createdAt: string;
       /**
-       * Created by 
+       * Created by
        * @description The ID of the user who created this list item (Note: If this event has `createdByWebhookId` present, this field will still be populated, but can be ignored. In this case, the value of this field will always be Ann6LewA)
        */
       createdBy: string;
       /**
-       * Created by Webhook ID 
+       * Created by Webhook ID
        * @description The ID of the webhook who created this list item, if it was created by a webhook
        */
       createdByWebhookId?: string;
       /**
-       * Updated at 
-       * Format: date-time 
+       * Updated at
+       * Format: date-time
        * @description The ISO 8601 timestamp that the list item was updated at, if relevant
        */
       updatedAt?: string;
       /**
-       * Updated by 
+       * Updated by
        * @description The ID of the user who updated this list item
        */
       updatedBy?: string;
       /**
-       * Format: uuid 
+       * Format: uuid
        * @description The ID of the parent list item if this list item is nested
        */
       parentListItemId?: string;
       /**
-       * Completed at 
-       * Format: date-time 
+       * Completed at
+       * Format: date-time
        * @description The ISO 8601 timestamp that the list item was completed at
        */
       completedAt?: string;
       /**
-       * Completed by 
+       * Completed by
        * @description The ID of the user who completed this list item
        */
       completedBy?: string;
       note?: {
         /**
-         * Created at 
-         * Format: date-time 
+         * Created at
+         * Format: date-time
          * @description The ISO 8601 timestamp that the note was created at. If this field is populated, then there's a note associated with the list item
          */
         createdAt: string;
         /**
-         * Created by 
+         * Created by
          * @description The ID of the user who created this note
          */
         createdBy: string;
         /**
-         * Updated at 
-         * Format: date-time 
+         * Updated at
+         * Format: date-time
          * @description The ISO 8601 timestamp that the note was updated at, if relevant
          */
         updatedAt?: string;
         /**
-         * Updated by 
+         * Updated by
          * @description The ID of the user who updated this note
          */
         updatedBy?: string;
         mentions?: components["schemas"]["Mentions"];
         /**
-         * Note 
-         * Format: markdown 
+         * Note
+         * Format: markdown
          * @description The note of the list item
          */
         content: string;
@@ -1176,91 +1188,91 @@ export interface components {
      */
     ListItemSummary: {
       /**
-       * Format: uuid 
+       * Format: uuid
        * @description The ID of the list item
        */
       id: string;
       /**
-       * Server ID 
+       * Server ID
        * @description The ID of the server
        */
       serverId: string;
       /**
-       * Channel ID 
-       * Format: uuid 
+       * Channel ID
+       * Format: uuid
        * @description The ID of the channel
        */
       channelId: string;
       /**
-       * Message 
-       * Format: markdown 
+       * Message
+       * Format: markdown
        * @description The message of the list item
        */
       message: string;
       mentions?: components["schemas"]["Mentions"];
       /**
-       * Created at 
-       * Format: date-time 
+       * Created at
+       * Format: date-time
        * @description The ISO 8601 timestamp that the list item was created at
        */
       createdAt: string;
       /**
-       * Created by 
+       * Created by
        * @description The ID of the user who created this list item (Note: If this event has `createdByWebhookId` present, this field will still be populated, but can be ignored. In this case, the value of this field will always be Ann6LewA)
        */
       createdBy: string;
       /**
-       * Created by Webhook ID 
+       * Created by Webhook ID
        * @description The ID of the webhook who created this list item, if it was created by a webhook
        */
       createdByWebhookId?: string;
       /**
-       * Updated at 
-       * Format: date-time 
+       * Updated at
+       * Format: date-time
        * @description The ISO 8601 timestamp that the list item was updated at, if relevant
        */
       updatedAt?: string;
       /**
-       * Updated by 
+       * Updated by
        * @description The ID of the user who updated this list item
        */
       updatedBy?: string;
       /**
-       * Format: uuid 
+       * Format: uuid
        * @description The ID of the parent list item if this list item is nested
        */
       parentListItemId?: string;
       /**
-       * Completed at 
-       * Format: date-time 
+       * Completed at
+       * Format: date-time
        * @description The ISO 8601 timestamp that the list item was completed at
        */
       completedAt?: string;
       /**
-       * Completed by 
+       * Completed by
        * @description The ID of the user who completed this list item
        */
       completedBy?: string;
       note?: {
         /**
-         * Created at 
-         * Format: date-time 
+         * Created at
+         * Format: date-time
          * @description The ISO 8601 timestamp that the note was created at. If this field is populated, then there's a note associated with the list item
          */
         createdAt: string;
         /**
-         * Created by 
+         * Created by
          * @description The ID of the user who created this note
          */
         createdBy: string;
         /**
-         * Updated at 
-         * Format: date-time 
+         * Updated at
+         * Format: date-time
          * @description The ISO 8601 timestamp that the note was updated at, if relevant
          */
         updatedAt?: string;
         /**
-         * Updated by 
+         * Updated by
          * @description The ID of the user who updated this note
          */
         updatedBy?: string;
@@ -1281,52 +1293,52 @@ export interface components {
      */
     Doc: {
       /**
-       * Doc ID 
+       * Doc ID
        * @description The ID of the doc
        */
       id: number;
       /**
-       * Server ID 
+       * Server ID
        * @description The ID of the server
        */
       serverId: string;
       /**
-       * Channel ID 
-       * Format: uuid 
+       * Channel ID
+       * Format: uuid
        * @description The ID of the channel
        */
       channelId: string;
       /**
-       * Title 
+       * Title
        * @description The title of the doc
        */
       title: string;
       /**
-       * Content 
-       * Format: markdown 
+       * Content
+       * Format: markdown
        * @description The content of the doc
        */
       content: string;
       mentions?: components["schemas"]["Mentions"];
       /**
-       * Created at 
-       * Format: date-time 
+       * Created at
+       * Format: date-time
        * @description The ISO 8601 timestamp that the doc was created at
        */
       createdAt: string;
       /**
-       * Created by 
+       * Created by
        * @description The ID of the user who created this doc
        */
       createdBy: string;
       /**
-       * Updated at 
-       * Format: date-time 
+       * Updated at
+       * Format: date-time
        * @description The ISO 8601 timestamp that the doc was updated at, if relevant
        */
       updatedAt?: string;
       /**
-       * Updated by 
+       * Updated by
        * @description The ID of the user who updated this doc
        */
       updatedBy?: string;
@@ -1343,41 +1355,41 @@ export interface components {
      */
     DocComment: {
       /**
-       * Doc comment ID 
+       * Doc comment ID
        * @description The ID of the doc comment
        */
       id: number;
       /**
-       * Content 
-       * Format: markdown 
+       * Content
+       * Format: markdown
        * @description The content of the doc comment
        */
       content: string;
       /**
-       * Created at 
-       * Format: date-time 
+       * Created at
+       * Format: date-time
        * @description The ISO 8601 timestamp that the doc comment was created at
        */
       createdAt: string;
       /**
-       * Created by 
+       * Created by
        * @description The ID of the user who created this doc comment (Note: If this event has `createdByWebhookId` present, this field will still be populated, but can be ignored. In this case, the value of this field will always be Ann6LewA)
        */
       createdBy: string;
       /**
-       * Updated at 
-       * Format: date-time 
+       * Updated at
+       * Format: date-time
        * @description The ISO 8601 timestamp that the doc comment was updated at, if relevant
        */
       updatedAt?: string;
       /**
-       * Channel ID 
-       * Format: uuid 
+       * Channel ID
+       * Format: uuid
        * @description The ID of the channel
        */
       channelId: string;
       /**
-       * Doc ID 
+       * Doc ID
        * @description The ID of the doc
        */
       docId: number;
@@ -1397,19 +1409,19 @@ export interface components {
      */
     DocReaction: {
       /**
-       * Channel ID 
-       * Format: uuid 
+       * Channel ID
+       * Format: uuid
        * @description The ID of the channel
        */
       channelId: string;
       /**
-       * User ID 
+       * User ID
        * @description The ID of the user who added the reaction
        */
       createdBy: string;
       emote: components["schemas"]["Emote"];
       /**
-       * Doc ID 
+       * Doc ID
        * @description The ID of the doc
        */
       docId: number;
@@ -1429,24 +1441,24 @@ export interface components {
      */
     DocCommentReaction: {
       /**
-       * Channel ID 
-       * Format: uuid 
+       * Channel ID
+       * Format: uuid
        * @description The ID of the channel
        */
       channelId: string;
       /**
-       * User ID 
+       * User ID
        * @description The ID of the user who added the reaction
        */
       createdBy: string;
       emote: components["schemas"]["Emote"];
       /**
-       * Doc ID 
+       * Doc ID
        * @description The ID of the doc
        */
       docId: number;
       /**
-       * Doc comment ID 
+       * Doc comment ID
        * @description The ID of the doc comment
        */
       docCommentId: number;
@@ -1467,17 +1479,17 @@ export interface components {
     ServerMember: {
       user: components["schemas"]["User"];
       /** Role IDs */
-      roleIds: (number)[];
+      roleIds: number[];
       /** Nickname */
       nickname?: string;
       /**
-       * Created at 
-       * Format: date-time 
+       * Created at
+       * Format: date-time
        * @description The ISO 8601 timestamp that the member was created at
        */
       joinedAt: string;
       /**
-       * Is owner 
+       * Is owner
        * @default false
        */
       isOwner?: boolean;
@@ -1495,7 +1507,7 @@ export interface components {
     ServerMemberSummary: {
       user: components["schemas"]["UserSummary"];
       /** Role IDs */
-      roleIds: (number)[];
+      roleIds: number[];
     };
     /**
      * @example {
@@ -1507,36 +1519,36 @@ export interface components {
      */
     User: {
       /**
-       * User ID 
+       * User ID
        * @description The ID of the user
        */
       id: string;
       /**
-       * User type 
-       * @description The type of user. If this property is absent, it can assumed to be of type `user` 
+       * User type
+       * @description The type of user. If this property is absent, it can assumed to be of type `user`
        * @enum {string}
        */
       type?: "bot" | "user";
       /**
-       * User name 
+       * User name
        * @description The user's name
        */
       name: string;
       /**
-       * Avatar 
-       * Format: media-uri 
+       * Avatar
+       * Format: media-uri
        * @description The avatar image associated with the user
        */
       avatar?: string;
       /**
-       * Banner 
-       * Format: media-uri 
+       * Banner
+       * Format: media-uri
        * @description The banner image associated with the user
        */
       banner?: string;
       /**
-       * Created at 
-       * Format: date-time 
+       * Created at
+       * Format: date-time
        * @description The ISO 8601 timestamp that the user was created at
        */
       createdAt: string;
@@ -1550,24 +1562,24 @@ export interface components {
      */
     UserSummary: {
       /**
-       * User ID 
+       * User ID
        * @description The ID of the user
        */
       id: string;
       /**
-       * User type 
-       * @description The type of user. If this property is absent, it can assumed to be of type `user` 
+       * User type
+       * @description The type of user. If this property is absent, it can assumed to be of type `user`
        * @enum {string}
        */
       type?: "bot" | "user";
       /**
-       * User name 
+       * User name
        * @description The user's name
        */
       name: string;
       /**
-       * Avatar 
-       * Format: media-uri 
+       * Avatar
+       * Format: media-uri
        * @description The avatar image associated with the user
        */
       avatar?: string;
@@ -1587,18 +1599,18 @@ export interface components {
     ServerMemberBan: {
       user: components["schemas"]["UserSummary"];
       /**
-       * Reason 
+       * Reason
        * @description The reason for the ban as submitted by the banner
        */
       reason?: string;
       /**
-       * Created by 
+       * Created by
        * @description The ID of the user who created this server member ban
        */
       createdBy: string;
       /**
-       * Created at 
-       * Format: date-time 
+       * Created at
+       * Format: date-time
        * @description The ISO 8601 timestamp that the server member ban was created at
        */
       createdAt: string;
@@ -1617,69 +1629,79 @@ export interface components {
      */
     ServerChannel: {
       /**
-       * Channel ID 
-       * Format: uuid 
+       * Channel ID
+       * Format: uuid
        * @description The ID of the channel
        */
       id: string;
       /**
-       * @description The type of channel. This will determine what routes to use for creating content in a channel. For example, if this "chat", then one must use the routes for creating channel messages 
+       * @description The type of channel. This will determine what routes to use for creating content in a channel. For example, if this "chat", then one must use the routes for creating channel messages
        * @enum {string}
        */
-      type: "announcements" | "chat" | "calendar" | "forums" | "media" | "docs" | "voice" | "list" | "scheduling" | "stream";
+      type:
+        | "announcements"
+        | "chat"
+        | "calendar"
+        | "forums"
+        | "media"
+        | "docs"
+        | "voice"
+        | "list"
+        | "scheduling"
+        | "stream";
       /** @description The name of the channel */
       name: string;
       /** @description The topic of the channel */
       topic?: string;
       /**
-       * Created at 
-       * Format: date-time 
+       * Created at
+       * Format: date-time
        * @description The ISO 8601 timestamp that the channel was created at
        */
       createdAt: string;
       /**
-       * Created by 
+       * Created by
        * @description The ID of the user who created this channel
        */
       createdBy: string;
       /**
-       * Updated at 
-       * Format: date-time 
+       * Updated at
+       * Format: date-time
        * @description The ISO 8601 timestamp that the channel was updated at, if relevant
        */
       updatedAt?: string;
       /**
-       * Server ID 
+       * Server ID
        * @description The ID of the server
        */
       serverId: string;
       /**
-       * Channel ID 
-       * Format: uuid 
+       * Channel ID
+       * Format: uuid
        * @description ID of the parent channel or parent thread, if present. Only relevant for server channels
        */
       parentId?: string;
       /** @description Only relevant for server channels */
       categoryId?: number;
       /**
-       * Group ID 
+       * Group ID
        * @description The ID of the group
        */
       groupId: string;
       /**
-       * Is public 
-       * @description Whether the channel can be accessed from users who are not member of the server 
+       * Is public
+       * @description Whether the channel can be accessed from users who are not member of the server
        * @default false
        */
       isPublic?: boolean;
       /**
-       * Archived by 
+       * Archived by
        * @description The ID of the user who archived this channel
        */
       archivedBy?: string;
       /**
-       * Archived at 
-       * Format: date-time 
+       * Archived at
+       * Format: date-time
        * @description The ISO 8601 timestamp that the channel was archived at, if relevant
        */
       archivedAt?: string;
@@ -1699,67 +1721,75 @@ export interface components {
      */
     Server: {
       /**
-       * Server ID 
+       * Server ID
        * @description The ID of the server
        */
       id: string;
       /**
-       * Created by 
+       * Created by
        * @description The ID of the user who created this server
        */
       ownerId: string;
       /**
-       * Server type 
-       * @description The type of server designated from the server's settings page 
+       * Server type
+       * @description The type of server designated from the server's settings page
        * @enum {string}
        */
-      type?: "team" | "organization" | "community" | "clan" | "guild" | "friends" | "streaming" | "other";
+      type?:
+        | "team"
+        | "organization"
+        | "community"
+        | "clan"
+        | "guild"
+        | "friends"
+        | "streaming"
+        | "other";
       /**
-       * Server name 
+       * Server name
        * @description The name given to the server
        */
       name: string;
       /**
-       * Server URL 
+       * Server URL
        * @description The URL that the server can be accessible from. For example, a value of "Guilded-Official" means the server can be accessible from https://www.guilded.gg/Guilded-Official
        */
       url?: string;
       /**
-       * Description 
+       * Description
        * @description The description associated with the server
        */
       about?: string;
       /**
-       * Avatar 
-       * Format: media-uri 
+       * Avatar
+       * Format: media-uri
        * @description The avatar image associated with the server
        */
       avatar?: string;
       /**
-       * Banner 
-       * Format: media-uri 
+       * Banner
+       * Format: media-uri
        * @description The banner image associated with the server
        */
       banner?: string;
       /**
-       * Timezone 
+       * Timezone
        * @description The timezone associated with the server
        */
       timezone?: string;
       /**
-       * Is verified 
+       * Is verified
        * @description The verified status of the server
        */
       isVerified?: boolean;
       /**
-       * Channel ID 
-       * Format: uuid 
+       * Channel ID
+       * Format: uuid
        * @description The channel ID of the default channel of the server. This channel is defined as the first chat or voice channel in the left sidebar of a server in our UI. This channel is useful for sending welcome messages, though note that a bot may not have permissions to interact with this channel depending on how the server is configured.
        */
       defaultChannelId?: string;
       /**
-       * Created at 
-       * Format: date-time 
+       * Created at
+       * Format: date-time
        * @description The ISO 8601 timestamp that the server was created at
        */
       createdAt: string;
@@ -1776,52 +1806,52 @@ export interface components {
      */
     Webhook: {
       /**
-       * Webhook ID 
-       * Format: uuid 
+       * Webhook ID
+       * Format: uuid
        * @description The ID of the webhook
        */
       id: string;
       /**
-       * Name 
+       * Name
        * @description The name of the webhook
        */
       name: string;
       /**
-       * Avatar 
-       * Format: media-uri 
+       * Avatar
+       * Format: media-uri
        * @description The avatar image associated with the webhook
        */
       avatar?: string;
       /**
-       * Server ID 
+       * Server ID
        * @description The ID of the server
        */
       serverId: string;
       /**
-       * Channel ID 
-       * Format: uuid 
+       * Channel ID
+       * Format: uuid
        * @description The ID of the channel
        */
       channelId: string;
       /**
-       * Created at 
-       * Format: date-time 
+       * Created at
+       * Format: date-time
        * @description The ISO 8601 timestamp that the webhook was created at
        */
       createdAt: string;
       /**
-       * Created by 
+       * Created by
        * @description The ID of the user who created this webhook
        */
       createdBy: string;
       /**
-       * Deleted at 
-       * Format: date-time 
+       * Deleted at
+       * Format: date-time
        * @description The ISO 8601 timestamp that the webhook was deleted at
        */
       deletedAt?: string;
       /**
-       * Token 
+       * Token
        * @description The token of the webhook
        */
       token?: string;
@@ -1844,39 +1874,39 @@ export interface components {
      */
     CalendarEvent: {
       /**
-       * Calendar event ID 
+       * Calendar event ID
        * @description The ID of the calendar event
        */
       id: number;
       /**
-       * Server ID 
+       * Server ID
        * @description The ID of the server
        */
       serverId: string;
       /**
-       * Channel ID 
-       * Format: uuid 
+       * Channel ID
+       * Format: uuid
        * @description The ID of the channel
        */
       channelId: string;
       /**
-       * Name 
+       * Name
        * @description The name of the event
        */
       name: string;
       /**
-       * Description 
-       * Format: markdown 
+       * Description
+       * Format: markdown
        * @description The description of the event
        */
       description?: string;
       /**
-       * Location 
+       * Location
        * @description The location of the event
        */
       location?: string;
       /**
-       * Format: uri 
+       * Format: uri
        * @description A URL to associate with the event
        */
       url?: string;
@@ -1885,23 +1915,23 @@ export interface components {
       /** @description Is this event a repeating event */
       repeats?: boolean;
       /**
-       * Calendar event series ID 
-       * Format: uuid 
+       * Calendar event series ID
+       * Format: uuid
        * @description The ID of the calendar event series. Only shows if the event is repeating
        */
       seriesId?: string;
       /**
-       * Role IDs 
+       * Role IDs
        * @description The role IDs to restrict the event to
        */
-      roleIds?: (number)[];
+      roleIds?: number[];
       /**
-       * RSVP disabled 
+       * RSVP disabled
        * @description When disabled, users will not be able to RSVP to the event
        */
       rsvpDisabled?: boolean;
       /**
-       * Is all day 
+       * Is all day
        * @description Does the event last all day
        */
       isAllDay?: boolean;
@@ -1910,13 +1940,13 @@ export interface components {
       /** @description When `rsvpLimit` is set, users from the waitlist will be added as space becomes available in the event */
       autofillWaitlist?: boolean;
       /**
-       * Starts at 
-       * Format: date-time 
+       * Starts at
+       * Format: date-time
        * @description The ISO 8601 timestamp that the event starts at
        */
       startsAt: string;
       /**
-       * Duration 
+       * Duration
        * @description The duration of the event _**in minutes**_
        */
       duration?: number;
@@ -1924,25 +1954,25 @@ export interface components {
       isPrivate?: boolean;
       mentions?: components["schemas"]["Mentions"];
       /**
-       * Created at 
-       * Format: date-time 
+       * Created at
+       * Format: date-time
        * @description The ISO 8601 timestamp that the event was created at
        */
       createdAt: string;
       /**
-       * Created by 
+       * Created by
        * @description The ID of the user who created this event
        */
       createdBy: string;
       cancellation?: {
         /**
-         * Description 
-         * Format: markdown 
+         * Description
+         * Format: markdown
          * @description The description of event cancellation
          */
         description?: string;
         /**
-         * Created by 
+         * Created by
          * @description The ID of the user who created this event cancellation
          */
         createdBy: string;
@@ -1957,23 +1987,23 @@ export interface components {
      */
     Emote: {
       /**
-       * Emote ID 
+       * Emote ID
        * @description The ID of the emote
        */
       id: number;
       /**
-       * Name 
+       * Name
        * @description The name of the emote
        */
       name: string;
       /**
-       * Emote URL 
-       * Format: media-uri 
+       * Emote URL
+       * Format: media-uri
        * @description The URL of the emote image
        */
       url: string;
       /**
-       * Server ID 
+       * Server ID
        * @description The ID of the server the emote was created on
        */
       serverId?: string;
@@ -1991,51 +2021,57 @@ export interface components {
      */
     CalendarEventRsvp: {
       /**
-       * Calendar event ID 
+       * Calendar event ID
        * @description The ID of the calendar event
        */
       calendarEventId: number;
       /**
-       * Channel ID 
-       * Format: uuid 
+       * Channel ID
+       * Format: uuid
        * @description The ID of the channel
        */
       channelId: string;
       /**
-       * Server ID 
+       * Server ID
        * @description The ID of the server
        */
       serverId: string;
       /**
-       * User ID 
+       * User ID
        * @description The ID of the user
        */
       userId: string;
       /**
-       * Status 
-       * @description The status of the RSVP 
+       * Status
+       * @description The status of the RSVP
        * @enum {string}
        */
-      status: "going" | "maybe" | "declined" | "invited" | "waitlisted" | "not responded";
+      status:
+        | "going"
+        | "maybe"
+        | "declined"
+        | "invited"
+        | "waitlisted"
+        | "not responded";
       /**
-       * Created by 
+       * Created by
        * @description The ID of the user who created this RSVP
        */
       createdBy: string;
       /**
-       * Created at 
-       * Format: date-time 
+       * Created at
+       * Format: date-time
        * @description The ISO 8601 timestamp that the RSVP was created at
        */
       createdAt: string;
       /**
-       * Updated by 
+       * Updated by
        * @description The ID of the user who updated this RSVP
        */
       updatedBy?: string;
       /**
-       * Updated at 
-       * Format: date-time 
+       * Updated at
+       * Format: date-time
        * @description The ISO 8601 timestamp that the RSVP was updated at, if relevant
        */
       updatedAt?: string;
@@ -2052,41 +2088,41 @@ export interface components {
      */
     CalendarEventComment: {
       /**
-       * Calendar event comment ID 
+       * Calendar event comment ID
        * @description The ID of the calendar event comment
        */
       id: number;
       /**
-       * Content 
-       * Format: markdown 
+       * Content
+       * Format: markdown
        * @description The content of the calendar event comment
        */
       content: string;
       /**
-       * Created at 
-       * Format: date-time 
+       * Created at
+       * Format: date-time
        * @description The ISO 8601 timestamp that the calendar event comment was created at
        */
       createdAt: string;
       /**
-       * Updated at 
-       * Format: date-time 
+       * Updated at
+       * Format: date-time
        * @description The ISO 8601 timestamp that the calendar event comment was updated at, if relevant
        */
       updatedAt?: string;
       /**
-       * Calendar event ID 
+       * Calendar event ID
        * @description The ID of the calendar event
        */
       calendarEventId: number;
       /**
-       * Channel ID 
-       * Format: uuid 
+       * Channel ID
+       * Format: uuid
        * @description The ID of the channel
        */
       channelId: string;
       /**
-       * Created by 
+       * Created by
        * @description The ID of the user who created this calendar event comment (Note: If this event has `createdByWebhookId` present, this field will still be populated, but can be ignored. In this case, the value of this field will always be Ann6LewA)
        */
       createdBy: string;
@@ -2106,19 +2142,19 @@ export interface components {
      */
     CalendarEventReaction: {
       /**
-       * Channel ID 
-       * Format: uuid 
+       * Channel ID
+       * Format: uuid
        * @description The ID of the channel
        */
       channelId: string;
       /**
-       * User ID 
+       * User ID
        * @description The ID of the user who added the reaction
        */
       createdBy: string;
       emote: components["schemas"]["Emote"];
       /**
-       * Calendar event ID 
+       * Calendar event ID
        * @description The ID of the calendar event
        */
       calendarEventId: number;
@@ -2138,24 +2174,24 @@ export interface components {
      */
     CalendarEventCommentReaction: {
       /**
-       * Channel ID 
-       * Format: uuid 
+       * Channel ID
+       * Format: uuid
        * @description The ID of the channel
        */
       channelId: string;
       /**
-       * User ID 
+       * User ID
        * @description The ID of the user who added the reaction
        */
       createdBy: string;
       emote: components["schemas"]["Emote"];
       /**
-       * Calendar event ID 
+       * Calendar event ID
        * @description The ID of the calendar event
        */
       calendarEventId: number;
       /**
-       * Calendar event comment ID 
+       * Calendar event comment ID
        * @description The ID of the calendar event comment
        */
       calendarEventCommentId: number;
@@ -2169,19 +2205,19 @@ export interface components {
      */
     CalendarEventSeries: {
       /**
-       * Calendar event series ID 
-       * Format: uuid 
+       * Calendar event series ID
+       * Format: uuid
        * @description The ID of the calendar event series
        */
       id: string;
       /**
-       * Server ID 
+       * Server ID
        * @description The ID of the server
        */
       serverId: string;
       /**
-       * Channel ID 
-       * Format: uuid 
+       * Channel ID
+       * Format: uuid
        * @description The ID of the channel
        */
       channelId: string;
@@ -2199,41 +2235,41 @@ export interface components {
      */
     Announcement: {
       /**
-       * Announcement ID 
+       * Announcement ID
        * @description The ID of the announcement
        */
       id: string;
       /**
-       * Server ID 
+       * Server ID
        * @description The ID of the server
        */
       serverId: string;
       /**
-       * Channel ID 
-       * Format: uuid 
+       * Channel ID
+       * Format: uuid
        * @description The ID of the channel
        */
       channelId: string;
       /**
-       * Created at 
-       * Format: date-time 
+       * Created at
+       * Format: date-time
        * @description The ISO 8601 timestamp that the announcement was created at
        */
       createdAt: string;
       /**
-       * Created by 
+       * Created by
        * @description The ID of the user who created this announcement
        */
       createdBy: string;
       /**
-       * Content 
-       * Format: markdown 
+       * Content
+       * Format: markdown
        * @description The content of the announcement
        */
       content: string;
       mentions?: components["schemas"]["Mentions"];
       /**
-       * Title 
+       * Title
        * @description The title of the announcement
        */
       title: string;
@@ -2252,19 +2288,19 @@ export interface components {
      */
     AnnouncementReaction: {
       /**
-       * Channel ID 
-       * Format: uuid 
+       * Channel ID
+       * Format: uuid
        * @description The ID of the channel
        */
       channelId: string;
       /**
-       * User ID 
+       * User ID
        * @description The ID of the user who added the reaction
        */
       createdBy: string;
       emote: components["schemas"]["Emote"];
       /**
-       * Announcement ID 
+       * Announcement ID
        * @description The ID of the announcement
        */
       announcementId: string;
@@ -2281,41 +2317,41 @@ export interface components {
      */
     AnnouncementComment: {
       /**
-       * Announcement comment ID 
+       * Announcement comment ID
        * @description The ID of the announcement comment
        */
       id: number;
       /**
-       * Content 
-       * Format: markdown 
+       * Content
+       * Format: markdown
        * @description The content of the announcement comment
        */
       content: string;
       /**
-       * Created at 
-       * Format: date-time 
+       * Created at
+       * Format: date-time
        * @description The ISO 8601 timestamp that the announcement comment was created at
        */
       createdAt: string;
       /**
-       * Updated at 
-       * Format: date-time 
+       * Updated at
+       * Format: date-time
        * @description The ISO 8601 timestamp that the announcement comment was updated at, if relevant
        */
       updatedAt?: string;
       /**
-       * Created by 
+       * Created by
        * @description The ID of the user who created this announcement comment (Note: If this event has `createdByWebhookId` present, this field will still be populated, but can be ignored. In this case, the value of this field will always be Ann6LewA)
        */
       createdBy: string;
       /**
-       * Channel ID 
-       * Format: uuid 
+       * Channel ID
+       * Format: uuid
        * @description The ID of the channel
        */
       channelId: string;
       /**
-       * Announcement ID 
+       * Announcement ID
        * @description The ID of the announcement
        */
       announcementId: string;
@@ -2336,24 +2372,24 @@ export interface components {
      */
     AnnouncementCommentReaction: {
       /**
-       * Channel ID 
-       * Format: uuid 
+       * Channel ID
+       * Format: uuid
        * @description The ID of the channel
        */
       channelId: string;
       /**
-       * User ID 
+       * User ID
        * @description The ID of the user who added the reaction
        */
       createdBy: string;
       emote: components["schemas"]["Emote"];
       /**
-       * Announcement ID 
+       * Announcement ID
        * @description The ID of the announcement
        */
       announcementId: string;
       /**
-       * Announcement comment ID 
+       * Announcement comment ID
        * @description The ID of the announcement comment
        */
       announcementCommentId: number;
@@ -2369,9 +2405,8 @@ export interface components {
 export type external = Record<string, never>;
 
 export interface operations {
-
   /**
-   * Get channel messages 
+   * Get channel messages
    * @description Results returned will be ordered ascending by the message's `createdAt`. `before` and `after` will filter based on the message's `createdAt`
    */
   ChannelMessageReadMany: {
@@ -2380,7 +2415,7 @@ export interface operations {
         /** @example 2021-06-15T20:15:00.706Z */
         before?: string;
         /**
-         * @description An ISO 8601 timestamp that will be used to filter out results for the current page. Order will be reversed when compared to `before` or when omitting this parameter altogether 
+         * @description An ISO 8601 timestamp that will be used to filter out results for the current page. Order will be reversed when compared to `before` or when omitting this parameter altogether
          * @example 2021-06-15T20:15:00.706Z
          */
         after?: string;
@@ -2391,7 +2426,7 @@ export interface operations {
       };
       path: {
         /**
-         * @description ID of the channel that the messages exist in 
+         * @description ID of the channel that the messages exist in
          * @example 00000000-0000-0000-0000-000000000000
          */
         channelId: string;
@@ -2402,7 +2437,7 @@ export interface operations {
       200: {
         content: {
           "application/json": {
-            messages: (components["schemas"]["ChatMessage"])[];
+            messages: components["schemas"]["ChatMessage"][];
           };
         };
       };
@@ -2413,7 +2448,7 @@ export interface operations {
     parameters: {
       path: {
         /**
-         * @description Channel ID to create the message in 
+         * @description Channel ID to create the message in
          * @example 00000000-0000-0000-0000-000000000000
          */
         channelId: string;
@@ -2468,25 +2503,25 @@ export interface operations {
          */
         "application/json": {
           /**
-           * Is private 
+           * Is private
            * @description If set, this message will only be seen by those mentioned or replied to
            */
           isPrivate?: boolean;
           /**
-           * Is silent 
-           * @description If set, this message will not notify any mentioned users or roles 
+           * Is silent
+           * @description If set, this message will not notify any mentioned users or roles
            * @default false
            */
           isSilent?: boolean;
           /** @description Message IDs to reply to */
-          replyMessageIds?: (string)[];
+          replyMessageIds?: string[];
           /**
-           * Content 
+           * Content
            * @description The content of the message
            */
           content?: Record<string, never> | string;
           /** @description At this time, only one embed is supported per message, and attachments are not supported. If you need to send more than one embed or upload attachments, consider creating the message via a webhook. */
-          embeds?: (components["schemas"]["ChatEmbed"])[];
+          embeds?: components["schemas"]["ChatEmbed"][];
         };
       };
     };
@@ -2502,14 +2537,14 @@ export interface operations {
     };
   };
   /**
-   * Get a channel message 
+   * Get a channel message
    * @description Get details for a specific chat message from a chat channel.
    */
   ChannelMessageRead: {
     parameters: {
       path: {
         /**
-         * @description ID of the channel that the message exists in 
+         * @description ID of the channel that the message exists in
          * @example 00000000-0000-0000-0000-000000000000
          */
         channelId: string;
@@ -2533,7 +2568,7 @@ export interface operations {
     parameters: {
       path: {
         /**
-         * @description ID of the channel that the message to be updated exists in 
+         * @description ID of the channel that the message to be updated exists in
          * @example 00000000-0000-0000-0000-000000000000
          */
         channelId: string;
@@ -2590,12 +2625,12 @@ export interface operations {
          */
         "application/json": {
           /**
-           * Content 
+           * Content
            * @description The content of the message
            */
           content?: Record<string, never> | string;
           /** @description At this time, only one embed is supported per message, and attachments are not supported. If you need to send more than one embed or upload attachments, consider creating the message via a webhook. */
-          embeds?: (components["schemas"]["ChatEmbed"])[];
+          embeds?: components["schemas"]["ChatEmbed"][];
         };
       };
     };
@@ -2604,79 +2639,82 @@ export interface operations {
       200: {
         content: {
           "application/json": {
-            message: WithRequired<({
-              /**
-               * Message ID 
-               * Format: uuid 
-               * @description The ID of the message
-               */
-              id?: string;
-              /**
-               * Type 
-               * @description The type of chat message. "system" messages are generated by Guilded, while "default" messages are user or bot-generated. 
-               * @enum {string}
-               */
-              type?: "default" | "system";
-              /**
-               * Server ID 
-               * @description The ID of the server
-               */
-              serverId?: string;
-              /**
-               * Group ID 
-               * @description The ID of the group
-               */
-              groupId?: string;
-              /**
-               * Channel ID 
-               * Format: uuid 
-               * @description The ID of the channel
-               */
-              channelId?: string;
-              /**
-               * Content 
-               * Format: markdown 
-               * @description The content of the message
-               */
-              content?: string;
-              embeds?: (components["schemas"]["ChatEmbed"])[];
-              /** @description Message IDs that were replied to */
-              replyMessageIds?: (string)[];
-              /**
-               * Is private 
-               * @description If set, this message will only be seen by those mentioned or replied to
-               */
-              isPrivate?: boolean;
-              /**
-               * Is silent 
-               * @description If set, this message did not notify mention or reply recipients 
-               * @default false
-               */
-              isSilent?: boolean;
-              mentions?: components["schemas"]["Mentions"];
-              /**
-               * Created at 
-               * Format: date-time 
-               * @description The ISO 8601 timestamp that the message was created at
-               */
-              createdAt?: string;
-              /**
-               * Created by 
-               * @description The ID of the user who created this message (Note: If this event has `createdByWebhookId` present, this field will still be populated, but can be ignored. In this case, the value of this field will always be Ann6LewA)
-               */
-              createdBy?: string;
-              /**
-               * Created by Webhook ID 
-               * @description The ID of the webhook who created this message, if it was created by a webhook
-               */
-              createdByWebhookId?: string;
-              /**
-               * Updated at 
-               * Format: date-time 
-               * @description The ISO 8601 timestamp that the message was updated at, if relevant
-               */
-              updatedAt: string;
-            }) & components["schemas"]["ChatMessage"], "updatedAt">;
+            message: WithRequired<
+              {
+                /**
+                 * Message ID
+                 * Format: uuid
+                 * @description The ID of the message
+                 */
+                id?: string;
+                /**
+                 * Type
+                 * @description The type of chat message. "system" messages are generated by Guilded, while "default" messages are user or bot-generated.
+                 * @enum {string}
+                 */
+                type?: "default" | "system";
+                /**
+                 * Server ID
+                 * @description The ID of the server
+                 */
+                serverId?: string;
+                /**
+                 * Group ID
+                 * @description The ID of the group
+                 */
+                groupId?: string;
+                /**
+                 * Channel ID
+                 * Format: uuid
+                 * @description The ID of the channel
+                 */
+                channelId?: string;
+                /**
+                 * Content
+                 * Format: markdown
+                 * @description The content of the message
+                 */
+                content?: string;
+                embeds?: components["schemas"]["ChatEmbed"][];
+                /** @description Message IDs that were replied to */
+                replyMessageIds?: string[];
+                /**
+                 * Is private
+                 * @description If set, this message will only be seen by those mentioned or replied to
+                 */
+                isPrivate?: boolean;
+                /**
+                 * Is silent
+                 * @description If set, this message did not notify mention or reply recipients
+                 * @default false
+                 */
+                isSilent?: boolean;
+                mentions?: components["schemas"]["Mentions"];
+                /**
+                 * Created at
+                 * Format: date-time
+                 * @description The ISO 8601 timestamp that the message was created at
+                 */
+                createdAt?: string;
+                /**
+                 * Created by
+                 * @description The ID of the user who created this message (Note: If this event has `createdByWebhookId` present, this field will still be populated, but can be ignored. In this case, the value of this field will always be Ann6LewA)
+                 */
+                createdBy?: string;
+                /**
+                 * Created by Webhook ID
+                 * @description The ID of the webhook who created this message, if it was created by a webhook
+                 */
+                createdByWebhookId?: string;
+                /**
+                 * Updated at
+                 * Format: date-time
+                 * @description The ISO 8601 timestamp that the message was updated at, if relevant
+                 */
+                updatedAt: string;
+              } & components["schemas"]["ChatMessage"],
+              "updatedAt"
+            >;
           };
         };
       };
@@ -2698,24 +2736,24 @@ export interface operations {
     };
   };
   /**
-   * [deprecated] Create reaction 
+   * [deprecated] Create reaction
    * @description [deprecated] Please use [this route](/docs/api/reactions/ChannelMessageReactionCreate) instead
    */
   ContentReactionCreate: {
     parameters: {
       path: {
         /**
-         * @description Channel ID where the content exists 
+         * @description Channel ID where the content exists
          * @example 00000000-0000-0000-0000-000000000000
          */
         channelId: string;
         /**
-         * @description Content ID of the content 
+         * @description Content ID of the content
          * @example 00000000-0000-0000-0000-000000000000
          */
         contentId: string;
         /**
-         * @description Emote ID to apply 
+         * @description Emote ID to apply
          * @example 90000000
          */
         emoteId: number;
@@ -2727,24 +2765,24 @@ export interface operations {
     };
   };
   /**
-   * [deprecated] Delete reaction 
+   * [deprecated] Delete reaction
    * @description [deprecated] Please use [this route](/docs/api/reactions/ChannelMessageReactionDelete) instead
    */
   ContentReactionDelete: {
     parameters: {
       path: {
         /**
-         * @description Channel ID where the content exists 
+         * @description Channel ID where the content exists
          * @example 00000000-0000-0000-0000-000000000000
          */
         channelId: string;
         /**
-         * @description Content ID of the content 
+         * @description Content ID of the content
          * @example 00000000-0000-0000-0000-000000000000
          */
         contentId: string;
         /**
-         * @description Emote ID to remove 
+         * @description Emote ID to remove
          * @example 90000000
          */
         emoteId: number;
@@ -2760,12 +2798,12 @@ export interface operations {
     parameters: {
       path: {
         /**
-         * @description Group ID to add the member to 
+         * @description Group ID to add the member to
          * @example AAAAAAA
          */
         groupId: string;
         /**
-         * @description Member ID to add to the group 
+         * @description Member ID to add to the group
          * @example Ann6LewA
          */
         userId: string;
@@ -2781,12 +2819,12 @@ export interface operations {
     parameters: {
       path: {
         /**
-         * @description Group ID to remove the member from 
+         * @description Group ID to remove the member from
          * @example AAAAAAA
          */
         groupId: string;
         /**
-         * @description Member ID to remove from the group 
+         * @description Member ID to remove from the group
          * @example Ann6LewA
          */
         userId: string;
@@ -2804,7 +2842,7 @@ export interface operations {
         /** @example wlVr3Ggl */
         serverId: string;
         /**
-         * @description Member ID to set XP to 
+         * @description Member ID to set XP to
          * @example Ann6LewA
          */
         userId: string;
@@ -2842,7 +2880,7 @@ export interface operations {
         /** @example wlVr3Ggl */
         serverId: string;
         /**
-         * @description Member ID to award XP to 
+         * @description Member ID to award XP to
          * @example Ann6LewA
          */
         userId: string;
@@ -2857,7 +2895,7 @@ export interface operations {
          */
         "application/json": {
           /**
-           * Amount 
+           * Amount
            * @description The amount of XP to award
            */
           amount: number;
@@ -2877,7 +2915,7 @@ export interface operations {
     };
   };
   /**
-   * Award XP to role 
+   * Award XP to role
    * @description Award XP to all members with a particular role.
    */
   ServerXpForRoleCreate: {
@@ -2886,7 +2924,7 @@ export interface operations {
         /** @example wlVr3Ggl */
         serverId: string;
         /**
-         * @description Role ID to award XP to 
+         * @description Role ID to award XP to
          * @example 1
          */
         roleId: number;
@@ -2901,7 +2939,7 @@ export interface operations {
          */
         "application/json": {
           /**
-           * Amount 
+           * Amount
            * @description The amount of XP to award
            */
           amount: number;
@@ -2920,12 +2958,12 @@ export interface operations {
         /** @example wlVr3Ggl */
         serverId: string;
         /**
-         * @description The ID of the member that the role should be assigned to 
+         * @description The ID of the member that the role should be assigned to
          * @example Ann6LewA
          */
         userId: string;
         /**
-         * @description The role ID to apply to the user 
+         * @description The role ID to apply to the user
          * @example 1
          */
         roleId: number;
@@ -2943,12 +2981,12 @@ export interface operations {
         /** @example wlVr3Ggl */
         serverId: string;
         /**
-         * @description The ID of the member that the role should be removed from 
+         * @description The ID of the member that the role should be removed from
          * @example Ann6LewA
          */
         userId: string;
         /**
-         * @description The role ID to remove from the user 
+         * @description The role ID to remove from the user
          * @example 1
          */
         roleId: number;
@@ -2960,7 +2998,7 @@ export interface operations {
     };
   };
   /**
-   * Get member roles 
+   * Get member roles
    * @description Get a list of the roles assigned to a member
    */
   RoleMembershipReadMany: {
@@ -2969,7 +3007,7 @@ export interface operations {
         /** @example wlVr3Ggl */
         serverId: string;
         /**
-         * @description The ID of the member to obtain roles from 
+         * @description The ID of the member to obtain roles from
          * @example Ann6LewA
          */
         userId: string;
@@ -2981,10 +3019,10 @@ export interface operations {
         content: {
           "application/json": {
             /**
-             * Role IDs 
+             * Role IDs
              * @description The IDs of the roles that the member currently has
              */
-            roleIds: (number)[];
+            roleIds: number[];
           };
         };
       };
@@ -3009,7 +3047,7 @@ export interface operations {
       200: {
         content: {
           "application/json": {
-            forumTopics: (components["schemas"]["ForumTopicSummary"])[];
+            forumTopics: components["schemas"]["ForumTopicSummary"][];
           };
         };
       };
@@ -3033,12 +3071,12 @@ export interface operations {
          */
         "application/json": {
           /**
-           * Title 
+           * Title
            * @description The title of the forum topic
            */
           title: string;
           /**
-           * Content 
+           * Content
            * @description The content of the forum topic
            */
           content: Record<string, never> | string;
@@ -3109,13 +3147,13 @@ export interface operations {
          */
         "application/json": {
           /**
-           * Title 
+           * Title
            * @description The title of the forum topic
            */
           title?: string;
           /**
-           * Content 
-           * Format: markdown 
+           * Content
+           * Format: markdown
            * @description The content of the forum topic
            */
           content?: string;
@@ -3166,14 +3204,14 @@ export interface operations {
     parameters: {
       path: {
         /**
-         * @description Channel ID where the forum topic exists 
+         * @description Channel ID where the forum topic exists
          * @example 00000000-0000-0000-0000-000000000000
          */
         channelId: string;
         /** @description Forum Topic ID */
         forumTopicId: number;
         /**
-         * @description Emote ID to apply 
+         * @description Emote ID to apply
          * @example 90000000
          */
         emoteId: number;
@@ -3189,14 +3227,14 @@ export interface operations {
     parameters: {
       path: {
         /**
-         * @description Channel ID where the forum topic exists 
+         * @description Channel ID where the forum topic exists
          * @example 00000000-0000-0000-0000-000000000000
          */
         channelId: string;
         /** @description Forum Topic ID */
         forumTopicId: number;
         /**
-         * @description Emote ID to remove 
+         * @description Emote ID to remove
          * @example 90000000
          */
         emoteId: number;
@@ -3249,7 +3287,7 @@ export interface operations {
       200: {
         content: {
           "application/json": {
-            forumTopicComments: (components["schemas"]["ForumTopicComment"])[];
+            forumTopicComments: components["schemas"]["ForumTopicComment"][];
           };
         };
       };
@@ -3273,8 +3311,8 @@ export interface operations {
          */
         "application/json": {
           /**
-           * Content 
-           * Format: markdown 
+           * Content
+           * Format: markdown
            * @description The content of the forum topic comment
            */
           content: string;
@@ -3347,8 +3385,8 @@ export interface operations {
          */
         "application/json": {
           /**
-           * Content 
-           * Format: markdown 
+           * Content
+           * Format: markdown
            * @description The content of the forum topic
            */
           content?: string;
@@ -3379,7 +3417,7 @@ export interface operations {
       200: {
         content: {
           "application/json": {
-            listItems: (components["schemas"]["ListItemSummary"])[];
+            listItems: components["schemas"]["ListItemSummary"][];
           };
         };
       };
@@ -3405,16 +3443,16 @@ export interface operations {
          */
         "application/json": {
           /**
-           * Message 
+           * Message
            * @description The message of the list item
            */
-          message: Record<string, never> | string;
+          message: string;
           note?: {
             /**
-             * Note 
+             * Note
              * @description The note of the list item
              */
-            content: Record<string, never> | string;
+            content: string;
           };
         };
       };
@@ -3452,7 +3490,7 @@ export interface operations {
     };
   };
   /**
-   * [deprecated] Update a list item 
+   * [deprecated] Update a list item
    * @description Deprecating this route in favor of the *patch* route
    */
   ListItemUpdateDeprecated: {
@@ -3476,15 +3514,15 @@ export interface operations {
          */
         "application/json": {
           /**
-           * Message 
-           * Format: markdown 
+           * Message
+           * Format: markdown
            * @description The message of the list item
            */
           message: string;
           note?: {
             /**
-             * Note 
-             * Format: markdown 
+             * Note
+             * Format: markdown
              * @description The note of the list item
              */
             content: string;
@@ -3540,15 +3578,15 @@ export interface operations {
          */
         "application/json": {
           /**
-           * Message 
-           * Format: markdown 
+           * Message
+           * Format: markdown
            * @description The message of the list item
            */
           message?: string;
           note?: {
             /**
-             * Note 
-             * Format: markdown 
+             * Note
+             * Format: markdown
              * @description The note of the list item
              */
             content: string;
@@ -3606,7 +3644,20 @@ export interface operations {
         /** @example Ann6LewA */
         userId: string;
         /** @description The type of social link to retrieve */
-        socialLinkType: "twitch" | "bnet" | "psn" | "xbox" | "steam" | "origin" | "youtube" | "twitter" | "facebook" | "switch" | "patreon" | "roblox" | "epic";
+        socialLinkType:
+          | "twitch"
+          | "bnet"
+          | "psn"
+          | "xbox"
+          | "steam"
+          | "origin"
+          | "youtube"
+          | "twitter"
+          | "facebook"
+          | "switch"
+          | "patreon"
+          | "roblox"
+          | "epic";
       };
     };
     responses: {
@@ -3627,7 +3678,7 @@ export interface operations {
         /** @example wlVr3Ggl */
         serverId: string;
         /**
-         * @description The ID of the user to update nickname for 
+         * @description The ID of the user to update nickname for
          * @example Ann6LewA
          */
         userId: string;
@@ -3642,7 +3693,7 @@ export interface operations {
          */
         "application/json": {
           /**
-           * Nickname 
+           * Nickname
            * @description The nickname to assign to the member
            */
           nickname: string;
@@ -3655,7 +3706,7 @@ export interface operations {
         content: {
           "application/json": {
             /**
-             * Nickname 
+             * Nickname
              * @description The nickname that was assigned to the member
              */
             nickname: string;
@@ -3671,7 +3722,7 @@ export interface operations {
         /** @example wlVr3Ggl */
         serverId: string;
         /**
-         * @description The ID of the user to remove nickname from 
+         * @description The ID of the user to remove nickname from
          * @example Ann6LewA
          */
         userId: string;
@@ -3683,7 +3734,7 @@ export interface operations {
     };
   };
   /**
-   * Create a channel 
+   * Create a channel
    * @description Only server channels are supported at this time (coming soon™: DM Channels!)
    */
   ChannelCreate: {
@@ -3701,23 +3752,33 @@ export interface operations {
           /** @description The topic of the channel */
           topic?: string;
           /**
-           * Is public 
-           * @description Whether the channel can be accessed from users who are not member of the server 
+           * Is public
+           * @description Whether the channel can be accessed from users who are not member of the server
            * @default false
            */
           isPublic?: boolean;
           /**
-           * @description The type of channel to create 
+           * @description The type of channel to create
            * @enum {string}
            */
-          type: "announcements" | "chat" | "calendar" | "forums" | "media" | "docs" | "voice" | "list" | "scheduling" | "stream";
+          type:
+            | "announcements"
+            | "chat"
+            | "calendar"
+            | "forums"
+            | "media"
+            | "docs"
+            | "voice"
+            | "list"
+            | "scheduling"
+            | "stream";
           /**
-           * Server ID 
+           * Server ID
            * @description The server that the channel should be created in. Optional if providing a `groupId` or `categoryId`
            */
           serverId?: string;
           /**
-           * Group ID 
+           * Group ID
            * @description The group that the channel should be created in. If not provided, channel will be created in the "Server home" group from `serverId` _or_ in the group that corresponds to the `categoryId` parameter
            */
           groupId?: string;
@@ -3738,7 +3799,7 @@ export interface operations {
     };
   };
   /**
-   * Get a channel 
+   * Get a channel
    * @description Only server channels are supported at this time (coming soon™: DM Channels!)
    */
   ChannelRead: {
@@ -3760,7 +3821,7 @@ export interface operations {
     };
   };
   /**
-   * Delete a channel 
+   * Delete a channel
    * @description Only server channels are supported at this time (coming soon™: DM Channels!)
    */
   ChannelDelete: {
@@ -3776,7 +3837,7 @@ export interface operations {
     };
   };
   /**
-   * Update a channel 
+   * Update a channel
    * @description Only server channels are supported at this time (coming soon™: DM Channels!)
    */
   ChannelUpdate: {
@@ -3801,7 +3862,7 @@ export interface operations {
           /** @description The topic of the channel. Not applicable to threads */
           topic?: string | null;
           /**
-           * Is public 
+           * Is public
            * @description Whether the channel can be accessed from users who are not member of the server. Not applicable to threads
            */
           isPublic?: boolean;
@@ -3820,7 +3881,7 @@ export interface operations {
     };
   };
   /**
-   * Get docs 
+   * Get docs
    * @description Results returned will be ordered descending by the doc's `updatedAt`. `before` will filter based on the doc's `updatedAt`
    */
   DocReadMany: {
@@ -3841,7 +3902,7 @@ export interface operations {
       200: {
         content: {
           "application/json": {
-            docs: (components["schemas"]["Doc"])[];
+            docs: components["schemas"]["Doc"][];
           };
         };
       };
@@ -3865,12 +3926,12 @@ export interface operations {
          */
         "application/json": {
           /**
-           * Title 
+           * Title
            * @description The title of the doc
            */
           title: string;
           /**
-           * Content 
+           * Content
            * @description The content of the doc
            */
           content: Record<string, never> | string;
@@ -3929,13 +3990,13 @@ export interface operations {
          */
         "application/json": {
           /**
-           * Title 
+           * Title
            * @description The title of the doc
            */
           title: string;
           /**
-           * Content 
-           * Format: markdown 
+           * Content
+           * Format: markdown
            * @description The content of the doc
            */
           content: string;
@@ -3990,19 +4051,19 @@ export interface operations {
     };
   };
   /**
-   * Kick a server member 
+   * Kick a server member
    * @description This route can be used to leave servers by passing in your own user ID or `@me` for `userId`
    */
   ServerMemberDelete: {
     parameters: {
       path: {
         /**
-         * @description The ID of the server to kick the user from 
+         * @description The ID of the server to kick the user from
          * @example wlVr3Ggl
          */
         serverId: string;
         /**
-         * @description The ID of the user to kick. If the value provided here is your own user's ID, the request will attempt to make you leave the server 
+         * @description The ID of the user to kick. If the value provided here is your own user's ID, the request will attempt to make you leave the server
          * @example Ann6LewA
          */
         userId: string;
@@ -4014,7 +4075,7 @@ export interface operations {
     };
   };
   /**
-   * Get members of a server 
+   * Get members of a server
    * @description Results returned will be ordered ascending by the member's `joinedAt`
    */
   ServerMemberReadMany: {
@@ -4029,7 +4090,7 @@ export interface operations {
       200: {
         content: {
           "application/json": {
-            members: (components["schemas"]["ServerMemberSummary"])[];
+            members: components["schemas"]["ServerMemberSummary"][];
           };
         };
       };
@@ -4042,7 +4103,7 @@ export interface operations {
         /** @example wlVr3Ggl */
         serverId: string;
         /**
-         * @description The ID of the user to get a server ban for 
+         * @description The ID of the user to get a server ban for
          * @example Ann6LewA
          */
         userId: string;
@@ -4060,7 +4121,7 @@ export interface operations {
     };
   };
   /**
-   * Create a server ban 
+   * Create a server ban
    * @description Also known as banning a server member
    */
   ServerMemberBanCreate: {
@@ -4069,7 +4130,7 @@ export interface operations {
         /** @example wlVr3Ggl */
         serverId: string;
         /**
-         * @description The ID of the user to ban from this server 
+         * @description The ID of the user to ban from this server
          * @example Ann6LewA
          */
         userId: string;
@@ -4084,7 +4145,7 @@ export interface operations {
          */
         "application/json": {
           /**
-           * Reason 
+           * Reason
            * @description The reason for the ban
            */
           reason?: string;
@@ -4103,7 +4164,7 @@ export interface operations {
     };
   };
   /**
-   * Delete a server ban 
+   * Delete a server ban
    * @description Also known as unbanning a server member
    */
   ServerMemberBanDelete: {
@@ -4112,7 +4173,7 @@ export interface operations {
         /** @example wlVr3Ggl */
         serverId: string;
         /**
-         * @description The ID of the user to unban from this server 
+         * @description The ID of the user to unban from this server
          * @example Ann6LewA
          */
         userId: string;
@@ -4136,21 +4197,21 @@ export interface operations {
       200: {
         content: {
           "application/json": {
-            serverMemberBans: (components["schemas"]["ServerMemberBan"])[];
+            serverMemberBans: components["schemas"]["ServerMemberBan"][];
           };
         };
       };
     };
   };
   /**
-   * Get a server's webhooks 
+   * Get a server's webhooks
    * @description Get a list of webhooks from a server.
    */
   WebhookReadMany: {
     parameters: {
       query: {
         /**
-         * @description ID of the channel you want to filter for webhooks 
+         * @description ID of the channel you want to filter for webhooks
          * @example 00000000-0000-0000-0000-000000000000
          */
         channelId: string;
@@ -4165,7 +4226,7 @@ export interface operations {
       200: {
         content: {
           "application/json": {
-            webhooks: (components["schemas"]["Webhook"])[];
+            webhooks: components["schemas"]["Webhook"][];
           };
         };
       };
@@ -4188,13 +4249,13 @@ export interface operations {
          */
         "application/json": {
           /**
-           * Name 
+           * Name
            * @description The name of the webhook
            */
           name: string;
           /**
-           * Channel ID 
-           * Format: uuid 
+           * Channel ID
+           * Format: uuid
            * @description Channel ID to create the webhook in
            */
           channelId: string;
@@ -4252,13 +4313,13 @@ export interface operations {
          */
         "application/json": {
           /**
-           * Name 
+           * Name
            * @description The name of the webhook
            */
           name: string;
           /**
-           * Channel ID 
-           * Format: uuid 
+           * Channel ID
+           * Format: uuid
            * @description The ID of the channel
            */
           channelId?: string;
@@ -4292,7 +4353,7 @@ export interface operations {
     };
   };
   /**
-   * Get a server 
+   * Get a server
    * @description Fetch various information about a given server. Currently, the bot must be a member of the server in order to fetch its information.
    */
   ServerRead: {
@@ -4314,7 +4375,7 @@ export interface operations {
     };
   };
   /**
-   * Get calendar events 
+   * Get calendar events
    * @description Results returned will be ordered ascending by the event's `startsAt`. `before` and `after` will filter based on the event's `startsAt`
    */
   CalendarEventReadMany: {
@@ -4337,21 +4398,21 @@ export interface operations {
       200: {
         content: {
           "application/json": {
-            calendarEvents: (components["schemas"]["CalendarEvent"])[];
+            calendarEvents: components["schemas"]["CalendarEvent"][];
           };
         };
       };
     };
   };
   /**
-   * Create a calendar event 
+   * Create a calendar event
    * @description We currently do not have a way to surface the `repeatInfo` after event series are updated. Stay tuned!
    */
   CalendarEventCreate: {
     parameters: {
       path: {
         /**
-         * @description The calendar to create the event in 
+         * @description The calendar to create the event in
          * @example 00000000-0000-0000-0000-000000000000
          */
         channelId: string;
@@ -4372,41 +4433,41 @@ export interface operations {
          */
         "application/json": {
           /**
-           * Name 
+           * Name
            * @description The name of the event
            */
           name: string;
           /**
-           * Description 
-           * Format: markdown 
+           * Description
+           * Format: markdown
            * @description The description of the event
            */
           description?: string;
           /**
-           * Location 
+           * Location
            * @description The location of the event
            */
           location?: string;
           /**
-           * Starts at 
-           * Format: date-time 
+           * Starts at
+           * Format: date-time
            * @description The ISO 8601 timestamp that the event starts at
            */
           startsAt?: string;
           /**
-           * Format: uri 
+           * Format: uri
            * @description A URL to associate with the event
            */
           url?: string;
           /** @description The color of the event when viewing in the calendar */
           color?: number;
           /**
-           * Is all day 
+           * Is all day
            * @description Does the event last all day? If passed with `duration`, `duration` will only be applied if it is an interval of minutes represented in days (e.g., `duration: 2880`)
            */
           isAllDay?: boolean;
           /**
-           * RSVP disabled 
+           * RSVP disabled
            * @description When disabled, users will not be able to RSVP to the event
            */
           rsvpDisabled?: boolean;
@@ -4415,52 +4476,60 @@ export interface operations {
           /** @description When `rsvpLimit` is set, users from the waitlist will be added as space becomes available in the event */
           autofillWaitlist?: boolean;
           /**
-           * Duration 
+           * Duration
            * @description The duration of the event _**in minutes**_
            */
           duration?: number;
           /** Is private */
           isPrivate?: boolean;
           /**
-           * Role IDs 
+           * Role IDs
            * @description The role IDs to restrict the event to
            */
-          roleIds?: (number)[];
+          roleIds?: number[];
           repeatInfo?: {
             /**
-             * Repeat Type 
-             * @description How often you want your event to repeat (important note: this will repeat for the next 180 days unless custom is defined) 
-             * @default once 
+             * Repeat Type
+             * @description How often you want your event to repeat (important note: this will repeat for the next 180 days unless custom is defined)
+             * @default once
              * @enum {string}
              */
             type: "once" | "everyDay" | "everyWeek" | "everyMonth" | "custom";
             /** @description Apply further clarification to your events. This **must** have `type` set to `custom` */
             every?: {
               /**
-               * Count 
+               * Count
                * @description How often between your interval the event should repeat. For example, 1 would be every interval, 2 would be every second occurrence of the interval
                */
               count: number;
               /**
-               * Interval 
-               * @description Coupled with `count`, this indicates the time range you are repeating your event over 
+               * Interval
+               * @description Coupled with `count`, this indicates the time range you are repeating your event over
                * @enum {string}
                */
               interval: "day" | "month" | "year" | "week";
             };
             /**
-             * Occurrences 
+             * Occurrences
              * @description Used to control the end date of the event repeat (only used when `type` is `custom`; if used with `endDate`, the earliest resultant date of the two will be used)
              */
             endsAfterOccurrences?: number;
             /**
-             * Ends at 
-             * Format: date-time 
+             * Ends at
+             * Format: date-time
              * @description The ISO 8601 timestamp that the event ends at. Used to control the end date of the event repeat (only used when `type` is `custom`; if used with `endsAfterOccurrences`, the earliest resultant date of the two will be used)
              */
             endDate?: string;
             /** @description Used to control the day of the week that the event should repeat on (only used when `type` is `custom` and when `every.interval` is `week`) */
-            on?: ("sunday" | "monday" | "tuesday" | "wednesday" | "thursday" | "friday" | "saturday")[];
+            on?: (
+              | "sunday"
+              | "monday"
+              | "tuesday"
+              | "wednesday"
+              | "thursday"
+              | "friday"
+              | "saturday"
+            )[];
           };
         };
       };
@@ -4513,7 +4582,7 @@ export interface operations {
     };
   };
   /**
-   * Update a calendar event 
+   * Update a calendar event
    * @description We currently do not have a way to surface the `repeatInfo` after event series are updated. Stay tuned!
    */
   CalendarEventUpdate: {
@@ -4540,41 +4609,41 @@ export interface operations {
          */
         "application/json": {
           /**
-           * Name 
+           * Name
            * @description The name of the event
            */
           name?: string;
           /**
-           * Description 
-           * Format: markdown 
+           * Description
+           * Format: markdown
            * @description The description of the event
            */
           description?: string;
           /**
-           * Location 
+           * Location
            * @description The location of the event
            */
           location?: string;
           /**
-           * Starts at 
-           * Format: date-time 
+           * Starts at
+           * Format: date-time
            * @description The ISO 8601 timestamp that the event starts at
            */
           startsAt?: string;
           /**
-           * Format: uri 
+           * Format: uri
            * @description A URL to associate with the event
            */
           url?: string;
           /** @description The color of the event when viewing in the calendar */
           color?: number;
           /**
-           * Is all day 
+           * Is all day
            * @description Does the event last all day? If passed with `duration`, `duration` will only be applied if it is an interval of minutes represented in days (e.g., `duration: 2880`)
            */
           isAllDay?: boolean;
           /**
-           * RSVP disabled 
+           * RSVP disabled
            * @description When disabled, users will not be able to RSVP to the event
            */
           rsvpDisabled?: boolean;
@@ -4583,21 +4652,21 @@ export interface operations {
           /** @description When `rsvpLimit` is set, users from the waitlist will be added as space becomes available in the event */
           autofillWaitlist?: boolean;
           /**
-           * Duration 
+           * Duration
            * @description The duration of the event _**in minutes**_
            */
           duration?: number;
           /** Is private */
           isPrivate?: boolean;
           /**
-           * Role IDs 
+           * Role IDs
            * @description The role IDs to restrict the event to. Passing an empty array will clear the role IDs on the event
            */
-          roleIds?: (number)[];
+          roleIds?: number[];
           cancellation?: {
             /**
-             * Description 
-             * Format: markdown 
+             * Description
+             * Format: markdown
              * @description The description of event cancellation
              */
             description?: string;
@@ -4660,8 +4729,8 @@ export interface operations {
          */
         "application/json": {
           /**
-           * Status 
-           * @description The status of the RSVP 
+           * Status
+           * @description The status of the RSVP
            * @enum {string}
            */
           status: "going" | "maybe" | "declined" | "invited";
@@ -4711,7 +4780,7 @@ export interface operations {
       200: {
         content: {
           "application/json": {
-            calendarEventRsvps: (components["schemas"]["CalendarEventRsvp"])[];
+            calendarEventRsvps: components["schemas"]["CalendarEventRsvp"][];
           };
         };
       };
@@ -4731,10 +4800,10 @@ export interface operations {
       content: {
         "application/json": {
           /** User IDs */
-          userIds: (string)[];
+          userIds: string[];
           /**
-           * Status 
-           * @description The status of the RSVP 
+           * Status
+           * @description The status of the RSVP
            * @enum {string}
            */
           status: "going" | "maybe" | "declined" | "invited";
@@ -4747,7 +4816,7 @@ export interface operations {
     };
   };
   /**
-   * Get a user 
+   * Get a user
    * @description **Note** - at this time, you can only retrieve your own user
    */
   UserRead: {
@@ -4773,7 +4842,7 @@ export interface operations {
     parameters: {
       path: {
         /**
-         * @description Channel ID where the forum topic exists 
+         * @description Channel ID where the forum topic exists
          * @example 00000000-0000-0000-0000-000000000000
          */
         channelId: string;
@@ -4793,7 +4862,7 @@ export interface operations {
     parameters: {
       path: {
         /**
-         * @description Channel ID where the forum topic exists 
+         * @description Channel ID where the forum topic exists
          * @example 00000000-0000-0000-0000-000000000000
          */
         channelId: string;
@@ -4823,7 +4892,7 @@ export interface operations {
       200: {
         content: {
           "application/json": {
-            calendarEventComments: (components["schemas"]["CalendarEventComment"])[];
+            calendarEventComments: components["schemas"]["CalendarEventComment"][];
           };
         };
       };
@@ -4848,8 +4917,8 @@ export interface operations {
          */
         "application/json": {
           /**
-           * Content 
-           * Format: markdown 
+           * Content
+           * Format: markdown
            * @description The content of the calendar event comment
            */
           content: string;
@@ -4928,8 +4997,8 @@ export interface operations {
          */
         "application/json": {
           /**
-           * Content 
-           * Format: markdown 
+           * Content
+           * Format: markdown
            * @description The content of the calendar event comment
            */
           content: string;
@@ -5034,7 +5103,7 @@ export interface operations {
       200: {
         content: {
           "application/json": {
-            docComments: (components["schemas"]["DocComment"])[];
+            docComments: components["schemas"]["DocComment"][];
           };
         };
       };
@@ -5059,8 +5128,8 @@ export interface operations {
          */
         "application/json": {
           /**
-           * Content 
-           * Format: markdown 
+           * Content
+           * Format: markdown
            * @description The content of the doc comment
            */
           content: string;
@@ -5139,8 +5208,8 @@ export interface operations {
          */
         "application/json": {
           /**
-           * Content 
-           * Format: markdown 
+           * Content
+           * Format: markdown
            * @description The content of the doc comment
            */
           content: string;
@@ -5244,7 +5313,7 @@ export interface operations {
       content: {
         "application/json": {
           /**
-           * Calendar event ID 
+           * Calendar event ID
            * @description Control the deletion of the series from the `calendarEventId` forward. If not defined, it will delete all events
            */
           calendarEventId?: number;
@@ -5281,41 +5350,41 @@ export interface operations {
          */
         "application/json": {
           /**
-           * Name 
+           * Name
            * @description The name of the event
            */
           name?: string;
           /**
-           * Description 
-           * Format: markdown 
+           * Description
+           * Format: markdown
            * @description The description of the event
            */
           description?: string;
           /**
-           * Location 
+           * Location
            * @description The location of the event
            */
           location?: string;
           /**
-           * Starts at 
-           * Format: date-time 
+           * Starts at
+           * Format: date-time
            * @description The ISO 8601 timestamp that the event starts at
            */
           startsAt?: string;
           /**
-           * Format: uri 
+           * Format: uri
            * @description A URL to associate with the event
            */
           url?: string;
           /** @description The color of the event when viewing in the calendar */
           color?: number;
           /**
-           * Is all day 
+           * Is all day
            * @description Does the event last all day? If passed with `duration`, `duration` will only be applied if it is an interval of minutes represented in days (e.g., `duration: 2880`)
            */
           isAllDay?: boolean;
           /**
-           * RSVP disabled 
+           * RSVP disabled
            * @description When disabled, users will not be able to RSVP to the event
            */
           rsvpDisabled?: boolean;
@@ -5324,55 +5393,63 @@ export interface operations {
           /** @description When `rsvpLimit` is set, users from the waitlist will be added as space becomes available in the event */
           autofillWaitlist?: boolean;
           /**
-           * Duration 
+           * Duration
            * @description The duration of the event _**in minutes**_
            */
           duration?: number;
           /** Is private */
           isPrivate?: boolean;
           /**
-           * Role IDs 
+           * Role IDs
            * @description The role IDs to restrict the event to. Passing an empty array will clear the role IDs on the event
            */
-          roleIds?: (number)[];
+          roleIds?: number[];
           repeatInfo?: {
             /**
-             * Repeat Type 
-             * @description How often you want your event to repeat (important note: this will repeat for the next 180 days unless custom is defined) 
-             * @default once 
+             * Repeat Type
+             * @description How often you want your event to repeat (important note: this will repeat for the next 180 days unless custom is defined)
+             * @default once
              * @enum {string}
              */
             type: "once" | "everyDay" | "everyWeek" | "everyMonth" | "custom";
             /** @description Apply further clarification to your events. This **must** have `type` set to `custom` */
             every?: {
               /**
-               * Count 
+               * Count
                * @description How often between your interval the event should repeat. For example, 1 would be every interval, 2 would be every second occurrence of the interval
                */
               count: number;
               /**
-               * Interval 
-               * @description Coupled with `count`, this indicates the time range you are repeating your event over 
+               * Interval
+               * @description Coupled with `count`, this indicates the time range you are repeating your event over
                * @enum {string}
                */
               interval: "day" | "month" | "year" | "week";
             };
             /**
-             * Occurrences 
+             * Occurrences
              * @description Used to control the end date of the event repeat (only used when `type` is `custom`; if used with `endDate`, the earliest resultant date of the two will be used)
              */
             endsAfterOccurrences?: number;
             /**
-             * Ends at 
-             * Format: date-time 
+             * Ends at
+             * Format: date-time
              * @description The ISO 8601 timestamp that the event ends at. Used to control the end date of the event repeat (only used when `type` is `custom`; if used with `endsAfterOccurrences`, the earliest resultant date of the two will be used)
              */
             endDate?: string;
             /** @description Used to control the day of the week that the event should repeat on (only used when `type` is `custom` and when `every.interval` is `week`) */
-            on?: ("sunday" | "monday" | "tuesday" | "wednesday" | "thursday" | "friday" | "saturday")[];
+            on?: (
+              | "sunday"
+              | "monday"
+              | "tuesday"
+              | "wednesday"
+              | "thursday"
+              | "friday"
+              | "saturday"
+            )[];
           };
           /**
-           * Calendar event ID 
+           * Calendar event ID
            * @description Control the updating of the series from the `calendarEventId` forward. If not defined, it will edit all events
            */
           calendarEventId?: number;
@@ -5385,7 +5462,7 @@ export interface operations {
     };
   };
   /**
-   * Get announcements 
+   * Get announcements
    * @description Results returned will be ordered ascending by the announcement's `createdAt`. `before` will filter based on the announcement's `createdAt`
    */
   AnnouncementReadMany: {
@@ -5406,7 +5483,7 @@ export interface operations {
       200: {
         content: {
           "application/json": {
-            announcements: (components["schemas"]["Announcement"])[];
+            announcements: components["schemas"]["Announcement"][];
           };
         };
       };
@@ -5430,12 +5507,12 @@ export interface operations {
          */
         "application/json": {
           /**
-           * Title 
+           * Title
            * @description The title of the announcement
            */
           title: string;
           /**
-           * Content 
+           * Content
            * @description The content of the announcement
            */
           content: Record<string, never> | string;
@@ -5509,12 +5586,12 @@ export interface operations {
          */
         "application/json": {
           /**
-           * Title 
+           * Title
            * @description The title of the announcement
            */
           title?: string;
           /**
-           * Content 
+           * Content
            * @description The content of the announcement
            */
           content?: Record<string, never> | string;
@@ -5533,7 +5610,7 @@ export interface operations {
     };
   };
   /**
-   * Get a users servers 
+   * Get a users servers
    * @description **Note** - at this time, you can only retrieve your own servers
    */
   UserServerReadMany: {
@@ -5548,7 +5625,7 @@ export interface operations {
       200: {
         content: {
           "application/json": {
-            servers: (components["schemas"]["Server"])[];
+            servers: components["schemas"]["Server"][];
           };
         };
       };
@@ -5563,7 +5640,7 @@ export interface operations {
         /** @example AAAAAAA */
         announcementId: string;
         /**
-         * @description Emote ID to apply 
+         * @description Emote ID to apply
          * @example 90000000
          */
         emoteId: number;
@@ -5583,7 +5660,7 @@ export interface operations {
         /** @example AAAAAAA */
         announcementId: string;
         /**
-         * @description Emote ID to apply 
+         * @description Emote ID to apply
          * @example 90000000
          */
         emoteId: number;
@@ -5609,7 +5686,7 @@ export interface operations {
       200: {
         content: {
           "application/json": {
-            announcementComments: (components["schemas"]["AnnouncementComment"])[];
+            announcementComments: components["schemas"]["AnnouncementComment"][];
           };
         };
       };
@@ -5634,8 +5711,8 @@ export interface operations {
          */
         "application/json": {
           /**
-           * Content 
-           * Format: markdown 
+           * Content
+           * Format: markdown
            * @description The content of the announcement comment
            */
           content: string;
@@ -5714,8 +5791,8 @@ export interface operations {
          */
         "application/json": {
           /**
-           * Content 
-           * Format: markdown 
+           * Content
+           * Format: markdown
            * @description The content of the announcement comment
            */
           content: string;
@@ -5738,7 +5815,7 @@ export interface operations {
     parameters: {
       path: {
         /**
-         * @description Channel ID where the announcement comment exists 
+         * @description Channel ID where the announcement comment exists
          * @example 00000000-0000-0000-0000-000000000000
          */
         channelId: string;
@@ -5747,7 +5824,7 @@ export interface operations {
         /** @example 1 */
         announcementCommentId: number;
         /**
-         * @description Emote ID to apply 
+         * @description Emote ID to apply
          * @example 90000000
          */
         emoteId: number;
@@ -5763,7 +5840,7 @@ export interface operations {
     parameters: {
       path: {
         /**
-         * @description Channel ID where the announcement comment exists 
+         * @description Channel ID where the announcement comment exists
          * @example 00000000-0000-0000-0000-000000000000
          */
         channelId: string;
@@ -5772,7 +5849,7 @@ export interface operations {
         /** @example 1 */
         announcementCommentId: number;
         /**
-         * @description Emote ID to apply 
+         * @description Emote ID to apply
          * @example 90000000
          */
         emoteId: number;

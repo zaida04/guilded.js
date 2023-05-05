@@ -1,17 +1,17 @@
 import type { Client } from "./Client";
 import { Base } from "./Base";
-import type {
-  ServerPayload,
-  ServerType as APIServerType,
-} from "@guildedjs/guilded-api-typings";
 import type { Channel } from "./channels";
 import { buildMemberKey } from "../util";
 import type { Member } from "./Member";
+import {
+  Schema,
+  ServerType as APIServerType,
+} from "@guildedjs/guilded-api-typings";
 
 /**
  * A class representing a Guilded server.
  */
-export class Server extends Base<ServerPayload> {
+export class Server extends Base<Schema<"Server">> {
   /** The ID of the owner of this server */
   ownerId: string;
   /** The type of this server */
@@ -35,7 +35,7 @@ export class Server extends Base<ServerPayload> {
   /** The date this server was created */
   _createdAt!: number;
 
-  constructor(client: Client, data: ServerPayload) {
+  constructor(client: Client, data: Schema<"Server">) {
     super(client, data);
     this.ownerId = data.ownerId;
     this._createdAt = Date.parse(data.createdAt);
@@ -67,7 +67,7 @@ export class Server extends Base<ServerPayload> {
       : null;
   }
 
-  _update(data: Partial<ServerPayload>): this {
+  _update(data: Partial<Schema<"Server">>): this {
     if ("name" in data && typeof data.name !== "undefined") {
       this.name = data.name;
     }

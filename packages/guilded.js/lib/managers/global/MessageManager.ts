@@ -1,8 +1,3 @@
-import type {
-  RESTPostChannelMessagesBody,
-  RESTGetChannelMessagesQuery,
-  EmbedPayload,
-} from "@guildedjs/guilded-api-typings";
 import { Message } from "../../structures/Message";
 import { CacheableStructManager } from "./CacheableStructManager";
 import { Collection } from "@discordjs/collection";
@@ -10,6 +5,7 @@ import type { Embed } from "../../structures/Embed";
 import { resolveContentToData } from "../../util";
 import type { MessageContent } from "../../typings";
 import { CollectorOptions, MessageCollector } from "../../structures";
+import { RestBody, RestPath, RestQuery } from "@guildedjs/guilded-api-typings";
 
 /**
  * Manager for handling caching and interactions for Messages
@@ -33,7 +29,7 @@ export class GlobalMessageManager extends CacheableStructManager<
    */
   fetchMany(
     channelId: string,
-    options: RESTGetChannelMessagesQuery
+    options: RestQuery<RestPath<"/channels/{channelId}/messages">["get"]>
   ): Promise<Collection<string, Message>> {
     return this.client.rest.router
       .getChannelMessages(channelId, options)
@@ -140,7 +136,7 @@ export class GlobalMessageManager extends CacheableStructManager<
   update(
     channelId: string,
     messageId: string,
-    content: RESTPostChannelMessagesBody | Embed | string
+    content: MessageContent
   ): Promise<Message> {
     return this.client.rest.router
       .updateChannelMessage(channelId, messageId, resolveContentToData(content))

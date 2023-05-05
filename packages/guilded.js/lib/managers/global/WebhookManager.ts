@@ -1,10 +1,7 @@
 import { Collection } from "@discordjs/collection";
-import type {
-  RESTPostServerWebhooksBody,
-  RESTPutServerWebhookBody,
-} from "@guildedjs/guilded-api-typings";
 import { Webhook } from "../../structures/Webhook";
 import { CacheableStructManager } from "./CacheableStructManager";
+import { RestBody, RestPath } from "@guildedjs/guilded-api-typings";
 
 /**
  * A manager for interacting with global webhooks. You can retrieve webhooks from the .cache property
@@ -26,7 +23,7 @@ export class GlobalWebhookManager extends CacheableStructManager<
    */
   create(
     serverId: string,
-    options: RESTPostServerWebhooksBody
+    options: RestBody<RestPath<"/servers/{serverId}/webhooks">["post"]>
   ): Promise<Webhook> {
     return this.client.rest.router
       .createWebhook(serverId, options)
@@ -98,7 +95,9 @@ export class GlobalWebhookManager extends CacheableStructManager<
   update(
     serverId: string,
     webhookId: string,
-    options: RESTPutServerWebhookBody
+    options: RestBody<
+      RestPath<"/servers/{serverId}/webhooks/{webhookId}">["put"]
+    >
   ): Promise<Webhook> {
     return this.client.rest.router
       .updateWebhook(serverId, webhookId, options)

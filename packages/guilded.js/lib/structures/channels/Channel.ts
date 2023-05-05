@@ -1,13 +1,14 @@
 import type { Collection } from "@discordjs/collection";
-import type {
-  RESTGetChannelMessagesQuery,
-  RESTPatchChannelBody,
-  ServerChannelPayload,
-} from "@guildedjs/guilded-api-typings";
 import { Base } from "../Base";
 import type { Client } from "../Client";
 import type { Message } from "../Message";
-import type { ChannelType as APIChannelType } from "@guildedjs/guilded-api-typings";
+import type {
+  ChannelType as APIChannelType,
+  RestBody,
+  RestPath,
+  RestQuery,
+  Schema,
+} from "@guildedjs/guilded-api-typings";
 import type { MessageContent } from "../../typings";
 
 /**
@@ -49,7 +50,7 @@ export class Channel extends Base {
   /**
    * The ID of the category that the channel belongs to.
    */
-  categoryId!: string | null;
+  categoryId!: number | null;
   /**
    * The ID of the group that the channel belongs to.
    */
@@ -69,7 +70,7 @@ export class Channel extends Base {
 
   constructor(
     client: Client,
-    data: ServerChannelPayload & { deleted?: boolean }
+    data: Schema<"ServerChannel"> & { deleted?: boolean }
   ) {
     super(client, data);
     this.serverId = data.serverId;
@@ -102,7 +103,9 @@ export class Channel extends Base {
     return this._updatedAt ? new Date(this._updatedAt) : null;
   }
 
-  _update(data: Partial<ServerChannelPayload & { deleted?: boolean }>): this {
+  _update(
+    data: Partial<Schema<"ServerChannel"> & { deleted?: boolean }>
+  ): this {
     if ("name" in data && typeof data.name !== "undefined") {
       this.name = data.name;
     }
@@ -143,7 +146,7 @@ export class Channel extends Base {
    * @param options - Additional options for the message fetch.
    */
   fetchMessages(
-    options?: RESTGetChannelMessagesQuery
+    options?: RestQuery<RestPath<"/channels/{channelId}/messages">["get"]>
   ): Promise<Collection<string, Message>> {
     return this.client.messages.fetchMany(this.id, options ?? {});
   }
@@ -160,7 +163,7 @@ export class Channel extends Base {
    * Update the channel with new data.
    * @param options - The new data for the channel.
    */
-  update(options: RESTPatchChannelBody) {
+  update(options: RestBody<RestPath<"/channels/{channelId}">["patch"]>) {
     return this.client.channels.update(this.id, options);
   }
 

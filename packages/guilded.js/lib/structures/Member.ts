@@ -5,15 +5,10 @@ import type {
   UpgradedServerMemberPayload,
   UpgradedServerMemberSummaryPayload,
 } from "../typings";
-import type {
-  ServerMemberPayload,
-  SocialLink,
-  UserSocialLink,
-  UserSummaryPayload,
-} from "@guildedjs/guilded-api-typings";
 import type { User } from "./User";
 import { buildMemberKey } from "../util";
 import { Collection } from "@discordjs/collection";
+import { Schema } from "@guildedjs/guilded-api-typings";
 
 export class Member extends Base<UpgradedServerMemberPayload> {
   /** The ID of the server this role belongs to */
@@ -31,7 +26,7 @@ export class Member extends Base<UpgradedServerMemberPayload> {
   /** Whether this member owns the server */
   isOwner: boolean;
   /** Cached social links of this member */
-  socialLinks: Collection<UserSocialLink, SocialLink>;
+  socialLinks: Collection<Schema<"SocialLink">["type"], Schema<"SocialLink">>;
 
   constructor(client: Client, data: UpgradedServerMemberPayload) {
     super(client, data);
@@ -50,7 +45,7 @@ export class Member extends Base<UpgradedServerMemberPayload> {
   }
 
   _update(
-    data: Partial<ServerMemberPayload & { kicked: boolean; banned: boolean }>
+    data: Partial<Schema<"ServerMember"> & { kicked: boolean; banned: boolean }>
   ): this {
     if ("nickname" in data) {
       this.nickname = data.nickname ?? null;
@@ -177,7 +172,7 @@ export class PartialMember extends Base<UpgradedServerMemberSummaryPayload> {
   /** The ID of the server this role belongs to */
   readonly serverId: string;
   /** The user information of this member */
-  readonly user: UserSummaryPayload;
+  readonly user: Schema<"UserSummary">;
   /** Roles this member has by ID (TODO: role object when Guilded API has one) */
   readonly roleIds: number[] = [];
 
@@ -210,7 +205,7 @@ export class MemberBan extends Base<UpgradedServerMemberBanPayload> {
   /** The reason this user was banned */
   reason: string | null;
   /** Information about the target user */
-  target: UserSummaryPayload;
+  target: Schema<"UserSummary">;
 
   /**
    * Creates a new instance of `MemberBan`.
