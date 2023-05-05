@@ -1,94 +1,10 @@
 import type {
-  RESTDeleteCalendarEventResult,
-  RESTDeleteCalendarEventRsvpResult,
-  RESTDeleteChannelMessageResult,
-  RESTDeleteChannelResult,
-  RESTDeleteDocResult,
-  RESTDeleteForumTopicLockResult,
-  RESTDeleteForumTopicPinResult,
-  RESTDeleteForumTopicResult,
-  RESTDeleteGroupMemberResult,
-  RESTDeleteListItemCompleteResult,
-  RESTDeleteListItemResult,
-  RESTDeleteMemberBanResult,
-  RESTDeleteMemberNicknameResult,
-  RESTDeleteMemberResult,
-  RESTDeleteMemberRoleResult,
-  RESTDeleteReactionResult,
-  RESTDeleteServerWebhookResult,
-  RESTGetCalendarEventResult,
-  RESTGetCalendarEventRsvpResult,
-  RESTGetCalendarEventRsvpsResult,
-  RESTGetCalendarEventsBody,
-  RESTGetCalendarEventsResult,
-  RESTGetChannelMessageResult,
-  RESTGetChannelMessagesQuery,
-  RESTGetChannelMessagesResult,
-  RESTGetChannelResult,
-  RESTGetDocResult,
-  RESTGetDocsResult,
-  RESTGetForumTopicResult,
-  RESTGetForumTopicsQuery,
-  RESTGetForumTopicsResult,
-  RESTGetListItemResult,
-  RESTGetListItemsResult,
-  RESTGetMemberBanResult,
-  RESTGetMemberBansResult,
-  RESTGetMemberResult,
-  RESTGetMemberRolesResult,
-  RESTGetMemberSocialLinkResult,
-  RESTGetMembersResult,
-  RESTGetServerResult,
-  RESTGetServerWebhookResult,
-  RESTGetServerWebhooksQuery,
-  RESTGetServerWebhooksResult,
-  RESTGetUserResult,
-  RESTPatchCalendarEventBody,
-  RESTPatchCalendarEventResult,
-  RESTPatchCalendarEventRsvpBody,
-  RESTPatchCalendarEventRsvpResult,
-  RESTPatchCalendarEventRsvpManyBody,
-  RESTPatchCalendarEventRsvpManyResult,
-  RESTPatchChannelBody,
-  RESTPatchChannelResult,
-  RESTPatchForumTopicBody,
-  RESTPatchForumTopicResult,
-  RESTPostCalendarEventBody,
-  RESTPostCalendarEventResult,
-  RESTPostChannelMessagesBody,
-  RESTPostChannelMessagesResult,
-  RESTPostChannelsBody,
-  RESTPostChannelsResult,
-  RESTPostDocsBody,
-  RESTPostDocsResult,
-  RESTPostForumTopicBody,
-  RESTPostForumTopicResult,
-  RESTPostListItemBody,
-  RESTPostListItemCompleteResult,
-  RESTPostListItemResult,
-  RESTPostMemberBanBody,
-  RESTPostMemberBanResult,
-  RESTPostRoleXpResult,
-  RESTPostServerWebhooksBody,
-  RESTPostServerWebhooksResult,
-  RESTPostUserXPBody,
-  RESTPostUserXpResult,
-  RESTPutChannelMessageBody,
-  RESTPutChannelMessageResult,
-  RESTPutDocBody,
-  RESTPutDocResult,
-  RESTPutForumTopicLockResult,
-  RESTPutForumTopicPinResult,
-  RESTPutGroupMemberResult,
-  RESTPutListItemBody,
-  RESTPutListItemResult,
-  RESTPutMemberNicknameBody,
-  RESTPutMemberNicknameResult,
-  RESTPutMemberRoleResult,
-  RESTPutReactionResult,
-  RESTPutServerWebhookBody,
-  RESTPutServerWebhookResult,
-  UserSocialLink,
+  rest,
+  RestBody,
+  RestPath,
+  RestPayload,
+  RestQuery,
+  Schema,
 } from "@guildedjs/guilded-api-typings";
 import type { RestManager } from "../RestManager";
 import { ROUTES } from "./routes";
@@ -100,19 +16,18 @@ export class Router {
    * Create a channel
    */
   async createChannel(
-    data: RESTPostChannelsBody
-  ): Promise<RESTPostChannelsResult> {
-    return this.rest.post<RESTPostChannelsResult, RESTPostChannelsBody>(
-      ROUTES.channels(),
-      data
-    );
+    data: RestBody<RestPath<"/channels">["post"]>
+  ): Promise<RestPayload<RestPath<"/channels">["post"], 201>> {
+    return this.rest.post(ROUTES.channels(), data);
   }
 
   /**
    * Fetch a channel
    */
-  async getChannel(channelId: string): Promise<RESTGetChannelResult> {
-    return this.rest.get<RESTGetChannelResult>(ROUTES.channel(channelId));
+  async getChannel(
+    channelId: string
+  ): Promise<RestPayload<RestPath<"/channels/{channelId}">["get"], 200>> {
+    return this.rest.get(ROUTES.channel(channelId));
   }
 
   /**
@@ -120,19 +35,18 @@ export class Router {
    */
   async updateChannel(
     channelId: string,
-    data: RESTPatchChannelBody
-  ): Promise<RESTPatchChannelResult> {
-    return this.rest.patch<RESTPatchChannelResult>(
-      ROUTES.channel(channelId),
-      data
-    );
+    data: RestBody<RestPath<"/channels/{channelId}">["patch"]>
+  ): Promise<RestPayload<RestPath<"/channels/{channelId}">["patch"], 200>> {
+    return this.rest.patch(ROUTES.channel(channelId), data);
   }
 
   /**
    * Delete a channel
    */
-  async deleteChannel(channelId: string): Promise<RESTDeleteChannelResult> {
-    return this.rest.delete<RESTDeleteChannelResult>(ROUTES.channel(channelId));
+  async deleteChannel(
+    channelId: string
+  ): Promise<RestPayload<RestPath<"/channels/{channelId}">["delete"], 204>> {
+    return this.rest.delete(ROUTES.channel(channelId));
   }
 
   /**
@@ -140,12 +54,11 @@ export class Router {
    */
   async createChannelMessage(
     channelId: string,
-    content: RESTPostChannelMessagesBody
-  ): Promise<RESTPostChannelMessagesResult> {
-    return this.rest.post<
-      RESTPostChannelMessagesResult,
-      RESTPostChannelMessagesBody
-    >(ROUTES.channelMessages(channelId), content);
+    content: RestBody<RestPath<"/channels/{channelId}/messages">["post"]>
+  ): Promise<
+    RestPayload<RestPath<"/channels/{channelId}/messages">["post"], 201>
+  > {
+    return this.rest.post(ROUTES.channelMessages(channelId), content);
   }
 
   /**
@@ -153,12 +66,11 @@ export class Router {
    */
   async getChannelMessages(
     channelId: string,
-    options: RESTGetChannelMessagesQuery
-  ): Promise<RESTGetChannelMessagesResult> {
-    return this.rest.get<
-      RESTGetChannelMessagesResult,
-      RESTGetChannelMessagesQuery
-    >(ROUTES.channelMessages(channelId), options);
+    options: RestQuery<RestPath<"/channels/{channelId}/messages">["get"]>
+  ): Promise<
+    RestPayload<RestPath<"/channels/{channelId}/messages">["get"], 200>
+  > {
+    return this.rest.get(ROUTES.channelMessages(channelId), options);
   }
 
   /**
@@ -167,10 +79,13 @@ export class Router {
   async getChannelMessage(
     channelId: string,
     messageId: string
-  ): Promise<RESTGetChannelMessageResult> {
-    return this.rest.get<RESTGetChannelMessageResult>(
-      ROUTES.channelMessage(channelId, messageId)
-    );
+  ): Promise<
+    RestPayload<
+      RestPath<"/channels/{channelId}/messages/{messageId}">["get"],
+      200
+    >
+  > {
+    return this.rest.get(ROUTES.channelMessage(channelId, messageId));
   }
 
   /**
@@ -179,12 +94,16 @@ export class Router {
   async updateChannelMessage(
     channelId: string,
     messageId: string,
-    options: RESTPutChannelMessageBody
-  ): Promise<RESTPutChannelMessageResult> {
-    return this.rest.put<
-      RESTPutChannelMessageResult,
-      RESTPutChannelMessageBody
-    >(ROUTES.channelMessage(channelId, messageId), options);
+    options: RestBody<
+      RestPath<"/channels/{channelId}/messages/{messageId}">["put"]
+    >
+  ): Promise<
+    RestPayload<
+      RestPath<"/channels/{channelId}/messages/{messageId}">["put"],
+      200
+    >
+  > {
+    return this.rest.put(ROUTES.channelMessage(channelId, messageId), options);
   }
 
   /**
@@ -193,10 +112,13 @@ export class Router {
   async deleteChannelMessage(
     channelId: string,
     messageId: string
-  ): Promise<RESTDeleteChannelMessageResult> {
-    return this.rest.delete<RESTDeleteChannelMessageResult>(
-      ROUTES.channelMessage(channelId, messageId)
-    );
+  ): Promise<
+    RestPayload<
+      RestPath<"/channels/{channelId}/messages/{messageId}">["delete"],
+      200
+    >
+  > {
+    return this.rest.delete(ROUTES.channelMessage(channelId, messageId));
   }
 
   /**
@@ -205,10 +127,13 @@ export class Router {
   async getCalendarEvent(
     channelId: string,
     calendarEventId: number
-  ): Promise<RESTGetCalendarEventResult> {
-    return this.rest.get<RESTGetCalendarEventResult>(
-      ROUTES.calendarEvent(channelId, calendarEventId)
-    );
+  ): Promise<
+    RestPayload<
+      RestPath<"/channels/{channelId}/events/{calendarEventId}">["get"],
+      200
+    >
+  > {
+    return this.rest.get(ROUTES.calendarEvent(channelId, calendarEventId));
   }
 
   /**
@@ -216,12 +141,11 @@ export class Router {
    */
   async getCalendarEvents(
     channelId: string,
-    options: RESTGetCalendarEventsBody
-  ): Promise<RESTGetCalendarEventsResult> {
-    return this.rest.get<
-      RESTGetCalendarEventsResult,
-      RESTGetCalendarEventsBody
-    >(ROUTES.calendarEvents(channelId), options);
+    options: RestQuery<RestPath<"/channels/{channelId}/events">["get"]>
+  ): Promise<
+    RestPayload<RestPath<"/channels/{channelId}/events">["get"], 200>
+  > {
+    return this.rest.get(ROUTES.calendarEvents(channelId), options);
   }
 
   /**
@@ -229,12 +153,11 @@ export class Router {
    */
   async createCalendarEvent(
     channelId: string,
-    options: RESTPostCalendarEventBody
-  ): Promise<RESTPostCalendarEventResult> {
-    return this.rest.post<
-      RESTPostCalendarEventResult,
-      RESTPostCalendarEventBody
-    >(ROUTES.calendarEvents(channelId), options);
+    options: RestBody<RestPath<"/channels/{channelId}/events">["post"]>
+  ): Promise<
+    RestPayload<RestPath<"/channels/{channelId}/events">["post"], 200>
+  > {
+    return this.rest.post(ROUTES.calendarEvents(channelId), options);
   }
 
   /**
@@ -243,12 +166,19 @@ export class Router {
   async updateCalendarEvent(
     channelId: string,
     calendarEventId: number,
-    options: RESTPatchCalendarEventBody
-  ): Promise<RESTPatchCalendarEventResult> {
-    return this.rest.patch<
-      RESTPatchCalendarEventResult,
-      RESTPatchCalendarEventBody
-    >(ROUTES.calendarEvent(channelId, calendarEventId), options);
+    options: RestBody<
+      RestPath<"/channels/{channelId}/events/{calendarEventId}">["patch"]
+    >
+  ): Promise<
+    RestPayload<
+      RestPath<"/channels/{channelId}/events/{calendarEventId}">["patch"],
+      200
+    >
+  > {
+    return this.rest.patch(
+      ROUTES.calendarEvent(channelId, calendarEventId),
+      options
+    );
   }
 
   /**
@@ -257,10 +187,13 @@ export class Router {
   async deleteCalendarEvent(
     channelId: string,
     calendarEventId: number
-  ): Promise<RESTDeleteCalendarEventResult> {
-    return this.rest.delete<RESTDeleteCalendarEventResult>(
-      ROUTES.calendarEvent(channelId, calendarEventId)
-    );
+  ): Promise<
+    RestPayload<
+      RestPath<"/channels/{channelId}/events/{calendarEventId}">["delete"],
+      200
+    >
+  > {
+    return this.rest.delete(ROUTES.calendarEvent(channelId, calendarEventId));
   }
 
   /**
@@ -270,8 +203,13 @@ export class Router {
     channelId: string,
     calendarEventId: number,
     userId: string
-  ): Promise<RESTGetCalendarEventRsvpResult> {
-    return this.rest.get<RESTGetCalendarEventRsvpResult>(
+  ): Promise<
+    RestPayload<
+      RestPath<"/channels/{channelId}/events/{calendarEventId}/rsvps/{userId}">["get"],
+      200
+    >
+  > {
+    return this.rest.get(
       ROUTES.calendarEventRsvp(channelId, calendarEventId, userId)
     );
   }
@@ -282,10 +220,13 @@ export class Router {
   async getCalendarEventRsvps(
     channelId: string,
     calendarEventId: number
-  ): Promise<RESTGetCalendarEventRsvpsResult> {
-    return this.rest.get<RESTGetCalendarEventRsvpsResult>(
-      ROUTES.calendarEventRsvps(channelId, calendarEventId)
-    );
+  ): Promise<
+    RestPayload<
+      RestPath<"/channels/{channelId}/events/{calendarEventId}/rsvps">["get"],
+      200
+    >
+  > {
+    return this.rest.get(ROUTES.calendarEventRsvps(channelId, calendarEventId));
   }
 
   /**
@@ -295,12 +236,19 @@ export class Router {
     channelId: string,
     calendarEventId: number,
     userId: string,
-    options: RESTPatchCalendarEventRsvpBody
-  ): Promise<RESTPatchCalendarEventRsvpResult> {
-    return this.rest.put<
-      RESTPatchCalendarEventRsvpResult,
-      RESTPatchCalendarEventRsvpBody
-    >(ROUTES.calendarEventRsvp(channelId, calendarEventId, userId), options);
+    options: RestBody<
+      RestPath<"/channels/{channelId}/events/{calendarEventId}/rsvps/{userId}">["put"]
+    >
+  ): Promise<
+    RestPayload<
+      RestPath<"/channels/{channelId}/events/{calendarEventId}/rsvps/{userId}">["put"],
+      200
+    >
+  > {
+    return this.rest.put(
+      ROUTES.calendarEventRsvp(channelId, calendarEventId, userId),
+      options
+    );
   }
 
   /**
@@ -309,23 +257,35 @@ export class Router {
   async updateCalendarEventRsvpMany(
     channelId: string,
     calendarEventId: number,
-    options: RESTPatchCalendarEventRsvpManyBody
-  ): Promise<RESTPatchCalendarEventRsvpManyResult> {
-    return this.rest.put<
-      RESTPatchCalendarEventRsvpManyResult,
-      RESTPatchCalendarEventRsvpManyBody
-    >(ROUTES.calendarEventRsvpsMany(channelId, calendarEventId), options);
+    options: RestBody<
+      RestPath<"/channels/{channelId}/events/{calendarEventId}/rsvps">["put"]
+    >
+  ): Promise<
+    RestPayload<
+      RestPath<"/channels/{channelId}/events/{calendarEventId}/rsvps">["put"],
+      200
+    >
+  > {
+    return this.rest.put(
+      ROUTES.calendarEventRsvpsMany(channelId, calendarEventId),
+      options
+    );
   }
 
   /**
    * Delete an rsvp user from a calendar event
    */
-  async deleteCalendarEventRvsp(
+  async deleteCalendarEventRsvp(
     channelId: string,
     calendarEventId: number,
     userId: string
-  ): Promise<RESTDeleteCalendarEventRsvpResult> {
-    return this.rest.delete<RESTDeleteCalendarEventRsvpResult>(
+  ): Promise<
+    RestPayload<
+      RestPath<"/channels/{channelId}/events/{calendarEventId}/rsvps/{userId}">["delete"],
+      204
+    >
+  > {
+    return this.rest.delete(
       ROUTES.calendarEventRsvp(channelId, calendarEventId, userId)
     );
   }
@@ -336,10 +296,13 @@ export class Router {
   async getMemberRoles(
     serverId: string,
     userId: string
-  ): Promise<RESTGetMemberRolesResult> {
-    return this.rest.get<RESTGetMemberRolesResult>(
-      ROUTES.memberRoles(serverId, userId)
-    );
+  ): Promise<
+    RestPayload<
+      RestPath<"/servers/{serverId}/members/{userId}/roles">["get"],
+      200
+    >
+  > {
+    return this.rest.get(ROUTES.memberRoles(serverId, userId));
   }
 
   /**
@@ -349,11 +312,13 @@ export class Router {
     serverId: string,
     userId: string,
     nickname: string
-  ): Promise<RESTPutMemberNicknameResult> {
-    return this.rest.put<
-      RESTPutMemberNicknameResult,
-      RESTPutMemberNicknameBody
-    >(ROUTES.memberNickname(serverId, userId), { nickname });
+  ): Promise<
+    RestPayload<
+      RestPath<"/servers/{serverId}/members/{userId}/nickname">["put"],
+      200
+    >
+  > {
+    return this.rest.put(ROUTES.memberNickname(serverId, userId), { nickname });
   }
 
   /**
@@ -362,17 +327,22 @@ export class Router {
   async deleteMemberNickname(
     serverId: string,
     userId: string
-  ): Promise<RESTDeleteMemberNicknameResult> {
-    return this.rest.delete<RESTDeleteMemberNicknameResult>(
-      ROUTES.memberNickname(serverId, userId)
-    );
+  ): Promise<
+    RestPayload<
+      RestPath<"/servers/{serverId}/members/{userId}/nickname">["delete"],
+      204
+    >
+  > {
+    return this.rest.delete(ROUTES.memberNickname(serverId, userId));
   }
 
   /**
    * Get a server
    */
-  async getServer(serverId: string): Promise<RESTGetServerResult> {
-    return this.rest.get<RESTGetServerResult>(ROUTES.server(serverId));
+  async getServer(
+    serverId: string
+  ): Promise<RestPayload<RestPath<"/servers/{serverId}">["get"], 200>> {
+    return this.rest.get(ROUTES.server(serverId));
   }
 
   /**
@@ -380,12 +350,11 @@ export class Router {
    */
   async createForumTopic(
     channelId: string,
-    options: RESTPostForumTopicBody
-  ): Promise<RESTPostForumTopicResult> {
-    return this.rest.post<RESTPostForumTopicResult, RESTPostForumTopicBody>(
-      ROUTES.forumTopics(channelId),
-      options
-    );
+    options: RestBody<RestPath<"/channels/{channelId}/topics">["post"]>
+  ): Promise<
+    RestPayload<RestPath<"/channels/{channelId}/topics">["post"], 201>
+  > {
+    return this.rest.post(ROUTES.forumTopics(channelId), options);
   }
 
   /**
@@ -393,12 +362,11 @@ export class Router {
    */
   async getForumTopics(
     channelId: string,
-    options: RESTGetForumTopicsQuery
-  ): Promise<RESTGetForumTopicsResult> {
-    return this.rest.get<RESTGetForumTopicsResult, RESTGetForumTopicsQuery>(
-      ROUTES.forumTopics(channelId),
-      options
-    );
+    options: RestQuery<RestPath<"/channels/{channelId}/topics">["get"]>
+  ): Promise<
+    RestPayload<RestPath<"/channels/{channelId}/topics">["get"], 200>
+  > {
+    return this.rest.get(ROUTES.forumTopics(channelId), options);
   }
 
   /**
@@ -407,10 +375,13 @@ export class Router {
   async getForumTopic(
     channelId: string,
     forumThreadId: string
-  ): Promise<RESTGetForumTopicResult> {
-    return this.rest.get<RESTGetForumTopicResult>(
-      ROUTES.forumTopic(channelId, forumThreadId)
-    );
+  ): Promise<
+    RestPayload<
+      RestPath<"/channels/{channelId}/topics/{forumTopicId}">["get"],
+      200
+    >
+  > {
+    return this.rest.get(ROUTES.forumTopic(channelId, forumThreadId));
   }
 
   /**
@@ -419,9 +390,16 @@ export class Router {
   async updateForumTopic(
     channelId: string,
     forumThreadId: string,
-    options: RESTPatchForumTopicBody
-  ): Promise<RESTPatchForumTopicResult> {
-    return this.rest.patch<RESTPatchForumTopicResult, RESTPatchForumTopicBody>(
+    options: RestBody<
+      RestPath<"/channels/{channelId}/topics/{forumTopicId}">["patch"]
+    >
+  ): Promise<
+    RestPayload<
+      RestPath<"/channels/{channelId}/topics/{forumTopicId}">["patch"],
+      201
+    >
+  > {
+    return this.rest.patch(
       ROUTES.forumTopic(channelId, forumThreadId),
       options
     );
@@ -433,10 +411,13 @@ export class Router {
   async deleteForumTopic(
     channelId: string,
     forumThreadId: string
-  ): Promise<RESTDeleteForumTopicResult> {
-    return this.rest.delete<RESTDeleteForumTopicResult>(
-      ROUTES.forumTopic(channelId, forumThreadId)
-    );
+  ): Promise<
+    RestPayload<
+      RestPath<"/channels/{channelId}/topics/{forumTopicId}">["delete"],
+      204
+    >
+  > {
+    return this.rest.delete(ROUTES.forumTopic(channelId, forumThreadId));
   }
 
   /**
@@ -445,22 +426,28 @@ export class Router {
   async pinForumTopic(
     channelId: string,
     forumThreadId: string
-  ): Promise<RESTPutForumTopicPinResult> {
-    return this.rest.put<RESTPutForumTopicPinResult>(
-      ROUTES.forumTopic(channelId, forumThreadId)
-    );
+  ): Promise<
+    RestPayload<
+      RestPath<"/channels/{channelId}/topics/{forumTopicId}/pin">["put"],
+      204
+    >
+  > {
+    return this.rest.put(ROUTES.forumTopicPin(channelId, forumThreadId));
   }
 
   /**
-   * Pin a topic in a forum
+   * Unpin a topic in a forum
    */
   async unpinForumTopic(
     channelId: string,
     forumThreadId: string
-  ): Promise<RESTDeleteForumTopicPinResult> {
-    return this.rest.put<RESTDeleteForumTopicPinResult>(
-      ROUTES.forumTopic(channelId, forumThreadId)
-    );
+  ): Promise<
+    RestPayload<
+      RestPath<"/channels/{channelId}/topics/{forumTopicId}/pin">["delete"],
+      204
+    >
+  > {
+    return this.rest.delete(ROUTES.forumTopicPin(channelId, forumThreadId));
   }
 
   /**
@@ -469,10 +456,13 @@ export class Router {
   async lockForumTopic(
     channelId: string,
     forumThreadId: string
-  ): Promise<RESTPutForumTopicLockResult> {
-    return this.rest.put<RESTPutForumTopicLockResult>(
-      ROUTES.forumTopic(channelId, forumThreadId)
-    );
+  ): Promise<
+    RestPayload<
+      RestPath<"/channels/{channelId}/topics/{forumTopicId}/lock">["put"],
+      204
+    >
+  > {
+    return this.rest.put(ROUTES.forumTopicLock(channelId, forumThreadId));
   }
 
   /**
@@ -481,10 +471,13 @@ export class Router {
   async unlockForumTopic(
     channelId: string,
     forumThreadId: string
-  ): Promise<RESTDeleteForumTopicLockResult> {
-    return this.rest.put<RESTDeleteForumTopicLockResult>(
-      ROUTES.forumTopic(channelId, forumThreadId)
-    );
+  ): Promise<
+    RestPayload<
+      RestPath<"/channels/{channelId}/topics/{forumTopicId}/lock">["delete"],
+      204
+    >
+  > {
+    return this.rest.delete(ROUTES.forumTopicLock(channelId, forumThreadId));
   }
 
   /**
@@ -492,19 +485,22 @@ export class Router {
    */
   async createListItem(
     channelId: string,
-    options: RESTPostListItemBody
-  ): Promise<RESTPostListItemResult> {
-    return this.rest.post<RESTPostListItemResult, RESTPostListItemBody>(
-      ROUTES.listItems(channelId),
-      options
-    );
+    options: RestBody<RestPath<"/channels/{channelId}/items">["post"]>
+  ): Promise<
+    RestPayload<RestPath<"/channels/{channelId}/items">["post"], 201>
+  > {
+    return this.rest.post(ROUTES.listItems(channelId), options);
   }
 
   /**
    * Get list items
    */
-  async getListItems(channelId: string): Promise<RESTGetListItemsResult> {
-    return this.rest.get<RESTGetListItemsResult>(ROUTES.listItems(channelId));
+  async getListItems(
+    channelId: string
+  ): Promise<RestPayload<RestPath<"/channels/{channelId}/items">["get"], 200>> {
+    return this.rest.get<
+      RestPayload<RestPath<"/channels/{channelId}/items">["get"], 200>
+    >(ROUTES.listItems(channelId));
   }
 
   /**
@@ -513,10 +509,13 @@ export class Router {
   async getListItem(
     channelId: string,
     itemId: string
-  ): Promise<RESTGetListItemResult> {
-    return this.rest.get<RESTGetListItemResult>(
-      ROUTES.listItem(channelId, itemId)
-    );
+  ): Promise<
+    RestPayload<
+      RestPath<"/channels/{channelId}/items/{listItemId}">["get"],
+      200
+    >
+  > {
+    return this.rest.get(ROUTES.listItem(channelId, itemId));
   }
 
   /**
@@ -525,12 +524,16 @@ export class Router {
   async updateListItem(
     channelId: string,
     itemId: string,
-    options: RESTPutListItemBody
-  ): Promise<RESTPutListItemResult> {
-    return this.rest.put<RESTPutListItemResult, RESTPostListItemBody>(
-      ROUTES.listItem(channelId, itemId),
-      options
-    );
+    options: RestBody<
+      RestPath<"/channels/{channelId}/items/{listItemId}">["put"]
+    >
+  ): Promise<
+    RestPayload<
+      RestPath<"/channels/{channelId}/items/{listItemId}">["put"],
+      200
+    >
+  > {
+    return this.rest.put(ROUTES.listItem(channelId, itemId), options);
   }
 
   /**
@@ -539,28 +542,37 @@ export class Router {
   async deleteListItem(
     channelId: string,
     itemId: string
-  ): Promise<RESTDeleteListItemResult> {
-    return this.rest.delete<RESTDeleteListItemResult>(
-      ROUTES.listItem(channelId, itemId)
-    );
+  ): Promise<
+    RestPayload<
+      RestPath<"/channels/{channelId}/items/{listItemId}">["delete"],
+      204
+    >
+  > {
+    return this.rest.delete(ROUTES.listItem(channelId, itemId));
   }
 
   async completeListItem(
     channelId: string,
     itemId: string
-  ): Promise<RESTPostListItemCompleteResult> {
-    return this.rest.post<RESTPostListItemCompleteResult>(
-      ROUTES.listItemComplete(channelId, itemId)
-    );
+  ): Promise<
+    RestPayload<
+      RestPath<"/channels/{channelId}/items/{listItemId}/complete">["post"],
+      204
+    >
+  > {
+    return this.rest.post(ROUTES.listItemComplete(channelId, itemId));
   }
 
   async uncompleteListItem(
     channelId: string,
     itemId: string
-  ): Promise<RESTDeleteListItemCompleteResult> {
-    return this.rest.delete<RESTDeleteListItemCompleteResult>(
-      ROUTES.listItemComplete(channelId, itemId)
-    );
+  ): Promise<
+    RestPayload<
+      RestPath<"/channels/{channelId}/items/{listItemId}/complete">["delete"],
+      204
+    >
+  > {
+    return this.rest.delete(ROUTES.listItemComplete(channelId, itemId));
   }
 
   /**
@@ -568,26 +580,30 @@ export class Router {
    */
   async createDoc(
     channelId: string,
-    options: RESTPostDocsBody
-  ): Promise<RESTPostDocsResult> {
-    return this.rest.post<RESTPostDocsResult, RESTPostDocsBody>(
-      ROUTES.channelDocs(channelId),
-      options
-    );
+    options: RestBody<RestPath<"/channels/{channelId}/docs">["post"]>
+  ): Promise<RestPayload<RestPath<"/channels/{channelId}/docs">["post"], 201>> {
+    return this.rest.post(ROUTES.channelDocs(channelId), options);
   }
 
   /**
    * Get the docs from a channel.
    */
-  async getDocs(channelId: string): Promise<RESTGetDocsResult> {
-    return this.rest.get<RESTGetDocsResult>(ROUTES.channelDocs(channelId));
+  async getDocs(
+    channelId: string
+  ): Promise<RestPayload<RestPath<"/channels/{channelId}/docs">["get"], 200>> {
+    return this.rest.get(ROUTES.channelDocs(channelId));
   }
 
   /**
    * Get a doc from a channel.
    */
-  async getDoc(channelId: string, docId: number): Promise<RESTGetDocResult> {
-    return this.rest.get<RESTGetDocResult>(ROUTES.channelDoc(channelId, docId));
+  async getDoc(
+    channelId: string,
+    docId: number
+  ): Promise<
+    RestPayload<RestPath<"/channels/{channelId}/docs/{docId}">["get"], 200>
+  > {
+    return this.rest.get(ROUTES.channelDoc(channelId, docId));
   }
 
   /**
@@ -596,12 +612,11 @@ export class Router {
   async updateDoc(
     channelId: string,
     docId: number,
-    options: RESTPutDocBody
-  ): Promise<RESTPutDocResult> {
-    return this.rest.put<RESTPutDocResult, RESTPutDocBody>(
-      ROUTES.channelDoc(channelId, docId),
-      options
-    );
+    options: RestBody<RestPath<"/channels/{channelId}/docs/{docId}">["put"]>
+  ): Promise<
+    RestPayload<RestPath<"/channels/{channelId}/docs/{docId}">["put"], 200>
+  > {
+    return this.rest.put(ROUTES.channelDoc(channelId, docId), options);
   }
 
   /**
@@ -610,10 +625,10 @@ export class Router {
   async deleteDoc(
     channelId: string,
     docId: number
-  ): Promise<RESTDeleteDocResult> {
-    return this.rest.delete<RESTDeleteDocResult>(
-      ROUTES.channelDoc(channelId, docId)
-    );
+  ): Promise<
+    RestPayload<RestPath<"/channels/{channelId}/docs/{docId}">["delete"], 204>
+  > {
+    return this.rest.delete(ROUTES.channelDoc(channelId, docId));
   }
 
   /**
@@ -623,10 +638,13 @@ export class Router {
     channelId: string,
     contentId: string,
     emoteId: number
-  ): Promise<RESTPutReactionResult> {
-    return this.rest.put<RESTPutReactionResult>(
-      ROUTES.channelReaction(channelId, contentId, emoteId)
-    );
+  ): Promise<
+    RestPayload<
+      RestPath<"/channels/{channelId}/messages/{messageId}/emotes/{emoteId}">["put"],
+      204
+    >
+  > {
+    return this.rest.put(ROUTES.channelReaction(channelId, contentId, emoteId));
   }
 
   /**
@@ -636,8 +654,13 @@ export class Router {
     channelId: string,
     contentId: string,
     emoteId: number
-  ): Promise<RESTDeleteReactionResult> {
-    return this.rest.delete<RESTDeleteReactionResult>(
+  ): Promise<
+    RestPayload<
+      RestPath<"/channels/{channelId}/messages/{messageId}/emotes/{emoteId}">["delete"],
+      204
+    >
+  > {
+    return this.rest.delete(
       ROUTES.channelReaction(channelId, contentId, emoteId)
     );
   }
@@ -649,11 +672,13 @@ export class Router {
     serverId: string,
     userId: string,
     amount: number
-  ): Promise<RESTPostUserXpResult> {
-    return this.rest.post<RESTPostUserXpResult, RESTPostUserXPBody>(
-      ROUTES.memberXP(serverId, userId),
-      { amount }
-    );
+  ): Promise<
+    RestPayload<
+      RestPath<"/servers/{serverId}/members/{userId}/xp">["post"],
+      200
+    >
+  > {
+    return this.rest.post(ROUTES.memberXP(serverId, userId), { amount });
   }
 
   /**
@@ -663,15 +688,14 @@ export class Router {
     serverId: string,
     roleId: string,
     amount: number
-  ): Promise<RESTPostRoleXpResult> {
-    return this.rest.post<RESTPostRoleXpResult, RESTPostUserXPBody>(
-      ROUTES.roleXP(serverId, roleId),
-      { amount }
-    );
+  ): Promise<
+    RestPayload<RestPath<"/servers/{serverId}/roles/{roleId}/xp">["post"], 204>
+  > {
+    return this.rest.post(ROUTES.roleXP(serverId, roleId), { amount });
   }
 
-  async getMe(): Promise<RESTGetUserResult> {
-    return this.rest.get<RESTGetUserResult>(ROUTES.me());
+  async getMe(): Promise<RestPayload<RestPath<"/users/{userId}">["get"], 200>> {
+    return this.rest.get(ROUTES.me());
   }
 
   /**
@@ -680,31 +704,41 @@ export class Router {
   async getMemberSocialLinks(
     serverId: string,
     userId: string,
-    type: UserSocialLink
-  ): Promise<RESTGetMemberSocialLinkResult> {
-    return this.rest.get<RESTGetMemberSocialLinkResult>(
-      ROUTES.memberSocialLinks(serverId, userId, type)
-    );
+    type: Schema<"SocialLink">["type"]
+  ): Promise<
+    RestPayload<
+      RestPath<"/servers/{serverId}/members/{userId}/social-links/{socialLinkType}">["get"],
+      200
+    >
+  > {
+    return this.rest.get(ROUTES.memberSocialLinks(serverId, userId, type));
   }
 
   async getMember(
     serverId: string,
     userId: string
-  ): Promise<RESTGetMemberResult> {
-    return this.rest.get<RESTGetMemberResult>(ROUTES.member(serverId, userId));
+  ): Promise<
+    RestPayload<RestPath<"/servers/{serverId}/members/{userId}">["get"], 200>
+  > {
+    return this.rest.get(ROUTES.member(serverId, userId));
   }
 
-  async getMembers(serverId: string): Promise<RESTGetMembersResult> {
-    return this.rest.get<RESTGetMembersResult>(ROUTES.members(serverId));
+  async getMembers(
+    serverId: string
+  ): Promise<RestPayload<RestPath<"/servers/{serverId}/members">["get"], 200>> {
+    return this.rest.get(ROUTES.members(serverId));
   }
 
+  /**
+   * Kick a member from a server
+   */
   async kickMember(
     serverId: string,
     userId: string
-  ): Promise<RESTDeleteMemberResult> {
-    return this.rest.delete<RESTDeleteMemberResult>(
-      ROUTES.member(serverId, userId)
-    );
+  ): Promise<
+    RestPayload<RestPath<"/servers/{serverId}/members/{userId}">["delete"], 204>
+  > {
+    return this.rest.delete(ROUTES.member(serverId, userId));
   }
 
   /**
@@ -713,10 +747,10 @@ export class Router {
   async banMember(
     serverId: string,
     userId: string
-  ): Promise<RESTPostMemberBanResult> {
-    return this.rest.post<RESTPostMemberBanResult, RESTPostMemberBanBody>(
-      ROUTES.memberBan(serverId, userId)
-    );
+  ): Promise<
+    RestPayload<RestPath<"/servers/{serverId}/bans/{userId}">["post"], 200>
+  > {
+    return this.rest.post(ROUTES.memberBan(serverId, userId));
   }
 
   /**
@@ -725,10 +759,10 @@ export class Router {
   async getMemberBan(
     serverId: string,
     userId: string
-  ): Promise<RESTGetMemberBanResult> {
-    return this.rest.get<RESTGetMemberBanResult>(
-      ROUTES.memberBan(serverId, userId)
-    );
+  ): Promise<
+    RestPayload<RestPath<"/servers/{serverId}/bans/{userId}">["get"], 200>
+  > {
+    return this.rest.get(ROUTES.memberBan(serverId, userId));
   }
 
   /**
@@ -737,17 +771,19 @@ export class Router {
   async unbanMember(
     serverId: string,
     userId: string
-  ): Promise<RESTDeleteMemberBanResult> {
-    return this.rest.delete<RESTDeleteMemberBanResult>(
-      ROUTES.memberBan(serverId, userId)
-    );
+  ): Promise<
+    RestPayload<RestPath<"/servers/{serverId}/bans/{userId}">["delete"], 204>
+  > {
+    return this.rest.delete(ROUTES.memberBan(serverId, userId));
   }
 
   /**
    * Get all bans in a server
    */
-  async getMemberBans(serverId: string): Promise<RESTGetMemberBansResult> {
-    return this.rest.get<RESTGetMemberBansResult>(ROUTES.memberBans(serverId));
+  async getMemberBans(
+    serverId: string
+  ): Promise<RestPayload<RestPath<"/servers/{serverId}/bans">["get"], 200>> {
+    return this.rest.get(ROUTES.memberBans(serverId));
   }
 
   /**
@@ -756,10 +792,10 @@ export class Router {
   async addMemberToGroup(
     groupId: string,
     userId: string
-  ): Promise<RESTPutGroupMemberResult> {
-    return this.rest.put<RESTPutGroupMemberResult>(
-      ROUTES.groupMember(groupId, userId)
-    );
+  ): Promise<
+    RestPayload<RestPath<"/groups/{groupId}/members/{userId}">["put"], 204>
+  > {
+    return this.rest.put(ROUTES.groupMember(groupId, userId));
   }
 
   /**
@@ -768,10 +804,10 @@ export class Router {
   async removeMemberFromGroup(
     groupId: string,
     userId: string
-  ): Promise<RESTDeleteGroupMemberResult> {
-    return this.rest.delete<RESTDeleteGroupMemberResult>(
-      ROUTES.groupMember(groupId, userId)
-    );
+  ): Promise<
+    RestPayload<RestPath<"/groups/{groupId}/members/{userId}">["delete"], 204>
+  > {
+    return this.rest.delete(ROUTES.groupMember(groupId, userId));
   }
 
   /**
@@ -781,10 +817,13 @@ export class Router {
     serverId: string,
     userId: string,
     roleId: number
-  ): Promise<RESTPutMemberRoleResult> {
-    return this.rest.put<RESTPutMemberRoleResult>(
-      ROUTES.memberRole(serverId, userId, roleId)
-    );
+  ): Promise<
+    RestPayload<
+      RestPath<"/servers/{serverId}/members/{userId}/roles/{roleId}">["put"],
+      204
+    >
+  > {
+    return this.rest.put(ROUTES.memberRole(serverId, userId, roleId));
   }
 
   /**
@@ -794,10 +833,13 @@ export class Router {
     serverId: string,
     userId: string,
     roleId: number
-  ): Promise<RESTDeleteMemberRoleResult> {
-    return this.rest.delete<RESTDeleteMemberRoleResult>(
-      ROUTES.memberRole(serverId, userId, roleId)
-    );
+  ): Promise<
+    RestPayload<
+      RestPath<"/servers/{serverId}/members/{userId}/roles/{roleId}">["delete"],
+      204
+    >
+  > {
+    return this.rest.delete(ROUTES.memberRole(serverId, userId, roleId));
   }
 
   /**
@@ -805,12 +847,11 @@ export class Router {
    */
   async createWebhook(
     serverId: string,
-    options: RESTPostServerWebhooksBody
-  ): Promise<RESTPostServerWebhooksResult> {
-    return this.rest.post<
-      RESTPostServerWebhooksResult,
-      RESTPostServerWebhooksBody
-    >(ROUTES.serverWebhooks(serverId), options);
+    options: RestBody<RestPath<"/servers/{serverId}/webhooks">["post"]>
+  ): Promise<
+    RestPayload<RestPath<"/servers/{serverId}/webhooks">["post"], 201>
+  > {
+    return this.rest.post(ROUTES.serverWebhooks(serverId), options);
   }
 
   /**
@@ -819,11 +860,13 @@ export class Router {
   async getWebhooks(
     serverId: string,
     channelId?: string
-  ): Promise<RESTGetServerWebhooksResult> {
-    return this.rest.get<
-      RESTGetServerWebhooksResult,
-      RESTGetServerWebhooksQuery
-    >(ROUTES.serverWebhooks(serverId), channelId ? { channelId } : undefined);
+  ): Promise<
+    RestPayload<RestPath<"/servers/{serverId}/webhooks">["get"], 200>
+  > {
+    return this.rest.get(
+      ROUTES.serverWebhooks(serverId),
+      channelId ? { query: { channelId } } : undefined
+    );
   }
 
   /**
@@ -832,10 +875,13 @@ export class Router {
   async getWebhook(
     serverId: string,
     webhookId: string
-  ): Promise<RESTGetServerWebhookResult> {
-    return this.rest.get<RESTGetServerWebhookResult>(
-      ROUTES.serverWebhook(serverId, webhookId)
-    );
+  ): Promise<
+    RestPayload<
+      RestPath<"/servers/{serverId}/webhooks/{webhookId}">["get"],
+      200
+    >
+  > {
+    return this.rest.get(ROUTES.serverWebhook(serverId, webhookId));
   }
 
   /**
@@ -844,12 +890,16 @@ export class Router {
   async updateWebhook(
     serverId: string,
     webhookId: string,
-    options: RESTPutServerWebhookBody
-  ): Promise<RESTPutServerWebhookResult> {
-    return this.rest.put<RESTPutServerWebhookResult, RESTPutServerWebhookBody>(
-      ROUTES.serverWebhook(serverId, webhookId),
-      options
-    );
+    options: RestBody<
+      RestPath<"/servers/{serverId}/webhooks/{webhookId}">["put"]
+    >
+  ): Promise<
+    RestPayload<
+      RestPath<"/servers/{serverId}/webhooks/{webhookId}">["put"],
+      200
+    >
+  > {
+    return this.rest.put(ROUTES.serverWebhook(serverId, webhookId), options);
   }
 
   /**
@@ -858,9 +908,12 @@ export class Router {
   async deleteWebhook(
     serverId: string,
     webhookId: string
-  ): Promise<RESTDeleteServerWebhookResult> {
-    return this.rest.delete<RESTDeleteServerWebhookResult>(
-      ROUTES.serverWebhook(serverId, webhookId)
-    );
+  ): Promise<
+    RestPayload<
+      RestPath<"/servers/{serverId}/webhooks/{webhookId}">["delete"],
+      204
+    >
+  > {
+    return this.rest.delete(ROUTES.serverWebhook(serverId, webhookId));
   }
 }

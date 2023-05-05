@@ -1,8 +1,4 @@
-import type {
-  RESTGetForumTopicsQuery,
-  RESTPatchForumTopicBody,
-  RESTPostForumTopicBody,
-} from "@guildedjs/guilded-api-typings";
+import { RestBody, RestPath, RestQuery } from "@guildedjs/guilded-api-typings";
 import { ForumTopic, PartialForumTopic } from "../../structures/Forum";
 import { CacheableStructManager } from "./CacheableStructManager";
 import { Collection } from "@discordjs/collection";
@@ -27,7 +23,7 @@ export class GlobalForumTopicManager extends CacheableStructManager<
    */
   create(
     channelId: string,
-    options: RESTPostForumTopicBody
+    options: RestBody<RestPath<"/channels/{channelId}/topics">["post"]>
   ): Promise<ForumTopic> {
     return this.client.rest.router
       .createForumTopic(channelId, options)
@@ -43,7 +39,7 @@ export class GlobalForumTopicManager extends CacheableStructManager<
    */
   fetchMany(
     channelId: string,
-    options: RESTGetForumTopicsQuery
+    options: RestQuery<RestPath<"/channels/{channelId}/topics">["get"]>
   ): Promise<Collection<number, PartialForumTopic>> {
     return this.client.rest.router
       .getForumTopics(channelId, options)
@@ -81,7 +77,9 @@ export class GlobalForumTopicManager extends CacheableStructManager<
   update(
     channelId: string,
     forumThreadId: string,
-    options: RESTPatchForumTopicBody
+    options: RestBody<
+      RestPath<"/channels/{channelId}/topics/{forumTopicId}">["patch"]
+    >
   ): Promise<ForumTopic> {
     return this.client.rest.router
       .updateForumTopic(channelId, forumThreadId, options)

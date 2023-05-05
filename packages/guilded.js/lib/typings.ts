@@ -1,20 +1,8 @@
 import type {
-  DocPayload,
   EmbedPayload,
-  ListItemPayload,
-  ListItemSummaryPayload,
-  RESTPostChannelMessagesBody,
-  ServerMemberBanPayload,
-  ServerMemberPayload,
-  ServerMemberRoleIdsPayload,
-  ServerMemberSummaryPayload,
-  SocialLink,
-  WSChannelMessageReactionDeletedPayload,
-  WSChatMessageDeletedPayload,
-  WSServerMemberBannedPayload,
-  WSServerMemberRemovedPayload,
-  WSServerMemberUnbannedPayload,
-  WSServerMemberUpdatedPayload,
+  RestBody,
+  RestPath,
+  Schema,
 } from "@guildedjs/guilded-api-typings";
 import type {
   Channel,
@@ -23,7 +11,6 @@ import type {
   MemberBan,
   Message,
   MessageReaction,
-  User,
   Webhook,
 } from "./structures";
 import type {
@@ -46,18 +33,22 @@ export interface BareStructureBaseData {
 }
 
 export type UpgradedServerMemberPayload = IDUpgradePayload<
-  ServerUpgradePayload<ServerMemberPayload>
+  ServerUpgradePayload<Schema<"ServerMember">>
 >;
-export type UpgradedServerMemberBanPayload =
-  ServerUpgradePayload<ServerMemberBanPayload>;
+export type UpgradedServerMemberBanPayload = ServerUpgradePayload<
+  Schema<"ServerMemberBan">
+>;
 export type UpgradedServerMemberSummaryPayload = IDUpgradePayload<
-  ServerUpgradePayload<ServerMemberSummaryPayload>
+  ServerUpgradePayload<Schema<"ServerMemberSummary">>
 >;
 
 export type ServerUpgradePayload<T> = T & { serverId: string };
 export type IDUpgradePayload<T> = T & { id: string };
 export type MessageContent =
-  | (Omit<RESTPostChannelMessagesBody, "embeds"> & {
+  | (Omit<
+      RestBody<RestPath<"/channels/{channelId}/messages">["post"]>,
+      "embeds"
+    > & {
       embeds?: Embed[] | EmbedPayload[];
     })
   | string
@@ -91,17 +82,17 @@ export type ClientEvents = {
   channelCreated: (channel: Channel) => unknown;
   channelUpdated: (channel: Channel, oldChannel: Channel | null) => unknown;
   channelDeleted: (channel: Channel) => unknown;
-  docCreated: (doc: DocPayload) => unknown;
-  docUpdated: (newDoc: DocPayload, oldDoc: DocPayload | null) => unknown;
-  docDeleted: (doc: DocPayload) => unknown;
-  listItemCreated: (item: ListItemPayload) => unknown;
+  docCreated: (doc: Schema<"Doc">) => unknown;
+  docUpdated: (newDoc: Schema<"Doc">, oldDoc: Schema<"Doc"> | null) => unknown;
+  docDeleted: (doc: Schema<"Doc">) => unknown;
+  listItemCreated: (item: Schema<"ListItem">) => unknown;
   listItemUpdated: (
-    newItem: ListItemPayload,
-    oldItem: ListItemPayload | ListItemSummaryPayload | null
+    newItem: Schema<"ListItem">,
+    oldItem: Schema<"ListItem"> | Schema<"ListItemSummary"> | null
   ) => unknown;
-  listItemDeleted: (item: ListItemPayload) => unknown;
-  listItemCompleted: (item: ListItemPayload) => unknown;
-  listItemUncompleted: (item: ListItemPayload) => unknown;
+  listItemDeleted: (item: Schema<"ListItem">) => unknown;
+  listItemCompleted: (item: Schema<"ListItem">) => unknown;
+  listItemUncompleted: (item: Schema<"ListItem">) => unknown;
   memberJoined: (member: Member) => unknown;
   memberRemoved: (event: MemberRemovedEvent) => unknown;
   memberUpdated: (event: MemberUpdatedEvent) => unknown;
@@ -109,15 +100,15 @@ export type ClientEvents = {
   memberUnbanned: (event: MemberUnbannedEvent) => unknown;
   memberSocialLinkCreated: (
     serverId: string,
-    socialLink: SocialLink
+    socialLink: Schema<"SocialLink">
   ) => unknown;
   memberSocialLinkUpdated: (
     serverId: string,
-    socialLink: SocialLink
+    socialLink: Schema<"SocialLink">
   ) => unknown;
   memberSocialLinkDeleted: (
     serverId: string,
-    socialLink: SocialLink
+    socialLink: Schema<"SocialLink">
   ) => unknown;
   botServerCreated: (server: Server, user: string) => unknown;
   botServerDeleted: (server: Server, user: string) => unknown;
@@ -135,7 +126,10 @@ export type ClientEvents = {
   webhookCreated: (webhook: Webhook) => unknown;
   webhookUpdated: (webhook: Webhook, oldWebhook: Webhook | null) => unknown;
   rolesUpdated: (
-    updatedMembers: { serverId: string; members: ServerMemberRoleIdsPayload[] },
+    updatedMembers: {
+      serverId: string;
+      members: { userId: string; roleIds: number[] }[];
+    },
     oldMembers: Member[]
   ) => unknown;
   unknownGatewayEvent: (data: any) => unknown;

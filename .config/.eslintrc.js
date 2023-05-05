@@ -11,8 +11,11 @@ module.exports = {
         "@typescript-eslint/no-var-requires": "off",
         "@typescript-eslint/explicit-function-return-type": "error",
         "@typescript-eslint/explicit-member-accessibility": "off",
-        "@typescript-eslint/promise-function-async": "off",
         "@typescript-eslint/no-invalid-this": "off",
+        "@typescript-eslint/promise-function-async": "off",
+        "jsdoc/multiline-blocks": "off",
+        "jsdoc/newline-after-description": "off",
+        "typescript-sort-keys/interface": "off",
         "@typescript-eslint/lines-between-class-members": [
             "warn",
             "always",
@@ -31,6 +34,7 @@ module.exports = {
         "no-restricted-globals": "off",
         "n/prefer-global/process": "off",
         "no-promise-executor-return": "off",
+        "jsdoc/no-undefined-types": "off",
     },
     overrides: [
         {

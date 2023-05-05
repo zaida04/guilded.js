@@ -1,20 +1,11 @@
-import type {
-  WSServerMemberUpdatedPayload,
-  WSServerMemberJoinedPayload,
-  WSServerMemberRemovedPayload,
-  WSServerMemberBannedPayload,
-  WSServerMemberUnbannedPayload,
-  WSServerMemberSocialLinkCreated,
-  WSServerMemberSocialLinkDeleted,
-  WSServerMemberSocialLinkUpdated,
-} from "@guildedjs/guilded-api-typings";
 import { constants } from "../../constants";
 import { Member, MemberBan, User } from "../../structures";
 import { GatewayEventHandler } from "./GatewayEventHandler";
 import { buildMemberKey } from "../../util";
+import { WSPacket } from "@guildedjs/guilded-api-typings";
 
 export class ServerMemberEventHandler extends GatewayEventHandler {
-  serverMemberUpdated(data: WSServerMemberUpdatedPayload): boolean {
+  serverMemberUpdated(data: WSPacket<"ServerMemberUpdated">): boolean {
     const {
       d: {
         userInfo: { id, nickname },
@@ -25,16 +16,16 @@ export class ServerMemberEventHandler extends GatewayEventHandler {
     const member = this.client.members.cache.get(buildMemberKey(serverId, id));
 
     const oldMember = member?._clone();
-    member?._update({ nickname: data.d.userInfo.nickname });
+    member?._update({ nickname: data.d.userInfo.nickname ?? undefined });
 
     return this.client.emit(constants.clientEvents.MEMBER_UPDATED, {
       serverId,
       userId: id,
-      nickname,
+      nickname: nickname ?? null,
       oldMember: oldMember ?? null,
     });
   }
-  serverMemberJoined(data: WSServerMemberJoinedPayload): boolean {
+  serverMemberJoined(data: WSPacket<"ServerMemberJoined">): boolean {
     const newMember = new Member(this.client, {
       ...data.d.member,
       serverId: data.d.serverId,
@@ -53,7 +44,7 @@ export class ServerMemberEventHandler extends GatewayEventHandler {
       });
     return this.client.emit(constants.clientEvents.MEMBER_JOINED, newMember);
   }
-  serverMemberRemoved(data: WSServerMemberRemovedPayload): boolean {
+  serverMemberRemoved(data: WSPacket<"ServerMemberRemoved">): boolean {
     const memberKey = buildMemberKey(data.d.serverId, data.d.userId);
     const existingMember = this.client.members.cache.get(memberKey);
     if (this.client.options.cache?.removeMemberOnLeave)
@@ -65,7 +56,7 @@ export class ServerMemberEventHandler extends GatewayEventHandler {
     });
     return this.client.emit(constants.clientEvents.MEMBER_REMOVED, data.d);
   }
-  serverMemberBanned(data: WSServerMemberBannedPayload): boolean {
+  serverMemberBanned(data: WSPacket<"ServerMemberBanned">): boolean {
     const newMemberBan = new MemberBan(this.client, {
       serverId: data.d.serverId,
       ...data.d.serverMemberBan,
@@ -77,7 +68,7 @@ export class ServerMemberEventHandler extends GatewayEventHandler {
       );
     return this.client.emit(constants.clientEvents.MEMBER_BANNED, newMemberBan);
   }
-  serverMemberUnbanned(data: WSServerMemberUnbannedPayload): boolean {
+  serverMemberUnbanned(data: WSPacket<"ServerMemberUnbanned">): boolean {
     const {
       d: {
         serverId,
@@ -101,7 +92,7 @@ export class ServerMemberEventHandler extends GatewayEventHandler {
     });
   }
   serverMemberSocialLinkCreated(
-    data: WSServerMemberSocialLinkCreated
+    data: WSPacket<"ServerMemberSocialLinkCreated">
   ): boolean {
     const {
       d: { serverId, socialLink },
@@ -120,7 +111,7 @@ export class ServerMemberEventHandler extends GatewayEventHandler {
     );
   }
   serverMemberSocialLinkUpdated(
-    data: WSServerMemberSocialLinkUpdated
+    data: WSPacket<"ServerMemberSocialLinkUpdated">
   ): boolean {
     const {
       d: { serverId, socialLink },
@@ -139,7 +130,7 @@ export class ServerMemberEventHandler extends GatewayEventHandler {
     );
   }
   serverMemberSocialLinkDeleted(
-    data: WSServerMemberSocialLinkDeleted
+    data: WSPacket<"ServerMemberSocialLinkDeleted">
   ): boolean {
     const {
       d: { serverId, socialLink },

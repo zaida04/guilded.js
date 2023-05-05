@@ -1,16 +1,10 @@
 import { Collection } from "@discordjs/collection";
-import type {
-  RESTGetCalendarEventsBody,
-  RESTPatchCalendarEventBody,
-  RESTPostCalendarEventBody,
-  RESTPatchCalendarEventRsvpBody,
-  RESTPatchCalendarEventRsvpManyBody,
-} from "@guildedjs/guilded-api-typings";
 import { CacheableStructManager } from "./CacheableStructManager";
 import {
   CalendarEvent,
   CalendarEventRsvp,
 } from "../../structures/CalendarEvent";
+import { RestBody, RestPath, RestQuery } from "@guildedjs/guilded-api-typings";
 
 /**
  * The manager is used to interact with calendars on a server.
@@ -35,7 +29,7 @@ export class GlobalCalendarManager extends CacheableStructManager<
    */
   create(
     channelId: string,
-    options: RESTPostCalendarEventBody
+    options: RestBody<RestPath<"/channels/{channelId}/events">["post"]>
   ): Promise<CalendarEvent> {
     return this.client.rest.router
       .createCalendarEvent(channelId, options)
@@ -78,7 +72,7 @@ export class GlobalCalendarManager extends CacheableStructManager<
    */
   fetchMany(
     channelId: string,
-    options: RESTGetCalendarEventsBody
+    options: RestQuery<RestPath<"/channels/{channelId}/events">["get"]>
   ): Promise<Collection<number, CalendarEvent>> {
     return this.client.rest.router
       .getCalendarEvents(channelId, options)
@@ -104,7 +98,9 @@ export class GlobalCalendarManager extends CacheableStructManager<
   update(
     channelId: string,
     calendarEventId: number,
-    options: RESTPatchCalendarEventBody
+    options: RestBody<
+      RestPath<"/channels/{channelId}/events/{calendarEventId}">["patch"]
+    >
   ): Promise<CalendarEvent> {
     return this.client.rest.router
       .updateCalendarEvent(channelId, calendarEventId, options)
@@ -216,7 +212,9 @@ export class GlobalCalendarManager extends CacheableStructManager<
     channelId: string,
     calendarEventId: number,
     userId: string,
-    options: RESTPatchCalendarEventRsvpBody
+    options: RestBody<
+      RestPath<"/channels/{channelId}/events/{calendarEventId}/rsvps/{userId}">["put"]
+    >
   ): Promise<CalendarEventRsvp> {
     return this.client.rest.router
       .updateCalendarEventRvsp(channelId, calendarEventId, userId, options)
@@ -245,7 +243,9 @@ export class GlobalCalendarManager extends CacheableStructManager<
   updateManyRsvp(
     channelId: string,
     calendarEventId: number,
-    options: RESTPatchCalendarEventRsvpManyBody
+    options: RestBody<
+      RestPath<"/channels/{channelId}/events/{calendarEventId}/rsvps">["put"]
+    >
   ): Promise<void> {
     return this.client.rest.router
       .updateCalendarEventRsvpMany(channelId, calendarEventId, options)
@@ -265,11 +265,13 @@ export class GlobalCalendarManager extends CacheableStructManager<
     userId: string
   ): Promise<CalendarEventRsvp | void> {
     return this.client.rest.router
-      .deleteCalendarEventRvsp(channelId, calendarEventId, userId)
-      .then((data) => {
+      .deleteCalendarEventRsvp(channelId, calendarEventId, userId)
+      .then(() => {
         if (this.shouldCacheCalendar && this.shouldCacheCalendarRsvps) {
           const cachedCalendar = this.cache.get(calendarEventId);
           const rsvp = cachedCalendar?.rsvps?.get(userId);
+          cachedCalendar?.rsvps?.delete(userId);
+
           return rsvp ?? void 0;
         }
         return void 0;

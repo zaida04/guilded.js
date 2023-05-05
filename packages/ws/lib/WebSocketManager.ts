@@ -1,9 +1,12 @@
 /* eslint-disable @typescript-eslint/no-base-to-string */
 import { EventEmitter } from "node:events";
 import type {
+  ClientUserData,
   SkeletonWSPayload,
+  ws,
   WSEvent,
-  WSWelcomePayload,
+  WSEventNames,
+  WSPayload,
 } from "@guildedjs/guilded-api-typings";
 import { WSOpCodes } from "@guildedjs/guilded-api-typings";
 import type TypedEmitter from "typed-emitter";
@@ -192,13 +195,16 @@ export class WebSocketManager {
       case WSOpCodes.SUCCESS:
         this.emitter.emit(
           "gatewayEvent",
-          EVENT_NAME as keyof WSEvent,
+          EVENT_NAME as WSEventNames,
           EVENT_DATA
         );
         break;
       // Auto handled by ws lib
       case WSOpCodes.WELCOME:
-        this.emitter.emit("ready", (EVENT_DATA as WSWelcomePayload).d.user);
+        this.emitter.emit(
+          "ready",
+          (EVENT_DATA.d as WSPayload<"_WelcomeMessage">).user as ClientUserData
+        );
         break;
       case WSOpCodes.RESUME:
         this.lastMessageId = null;
@@ -261,7 +267,12 @@ export type WebsocketManagerEvents = {
   exit(info: string): unknown;
   gatewayEvent(event: keyof WSEvent, data: SkeletonWSPayload): unknown;
   raw(data: any): unknown;
-  ready(user: WSWelcomePayload["d"]["user"]): unknown;
+  ready(
+    user: WSPayload<"_WelcomeMessage">["user"] & {
+      createdBy: string;
+      botId: string;
+    }
+  ): unknown;
   reconnect(): unknown;
   unknown(reason: string, data: any): unknown;
 };

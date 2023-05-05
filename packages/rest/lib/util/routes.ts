@@ -1,4 +1,4 @@
-import type { UserSocialLink } from "@guildedjs/guilded-api-typings";
+import type { Schema, rest } from "@guildedjs/guilded-api-typings";
 
 export const ROUTES = {
   // Channel Endpoints
@@ -55,6 +55,8 @@ export const ROUTES = {
     `/channels/${channelId}/topics/${forumTopicId}` as const,
   forumTopicPin: (channelId: string, forumTopicId: string) =>
     `/channels/${channelId}/topics/${forumTopicId}/pin` as const,
+  forumTopicLock: (channelId: string, forumTopicId: string) =>
+    `/channels/${channelId}/topics/${forumTopicId}/lock` as const,
 
   // List Endpoints
   listItems: (channelId: string) => `/channels/${channelId}/items` as const,
@@ -79,8 +81,11 @@ export const ROUTES = {
     `/servers/${serverId}/roles/${roleId}/xp` as const,
 
   // Social Links Endpoints
-  memberSocialLinks: (serverId: string, userId: string, type: UserSocialLink) =>
-    `/servers/${serverId}/members/${userId}/social-links/${type}` as const,
+  memberSocialLinks: (
+    serverId: string,
+    userId: string,
+    type: Schema<"SocialLink">["type"]
+  ) => `/servers/${serverId}/members/${userId}/social-links/${type}` as const,
 
   // Group Memberships Endpoints
   groupMember: (groupId: string, userId: string) =>

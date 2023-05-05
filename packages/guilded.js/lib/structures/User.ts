@@ -1,11 +1,8 @@
+import { Schema, WSPayload } from "@guildedjs/guilded-api-typings";
 import { Base } from "./Base";
-import type {
-  UserPayload,
-  WSWelcomePayload,
-} from "@guildedjs/guilded-api-typings";
 import type { Client } from "./Client";
 
-export class User extends Base<UserPayload> {
+export class User extends Base<Schema<"User">> {
   /** The name for this user */
   name: string;
   /** The type of this user */
@@ -17,7 +14,7 @@ export class User extends Base<UserPayload> {
   /** When this user was created */
   readonly _createdAt: number | null;
 
-  constructor(client: Client, data: UserPayload) {
+  constructor(client: Client, data: Schema<"User">) {
     super(client, data);
     this.name = data.name;
     this._createdAt = Date.parse(data.createdAt);
@@ -30,7 +27,7 @@ export class User extends Base<UserPayload> {
     return this._createdAt ? new Date(this._createdAt) : null;
   }
 
-  _update(data: Partial<UserPayload>): this {
+  _update(data: Partial<Schema<"User">>): this {
     if ("avatar" in data) {
       this.avatar = data.avatar ?? null;
     }
@@ -49,7 +46,13 @@ export class ClientUser extends User {
   // The bot ID (not to be confused with the user ID) of this bot
   readonly botId: string;
 
-  constructor(client: Client, data: WSWelcomePayload["d"]["user"]) {
+  constructor(
+    client: Client,
+    data: WSPayload<"_WelcomeMessage">["user"] & {
+      createdBy: string;
+      botId: string;
+    }
+  ) {
     super(client, { ...data, type: "bot" });
     this.createdBy = data.createdBy;
     this.botId = data.botId;

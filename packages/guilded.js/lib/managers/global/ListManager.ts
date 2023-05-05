@@ -1,9 +1,4 @@
-import type {
-  ListItemPayload,
-  ListItemSummaryPayload,
-  RESTPostListItemBody,
-  RESTPutListItemBody,
-} from "@guildedjs/guilded-api-typings";
+import { RestBody, RestPath, Schema } from "@guildedjs/guilded-api-typings";
 import { GlobalManager } from "./GlobalManager";
 
 /**
@@ -18,8 +13,8 @@ export class GlobalListItemManager extends GlobalManager {
    */
   create(
     channelId: string,
-    options: RESTPostListItemBody
-  ): Promise<ListItemPayload> {
+    options: RestBody<RestPath<"/channels/{channelId}/items">["post"]>
+  ): Promise<Schema<"ListItem">> {
     return this.client.rest.router
       .createListItem(channelId, options)
       .then((data) => data.listItem);
@@ -30,7 +25,7 @@ export class GlobalListItemManager extends GlobalManager {
    * @param channelId The ID of the channel to fetch the list items from.
    * @returns A Promise that resolves with an array of list item summaries.
    */
-  fetchMany(channelId: string): Promise<ListItemSummaryPayload[]> {
+  fetchMany(channelId: string): Promise<Schema<"ListItemSummary">[]> {
     return this.client.rest.router
       .getListItems(channelId)
       .then((data) => data.listItems);
@@ -42,7 +37,7 @@ export class GlobalListItemManager extends GlobalManager {
    * @param itemId The ID of the list item to fetch.
    * @returns A Promise that resolves with the requested list item.
    */
-  fetch(channelId: string, itemId: string): Promise<ListItemPayload> {
+  fetch(channelId: string, itemId: string): Promise<Schema<"ListItem">> {
     return this.client.rest.router
       .getListItem(channelId, itemId)
       .then((data) => data.listItem);
@@ -58,8 +53,10 @@ export class GlobalListItemManager extends GlobalManager {
   update(
     channelId: string,
     itemId: string,
-    options: RESTPutListItemBody
-  ): Promise<ListItemPayload> {
+    options: RestBody<
+      RestPath<"/channels/{channelId}/items/{listItemId}">["put"]
+    >
+  ): Promise<Schema<"ListItem">> {
     return this.client.rest.router
       .updateListItem(channelId, itemId, options)
       .then((data) => data.listItem);

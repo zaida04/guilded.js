@@ -1,8 +1,8 @@
-import type { RESTPutServerWebhookBody } from "@guildedjs/guilded-api-typings";
 import type { WebhookPayload } from "@guildedjs/guilded-api-typings/dist/v1/structs/Webhook";
 import { Base } from "./Base";
 import type { Client } from "./Client";
 import type { User } from "./User";
+import { RestBody, RestPath } from "@guildedjs/guilded-api-typings";
 
 /**
  * Object representing received webhook data. This object is NOT to be used to send data to webhooks. That would be WebhookClient
@@ -80,7 +80,11 @@ export class Webhook extends Base<WebhookPayload> {
    * @param options The new options for this webhook
    * @returns A promise that resolves with the updated webhook
    */
-  update(options: RESTPutServerWebhookBody): Promise<Webhook> {
+  update(
+    options: RestBody<
+      RestPath<"/servers/{serverId}/webhooks/{webhookId}">["put"]
+    >
+  ): Promise<Webhook> {
     return this.client.webhooks.update(this.serverId, this.id, options);
   }
 

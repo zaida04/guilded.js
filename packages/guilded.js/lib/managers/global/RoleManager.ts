@@ -12,9 +12,11 @@ export class GlobalRoleManager extends GlobalManager {
    * @returns A Promise that resolves with the total XP awarded to the role.
    */
   giveXP(serverId: string, roleId: number, amount: number): Promise<number> {
-    return this.client.rest.router
-      .awardRoleXP(serverId, roleId.toString(), amount)
-      .then((data) => data.total);
+    return this.client.rest.router.awardRoleXP(
+      serverId,
+      roleId.toString(),
+      amount
+    );
   }
 
   /**
