@@ -460,7 +460,7 @@ export class Router {
 		serverId: string,
 		roleId: string,
 		amount: number,
-	): Promise<RestPayload<RestPath<"/servers/{serverId}/roles/{roleId}/xp">["post"], 201>> {
+	): Promise<RestPayload<RestPath<"/servers/{serverId}/roles/{roleId}/xp">["post"], 200>> {
 		return this.rest.post(ROUTES.roleXP(serverId, roleId), { amount });
 	}
 

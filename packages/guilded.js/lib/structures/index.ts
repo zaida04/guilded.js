@@ -15,9 +15,8 @@ export * from "./User";
 export * from "./Client";
 
 export {
-  MentionsPayload,
-  EmbedField,
-  EmbedAuthor,
-  EmbedFooter,
-  EmbedImage,
+	EmbedField,
+	EmbedAuthor,
+	EmbedFooter,
+	EmbedImage,
 } from "@guildedjs/guilded-api-typings";
