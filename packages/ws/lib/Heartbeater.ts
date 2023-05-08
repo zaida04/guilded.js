@@ -1,4 +1,4 @@
-import { WebSocketManager } from "./WebSocketManager";
+import type { WebSocketManager } from "./WebSocketManager";
 
 export default class Heartbeater {
   public heartbeatInterval: NodeJS.Timeout;

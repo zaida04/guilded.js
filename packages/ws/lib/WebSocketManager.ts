@@ -123,6 +123,7 @@ export class WebSocketManager {
       if (error instanceof Error) {
         this.emitter.emit("error", "Error connecting to socket", error);
       }
+
       this._handleDisconnect({ blockReconnects: false, forceReconnect: true });
       return;
     }
@@ -222,6 +223,7 @@ export class WebSocketManager {
         );
         break;
       }
+
       // Auto handled by ws lib
       case WSOpCodes.WELCOME: {
         this._debug("Received welcome packet. Setting up heartbeat.");
@@ -235,11 +237,13 @@ export class WebSocketManager {
         );
         break;
       }
+
       case WSOpCodes.RESUME: {
         this._debug("Received resume packet.");
         this.lastMessageId = null;
         break;
       }
+
       default: {
         this._debug("Received unknown opcode.");
         this.emitter.emit("unknown", "unknown opcode", packet);
