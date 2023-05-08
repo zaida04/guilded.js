@@ -90,17 +90,21 @@ export class WebSocketManager {
   }
 
   connect(): void {
+    this._debug("Connecting to Guilded...");
     const headers: Record<string, string> = {
       Authorization: `Bearer ${this.token}`,
     };
-    if (this.shouldRequestMissedEvents)
+    if (this.shouldRequestMissedEvents) {
+      this._debug(`Resuming from last message ${this.lastMessageId}`);
       headers["guilded-last-message-id"] = this.lastMessageId!;
+    }
 
     try {
       this.socket = new WebSocket(this.wsURL, {
         headers,
       });
     } catch (error) {
+      this._debug(`Error connecting to Guilded. ${(error as Error).message}`);
       if (!this.shouldRequestMissedEvents) throw error;
       this.lastMessageId = null;
 
@@ -153,16 +157,20 @@ export class WebSocketManager {
   }
 
   _handleDisconnect(): void {
+    this.destroy();
+    this._debug("destroying connection...");
+
+    this._debug(
+      `checking if should reconnect: ${this.options.autoConnectOnErr} ${this.reconnectAttemptAmount}`
+    );
     if (
       (this.options.autoConnectOnErr ?? true) ||
       !this.reconnectAttemptExceeded
     ) {
+      this._debug("reconnecting...");
       this.reconnectAttemptAmount++;
       this.connect();
-      return;
     }
-
-    this.destroy();
   }
 
   _debug(str: any): boolean {
