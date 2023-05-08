@@ -11,6 +11,7 @@ import type {
 import { WSOpCodes } from "@guildedjs/guilded-api-typings";
 import type TypedEmitter from "typed-emitter";
 import WebSocket from "ws";
+import Heartbeater from "./Heartbeater";
 
 export class WebSocketManager {
   /**
@@ -63,6 +64,11 @@ export class WebSocketManager {
    */
   reconnectAttemptAmount = 0;
 
+  /**
+   * Heartbeating helper
+   */
+  heartbeater: Heartbeater | null = null;
+
   constructor(public readonly options: WebSocketOptions) {}
 
   /**
@@ -90,33 +96,34 @@ export class WebSocketManager {
   }
 
   connect(): void {
-    this._debug("Connecting to Guilded...");
+    this._debug(`Connecting to Guilded WS Gateway at url ${this.wsURL}.`);
     const headers: Record<string, string> = {
       Authorization: `Bearer ${this.token}`,
     };
+
     if (this.shouldRequestMissedEvents) {
-      this._debug(`Resuming from last message ${this.lastMessageId}`);
-      headers["guilded-last-message-id"] = this.lastMessageId!;
+      this._debug(
+        `Requesting missed events from last message ${this.lastMessageId}.`
+      );
+      if (this.lastMessageId) {
+        headers["guilded-last-message-id"] = this.lastMessageId;
+      }
     }
 
     try {
       this.socket = new WebSocket(this.wsURL, {
         headers,
       });
+      this._debug("Socket created.");
     } catch (error) {
-      this._debug(`Error connecting to Guilded. ${(error as Error).message}`);
-      if (!this.shouldRequestMissedEvents) throw error;
+      this._debug(`Error creating socket ${(error as Error).message}.`);
+      if (!this.shouldRequestMissedEvents && this.lastMessageId) throw error;
+
       this.lastMessageId = null;
-
-      this._handleDisconnect();
       if (error instanceof Error) {
-        this.emitter.emit("error", error.message, error);
+        this.emitter.emit("error", "Error connecting to socket", error);
       }
-
-      this.emitter.emit(
-        "exit",
-        "Gateway connection permanently closed BEFORE connection establishable due to error."
-      );
+      this._handleDisconnect({ blockReconnects: false, forceReconnect: true });
       return;
     }
 
@@ -125,49 +132,55 @@ export class WebSocketManager {
     this.socket.on("pong", this.onSocketPong.bind(this));
     this.socket.on("message", (data) => {
       this.emitter.emit("raw", data);
-      this._debug(data.toString());
       this.onSocketMessage(data.toString());
     });
 
     this.socket.on("error", (err) => {
-      this._debug("Gateway connection errored.");
-      this.emitter.emit("error", "Gateway Error", err);
-      this._handleDisconnect();
-      this.emitter.emit(
-        "exit",
-        "Gateway connection permanently closed due to error."
-      );
+      this._debug(`Error received from WS. ${err.message}`);
+      this.emitter.emit("exit", "Gateway connection  closed due to error.");
+      this._handleDisconnect({ blockReconnects: true, forceReconnect: false });
     });
 
     this.socket.on("close", (code, reason) => {
-      this._debug(
-        `Gateway connection terminated with code ${code} for reason: ${reason.toString()}`
-      );
-      this._handleDisconnect();
-      this.emitter.emit("exit", "Gateway connection permanently closed.");
+      this.emitter.emit("exit", "Gateway connection closed.");
+      this._handleDisconnect({ blockReconnects: false, forceReconnect: false });
     });
   }
 
   destroy(): void {
-    if (!this.socket)
+    this._debug("Destroying websocket connection.");
+    if (!this.socket) {
       throw new Error("There is no active connection to destroy.");
+    }
+
+    this.heartbeater?.destroy();
+    this.heartbeater = null;
+
     this.socket.removeAllListeners();
-    if (this.socket.OPEN) this.socket.close();
+    if (!this.socket.CLOSED && !this.socket.CLOSING) this.socket.close();
+
+    this.socket = null;
     this.isAlive = false;
   }
 
-  _handleDisconnect(): void {
+  _handleDisconnect(opts: {
+    blockReconnects: boolean;
+    forceReconnect: boolean;
+  }): void {
+    this._debug(`Received request to disconnect.`);
     this.destroy();
-    this._debug("destroying connection...");
-
     this._debug(
-      `checking if should reconnect: ${this.options.autoConnectOnErr} ${this.reconnectAttemptAmount}`
+      `Checking if should reconnect. 
+      Reconnect allowed: ${this.options.autoConnectOnErr}. 
+      Reconnect attempt ${this.reconnectAttemptAmount}. 
+      Reconnect attempt limit ${this.options.reconnectAttemptLimit}.`
     );
     if (
-      (this.options.autoConnectOnErr ?? true) ||
+      opts.forceReconnect ||
+      (!opts.blockReconnects && (this.options.autoConnectOnErr ?? true)) ||
       !this.reconnectAttemptExceeded
     ) {
-      this._debug("reconnecting...");
+      this._debug("Reconnecting.");
       this.reconnectAttemptAmount++;
       this.connect();
     }
@@ -195,49 +208,64 @@ export class WebSocketManager {
       return void 0;
     }
 
+    this._debug(`Received event ${EVENT_NAME}. ${packet}}`);
     // SAVE THE ID IF AVAILABLE. USED FOR RESUMING CONNECTIONS.
     if (EVENT_DATA.s) this.lastMessageId = EVENT_DATA.s;
 
     switch (EVENT_DATA.op) {
       // Normal event based packets
-      case WSOpCodes.SUCCESS:
+      case WSOpCodes.SUCCESS: {
         this.emitter.emit(
           "gatewayEvent",
           EVENT_NAME as WSEventNames,
           EVENT_DATA
         );
         break;
+      }
       // Auto handled by ws lib
-      case WSOpCodes.WELCOME:
+      case WSOpCodes.WELCOME: {
+        this._debug("Received welcome packet. Setting up heartbeat.");
+        this.heartbeater = new Heartbeater(
+          this,
+          (EVENT_DATA.d as WSPayload<"_WelcomeMessage">).heartbeatIntervalMs
+        );
         this.emitter.emit(
           "ready",
           (EVENT_DATA.d as WSPayload<"_WelcomeMessage">).user as ClientUserData
         );
         break;
-      case WSOpCodes.RESUME:
+      }
+      case WSOpCodes.RESUME: {
+        this._debug("Received resume packet.");
         this.lastMessageId = null;
         break;
-      default:
+      }
+      default: {
+        this._debug("Received unknown opcode.");
         this.emitter.emit("unknown", "unknown opcode", packet);
         break;
+      }
     }
   }
 
   private onSocketOpen(): void {
-    this._debug("Socket connection opened.");
+    this._debug(
+      "Socket has been successfully opened and is ready to receive data."
+    );
     this.isAlive = true;
     this.connectedAt = new Date();
   }
 
   private onSocketPing(): void {
-    this._debug("Ping received.");
-    this.lastPingedAt = Date.now();
-    this.socket!.ping();
+    this._debug(`Ping request from Guilded received. Responding with a pong.`);
+    this.socket!.pong();
   }
 
   private onSocketPong(): void {
-    this._debug("Pong received.");
     this.ping = Date.now() - this.lastPingedAt;
+    this._debug(
+      `Pong response from Guilded received. Latency: ${this.ping}ms.`
+    );
   }
 }
 
