@@ -23,7 +23,8 @@
   "dependencies": {
     "form-data": "^4.0.0",
     "node-fetch": "2.6.7",
-    "qs": "^6.10.5"
+    "qs": "^6.10.5",
+    "typed-emitter": "2.1.0"
   },
   "contributors": [
     {

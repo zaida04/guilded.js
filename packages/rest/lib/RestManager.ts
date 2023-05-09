@@ -3,6 +3,7 @@ import type { Buffer } from "node:buffer";
 import EventEmitter from "node:events";
 import FormData from "form-data";
 import { stringify } from "qs";
+import type TypedEmitter from "typed-emitter";
 import { GuildedAPIError } from "./errors/GuildedAPIError";
 import { PermissionsError } from "./errors/PermissionsError";
 import type { RestOptions } from "./typings";
@@ -32,6 +33,14 @@ export type ResponseDetails = {
   status: number;
 };
 
+export type RestManagerEvents = {
+  request(request: RequestOptions): void;
+  error(req: RequestOptions, res: ResponseDetails): void;
+  ratelimit(
+    ratelimit: RequestOptions & { responseHeaders: Record<string, string> }
+  ): void;
+};
+
 export class RestManager {
   /**
    * The bot token to be used for making requests.
@@ -56,7 +65,7 @@ export class RestManager {
   /**
    * Logging emitter
    */
-  readonly emitter = new EventEmitter();
+  readonly emitter = new EventEmitter() as TypedEmitter<RestManagerEvents>;
 
   constructor(public readonly options: RestOptions) {}
 
@@ -122,6 +131,7 @@ export class RestManager {
       requestOptions.body = JSON.stringify(data.body);
     }
 
+    this.emitter.emit("request", requestOptions);
     // The reason we're hoisting the variable like this is so that we can have error handling for the underlying fetch request.
     let response;
     try {
@@ -133,6 +143,13 @@ export class RestManager {
     }
 
     if (!response.ok) {
+      const mapHeadersToObj: Record<string, string> = {};
+      // This is done because Headers isn't stringifiable or iterable without the use of the forEach method.
+      // eslint-disable-next-line unicorn/no-array-for-each
+      response.headers.forEach((v, k) => {
+        mapHeadersToObj[k] = v;
+      });
+
       // Occurs when ratelimited.
       if (response.status === 429) {
         const retryAfterTime = Number(
@@ -144,6 +161,10 @@ export class RestManager {
           throw new Error("MAX REQUEST RATELIMIT RETRY LIMIT REACHED.");
         }
 
+        this.emitter.emit("ratelimit", {
+          ...requestOptions,
+          responseHeaders: mapHeadersToObj,
+        });
         // Make the thread wait the amount of time specified in the Retry-After before retrying request.
         await sleep(retryAfterTime * 1_000);
         return this.make<T, B, Q>(data, authenticated, ++retryCount);
@@ -166,13 +187,6 @@ export class RestManager {
         }
       }
 
-      const mapHeadersToObj: Record<string, string> = {};
-      // This is done because Headers isn't stringifiable or iterable without the use of the forEach method.
-      // eslint-disable-next-line unicorn/no-array-for-each
-      response.headers.forEach((v, k) => {
-        mapHeadersToObj[k] = v;
-      });
-
       // Details response object for error reporting.
       const responseDetails: ResponseDetails = {
         status: response.status,
@@ -187,6 +201,7 @@ export class RestManager {
       if (bodyIsJSON && typeof requestOptions.body === "string")
         requestOptions.body = JSON.parse(requestOptions.body);
 
+      this.emitter.emit("error", requestOptions, responseDetails);
       // Occurs when bot has a permission missing
       if (responseDetails.status === 403) {
         throw new PermissionsError(
