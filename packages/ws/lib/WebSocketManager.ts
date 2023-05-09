@@ -124,7 +124,7 @@ export class WebSocketManager {
         this.emitter.emit("error", "Error connecting to socket", error);
       }
 
-      this._handleDisconnect({ blockReconnects: false, forceReconnect: true });
+      this._handleDisconnect({ blockReconnects: false });
       return;
     }
 
@@ -139,12 +139,12 @@ export class WebSocketManager {
     this.socket.on("error", (err) => {
       this._debug(`Error received from WS. ${err.message}`);
       this.emitter.emit("exit", "Gateway connection  closed due to error.");
-      this._handleDisconnect({ blockReconnects: true, forceReconnect: false });
+      this._handleDisconnect({ blockReconnects: true });
     });
 
     this.socket.on("close", (code, reason) => {
       this.emitter.emit("exit", "Gateway connection closed.");
-      this._handleDisconnect({ blockReconnects: false, forceReconnect: false });
+      this._handleDisconnect({ blockReconnects: false });
     });
   }
 
@@ -164,10 +164,7 @@ export class WebSocketManager {
     this.isAlive = false;
   }
 
-  _handleDisconnect(opts: {
-    blockReconnects: boolean;
-    forceReconnect: boolean;
-  }): void {
+  _handleDisconnect(opts: { blockReconnects: boolean }): void {
     this._debug(`Received request to disconnect.`);
     this.destroy();
     this._debug(
@@ -177,7 +174,6 @@ export class WebSocketManager {
       Reconnect attempt limit ${this.options.reconnectAttemptLimit}.`
     );
     if (
-      opts.forceReconnect ||
       (!opts.blockReconnects && (this.options.autoConnectOnErr ?? true)) ||
       !this.reconnectAttemptExceeded
     ) {
@@ -241,6 +237,20 @@ export class WebSocketManager {
       case WSOpCodes.RESUME: {
         this._debug("Received resume packet.");
         this.lastMessageId = null;
+        break;
+      }
+
+      case WSOpCodes.ERROR: {
+        this._debug("Received error packet.");
+        this.emitter.emit(
+          "error",
+          "Error received from WS",
+          new Error((EVENT_DATA.d as { message: string }).message)
+        );
+        this.lastMessageId = null;
+        this._handleDisconnect({
+          blockReconnects: false,
+        });
         break;
       }
 
