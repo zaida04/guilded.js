@@ -17,7 +17,7 @@ import type {
   CalendarEvent,
   CalendarEventRsvp,
 } from "./structures/CalendarEvent";
-import type { ForumTopic } from "./structures/Forum";
+import type { ForumTopic, ForumTopicComment } from "./structures/Forum";
 import type { Server } from "./structures/Server";
 import type {
   MemberRemovedEvent,
@@ -122,6 +122,9 @@ export type ClientEvents = {
   forumTopicUnpinned: (topic: ForumTopic) => unknown;
   forumTopicLocked: (topic: ForumTopic) => unknown;
   forumTopicUnlocked: (topic: ForumTopic) => unknown;
+  forumTopicCommentCreated: (comment: ForumTopicComment) => unknown;
+  forumTopicCommentUpdated: (comment: ForumTopicComment) => unknown;
+  forumTopicCommentDeleted: (comment: ForumTopicComment) => unknown;
   serverCreated: (server: { serverId: string }) => unknown;
   webhookCreated: (webhook: Webhook) => unknown;
   webhookUpdated: (webhook: Webhook, oldWebhook: Webhook | null) => unknown;

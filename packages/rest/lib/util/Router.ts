@@ -358,6 +358,27 @@ export class Router {
   }
 
   /**
+   * Create a comment on a topic in a forum
+   */
+  async createForumTopicComment(
+    channelId: string,
+    forumTopicId: string,
+    options: RestBody<
+      RestPath<"/channels/{channelId}/topics/{forumTopicId}/comments">["post"]
+    >
+  ): Promise<
+    RestPayload<
+      RestPath<"/channels/{channelId}/topics/{forumTopicId}/comments">["post"],
+      200
+    >
+  > {
+    return this.rest.post(
+      ROUTES.forumTopicComments(channelId, forumTopicId),
+      options
+    );
+  }
+
+  /**
    * Get all topics in a forum
    */
   async getForumTopics(

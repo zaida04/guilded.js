@@ -57,6 +57,28 @@ export const ROUTES = {
     `/channels/${channelId}/topics/${forumTopicId}/pin` as const,
   forumTopicLock: (channelId: string, forumTopicId: string) =>
     `/channels/${channelId}/topics/${forumTopicId}/lock` as const,
+  forumTopicComments: (channelId: string, forumTopicId: string) =>
+    `/channels/${channelId}/topics/${forumTopicId}/comments` as const,
+  forumTopicComment: (
+    channelId: string,
+    forumTopicId: string,
+    forumTopicCommentId: string
+  ) =>
+    `/channels/${channelId}/topics/${forumTopicId}/comments/${forumTopicCommentId}` as const,
+  forumTopicCommentReaction: (
+    channelId: string,
+    forumTopicId: string,
+    forumTopicCommentId: string,
+    emoteId: number
+  ) =>
+    `/channels/${channelId}/topics/${forumTopicId}/comments/${forumTopicCommentId}/emotes/${emoteId}` as const,
+  forumTopicCommentReactions: (
+    channelId: string,
+    forumTopicId: string,
+    forumTopicCommentId: string,
+    emoteId: number
+  ) =>
+    `/channels/${channelId}/topics/${forumTopicId}/comments/${forumTopicCommentId}/emotes` as const,
 
   // List Endpoints
   listItems: (channelId: string) => `/channels/${channelId}/items` as const,

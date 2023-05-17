@@ -1,5 +1,9 @@
 import { RestBody, RestPath, RestQuery } from "@guildedjs/guilded-api-typings";
-import { ForumTopic, PartialForumTopic } from "../../structures/Forum";
+import {
+  ForumTopic,
+  ForumTopicComment,
+  PartialForumTopic,
+} from "../../structures/Forum";
 import { CacheableStructManager } from "./CacheableStructManager";
 import { Collection } from "@discordjs/collection";
 

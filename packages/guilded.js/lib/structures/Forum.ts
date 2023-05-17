@@ -1,6 +1,8 @@
 import { Schema } from "@guildedjs/guilded-api-typings";
 import { Base } from "./Base";
 import type { Client } from "./Client";
+import { Comment } from "./Comment";
+import { Collection } from "@discordjs/collection";
 
 /**
  * Represents a forum topic in Guilded.
@@ -54,6 +56,10 @@ export class ForumTopic extends Base<Schema<"ForumTopic">, number> {
    * The mentions in the forum topic.
    */
   mentions!: Schema<"Mentions">;
+  /**
+   * Comments for this forum topic
+   */
+  comments: Collection<string, ForumTopicComment>;
 
   constructor(client: Client, data: Schema<"ForumTopic">) {
     super(client, data);
@@ -64,6 +70,7 @@ export class ForumTopic extends Base<Schema<"ForumTopic">, number> {
     this.isPinned = false;
     this.isLocked = false;
     this._deletedAt = null;
+    this.comments = new Collection();
 
     this._update(data);
   }
@@ -221,5 +228,15 @@ export class PartialForumTopic extends Base<
    */
   fetch(): Promise<ForumTopic> {
     return this.client.topics.fetch(this.serverId, this.id);
+  }
+}
+
+export class ForumTopicComment extends Comment {
+  readonly forumTopicId: number;
+
+  constructor(client: Client, data: Schema<"ForumTopicComment">) {
+    super(client, data);
+
+    this.forumTopicId = data.forumTopicId;
   }
 }
