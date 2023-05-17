@@ -30,7 +30,7 @@
     "prettier": "2.8.8",
     "rimraf": "5.0.1",
     "ts-node": "10.9.1",
-    "typedoc": "0.24.7",
+    "typedoc": "0.23.24",
     "typedoc-plugin-remove-references": "0.0.6",
     "typedoc-plugin-rename-defaults": "^0.6.5",
     "typedoc-plugin-resolve-crossmodule-references": "^0.3.3",
