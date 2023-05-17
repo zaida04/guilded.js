@@ -1,4 +1,4 @@
-import type { APIEmbed } from "@guildedjs/guilded-api-typings";
+import type { APIEmbed } from "../../api-typings";
 import { resolveColor } from "../util/color";
 
 export class WebhookEmbed {

@@ -1,4 +1,4 @@
-import type { Schema, rest } from "@guildedjs/guilded-api-typings";
+import type { Schema } from "../../api-typings";
 
 export const ROUTES = {
   // Channel Endpoints

@@ -5,7 +5,7 @@ import type {
   RestPayload,
   RestQuery,
   Schema,
-} from "@guildedjs/guilded-api-typings";
+} from "../../api-typings";
 import type { RestManager } from "../RestManager";
 import { ROUTES } from "./routes";
 

@@ -3,7 +3,7 @@ import type {
   APIContent,
   APIEmbed,
   RESTPostWebhookBody,
-} from "@guildedjs/guilded-api-typings";
+} from "../../api-typings";
 import { WebhookEmbed } from "../webhook/WebhookEmbed";
 
 export type MessageAttachment = {

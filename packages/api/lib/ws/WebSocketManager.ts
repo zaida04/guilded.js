@@ -1,15 +1,15 @@
 /* eslint-disable @typescript-eslint/no-base-to-string */
 import { EventEmitter } from "node:events";
+import type TypedEmitter from "typed-emitter";
+import WebSocket from "ws";
 import type {
   ClientUserData,
   SkeletonWSPayload,
   WSEvent,
   WSEventNames,
   WSPayload,
-} from "@guildedjs/guilded-api-typings";
-import { WSOpCodes } from "@guildedjs/guilded-api-typings";
-import type TypedEmitter from "typed-emitter";
-import WebSocket from "ws";
+} from "../api-typings";
+import { WSOpCodes } from "../api-typings";
 import Heartbeater from "./Heartbeater";
 
 export class WebSocketManager {

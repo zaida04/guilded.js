@@ -1,10 +1,10 @@
+import FormData from "form-data";
 import type {
   APIContent,
   APIEmbed,
   RESTPostWebhookBody,
   RESTPostWebhookResult,
-} from "@guildedjs/guilded-api-typings";
-import FormData from "form-data";
+} from "../../api-typings";
 import { RestManager } from "../RestManager";
 import {
   type parsedMessage,
