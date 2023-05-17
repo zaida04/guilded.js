@@ -14,7 +14,7 @@
     "dev": "nodemon"
   },
   "devDependencies": {
-    "@types/node": "18.11.18",
+    "@types/node": "18.16.12",
     "typescript": "5.0.4"
   },
   "dependencies": {
