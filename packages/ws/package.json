@@ -62,13 +62,13 @@
     "dist",
     "types"
   ],
-  "homepage": "https://github.com/guildedjs/guilded.js/tree/main/packages/rest#readme",
+  "homepage": "https://github.com/zaida04/guilded.js/tree/main/packages/rest#readme",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/guildedjs/guilded.js.git"
+    "url": "git+https://github.com/zaida04/guilded.js.git"
   },
   "bugs": {
-    "url": "https://github.com/guildedjs/guilded.js/issues"
+    "url": "https://github.com/zaida04/guilded.js/issues"
   },
   "gitHead": "eee38a19e0bfa812d7136cc78a6bc99e0b402b0c"
 }

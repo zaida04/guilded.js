@@ -1,8 +1,8 @@
 # `@guildedjs/guilded-api-typings`
 
-[![GitHub](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/guildedjs/guilded.js/blob/main/LICENSE)
+[![GitHub](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/zaida04/guilded.js/blob/main/LICENSE)
 [![npm](https://img.shields.io/npm/v/@guildedjs/guilded-api-typings?color=crimson&logo=npm)](https://www.npmjs.com/package/@guildedjs/guilded-api-typings)
-[![CI workflows](https://github.com/guildedjs/guilded.js/actions/workflows/ci.yml/badge.svg)](https://github.com/guildedjs/guilded.js/actions/workflows/ci.yml)
+[![CI workflows](https://github.com/zaida04/guilded.js/actions/workflows/ci.yml/badge.svg)](https://github.com/zaida04/guilded.js/actions/workflows/ci.yml)
 
 TypeScript Typings for the Guilded.gg API.
 
@@ -12,13 +12,13 @@ TypeScript Typings for the Guilded.gg API.
 
 You can install this package from [NPM](https://www.npmjs.com/package/@guildedjs/guilded-api-typings)
 
--   `npm install @guildedjs/guilded-api-typings`
--   `yarn add @guildedjs/guilded-api-typings`
+- `npm install @guildedjs/guilded-api-typings`
+- `yarn add @guildedjs/guilded-api-typings`
 
 ## Contributing
 
-Please see the main [README.md](https://github.com/guildedjs/guilded.js) for info on how to contribute to this package or the other `@guildedjs` packages.
+Please see the main [README.md](https://github.com/zaida04/guilded.js) for info on how to contribute to this package or the other `@guildedjs` packages.
 
 ## LICENSE
 
-Licensed under the [MIT License](https://github.com/guildedjs/guilded.js/blob/main/LICENSE)
+Licensed under the [MIT License](https://github.com/zaida04/guilded.js/blob/main/LICENSE)

@@ -66,13 +66,13 @@
     "dist",
     "types"
   ],
-  "homepage": "https://github.com/guildedjs/guilded.js/blob/main/packages/guilded.js/README.md",
+  "homepage": "https://github.com/zaida04/guilded.js/blob/main/packages/guilded.js/README.md",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/guildedjs/guilded.js.git"
+    "url": "git+https://github.com/zaida04/guilded.js.git"
   },
   "bugs": {
-    "url": "https://github.com/guildedjs/guilded.js/issues"
+    "url": "https://github.com/zaida04/guilded.js/issues"
   },
   "gitHead": "eee38a19e0bfa812d7136cc78a6bc99e0b402b0c"
 }
