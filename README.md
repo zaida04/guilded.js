@@ -9,6 +9,10 @@
     </p>
 </div>
 
+> ### Looking for maintainers!
+>
+> Do you have an interest in the Guilded API and have prior experience with working with typescript libraries? Make an issue in this github repository or shoot us a message in our [Guilded Server](https://www.guilded.gg/guildedjs)!
+
 ## 📝 About
 
 This repo serves as a monorepo that houses several packages, mainly the `guilded.js` package, which is a library for the Guilded API.
