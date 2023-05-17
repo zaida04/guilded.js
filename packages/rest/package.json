@@ -16,14 +16,14 @@
   },
   "devDependencies": {
     "@guildedjs/guilded-api-typings": "workspace:*",
-    "@types/node-fetch": "2.6.2",
+    "@types/node-fetch": "2.6.4",
     "@types/qs": "^6.9.7",
     "typescript": "5.0.4"
   },
   "dependencies": {
     "form-data": "^4.0.0",
-    "node-fetch": "2.6.7",
-    "qs": "^6.10.5",
+    "node-fetch": "2.6.11",
+    "qs": "^6.11.2",
     "typed-emitter": "2.1.0"
   },
   "contributors": [
