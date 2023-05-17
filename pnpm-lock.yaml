@@ -111,6 +111,40 @@ importers:
         specifier: 5.0.4
         version: 5.0.4
 
+  packages/api:
+    dependencies:
+      form-data:
+        specifier: ^4.0.0
+        version: 4.0.0
+      node-fetch:
+        specifier: 2.6.11
+        version: 2.6.11
+      qs:
+        specifier: ^6.11.2
+        version: 6.11.2
+      typed-emitter:
+        specifier: 2.1.0
+        version: 2.1.0
+    devDependencies:
+      '@types/node-fetch':
+        specifier: 2.6.4
+        version: 2.6.4
+      '@types/qs':
+        specifier: ^6.9.7
+        version: 6.9.7
+      '@types/ws':
+        specifier: 8.5.4
+        version: 8.5.4
+      openapi-typescript:
+        specifier: ^6.2.4
+        version: 6.2.4
+      typescript:
+        specifier: 5.0.4
+        version: 5.0.4
+      ws:
+        specifier: 8.13.0
+        version: 8.13.0
+
   packages/gil:
     dependencies:
       '@discordjs/collection':
@@ -130,33 +164,18 @@ importers:
         specifier: 5.0.4
         version: 5.0.4
 
-  packages/guilded-api-typings:
-    devDependencies:
-      openapi-typescript:
-        specifier: ^6.2.4
-        version: 6.2.4
-      typescript:
-        specifier: 5.0.4
-        version: 5.0.4
-
   packages/guilded.js:
     dependencies:
       '@discordjs/collection':
         specifier: ^1.5.1
         version: 1.5.1
-      '@guildedjs/rest':
+      '@guildedjs/api':
         specifier: workspace:*
-        version: link:../rest
-      '@guildedjs/ws':
-        specifier: workspace:*
-        version: link:../ws
+        version: link:../api
       typed-emitter:
         specifier: 2.1.0
         version: 2.1.0
     devDependencies:
-      '@guildedjs/guilded-api-typings':
-        specifier: workspace:*
-        version: link:../guilded-api-typings
       '@types/node':
         specifier: 18.16.12
         version: 18.16.12
@@ -164,58 +183,11 @@ importers:
         specifier: 5.0.4
         version: 5.0.4
 
-  packages/rest:
-    dependencies:
-      form-data:
-        specifier: ^4.0.0
-        version: 4.0.0
-      node-fetch:
-        specifier: 2.6.11
-        version: 2.6.11
-      qs:
-        specifier: ^6.11.2
-        version: 6.11.2
-      typed-emitter:
-        specifier: 2.1.0
-        version: 2.1.0
-    devDependencies:
-      '@guildedjs/guilded-api-typings':
-        specifier: workspace:*
-        version: link:../guilded-api-typings
-      '@types/node-fetch':
-        specifier: 2.6.4
-        version: 2.6.4
-      '@types/qs':
-        specifier: ^6.9.7
-        version: 6.9.7
-      typescript:
-        specifier: 5.0.4
-        version: 5.0.4
-
-  packages/ws:
-    dependencies:
-      '@guildedjs/guilded-api-typings':
-        specifier: workspace:*
-        version: link:../guilded-api-typings
-      '@types/ws':
-        specifier: 8.5.4
-        version: 8.5.4
-      typed-emitter:
-        specifier: 2.1.0
-        version: 2.1.0
-      ws:
-        specifier: 8.13.0
-        version: 8.13.0
-    devDependencies:
-      typescript:
-        specifier: 5.0.4
-        version: 5.0.4
-
   services/proxy:
     dependencies:
-      '@guildedjs/rest':
+      '@guildedjs/api':
         specifier: workspace:*
-        version: link:../../packages/rest
+        version: link:../../packages/api
       dotenv:
         specifier: ^16.0.3
         version: 16.0.3
@@ -1010,7 +982,7 @@ packages:
   /@types/concat-stream@2.0.0:
     resolution: {integrity: sha512-t3YCerNM7NTVjLuICZo5gYAXYoDvpuuTceCcFQWcDQz26kxUR5uIWolxbIR5jRNIXpMqhOpW/b8imCR1LEmuJw==}
     dependencies:
-      '@types/node': 20.1.1
+      '@types/node': 18.16.12
     dev: true
 
   /@types/debug@4.1.7:
@@ -1066,7 +1038,7 @@ packages:
   /@types/node-fetch@2.6.4:
     resolution: {integrity: sha512-1ZX9fcN4Rvkvgv4E6PAY5WXUFWFcRWxZa3EW83UjycOB9ljJCedb2CupIP4RZMEwF/M3eTcCihbBRgwtGbg5Rg==}
     dependencies:
-      '@types/node': 20.1.1
+      '@types/node': 18.16.12
       form-data: 3.0.1
     dev: true
 
@@ -1077,9 +1049,6 @@ packages:
   /@types/node@18.16.12:
     resolution: {integrity: sha512-tIRrjbY9C277MOfP8M3zjMIhtMlUJ6YVqkGgLjz+74jVsdf4/UjC6Hku4+1N0BS0qyC0JAS6tJLUk9H6JUKviQ==}
     dev: true
-
-  /@types/node@20.1.1:
-    resolution: {integrity: sha512-uKBEevTNb+l6/aCQaKVnUModfEMjAl98lw2Si9P5y4hLu9tm6AlX2ZIoXZX6Wh9lJueYPrGPKk5WMCNHg/u6/A==}
 
   /@types/normalize-package-data@2.4.1:
     resolution: {integrity: sha512-Gj7cI7z+98M282Tqmp2K5EIsoouUEzbBJhQQzDE3jSIRk6r9gsz0oUokqIUR4u1R3dMHo0pDHM7sNOHyhulypw==}
@@ -1130,8 +1099,8 @@ packages:
   /@types/ws@8.5.4:
     resolution: {integrity: sha512-zdQDHKUgcX/zBc4GrwsE/7dVdAD8JR4EuiAXiiUhhfyIJXXb2+PrGshFyeXWQPMmmZ2XxgaqclgpIC7eTXc1mg==}
     dependencies:
-      '@types/node': 20.1.1
-    dev: false
+      '@types/node': 18.16.12
+    dev: true
 
   /@types/yargs-parser@21.0.0:
     resolution: {integrity: sha512-iO9ZQHkZxHn4mSakYV0vFHAVDyEOIJQrV2uZ06HxEPcx+mt8swXoZHIbaaJ2crJYFfErySgktuTZ3BeLz+XmFA==}
@@ -6746,7 +6715,7 @@ packages:
         optional: true
       utf-8-validate:
         optional: true
-    dev: false
+    dev: true
 
   /xml-name-validator@4.0.0:
     resolution: {integrity: sha512-ICP2e+jsHvAj2E2lIHxa5tjXRlKDJo4IdvPvCXbXQGdzSfmSpNVyIKMvoZHjDY9DP0zV17iI85o90vRFXNccRw==}

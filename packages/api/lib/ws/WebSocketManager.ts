@@ -3,7 +3,6 @@ import { EventEmitter } from "node:events";
 import type {
   ClientUserData,
   SkeletonWSPayload,
-  ws,
   WSEvent,
   WSEventNames,
   WSPayload,

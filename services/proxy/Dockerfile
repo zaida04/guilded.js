@@ -7,8 +7,7 @@ RUN apk add --update \
 && curl -L https://unpkg.com/@pnpm/self-installer | node
 
 COPY tsconfig.json package.json pnpm-lock.yaml pnpm-workspace.yaml ./
-COPY ./packages/rest/. ./packages/rest/
-COPY ./packages/guilded-api-typings/. ./packages/guilded-api-typings/.
+COPY ./packages/api/. ./packages/api/
 
 COPY ./services/proxy/package.json ./services/proxy/tsconfig.json ./services/proxy/
 RUN pnpm install -r --frozen-lockfile

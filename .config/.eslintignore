@@ -7,6 +7,6 @@
 *.d.ts
 
 packages/**/*.js
-packages/guilded-api-typings/lib/v1/rest.ts
-packages/guilded-api-typings/lib/v1/ws.ts
+packages/api/lib/v1/rest.ts
+packages/api/lib/v1/ws.ts
 apps/**/*.js

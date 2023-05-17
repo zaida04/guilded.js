@@ -1,5 +1,5 @@
 {
-  "name": "@guildedjs/rest",
+  "name": "@guildedjs/api",
   "version": "3.1.2",
   "description": "Rest structure for guilded.js",
   "author": "Zaid \"Nico\" <contact@nico.engineer>",
@@ -12,13 +12,18 @@
   "scripts": {
     "build": "tsc && gen-esm-wrapper . ./dist/index.mjs",
     "build:typecheck": "tsc --noEmit",
-    "prepublishOnly": "rimraf dist/ && rimraf types/ && pnpm run build"
+    "prepublishOnly": "rimraf dist/ && rimraf types/ && pnpm run build",
+    "generate:api:ws": "openapi-typescript \"https://www.guilded.gg/api/v1/socket-open-api-schema.json\" --output lib/api-typings/v1/ws.ts",
+    "generate:api:rest": "openapi-typescript \"https://www.guilded.gg/api/v1/open-api-schema.json\" --output lib/api-typings/v1/rest.ts"
   },
   "devDependencies": {
-    "@guildedjs/guilded-api-typings": "workspace:*",
     "@types/node-fetch": "2.6.4",
     "@types/qs": "^6.9.7",
-    "typescript": "5.0.4"
+    "@types/ws": "8.5.4",
+    "openapi-typescript": "^6.2.4",
+    "typescript": "5.0.4",
+    "typed-emitter": "2.1.0",
+    "ws": "8.13.0"
   },
   "dependencies": {
     "form-data": "^4.0.0",
