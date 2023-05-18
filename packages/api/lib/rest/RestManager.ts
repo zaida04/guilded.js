@@ -7,6 +7,7 @@ import type TypedEmitter from "typed-emitter";
 import { GuildedAPIError } from "./errors/GuildedAPIError";
 import { PermissionsError } from "./errors/PermissionsError";
 import type { RestOptions } from "./typings";
+import { GuildedRouter } from "../generated/router";
 
 let HTTPFetch = globalThis.fetch;
 if (!HTTPFetch) {
@@ -60,6 +61,11 @@ export class RestManager {
 	 */
 	readonly emitter = new EventEmitter() as TypedEmitter<RestManagerEvents>;
 
+	/**
+	 * Utility router
+	 */
+	readonly router = new GuildedRouter(this);
+
 	constructor(public readonly options: RestOptions) { }
 
 	/**
@@ -75,7 +81,7 @@ export class RestManager {
 	get obfuscatedToken(): string {
 		return this.token
 			.split("")
-			.map((x) => "X")
+			.map(() => "X")
 			.join("");
 	}
 

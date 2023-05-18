@@ -2,7 +2,6 @@ export * from "./errors/GuildedAPIError";
 export * from "./errors/PermissionsError";
 export * from "./RestManager";
 export * from "./typings";
-export * from "./router";
 export * from "./util/constants";
 export * from "./util/routes";
 export * from "./util/color";

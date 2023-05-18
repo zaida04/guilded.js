@@ -1,4 +1,4 @@
-import { WSPayload, WSSchema } from "../../api-typings";
+import { WSPayload, WSSchema } from "../../generated/api-typings";
 
 export const ROUTES = {
 	// Channel Endpoints

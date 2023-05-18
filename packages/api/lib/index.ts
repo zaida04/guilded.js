@@ -1,3 +1,4 @@
 export * from "./ws";
 export * from "./rest";
-export * from "./api-typings";
+export * from "./generated/api-typings";
+export * from "./generated/router";
