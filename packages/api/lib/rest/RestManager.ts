@@ -300,5 +300,5 @@ export type MakeOptions<B = RequestBodyObject, Q = RequestBodyObject> = {
 	query?: Q;
 };
 export type JSONB = Record<string, any>;
-export type HTTPMethods = "DELETE" | "GET" | "HEAD" | "PATCH" | "POST" | "PUT";
+export type HTTPMethods = "DELETE" | "GET" | "HEAD" | "PATCH" | "POST" | "PUT" | "OPTIONS";
 export type RequestBodyObject = JSONB | undefined;

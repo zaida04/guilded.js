@@ -6,5 +6,5 @@ export * from "./cache";
 export * from "./constants";
 export * from "./util";
 export * from "./typings";
-export * from "@guildedjs/rest";
+export * from "@guildedjs/api";
 export * from "@discordjs/collection";

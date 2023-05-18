@@ -1,5 +1,5 @@
 import { RestBody, RestPath } from "@guildedjs/api";
-import { DOMAINS } from "@guildedjs/rest";
+import { DOMAINS } from "@guildedjs/api";
 import { Embed } from "./structures/Embed";
 import type { MessageContent } from "./typings";
 

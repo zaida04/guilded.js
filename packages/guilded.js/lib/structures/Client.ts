@@ -1,5 +1,5 @@
-import { RestManager } from "@guildedjs/rest";
-import { WebSocketManager } from "@guildedjs/ws";
+import { RestManager } from "@guildedjs/api";
+import { WebSocketManager } from "@guildedjs/api";
 import { EventEmitter } from "node:events";
 import { ClientGatewayHandler } from "../gateway/ClientGatewayHandler";
 import { GlobalChannelManager } from "../managers/global/ChannelManager";

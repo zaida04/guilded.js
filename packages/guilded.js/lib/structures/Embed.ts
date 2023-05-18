@@ -3,7 +3,7 @@ import type {
 	EmbedPayload,
 	Schema,
 } from "@guildedjs/api";
-import { resolveColor } from "@guildedjs/rest";
+import { resolveColor } from "@guildedjs/api";
 
 export class Embed {
 	title: string | null;
