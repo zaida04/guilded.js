@@ -5,7 +5,7 @@ import {
 } from "../../structures/CalendarEvent";
 import { GatewayEventHandler } from "./GatewayEventHandler";
 import { Collection } from "@discordjs/collection";
-import { WSPacket } from "@guildedjs/guilded-api-typings";
+import { WSPacket } from "@guildedjs/api";
 
 export class CalendarEventHandler extends GatewayEventHandler {
 	calendarEventCreated(data: WSPacket<"CalendarEventCreated">): boolean {

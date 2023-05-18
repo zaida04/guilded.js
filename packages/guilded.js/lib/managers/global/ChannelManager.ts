@@ -1,4 +1,4 @@
-import { ChannelType, RestBody, RestPath } from "@guildedjs/guilded-api-typings";
+import { ChannelType, RestBody, RestPath } from "@guildedjs/api";
 import {
 	Channel,
 	DocChannel,

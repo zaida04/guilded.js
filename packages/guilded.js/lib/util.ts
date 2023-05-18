@@ -1,4 +1,4 @@
-import { RestBody, RestPath } from "@guildedjs/guilded-api-typings";
+import { RestBody, RestPath } from "@guildedjs/api";
 import { DOMAINS } from "@guildedjs/rest";
 import { Embed } from "./structures/Embed";
 import type { MessageContent } from "./typings";

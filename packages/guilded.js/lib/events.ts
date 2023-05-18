@@ -1,4 +1,4 @@
-import { Schema } from "@guildedjs/guilded-api-typings";
+import { Schema } from "@guildedjs/api";
 import type { Member } from "./structures";
 
 export interface ServerEvent {

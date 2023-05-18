@@ -1,4 +1,4 @@
-import type { Schema } from "@guildedjs/guilded-api-typings";
+import type { Schema } from "@guildedjs/api";
 import { Base } from "./Base";
 import type { Client } from "./Client";
 import type { User } from "./User";

@@ -1,7 +1,7 @@
 import { constants } from "../../constants";
 import { GatewayEventHandler } from "./GatewayEventHandler";
 import { buildMemberKey } from "../../util";
-import { WSPacket } from "@guildedjs/guilded-api-typings";
+import { WSPacket } from "@guildedjs/api";
 
 export class ServerEventHandler extends GatewayEventHandler {
 	serverRolesUpdated(data: WSPacket<"ServerRolesUpdated">): boolean {
