@@ -1,6 +1,6 @@
 import { Collection } from "@discordjs/collection";
 import { Channel } from "./Channel";
-import { RestBody, RestPath, Schema } from "@guildedjs/api";
+import { DocPayload } from "@guildedjs/api";
 
 /**
  * Represents a doc channel on Guilded
@@ -10,7 +10,7 @@ export class DocChannel extends Channel {
 	/**
 	 * The docs in this channel.
 	 */
-	readonly docs = new Collection<number, Schema<"Doc">>();
+	readonly docs = new Collection<number, DocPayload>();
 
 	/**
 	 * Create a new doc in this channel.
@@ -19,7 +19,7 @@ export class DocChannel extends Channel {
 	 */
 	createDoc(
 		options: RestBody<RestPath<"/channels/{channelId}/docs">["post"]>
-	): Promise<Schema<"Doc">> {
+	): Promise<DocPayload> {
 		return this.client.docs.create(this.id, options);
 	}
 
@@ -27,16 +27,16 @@ export class DocChannel extends Channel {
 	 * Get all the docs from this channel.
 	 * @returns A promise that resolves with an array of all docs.
 	 */
-	getDocs(): Promise<Schema<"Doc">[]> {
+	getDocs(): Promise<DocPayload[]> {
 		return this.client.docs.fetchMany(this.id);
 	}
 
 	/**
 	 * Get a specific doc from this channel.
-	 * @param docId - The ID ofSchema<"Doc"> the doc to fetch.
+	 * @param docId - The ID ofDocPayload the doc to fetch.
 	 * @returns A promise that resolves with the fetched doc.
 	 */
-	getDoc(docId: number): Promise<Schema<"Doc">> {
+	getDoc(docId: number): Promise<DocPayload> {
 		return this.client.docs.fetch(this.id, docId);
 	}
 
@@ -49,7 +49,7 @@ export class DocChannel extends Channel {
 	updateDoc(
 		docId: number,
 		options: RestBody<RestPath<"/channels/{channelId}/docs/{docId}">["put"]>
-	): Promise<Schema<"Doc">> {
+	): Promise<DocPayload> {
 		return this.client.docs.update(this.id, docId, options);
 	}
 

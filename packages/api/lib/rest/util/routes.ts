@@ -1,4 +1,5 @@
 import { WSPayload, WSSchema } from "../../generated/api-typings";
+import { SocialLinkPayload } from "../../generated/router";
 
 export const ROUTES = {
 	// Channel Endpoints
@@ -84,7 +85,7 @@ export const ROUTES = {
 	memberSocialLinks: (
 		serverId: string,
 		userId: string,
-		type: WSSchema<"SocialLink">
+		type: SocialLinkPayload["type"]
 	) => `/servers/${serverId}/members/${userId}/social-links/${type}` as const,
 
 	// Group Memberships Endpoints

@@ -1,7 +1,8 @@
 import { Collection } from "@discordjs/collection";
 import { Channel } from "./Channel";
 import type { ForumTopic } from "../Forum";
-import { Schema } from "@guildedjs/api";
+import { ForumTopicPayload } from "@guildedjs/api";
+
 
 /**
  * Represents a forum channel in Guilded.
@@ -9,7 +10,7 @@ import { Schema } from "@guildedjs/api";
  */
 export class ForumChannel extends Channel {
 	/** The topics in this channel. */
-	readonly topics = new Collection<string, Schema<"ForumTopic">>();
+	readonly topics = new Collection<string, ForumTopicPayload>();
 
 	/**
 	 * Creates a topic in this forum channel.

@@ -1,8 +1,8 @@
-import { Schema, WSPayload } from "@guildedjs/api";
+import { UserPayload, WSPayload } from "@guildedjs/api";
 import { Base } from "./Base";
 import type { Client } from "./Client";
 
-export class User extends Base<Schema<"User">> {
+export class User extends Base<UserPayload> {
 	/** The name for this user */
 	name: string;
 	/** The type of this user */
@@ -14,7 +14,7 @@ export class User extends Base<Schema<"User">> {
 	/** When this user was created */
 	readonly _createdAt: number | null;
 
-	constructor(client: Client, data: Schema<"User">) {
+	constructor(client: Client, data: UserPayload) {
 		super(client, data);
 		this.name = data.name;
 		this._createdAt = Date.parse(data.createdAt);
@@ -27,7 +27,7 @@ export class User extends Base<Schema<"User">> {
 		return this._createdAt ? new Date(this._createdAt) : null;
 	}
 
-	_update(data: Partial<Schema<"User">>): this {
+	_update(data: Partial<UserPayload>): this {
 		if ("avatar" in data) {
 			this.avatar = data.avatar ?? null;
 		}

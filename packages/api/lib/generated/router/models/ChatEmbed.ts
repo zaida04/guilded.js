@@ -19,7 +19,7 @@ export type ChatEmbed = {
      */
     url?: string;
     /**
-     * Decimal value of the color that the left border should be
+     * The integer value corresponds to the decimal RGB representation for the color. The color that the left border should be
      */
     color?: number;
     /**

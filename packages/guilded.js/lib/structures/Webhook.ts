@@ -1,8 +1,8 @@
-import type { WebhookPayload } from "@guildedjs/api/dist/v1/structs/Webhook";
+import { WebhookPayload } from "@guildedjs/api";
 import { Base } from "./Base";
 import type { Client } from "./Client";
 import type { User } from "./User";
-import { RestBody, RestPath } from "@guildedjs/api";
+import { GlobalWebhookManager } from "../managers/global";
 
 /**
  * Object representing received webhook data. This object is NOT to be used to send data to webhooks. That would be WebhookClient
@@ -81,9 +81,7 @@ export class Webhook extends Base<WebhookPayload> {
 	 * @returns A promise that resolves with the updated webhook
 	 */
 	update(
-		options: RestBody<
-			RestPath<"/servers/{serverId}/webhooks/{webhookId}">["put"]
-		>
+		options: Parameters<GlobalWebhookManager["update"]>[2],
 	): Promise<Webhook> {
 		return this.client.webhooks.update(this.serverId, this.id, options);
 	}

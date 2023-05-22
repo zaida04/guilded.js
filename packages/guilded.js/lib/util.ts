@@ -1,5 +1,4 @@
-import { RestBody, RestPath } from "@guildedjs/api";
-import { DOMAINS } from "@guildedjs/api";
+import { DOMAINS, EmbedPayload } from "@guildedjs/api";
 import { Embed } from "./structures/Embed";
 import type { MessageContent } from "./typings";
 
@@ -212,7 +211,7 @@ export const buildCalendarRsvpKey = (calendarEventId: number, userId: string) =>
  */
 export const resolveContentToData = (
 	content: MessageContent
-): RestBody<RestPath<"/channels/{channelId}/messages">["post"]> => {
+): { content?: string, embeds?: EmbedPayload[] } => {
 	if (typeof content === "string") return { content };
 	if (content instanceof Embed) return { embeds: [content.toJSON()] };
 

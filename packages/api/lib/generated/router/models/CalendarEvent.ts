@@ -34,7 +34,7 @@ export type CalendarEvent = {
      */
     url?: string;
     /**
-     * The color of the event when viewing in the calendar
+     * The integer value corresponds to the decimal RGB representation for the color. The color of the event when viewing in the calendar
      */
     color?: number;
     /**

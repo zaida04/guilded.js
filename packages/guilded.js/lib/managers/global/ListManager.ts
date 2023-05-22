@@ -14,7 +14,7 @@ export class GlobalListItemManager extends GlobalManager {
 	create(
 		channelId: string,
 		options: RestBody<RestPath<"/channels/{channelId}/items">["post"]>
-	): Promise<Schema<"ListItem">> {
+	): Promise<ListItemPayload> {
 		return this.client.rest.router
 			.createListItem(channelId, options)
 			.then((data) => data.listItem);
@@ -25,7 +25,7 @@ export class GlobalListItemManager extends GlobalManager {
 	 * @param channelId The ID of the channel to fetch the list items from.
 	 * @returns A Promise that resolves with an array of list item summaries.
 	 */
-	fetchMany(channelId: string): Promise<Schema<"ListItemSummary">[]> {
+	fetchMany(channelId: string): Promise<ListItemSummaryPayload[]> {
 		return this.client.rest.router
 			.getListItems(channelId)
 			.then((data) => data.listItems);
@@ -37,7 +37,7 @@ export class GlobalListItemManager extends GlobalManager {
 	 * @param itemId The ID of the list item to fetch.
 	 * @returns A Promise that resolves with the requested list item.
 	 */
-	fetch(channelId: string, itemId: string): Promise<Schema<"ListItem">> {
+	fetch(channelId: string, itemId: string): Promise<ListItemPayload> {
 		return this.client.rest.router
 			.getListItem(channelId, itemId)
 			.then((data) => data.listItem);
@@ -56,7 +56,7 @@ export class GlobalListItemManager extends GlobalManager {
 		options: RestBody<
 			RestPath<"/channels/{channelId}/items/{listItemId}">["put"]
 		>
-	): Promise<Schema<"ListItem">> {
+	): Promise<ListItemPayload> {
 		return this.client.rest.router
 			.updateListItem(channelId, itemId, options)
 			.then((data) => data.listItem);

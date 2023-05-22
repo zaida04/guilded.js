@@ -1,6 +1,7 @@
 import { Collection } from "@discordjs/collection";
 import { Channel } from "./Channel";
-import { Schema } from "@guildedjs/api";
+import { ListItemPayload, ListItemSummaryPayload } from "@guildedjs/api";
+
 
 /**
  * Represents a list channel in Guilded.
@@ -12,7 +13,7 @@ export class ListChannel extends Channel {
 	 */
 	readonly items = new Collection<
 		string,
-		Schema<"ListItem"> | Schema<"ListItemSummary">
+		ListItemPayload | ListItemSummaryPayload
 	>();
 
 	/**
@@ -21,7 +22,7 @@ export class ListChannel extends Channel {
 	 * @param note - Optional note for the new list item.
 	 * @returns A Promise that resolves with the newly created list item payload.
 	 */
-	createItem(message: string, note?: string): Promise<Schema<"ListItem">> {
+	createItem(message: string, note?: string): Promise<ListItemPayload> {
 		return this.client.lists.create(this.id, {
 			message,
 			note: note ? { content: note } : undefined,
@@ -33,7 +34,7 @@ export class ListChannel extends Channel {
 	 * @param itemId - The ID of the list item to fetch.
 	 * @returns A Promise that resolves with the list item payload.
 	 */
-	getItem(itemId: string): Promise<Schema<"ListItem">> {
+	getItem(itemId: string): Promise<ListItemPayload> {
 		return this.client.lists.fetch(this.id, itemId).then((data) => {
 			this.items.set(data.id, data);
 			return data;
@@ -44,7 +45,7 @@ export class ListChannel extends Channel {
 	 * Fetches all list items in this channel.
 	 * @returns A Promise that resolves with an array of list item summary payloads.
 	 */
-	getItems(): Promise<Schema<"ListItemSummary">[]> {
+	getItems(): Promise<ListItemSummaryPayload[]> {
 		return this.client.lists.fetchMany(this.id).then((data) => {
 			for (const item of data) {
 				this.items.set(item.id, item);

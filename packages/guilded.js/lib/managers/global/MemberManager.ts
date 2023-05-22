@@ -3,7 +3,7 @@ import { Member, MemberBan, PartialMember } from "../../structures/Member";
 import { CacheableStructManager } from "./CacheableStructManager";
 import { Collection } from "@discordjs/collection";
 import { buildMemberKey } from "../../util";
-import { Schema } from "@guildedjs/api";
+
 
 /**
  * A class representing a manager for Discord server members.
@@ -175,8 +175,8 @@ export class GlobalMemberManager extends CacheableStructManager<
 	fetchSocialLinks(
 		serverId: string,
 		memberId: string,
-		type: Schema<"SocialLink">["type"]
-	): Promise<Schema<"SocialLink">> {
+		type: SocialLinkPayload["type"]
+	): Promise<SocialLinkPayload> {
 		return this.client.rest.router
 			.getMemberSocialLinks(serverId, memberId, type)
 			.then((data) => {

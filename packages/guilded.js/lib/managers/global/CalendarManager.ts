@@ -4,7 +4,9 @@ import {
 	CalendarEvent,
 	CalendarEventRsvp,
 } from "../../structures/CalendarEvent";
-import { RestBody, RestPath, RestQuery } from "@guildedjs/api";
+import { MethodP, OptionParam, OptionQuery } from "../../typings";
+import { CalendarEventsService } from "@guildedjs/api";
+import { CalendarEventSeries } from "@guildedjs/api/types/generated/router/models/CalendarEventSeries";
 
 /**
  * The manager is used to interact with calendars on a server.
@@ -29,10 +31,9 @@ export class GlobalCalendarManager extends CacheableStructManager<
 	 */
 	create(
 		channelId: string,
-		options: RestBody<RestPath<"/channels/{channelId}/events">["post"]>
+		options: OptionParam<CalendarEventsService["calendarEventCreate"]>
 	): Promise<CalendarEvent> {
-		return this.client.rest.router
-			.createCalendarEvent(channelId, options)
+		return this.client.rest.router.calendarEvents.calendarEventCreate({ channelId, requestBody: options })
 			.then((data) => {
 				return new CalendarEvent(this.client, data.calendarEvent);
 			});
@@ -54,8 +55,8 @@ export class GlobalCalendarManager extends CacheableStructManager<
 			const existingCalendar = this.client.calendars.cache.get(calendarEventId);
 			if (existingCalendar) return Promise.resolve(existingCalendar);
 		}
-		return this.client.rest.router
-			.getCalendarEvent(channelId, calendarEventId)
+		return this.client.rest.router.calendarEvents
+			.calendarEventRead({ channelId, calendarEventId })
 			.then((data) => {
 				const newCalendar = new CalendarEvent(this.client, data.calendarEvent);
 				if (this.shouldCacheCalendar)
@@ -72,10 +73,10 @@ export class GlobalCalendarManager extends CacheableStructManager<
 	 */
 	fetchMany(
 		channelId: string,
-		options: RestQuery<RestPath<"/channels/{channelId}/events">["get"]>
+		options: Omit<OptionQuery<CalendarEventsService["calendarEventReadMany"]>, "channelId">
 	): Promise<Collection<number, CalendarEvent>> {
-		return this.client.rest.router
-			.getCalendarEvents(channelId, options)
+		return this.client.rest.router.calendarEvents
+			.calendarEventReadMany({ channelId, ...options })
 			.then((data) => {
 				const calendarEvents = new Collection<number, CalendarEvent>();
 				for (const calendarEvent of data.calendarEvents) {

@@ -1,11 +1,12 @@
-import { Schema } from "@guildedjs/api";
+
+import { ForumTopicPayload, MentionsPayload, ForumTopicSummaryPayload } from "@guildedjs/api";
 import { Base } from "./Base";
 import type { Client } from "./Client";
 
 /**
  * Represents a forum topic in Guilded.
  */
-export class ForumTopic extends Base<Schema<"ForumTopic">, number> {
+export class ForumTopic extends Base<ForumTopicPayload, number> {
 	/**
 	 * The server ID of the forum topic.
 	 */
@@ -53,9 +54,9 @@ export class ForumTopic extends Base<Schema<"ForumTopic">, number> {
 	/**
 	 * The mentions in the forum topic.
 	 */
-	mentions!: Schema<"Mentions">;
+	mentions!: MentionsPayload;
 
-	constructor(client: Client, data: Schema<"ForumTopic">) {
+	constructor(client: Client, data: ForumTopicPayload) {
 		super(client, data);
 		this.serverId = data.serverId;
 		this.channelId = data.channelId;
@@ -92,7 +93,7 @@ export class ForumTopic extends Base<Schema<"ForumTopic">, number> {
 		return this._updatedAt ? new Date(this._updatedAt) : null;
 	}
 
-	_update(data: Partial<Schema<"ForumTopic"> & { _deletedAt?: Date }>) {
+	_update(data: Partial<ForumTopicPayload & { _deletedAt?: Date }>) {
 		if ("updatedAt" in data && typeof data.updatedAt !== "undefined") {
 			this._updatedAt = data.updatedAt ? Date.parse(data.updatedAt) : null;
 		}
@@ -132,7 +133,7 @@ export class ForumTopic extends Base<Schema<"ForumTopic">, number> {
 //     ""channelId"
 /** A partial summary representation of a forum topic. Can fetch this topic to get full data */
 export class PartialForumTopic extends Base<
-	Schema<"ForumTopicSummary">,
+	ForumTopicSummaryPayload,
 	number
 > {
 	/**
@@ -168,7 +169,7 @@ export class PartialForumTopic extends Base<
 	 */
 	readonly channelId: string;
 
-	constructor(client: Client, data: Schema<"ForumTopicSummary">) {
+	constructor(client: Client, data: ForumTopicSummaryPayload) {
 		super(client, data);
 		this.serverId = data.serverId;
 		this.channelId = data.channelId;
@@ -179,7 +180,7 @@ export class PartialForumTopic extends Base<
 		this._update(data);
 	}
 
-	_update(data: Partial<Schema<"ForumTopic"> & { _deletedAt?: Date }>) {
+	_update(data: Partial<ForumTopicPayload & { _deletedAt?: Date }>) {
 		if ("updatedAt" in data && typeof data.updatedAt !== "undefined") {
 			this._updatedAt = data.updatedAt ? Date.parse(data.updatedAt) : null;
 		}

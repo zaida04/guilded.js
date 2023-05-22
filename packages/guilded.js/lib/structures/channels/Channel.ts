@@ -2,13 +2,7 @@ import type { Collection } from "@discordjs/collection";
 import { Base } from "../Base";
 import type { Client } from "../Client";
 import type { Message } from "../Message";
-import type {
-	ChannelType as APIChannelType,
-	RestBody,
-	RestPath,
-	RestQuery,
-	Schema,
-} from "@guildedjs/api";
+import type { ChannelType as APIChannelType, ServerChannelPayload } from "@guildedjs/api";
 import type { MessageContent } from "../../typings";
 
 /**
@@ -70,7 +64,7 @@ export class Channel extends Base {
 
 	constructor(
 		client: Client,
-		data: Schema<"ServerChannel"> & { deleted?: boolean }
+		data: ServerChannelPayload & { deleted?: boolean }
 	) {
 		super(client, data);
 		this.serverId = data.serverId;
@@ -104,7 +98,7 @@ export class Channel extends Base {
 	}
 
 	_update(
-		data: Partial<Schema<"ServerChannel"> & { deleted?: boolean }>
+		data: Partial<ServerChannelPayload & { deleted?: boolean }>
 	): this {
 		if ("name" in data && typeof data.name !== "undefined") {
 			this.name = data.name;

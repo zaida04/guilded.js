@@ -1,4 +1,3 @@
-import { RestBody, RestPath } from "@guildedjs/api";
 import type { Webhook } from "../Webhook";
 import { Channel } from "./Channel";
 

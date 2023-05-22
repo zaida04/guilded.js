@@ -10,5 +10,5 @@ export type UserStatus = {
     /**
      * Emote ID
      */
-    emoteId?: number;
+    emoteId: number;
 };

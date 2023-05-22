@@ -14,7 +14,7 @@ export class GlobalDocManager extends GlobalManager {
 	create(
 		channelId: string,
 		options: RestBody<RestPath<"/channels/{channelId}/docs">["post"]>
-	): Promise<Schema<"Doc">> {
+	): Promise<DocPayload> {
 		return this.client.rest.router
 			.createDoc(channelId, options)
 			.then((data) => data.doc);
@@ -25,7 +25,7 @@ export class GlobalDocManager extends GlobalManager {
 	 * @param channelId - The ID of the channel where the Docs are located.
 	 * @returns A Promise that resolves with an array of Doc payloads.
 	 */
-	fetchMany(channelId: string): Promise<Schema<"Doc">[]> {
+	fetchMany(channelId: string): Promise<DocPayload[]> {
 		return this.client.rest.router.getDocs(channelId).then((data) => data.docs);
 	}
 
@@ -35,7 +35,7 @@ export class GlobalDocManager extends GlobalManager {
 	 * @param docId - The ID of the Doc to fetch.
 	 * @returns A Promise that resolves with the Doc payload of the fetched Doc.
 	 */
-	fetch(channelId: string, docId: number): Promise<Schema<"Doc">> {
+	fetch(channelId: string, docId: number): Promise<DocPayload> {
 		return this.client.rest.router
 			.getDoc(channelId, docId)
 			.then((data) => data.doc);
@@ -52,7 +52,7 @@ export class GlobalDocManager extends GlobalManager {
 		channelId: string,
 		docId: number,
 		options: RestBody<RestPath<"/channels/{channelId}/docs/{docId}">["put"]>
-	): Promise<Schema<"Doc">> {
+	): Promise<DocPayload> {
 		return this.client.rest.router
 			.updateDoc(channelId, docId, options)
 			.then((data) => data.doc);

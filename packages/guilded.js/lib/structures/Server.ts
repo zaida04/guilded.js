@@ -3,15 +3,12 @@ import { Base } from "./Base";
 import type { Channel } from "./channels";
 import { buildMemberKey } from "../util";
 import type { Member } from "./Member";
-import {
-	Schema,
-	ServerType as APIServerType,
-} from "@guildedjs/api";
+import { ServerPayload } from "@guildedjs/api";
 
 /**
  * A class representing a Guilded server.
  */
-export class Server extends Base<Schema<"Server">> {
+export class Server extends Base<ServerPayload> {
 	/** The ID of the owner of this server */
 	ownerId: string;
 	/** The type of this server */
@@ -35,7 +32,7 @@ export class Server extends Base<Schema<"Server">> {
 	/** The date this server was created */
 	_createdAt!: number;
 
-	constructor(client: Client, data: Schema<"Server">) {
+	constructor(client: Client, data: ServerPayload) {
 		super(client, data);
 		this.ownerId = data.ownerId;
 		this._createdAt = Date.parse(data.createdAt);
@@ -67,7 +64,7 @@ export class Server extends Base<Schema<"Server">> {
 			: null;
 	}
 
-	_update(data: Partial<Schema<"Server">>): this {
+	_update(data: Partial<ServerPayload>): this {
 		if ("name" in data && typeof data.name !== "undefined") {
 			this.name = data.name;
 		}
@@ -123,7 +120,7 @@ export enum ServerType {
 }
 
 /** A mapping of server types from the API to the client. */
-export const ServerTypeMap: Record<APIServerType, ServerType> = {
+export const ServerTypeMap: Record<NonNullable<ServerPayload["type"]>, ServerType> = {
 	team: ServerType.Team,
 	organization: ServerType.Organization,
 	community: ServerType.Community,

@@ -8,7 +8,8 @@ import type {
 import type { User } from "./User";
 import { buildMemberKey } from "../util";
 import { Collection } from "@discordjs/collection";
-import { Schema } from "@guildedjs/api";
+import { ServerMemberPayload, SocialLinkPayload, UserSummaryPayload } from "@guildedjs/api";
+
 
 export class Member extends Base<UpgradedServerMemberPayload> {
 	/** The ID of the server this role belongs to */
@@ -26,7 +27,7 @@ export class Member extends Base<UpgradedServerMemberPayload> {
 	/** Whether this member owns the server */
 	isOwner: boolean;
 	/** Cached social links of this member */
-	socialLinks: Collection<Schema<"SocialLink">["type"], Schema<"SocialLink">>;
+	socialLinks: Collection<SocialLinkPayload["type"], SocialLinkPayload>;
 
 	constructor(client: Client, data: UpgradedServerMemberPayload) {
 		super(client, data);
@@ -45,7 +46,7 @@ export class Member extends Base<UpgradedServerMemberPayload> {
 	}
 
 	_update(
-		data: Partial<Schema<"ServerMember"> & { kicked: boolean; banned: boolean }>
+		data: Partial<ServerMemberPayload & { kicked: boolean; banned: boolean }>
 	): this {
 		if ("nickname" in data) {
 			this.nickname = data.nickname ?? null;
@@ -172,7 +173,7 @@ export class PartialMember extends Base<UpgradedServerMemberSummaryPayload> {
 	/** The ID of the server this role belongs to */
 	readonly serverId: string;
 	/** The user information of this member */
-	readonly user: Schema<"UserSummary">;
+	readonly user: UserSummaryPayload;
 	/** Roles this member has by ID (TODO: role object when Guilded API has one) */
 	readonly roleIds: number[] = [];
 
@@ -205,7 +206,7 @@ export class MemberBan extends Base<UpgradedServerMemberBanPayload> {
 	/** The reason this user was banned */
 	reason: string | null;
 	/** Information about the target user */
-	target: Schema<"UserSummary">;
+	target: UserSummaryPayload;
 
 	/**
 	 * Creates a new instance of `MemberBan`.
