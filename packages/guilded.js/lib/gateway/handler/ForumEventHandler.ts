@@ -21,6 +21,7 @@ export class ForumEventHandler extends GatewayEventHandler {
 			newTopic
 		);
 	}
+
 	forumTopicUpdated(data: WSPacket<"ForumTopicUpdated">) {
 		const getCachedTopic = this.client.topics.cache.get(data.d.forumTopic.id);
 		if (!getCachedTopic) {
@@ -39,6 +40,7 @@ export class ForumEventHandler extends GatewayEventHandler {
 			frozenOldTopic
 		);
 	}
+
 	forumTopicDeleted(data: WSPacket<"ForumTopicDeleted">) {
 		const getCachedTopic = this.client.topics.cache.get(data.d.forumTopic.id);
 		getCachedTopic?._update({ _deletedAt: new Date() });
@@ -47,6 +49,7 @@ export class ForumEventHandler extends GatewayEventHandler {
 			getCachedTopic ?? new ForumTopic(this.client, data.d.forumTopic)
 		);
 	}
+
 	forumTopicPinned(data: WSPacket<"ForumTopicPinned">) {
 		const getCachedTopic = this.client.topics.cache.get(data.d.forumTopic.id);
 		getCachedTopic?._update({ isPinned: true });
@@ -55,6 +58,7 @@ export class ForumEventHandler extends GatewayEventHandler {
 			getCachedTopic ?? new ForumTopic(this.client, data.d.forumTopic)
 		);
 	}
+
 	forumTopicUnpinned(data: WSPacket<"ForumTopicUnpinned">) {
 		const getCachedTopic = this.client.topics.cache.get(data.d.forumTopic.id);
 		getCachedTopic?._update({ isPinned: false });
@@ -63,6 +67,7 @@ export class ForumEventHandler extends GatewayEventHandler {
 			getCachedTopic ?? new ForumTopic(this.client, data.d.forumTopic)
 		);
 	}
+
 	forumTopicLocked(data: WSPacket<"ForumTopicLocked">) {
 		const getCachedTopic = this.client.topics.cache.get(data.d.forumTopic.id);
 		getCachedTopic?._update({ isLocked: true });
@@ -71,6 +76,7 @@ export class ForumEventHandler extends GatewayEventHandler {
 			getCachedTopic ?? new ForumTopic(this.client, data.d.forumTopic)
 		);
 	}
+
 	forumTopicUnlocked(data: WSPacket<"ForumTopicUnlocked">) {
 		const getCachedTopic = this.client.topics.cache.get(data.d.forumTopic.id);
 		getCachedTopic?._update({ isLocked: false });

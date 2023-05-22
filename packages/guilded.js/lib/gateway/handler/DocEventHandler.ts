@@ -9,12 +9,14 @@ export class DocEventHandler extends GatewayEventHandler {
 		if (existingChannel) existingChannel.docs.set(data.d.doc.id, data.d.doc);
 		return this.client.emit(constants.clientEvents.DOC_CREATED, data.d.doc);
 	}
+
 	docUpdated(data: WSPacket<"DocUpdated">) {
 		const existingChannel = this.client.channels.cache.get(data.d.doc.channelId) as DocChannel | undefined;
 		const existingDoc = existingChannel?.docs.get(data.d.doc.id);
 		if (existingChannel) existingChannel.docs.set(data.d.doc.id, data.d.doc);
 		return this.client.emit(constants.clientEvents.DOC_UPDATED, data.d.doc, existingDoc ?? null);
 	}
+
 	docDeleted(data: WSPacket<"DocDeleted">) {
 		const existingChannel = this.client.channels.cache.get(data.d.doc.channelId) as DocChannel | undefined;
 		if (existingChannel) existingChannel.docs.set(data.d.doc.id, data.d.doc);

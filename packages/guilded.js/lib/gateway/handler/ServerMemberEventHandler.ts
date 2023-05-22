@@ -25,6 +25,7 @@ export class ServerMemberEventHandler extends GatewayEventHandler {
       oldMember: oldMember ?? null,
     });
   }
+
   serverMemberJoined(data: WSPacket<"ServerMemberJoined">): boolean {
     const newMember = new Member(this.client, {
       ...data.d.member,
@@ -44,6 +45,7 @@ export class ServerMemberEventHandler extends GatewayEventHandler {
       });
     return this.client.emit(constants.clientEvents.MEMBER_JOINED, newMember);
   }
+
   serverMemberRemoved(data: WSPacket<"ServerMemberRemoved">): boolean {
     const memberKey = buildMemberKey(data.d.serverId, data.d.userId);
     const existingMember = this.client.members.cache.get(memberKey);
@@ -56,6 +58,7 @@ export class ServerMemberEventHandler extends GatewayEventHandler {
     });
     return this.client.emit(constants.clientEvents.MEMBER_REMOVED, data.d);
   }
+
   serverMemberBanned(data: WSPacket<"ServerMemberBanned">): boolean {
     const newMemberBan = new MemberBan(this.client, {
       serverId: data.d.serverId,
@@ -68,6 +71,7 @@ export class ServerMemberEventHandler extends GatewayEventHandler {
       );
     return this.client.emit(constants.clientEvents.MEMBER_BANNED, newMemberBan);
   }
+
   serverMemberUnbanned(data: WSPacket<"ServerMemberUnbanned">): boolean {
     const {
       d: {
@@ -91,6 +95,7 @@ export class ServerMemberEventHandler extends GatewayEventHandler {
       serverId,
     });
   }
+
   serverMemberSocialLinkCreated(
     data: WSPacket<"ServerMemberSocialLinkCreated">
   ): boolean {
@@ -110,6 +115,7 @@ export class ServerMemberEventHandler extends GatewayEventHandler {
       socialLink
     );
   }
+
   serverMemberSocialLinkUpdated(
     data: WSPacket<"ServerMemberSocialLinkUpdated">
   ): boolean {
@@ -129,6 +135,7 @@ export class ServerMemberEventHandler extends GatewayEventHandler {
       socialLink
     );
   }
+
   serverMemberSocialLinkDeleted(
     data: WSPacket<"ServerMemberSocialLinkDeleted">
   ): boolean {
