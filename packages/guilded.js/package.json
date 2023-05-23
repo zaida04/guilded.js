@@ -1,6 +1,6 @@
 {
   "name": "guilded.js",
-  "version": "0.21.0",
+  "version": "0.22.0",
   "description": "A Node.js library for the Guilded.gg (https://www.guilded.gg/) API written in TypeScript, usable in either JavaScript or TypeScript projects.",
   "author": "Zaid \"Nico\" <contact@nico.engineer>",
   "license": "MIT",
