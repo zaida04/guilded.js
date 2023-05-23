@@ -7,6 +7,7 @@ module.exports = {
         project: "./tsconfig.eslint.json",
     },
     rules: {
+        "unicorn/no-abusive-eslint-disable": "off",
         "@typescript-eslint/unbound-method": "off",
         "@typescript-eslint/no-var-requires": "off",
         "@typescript-eslint/explicit-function-return-type": "error",

@@ -28,10 +28,13 @@ export class GlobalServerManager extends CacheableStructManager<
       const existingServer = this.client.servers.cache.get(serverId);
       if (existingServer) return Promise.resolve(existingServer);
     }
-    return this.client.rest.router.getServer(serverId).then((data) => {
-      const newServer = new Server(this.client, data.server);
-      if (this.shouldCacheServer) this.cache.set(newServer.id, newServer);
-      return newServer;
-    });
+
+    return this.client.rest.router.servers
+      .serverRead({ serverId })
+      .then((data) => {
+        const newServer = new Server(this.client, data.server);
+        if (this.shouldCacheServer) this.cache.set(newServer.id, newServer);
+        return newServer;
+      });
   }
 }

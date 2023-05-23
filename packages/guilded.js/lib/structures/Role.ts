@@ -22,7 +22,7 @@ export class Role extends Base<{ id: number; serverId: string }, number> {
    * @param amount - The amount of XP to award to the role
    * @returns A Promise that resolves to the new total XP of the role
    */
-  awardXP(amount: number): Promise<number> {
+  giveXP(amount: number): Promise<void> {
     return this.client.roles.giveXP(this.serverId, this.id, amount);
   }
 
