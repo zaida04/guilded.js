@@ -19,9 +19,9 @@ export class GlobalReactionManager extends CacheableStructManager<
    * @param emoteId The ID of the emote to add.
    * @returns A Promise that resolves with no value upon successful completion.
    */
-  create(channelId: string, contentId: string, emoteId: number): Promise<void> {
-    return this.client.rest.router
-      .addReactionEmote(channelId, contentId, emoteId)
+  create(channelId: string, messageId: string, emoteId: number): Promise<void> {
+    return this.client.rest.router.reactions
+      .channelMessageReactionCreate({ channelId, messageId, emoteId })
       .then(() => void 0);
   }
 
@@ -32,9 +32,9 @@ export class GlobalReactionManager extends CacheableStructManager<
    * @param emoteId The ID of the emote to delete.
    * @returns A Promise that resolves with no value upon successful completion.
    */
-  delete(channelId: string, contentId: string, emoteId: number): Promise<void> {
-    return this.client.rest.router
-      .deleteReactionEmote(channelId, contentId, emoteId)
+  delete(channelId: string, messageId: string, emoteId: number): Promise<void> {
+    return this.client.rest.router.reactions
+      .channelMessageReactionDelete({ channelId, messageId, emoteId })
       .then(() => void 0);
   }
 }

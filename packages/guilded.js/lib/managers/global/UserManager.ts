@@ -18,8 +18,8 @@ export class GlobalUserManager extends CacheableStructManager<string, User> {
       if (existingUser) return Promise.resolve(existingUser);
     }
 
-    return this.client.rest.router
-      .getMe()
+    return this.client.rest.router.users
+      .userRead({ userId: "@me" })
       .then((data) => new User(this.client, data.user));
   }
 }

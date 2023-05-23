@@ -2,24 +2,28 @@ import type { Client } from "./Client";
 import { Base } from "./Base";
 import type { User } from "./User";
 import type { Member } from "./Member";
-import { buildMemberKey, buildReactionKey } from "../util";
+import {
+  buildMemberKey,
+  buildReactionKey,
+  resolveContentToData,
+} from "../util";
 import { Embed } from "./Embed";
 import type { Server } from "./Server";
 import type { Channel } from "./channels";
 import type { MessageContent } from "../typings";
 import {
-  RestBody,
-  RestPath,
-  Schema,
+  ChatMessagePayload,
+  EmotePayload,
+  MentionsPayload,
   WSPayload,
-} from "@guildedjs/guilded-api-typings";
+} from "@guildedjs/api";
 
 export enum MessageType {
   Default,
   System,
 }
 
-export class Message extends Base<Schema<"ChatMessage">> {
+export class Message extends Base<ChatMessagePayload> {
   /** The ID of the channel */
   readonly channelId: string;
   /** The ID of the server this message belongs to */
@@ -29,7 +33,7 @@ export class Message extends Base<Schema<"ChatMessage">> {
   /** The content of the message */
   content: string;
   /** The mentions within this message */
-  mentions?: Schema<"Mentions">;
+  mentions?: MentionsPayload;
   /** The ID of the messages that this is replying to. */
   readonly replyMessageIds: string[] = [];
   /** If set, this message will only be seen by those mentioned or replied to. */
@@ -53,7 +57,7 @@ export class Message extends Base<Schema<"ChatMessage">> {
   /** Embeds contained within this message */
   embeds: Embed[] = [];
 
-  constructor(client: Client, data: Schema<"ChatMessage">) {
+  constructor(client: Client, data: ChatMessagePayload) {
     super(client, data);
     this.isReply = !!data.replyMessageIds;
     this.channelId = data.channelId;
@@ -73,7 +77,7 @@ export class Message extends Base<Schema<"ChatMessage">> {
   }
 
   /** Update details of this structure */
-  _update(data: Partial<Schema<"ChatMessage">> | { deletedAt: string }): this {
+  _update(data: Partial<ChatMessagePayload> | { deletedAt: string }): this {
     if ("content" in data && typeof data.content !== "undefined") {
       this.content = data.content;
     }
@@ -202,19 +206,10 @@ export class Message extends Base<Schema<"ChatMessage">> {
    * message.reply(replyObj)
    */
   reply(content: MessageContent) {
-    return this.client.messages.send(
-      this.channelId,
-      typeof content === "string"
-        ? { content, replyMessageIds: [this.id] }
-        : content instanceof Embed
-        ? { embeds: [content] }
-        : {
-            ...content,
-            replyMessageIds: content.replyMessageIds
-              ? [this.id, ...content.replyMessageIds]
-              : [this.id],
-          }
-    );
+    return this.client.messages.send(this.channelId, {
+      ...resolveContentToData(content),
+      replyMessageIds: [this.id],
+    });
   }
 
   /**
@@ -223,8 +218,12 @@ export class Message extends Base<Schema<"ChatMessage">> {
    * @returns A promise that resolves when the emote has been added.
    */
   addReaction(emoteId: number): Promise<void> {
-    return this.client.rest.router
-      .addReactionEmote(this.channelId, this.id, emoteId)
+    return this.client.rest.router.reactions
+      .channelMessageReactionCreate({
+        channelId: this.channelId,
+        messageId: this.id,
+        emoteId,
+      })
       .then(() => void 0);
   }
 
@@ -234,8 +233,12 @@ export class Message extends Base<Schema<"ChatMessage">> {
    * @returns A promise that resolves when the emote has been deleted.
    */
   deleteReaction(emoteId: number): Promise<void> {
-    return this.client.rest.router
-      .deleteReactionEmote(this.channelId, this.id, emoteId)
+    return this.client.rest.router.reactions
+      .channelMessageReactionDelete({
+        channelId: this.channelId,
+        messageId: this.id,
+        emoteId,
+      })
       .then(() => void 0);
   }
 
@@ -270,7 +273,7 @@ export class MessageReaction extends Base<FlattenedReactionData> {
   /**
    * The emote associated with this reaction.
    */
-  readonly emote: Schema<"Emote">;
+  readonly emote: EmotePayload;
 
   /**
    * The ID of the server where the reaction was made.

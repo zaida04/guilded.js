@@ -1,4 +1,5 @@
-import { RestBody, RestPath, Schema } from "@guildedjs/guilded-api-typings";
+import { DocPayload, DocsService } from "@guildedjs/api";
+import { OptionBody } from "../../typings";
 import { GlobalManager } from "./GlobalManager";
 
 /**
@@ -13,10 +14,10 @@ export class GlobalDocManager extends GlobalManager {
    */
   create(
     channelId: string,
-    options: RestBody<RestPath<"/channels/{channelId}/docs">["post"]>
-  ): Promise<Schema<"Doc">> {
-    return this.client.rest.router
-      .createDoc(channelId, options)
+    options: OptionBody<DocsService["docCreate"]>
+  ): Promise<DocPayload> {
+    return this.client.rest.router.docs
+      .docCreate({ channelId, requestBody: options })
       .then((data) => data.doc);
   }
 
@@ -25,8 +26,10 @@ export class GlobalDocManager extends GlobalManager {
    * @param channelId - The ID of the channel where the Docs are located.
    * @returns A Promise that resolves with an array of Doc payloads.
    */
-  fetchMany(channelId: string): Promise<Schema<"Doc">[]> {
-    return this.client.rest.router.getDocs(channelId).then((data) => data.docs);
+  fetchMany(channelId: string): Promise<DocPayload[]> {
+    return this.client.rest.router.docs
+      .docReadMany({ channelId })
+      .then((data) => data.docs);
   }
 
   /**
@@ -35,9 +38,9 @@ export class GlobalDocManager extends GlobalManager {
    * @param docId - The ID of the Doc to fetch.
    * @returns A Promise that resolves with the Doc payload of the fetched Doc.
    */
-  fetch(channelId: string, docId: number): Promise<Schema<"Doc">> {
-    return this.client.rest.router
-      .getDoc(channelId, docId)
+  fetch(channelId: string, docId: number): Promise<DocPayload> {
+    return this.client.rest.router.docs
+      .docRead({ channelId, docId })
       .then((data) => data.doc);
   }
 
@@ -51,10 +54,10 @@ export class GlobalDocManager extends GlobalManager {
   update(
     channelId: string,
     docId: number,
-    options: RestBody<RestPath<"/channels/{channelId}/docs/{docId}">["put"]>
-  ): Promise<Schema<"Doc">> {
-    return this.client.rest.router
-      .updateDoc(channelId, docId, options)
+    options: OptionBody<DocsService["docUpdate"]>
+  ): Promise<DocPayload> {
+    return this.client.rest.router.docs
+      .docUpdate({ channelId, docId, requestBody: options })
       .then((data) => data.doc);
   }
 
@@ -65,8 +68,8 @@ export class GlobalDocManager extends GlobalManager {
    * @returns A Promise that resolves with void when the Doc is successfully deleted.
    */
   delete(channelId: string, docId: number): Promise<void> {
-    return this.client.rest.router
-      .deleteDoc(channelId, docId)
+    return this.client.rest.router.docs
+      .docDelete({ channelId, docId })
       .then(() => void 0);
   }
 }

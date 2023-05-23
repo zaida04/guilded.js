@@ -1,7 +1,7 @@
 import { Collection } from "@discordjs/collection";
 import { Channel } from "./Channel";
 import type { ForumTopic } from "../Forum";
-import { Schema } from "@guildedjs/guilded-api-typings";
+import { ForumTopicPayload } from "@guildedjs/api";
 
 /**
  * Represents a forum channel in Guilded.
@@ -9,7 +9,7 @@ import { Schema } from "@guildedjs/guilded-api-typings";
  */
 export class ForumChannel extends Channel {
   /** The topics in this channel. */
-  readonly topics = new Collection<string, Schema<"ForumTopic">>();
+  readonly topics = new Collection<string, ForumTopicPayload>();
 
   /**
    * Creates a topic in this forum channel.
@@ -26,7 +26,7 @@ export class ForumChannel extends Channel {
    * @param id - The ID of the topic to delete.
    * @returns A Promise that resolves when the topic is deleted.
    */
-  deleteTopic(id: string): Promise<void> {
-    return this.client.topics.delete(this.id, id);
+  deleteTopic(forumTopicId: number): Promise<void> {
+    return this.client.topics.delete(this.id, forumTopicId);
   }
 }

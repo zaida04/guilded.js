@@ -1,4 +1,4 @@
-import { Schema } from "@guildedjs/guilded-api-typings";
+import { EmotePayload, UserSummaryPayload } from "@guildedjs/api";
 import type { Member } from "./structures";
 
 export interface ServerEvent {
@@ -9,7 +9,7 @@ export interface MemberUnbannedEvent extends ServerEvent {
 	createdAt: string;
 	createdBy: string;
 	reason?: string;
-	user: Schema<"UserSummary">;
+	user: UserSummaryPayload;
 }
 
 export interface MemberRemovedEvent extends ServerEvent {
@@ -27,7 +27,7 @@ export interface MemberUpdatedEvent extends ServerEvent {
 export interface MessageReactionDeletedEvent extends ServerEvent {
 	channelId: string;
 	createdBy: string;
-	emote: Schema<"Emote">;
+	emote: EmotePayload;
 	messageId: string;
 }
 

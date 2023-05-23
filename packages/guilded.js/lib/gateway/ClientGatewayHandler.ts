@@ -6,8 +6,8 @@ import type {
 	SkeletonWSPayload,
 	WSEvent,
 	WSPacket,
-} from "@guildedjs/guilded-api-typings";
-import { WebSocketEvents } from "@guildedjs/guilded-api-typings";
+} from "@guildedjs/api";
+import { WebSocketEvents } from "@guildedjs/api";
 import { ServerWebhookEventHandler } from "./handler/ServerWebhookEventHandler";
 import { ListEventHandler } from "./handler/ListEventHandler";
 import { ServerChannelEventHandler } from "./handler/ServerChannelEventHandler";

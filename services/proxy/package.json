@@ -18,7 +18,7 @@
     "typescript": "5.0.4"
   },
   "dependencies": {
-    "@guildedjs/rest": "workspace:*",
+    "@guildedjs/api": "workspace:*",
     "dotenv": "^16.0.3"
   },
   "contributors": [
@@ -49,7 +49,7 @@
     "guilded.js",
     "guilded-api"
   ],
-  "homepage": "https://github.com/zaida04/guilded.js/tree/main/packages/rest#readme",
+  "homepage": "https://github.com/zaida04/guilded.js/tree/main/packages/proxy#readme",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/zaida04/guilded.js.git"

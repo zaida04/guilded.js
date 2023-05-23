@@ -1,19 +1,19 @@
-import type { GetStaticProps, NextPage } from "next";
+import type { NextPage } from "next";
 import { LayoutWrapper } from "../../components/LayoutWrapper";
-import { PackageBadge } from "../../components/PackageBadge";
-import fetchDocs from "../../lib/loader";
+// import { PackageBadge } from "../../components/PackageBadge";
+// import fetchDocs from "../../lib/loader.ts.ignore";
 
 type Props = { packages: string[] };
-export const getStaticProps: GetStaticProps<Props> = async () => {
-  const docs = fetchDocs();
-  const packageNames = docs.children!.map((x) => x.name);
-  return { props: { packages: packageNames } };
-};
+// export const getStaticProps: GetStaticProps<Props> = async () => {
+// 	const docs = fetchDocs();
+// 	const packageNames = docs.children!.map((x) => x.name);
+// 	return { props: { packages: packageNames } };
+// };
 
 const Docs: NextPage<Props> = ({ packages }) => {
   return (
     <LayoutWrapper>
-      <div className="flex justify-center">
+      {/* <div className="flex justify-center">
         <div
           className="bg-orange-100 border-l-4 border-orange-500 text-orange-700 p-4 w-3/4"
           role="alert"
@@ -29,7 +29,7 @@ const Docs: NextPage<Props> = ({ packages }) => {
             </a>
           </p>
         </div>
-      </div>
+      </div> */}
 
       <div className="min-h-screen flex items-center flex-col pt-12">
         <h1 className="text-5xl text-white font-bold pb-4">Packages:</h1>
@@ -40,11 +40,11 @@ const Docs: NextPage<Props> = ({ packages }) => {
             </p>
           </div>
         </a>
-        {packages
-          .sort((a, b) => a.length - b.length)
-          .map((x) => (
-            <PackageBadge key={x} text={x} />
-          ))}
+        {/* {packages
+					.sort((a, b) => a.length - b.length)
+					.map((x) => (
+						<PackageBadge key={x} text={x} />
+					))} */}
       </div>
     </LayoutWrapper>
   );

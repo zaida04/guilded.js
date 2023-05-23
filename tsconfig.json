@@ -20,5 +20,16 @@
     "allowSyntheticDefaultImports": true,
     "resolveJsonModule": true
   },
+  "references": [
+    {
+      "path": "./packages/api"
+    },
+    {
+      "path": "./packages/guilded.js"
+    },
+    {
+      "path": "./packages/gil"
+    }
+  ],
   "exclude": ["dist/**"]
 }

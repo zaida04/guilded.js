@@ -1,5 +1,6 @@
-import { RestBody, RestPath, RestQuery } from "@guildedjs/guilded-api-typings";
+import { ForumsService } from "@guildedjs/api";
 import { ForumTopic, PartialForumTopic } from "../../structures/Forum";
+import { OptionBody, OptionQuery } from "../../typings";
 import { CacheableStructManager } from "./CacheableStructManager";
 import { Collection } from "@discordjs/collection";
 
@@ -23,10 +24,10 @@ export class GlobalForumTopicManager extends CacheableStructManager<
    */
   create(
     channelId: string,
-    options: RestBody<RestPath<"/channels/{channelId}/topics">["post"]>
+    options: OptionBody<ForumsService["forumTopicCreate"]>
   ): Promise<ForumTopic> {
-    return this.client.rest.router
-      .createForumTopic(channelId, options)
+    return this.client.rest.router.forums
+      .forumTopicCreate({ channelId, requestBody: options })
       .then((data) => new ForumTopic(this.client, data.forumTopic));
   }
 
@@ -39,10 +40,10 @@ export class GlobalForumTopicManager extends CacheableStructManager<
    */
   fetchMany(
     channelId: string,
-    options: RestQuery<RestPath<"/channels/{channelId}/topics">["get"]>
+    options: Omit<OptionQuery<ForumsService["forumTopicReadMany"]>, "channelId">
   ): Promise<Collection<number, PartialForumTopic>> {
-    return this.client.rest.router
-      .getForumTopics(channelId, options)
+    return this.client.rest.router.forums
+      .forumTopicReadMany({ channelId, ...options })
       .then((data) => {
         const topics = new Collection<number, PartialForumTopic>();
         for (const forumTopic of data.forumTopics) {
@@ -57,12 +58,12 @@ export class GlobalForumTopicManager extends CacheableStructManager<
    * Get a topic in a forum.
    *
    * @param channelId The ID of the channel containing the forum.
-   * @param forumThreadId The ID of the forum topic.
+   * @param forumTopicId The ID of the forum topic.
    * @returns a Promise that resolves to a ForumTopic.
    */
   fetch(channelId: string, forumTopicId: number): Promise<ForumTopic> {
-    return this.client.rest.router
-      .getForumTopic(channelId, forumTopicId.toString())
+    return this.client.rest.router.forums
+      .forumTopicRead({ channelId, forumTopicId })
       .then((data) => new ForumTopic(this.client, data.forumTopic));
   }
 
@@ -70,19 +71,17 @@ export class GlobalForumTopicManager extends CacheableStructManager<
    * Update a topic in a forum.
    *
    * @param channelId The ID of the channel containing the forum.
-   * @param forumThreadId The ID of the forum topic.
+   * @param forumTopicId The ID of the forum topic.
    * @param options The options for updating the forum topic.
    * @returns A Promise that resolves to the updated ForumTopic. If cached locally, it will modify that object.
    */
   update(
     channelId: string,
-    forumThreadId: string,
-    options: RestBody<
-      RestPath<"/channels/{channelId}/topics/{forumTopicId}">["patch"]
-    >
+    forumTopicId: number,
+    options: OptionBody<ForumsService["forumTopicUpdate"]>
   ): Promise<ForumTopic> {
-    return this.client.rest.router
-      .updateForumTopic(channelId, forumThreadId, options)
+    return this.client.rest.router.forums
+      .forumTopicUpdate({ channelId, forumTopicId, requestBody: options })
       .then((data) => {
         // This is in the case of which the WS gateway beats us to modifying the topic in the cache. If they haven't, then we do it ourselves.
         const existingTopic = this.client.topics.cache.get(data.forumTopic.id);
@@ -98,12 +97,12 @@ export class GlobalForumTopicManager extends CacheableStructManager<
    * Delete a topic in a forum.
    *
    * @param channelId The ID of the channel containing the forum.
-   * @param forumThreadId The ID of the forum topic.
+   * @param forumTopicId The ID of the forum topic.
    * @returns A Promise that resolves to nothing.
    */
-  delete(channelId: string, forumThreadId: string): Promise<void> {
-    return this.client.rest.router
-      .deleteForumTopic(channelId, forumThreadId)
+  delete(channelId: string, forumTopicId: number): Promise<void> {
+    return this.client.rest.router.forums
+      .forumTopicDelete({ channelId, forumTopicId })
       .then(() => void 0);
   }
 
@@ -111,12 +110,12 @@ export class GlobalForumTopicManager extends CacheableStructManager<
    * Pin a topic in a forum.
    *
    * @param channelId The ID of the channel containing the forum.
-   * @param forumThreadId The ID of the forum topic.
+   * @param forumTopicId The ID of the forum topic.
    * @returns A Promise that resolves to nothing.
    */
-  pin(channelId: string, forumThreadId: string): Promise<void> {
-    return this.client.rest.router
-      .pinForumTopic(channelId, forumThreadId)
+  pin(channelId: string, forumTopicId: number): Promise<void> {
+    return this.client.rest.router.forums
+      .forumTopicPin({ channelId, forumTopicId })
       .then(() => void 0);
   }
 
@@ -124,12 +123,12 @@ export class GlobalForumTopicManager extends CacheableStructManager<
    * Unpin a topic in a forum.
    *
    * @param channelId The ID of the channel containing the forum.
-   * @param forumThreadId The ID of the forum topic.
+   * @param forumTopicId The ID of the forum topic.
    * @returns A Promise that resolves to nothing.
    */
-  unpin(channelId: string, forumThreadId: string): Promise<void> {
-    return this.client.rest.router
-      .unpinForumTopic(channelId, forumThreadId)
+  unpin(channelId: string, forumTopicId: number): Promise<void> {
+    return this.client.rest.router.forums
+      .forumTopicUnpin({ channelId, forumTopicId })
       .then(() => void 0);
   }
 
@@ -137,12 +136,12 @@ export class GlobalForumTopicManager extends CacheableStructManager<
    * Lock a topic in a forum.
    *
    * @param channelId The ID of the channel containing the forum.
-   * @param forumThreadId The ID of the forum topic.
+   * @param forumTopicId The ID of the forum topic.
    * @returns A Promise that resolves to nothing.
    */
-  lock(channelId: string, forumThreadId: string): Promise<void> {
-    return this.client.rest.router
-      .lockForumTopic(channelId, forumThreadId)
+  lock(channelId: string, forumTopicId: number): Promise<void> {
+    return this.client.rest.router.forums
+      .forumTopicLock({ channelId, forumTopicId })
       .then(() => void 0);
   }
 
@@ -150,12 +149,12 @@ export class GlobalForumTopicManager extends CacheableStructManager<
    * Unlock a topic in a forum.
    *
    * @param channelId The ID of the channel containing the forum.
-   * @param forumThreadId The ID
+   * @param forumTopicId The ID
    * @returns A Promise that resolves to nothing.
    */
-  unlock(channelId: string, forumThreadId: string): Promise<void> {
-    return this.client.rest.router
-      .unlockForumTopic(channelId, forumThreadId)
+  unlock(channelId: string, forumTopicId: number): Promise<void> {
+    return this.client.rest.router.forums
+      .forumTopicUnlock({ channelId, forumTopicId })
       .then(() => void 0);
   }
 }

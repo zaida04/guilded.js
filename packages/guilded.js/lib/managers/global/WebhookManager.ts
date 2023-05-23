@@ -1,7 +1,8 @@
 import { Collection } from "@discordjs/collection";
 import { Webhook } from "../../structures/Webhook";
 import { CacheableStructManager } from "./CacheableStructManager";
-import { RestBody, RestPath } from "@guildedjs/guilded-api-typings";
+import { OptionBody } from "../../typings";
+import { WebhookService } from "@guildedjs/api";
 
 /**
  * A manager for interacting with global webhooks. You can retrieve webhooks from the .cache property
@@ -23,10 +24,10 @@ export class GlobalWebhookManager extends CacheableStructManager<
    */
   create(
     serverId: string,
-    options: RestBody<RestPath<"/servers/{serverId}/webhooks">["post"]>
+    options: OptionBody<WebhookService["webhookCreate"]>
   ): Promise<Webhook> {
-    return this.client.rest.router
-      .createWebhook(serverId, options)
+    return this.client.rest.router.webhook
+      .webhookCreate({ serverId, requestBody: options })
       .then((data) => {
         // This is in the case of which the WS gateway beats us to adding the message to the cache. If they haven't, then we do it ourselves.
         const existingWebhook = this.client.webhooks.cache.get(data.webhook.id);
@@ -44,10 +45,10 @@ export class GlobalWebhookManager extends CacheableStructManager<
    */
   fetchMany(
     serverId: string,
-    channelId?: string
+    channelId: string
   ): Promise<Collection<string, Webhook>> {
-    return this.client.rest.router
-      .getWebhooks(serverId, channelId)
+    return this.client.rest.router.webhook
+      .webhookReadMany({ serverId, channelId })
       .then((data) => {
         const webhooks = new Collection<string, Webhook>();
         for (const webhook of data.webhooks) {
@@ -76,8 +77,8 @@ export class GlobalWebhookManager extends CacheableStructManager<
       const existingWebhook = this.client.webhooks.cache.get(webhookId);
       if (existingWebhook) return Promise.resolve(existingWebhook);
     }
-    return this.client.rest.router
-      .getWebhook(serverId, webhookId)
+    return this.client.rest.router.webhook
+      .webhookRead({ serverId, webhookId })
       .then((data) => {
         const newWebhook = new Webhook(this.client, data.webhook);
         if (this.shouldCacheWebhook) this.cache.set(newWebhook.id, newWebhook);
@@ -95,12 +96,10 @@ export class GlobalWebhookManager extends CacheableStructManager<
   update(
     serverId: string,
     webhookId: string,
-    options: RestBody<
-      RestPath<"/servers/{serverId}/webhooks/{webhookId}">["put"]
-    >
+    options: OptionBody<WebhookService["webhookUpdate"]>
   ): Promise<Webhook> {
-    return this.client.rest.router
-      .updateWebhook(serverId, webhookId, options)
+    return this.client.rest.router.webhook
+      .webhookUpdate({ serverId, webhookId, requestBody: options })
       .then((data) => {
         return (
           this.cache.get(data.webhook.id)?._update(data.webhook) ??
@@ -115,7 +114,10 @@ export class GlobalWebhookManager extends CacheableStructManager<
    * @param webhookId The ID of the webhook to delete
    * @returns A Promise that resolves with the deleted webhook, or null if it was not cached
    */
-  delete(serverId: string, webhookId: string): Promise<Webhook | null> {
-    return this.client.rest.router.deleteWebhook(serverId, webhookId);
+  delete(serverId: string, webhookId: string): Promise<void> {
+    return this.client.rest.router.webhook.webhookDelete({
+      serverId,
+      webhookId,
+    });
   }
 }

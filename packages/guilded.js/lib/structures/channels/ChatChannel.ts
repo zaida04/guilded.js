@@ -1,4 +1,5 @@
-import { RestBody, RestPath } from "@guildedjs/guilded-api-typings";
+import { WebhookService } from "@guildedjs/api";
+import { OptionBody } from "../../typings";
 import type { Webhook } from "../Webhook";
 import { Channel } from "./Channel";
 
@@ -14,7 +15,7 @@ export class ChatChannel extends Channel {
    * @returns A promise that resolves with the created webhook.
    */
   createWebhook(
-    options: RestBody<RestPath<"/servers/{serverId}/webhooks">["post"]>
+    options: OptionBody<WebhookService["webhookCreate"]>
   ): Promise<Webhook> {
     return this.client.webhooks.create(this.serverId, options);
   }

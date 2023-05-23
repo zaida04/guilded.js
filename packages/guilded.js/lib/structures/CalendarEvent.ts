@@ -1,4 +1,4 @@
-import type { Schema } from "@guildedjs/guilded-api-typings";
+import { CalendarEventPayload, MentionsPayload, CalendarEventRsvpPayload } from "@guildedjs/api";
 import { Base } from "./Base";
 import type { Client } from "./Client";
 import type { User } from "./User";
@@ -7,7 +7,7 @@ import { Collection } from "@discordjs/collection";
 /**
  * Represents a calendar event on Guilded
  */
-export class CalendarEvent extends Base<Schema<"CalendarEvent">, number> {
+export class CalendarEvent extends Base<CalendarEventPayload, number> {
 	/** The ID of the calendar event (min 1) */
 	readonly id: number;
 	/** The ID of the server */
@@ -31,9 +31,9 @@ export class CalendarEvent extends Base<Schema<"CalendarEvent">, number> {
 	/** Whether this event is private or not */
 	isPrivate?: boolean;
 	/** The mentions in this calendar event */
-	mentions?: Schema<"Mentions">;
+	mentions?: MentionsPayload;
 	/** The cancellations for this event */
-	cancellation?: Schema<"CalendarEvent">["cancellation"];
+	cancellation?: CalendarEventPayload["cancellation"];
 	/** The number of rsvps to allow before waitlisting rsvps (min 1) */
 	rsvpLimit?: number | null;
 	/** A collection of cached rsvps for this calendar event */
@@ -53,7 +53,7 @@ export class CalendarEvent extends Base<Schema<"CalendarEvent">, number> {
 	/** The ID of the user who created this event */
 	readonly createdBy: string;
 
-	constructor(client: Client, data: Schema<"CalendarEvent">) {
+	constructor(client: Client, data: CalendarEventPayload) {
 		super(client, data);
 
 		this.id = data.id;
@@ -96,7 +96,7 @@ export class CalendarEvent extends Base<Schema<"CalendarEvent">, number> {
 		return new Date(this._createdAt);
 	}
 
-	_update(data: Partial<Schema<"CalendarEvent">>): this {
+	_update(data: Partial<CalendarEventPayload>): this {
 		if ("name" in data && typeof data.name !== "undefined") {
 			this.name = data.name;
 		}
@@ -144,7 +144,7 @@ export class CalendarEvent extends Base<Schema<"CalendarEvent">, number> {
 /**
  * Represents a calendar event RSVP
  */
-export class CalendarEventRsvp extends Base<Schema<"CalendarEventRsvp">, string> {
+export class CalendarEventRsvp extends Base<CalendarEventRsvpPayload, string> {
 	/** The ID of the calendar event (min 1) */
 	readonly calendarEventId: number;
 	/** The ID of the channel */
@@ -164,7 +164,7 @@ export class CalendarEventRsvp extends Base<Schema<"CalendarEventRsvp">, string>
 	/** The ISO 8601 timestamp that the rsvp was updated at, if relevant */
 	updatedAt?: string | null;
 
-	constructor(client: Client, data: Schema<"CalendarEventRsvp">) {
+	constructor(client: Client, data: CalendarEventRsvpPayload) {
 		super(client, { ...data, id: data.calendarEventId + "-" + data.userId });
 
 		this.calendarEventId = data.calendarEventId;
@@ -188,7 +188,7 @@ export class CalendarEventRsvp extends Base<Schema<"CalendarEventRsvp">, string>
 		return new Date(this._createdAt);
 	}
 
-	_update(data: Partial<Schema<"CalendarEventRsvp">>): this {
+	_update(data: Partial<CalendarEventRsvpPayload>): this {
 		if ("updatedAt" in data && typeof data.updatedAt !== "undefined") {
 			this.updatedAt = data.updatedAt ?? null;
 		}

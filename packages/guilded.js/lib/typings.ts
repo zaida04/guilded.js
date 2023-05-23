@@ -1,9 +1,14 @@
 import type {
+  ChatService,
+  DocPayload,
   EmbedPayload,
-  RestBody,
-  RestPath,
-  Schema,
-} from "@guildedjs/guilded-api-typings";
+  ListItemPayload,
+  ListItemSummaryPayload,
+  ServerMemberBanPayload,
+  ServerMemberPayload,
+  ServerMemberSummaryPayload,
+  SocialLinkPayload,
+} from "@guildedjs/api";
 import type {
   Channel,
   Embed,
@@ -32,25 +37,23 @@ export interface BareStructureBaseData {
   id: string;
 }
 
+export type OptionBody<T extends (...args: any[]) => any> =
+  Parameters<T>[0]["requestBody"];
+export type OptionQuery<T extends (...args: any[]) => any> = Parameters<T>[0];
+
 export type UpgradedServerMemberPayload = IDUpgradePayload<
-  ServerUpgradePayload<Schema<"ServerMember">>
+  ServerUpgradePayload<ServerMemberPayload>
 >;
-export type UpgradedServerMemberBanPayload = ServerUpgradePayload<
-  Schema<"ServerMemberBan">
->;
+export type UpgradedServerMemberBanPayload =
+  ServerUpgradePayload<ServerMemberBanPayload>;
 export type UpgradedServerMemberSummaryPayload = IDUpgradePayload<
-  ServerUpgradePayload<Schema<"ServerMemberSummary">>
+  ServerUpgradePayload<ServerMemberSummaryPayload>
 >;
 
 export type ServerUpgradePayload<T> = T & { serverId: string };
 export type IDUpgradePayload<T> = T & { id: string };
 export type MessageContent =
-  | (Omit<
-      RestBody<RestPath<"/channels/{channelId}/messages">["post"]>,
-      "embeds"
-    > & {
-      embeds?: Embed[] | EmbedPayload[];
-    })
+  | OptionBody<ChatService["channelMessageCreate"]>
   | string
   | Embed;
 export type MaybePromise<T> = T | Promise<T>;
@@ -82,17 +85,17 @@ export type ClientEvents = {
   channelCreated: (channel: Channel) => unknown;
   channelUpdated: (channel: Channel, oldChannel: Channel | null) => unknown;
   channelDeleted: (channel: Channel) => unknown;
-  docCreated: (doc: Schema<"Doc">) => unknown;
-  docUpdated: (newDoc: Schema<"Doc">, oldDoc: Schema<"Doc"> | null) => unknown;
-  docDeleted: (doc: Schema<"Doc">) => unknown;
-  listItemCreated: (item: Schema<"ListItem">) => unknown;
+  docCreated: (doc: DocPayload) => unknown;
+  docUpdated: (newDoc: DocPayload, oldDoc: DocPayload | null) => unknown;
+  docDeleted: (doc: DocPayload) => unknown;
+  listItemCreated: (item: ListItemPayload) => unknown;
   listItemUpdated: (
-    newItem: Schema<"ListItem">,
-    oldItem: Schema<"ListItem"> | Schema<"ListItemSummary"> | null
+    newItem: ListItemPayload,
+    oldItem: ListItemPayload | ListItemSummaryPayload | null
   ) => unknown;
-  listItemDeleted: (item: Schema<"ListItem">) => unknown;
-  listItemCompleted: (item: Schema<"ListItem">) => unknown;
-  listItemUncompleted: (item: Schema<"ListItem">) => unknown;
+  listItemDeleted: (item: ListItemPayload) => unknown;
+  listItemCompleted: (item: ListItemPayload) => unknown;
+  listItemUncompleted: (item: ListItemPayload) => unknown;
   memberJoined: (member: Member) => unknown;
   memberRemoved: (event: MemberRemovedEvent) => unknown;
   memberUpdated: (event: MemberUpdatedEvent) => unknown;
@@ -100,15 +103,15 @@ export type ClientEvents = {
   memberUnbanned: (event: MemberUnbannedEvent) => unknown;
   memberSocialLinkCreated: (
     serverId: string,
-    socialLink: Schema<"SocialLink">
+    socialLink: SocialLinkPayload
   ) => unknown;
   memberSocialLinkUpdated: (
     serverId: string,
-    socialLink: Schema<"SocialLink">
+    socialLink: SocialLinkPayload
   ) => unknown;
   memberSocialLinkDeleted: (
     serverId: string,
-    socialLink: Schema<"SocialLink">
+    socialLink: SocialLinkPayload
   ) => unknown;
   botServerCreated: (server: Server, user: string) => unknown;
   botServerDeleted: (server: Server, user: string) => unknown;

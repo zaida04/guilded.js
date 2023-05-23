@@ -1,4 +1,4 @@
-import { WSPacket } from "@guildedjs/guilded-api-typings";
+import { WSPacket } from "@guildedjs/api";
 import { constants } from "../../constants";
 import type { DocChannel } from "../../structures";
 import { GatewayEventHandler } from "./GatewayEventHandler";

@@ -3,7 +3,7 @@ import { Member, MemberBan, PartialMember } from "../../structures/Member";
 import { CacheableStructManager } from "./CacheableStructManager";
 import { Collection } from "@discordjs/collection";
 import { buildMemberKey } from "../../util";
-import { Schema } from "@guildedjs/guilded-api-typings";
+import { SocialLinkPayload } from "@guildedjs/api";
 
 /**
  * A class representing a manager for Discord server members.
@@ -23,18 +23,18 @@ export class GlobalMemberManager extends CacheableStructManager<
   /**
    * Fetches a member from a server.
    * @param serverId The ID of the server to fetch the member from.
-   * @param memberId The ID of the member to fetch.
+   * @param userId The ID of the member to fetch.
    * @param force Whether to force a fetch from the API.
    * @returns A Promise that resolves with the fetched member.
    */
-  fetch(serverId: string, memberId: string, force?: boolean): Promise<Member> {
-    const memberKey = buildMemberKey(serverId, memberId);
+  fetch(serverId: string, userId: string, force?: boolean): Promise<Member> {
+    const memberKey = buildMemberKey(serverId, userId);
     if (!force) {
       const existingMember = this.client.members.cache.get(memberKey);
       if (existingMember) return Promise.resolve(existingMember);
     }
-    return this.client.rest.router
-      .getMember(serverId, memberId)
+    return this.client.rest.router.members
+      .serverMemberRead({ serverId, userId })
       .then((data) => {
         const newMember = new Member(this.client, {
           ...data.member,
@@ -56,32 +56,34 @@ export class GlobalMemberManager extends CacheableStructManager<
    * @returns A Promise that resolves with a collection of partial members.
    */
   fetchMany(serverId: string): Promise<Collection<string, PartialMember>> {
-    return this.client.rest.router.getMembers(serverId).then((data) => {
-      const members = new Collection<string, PartialMember>();
-      for (const member of data.members) {
-        const newMember = new PartialMember(this.client, {
-          serverId,
-          id: member.user.id,
-          ...member,
-        });
-        members.set(newMember.id, newMember);
-      }
-      return members;
-    });
+    return this.client.rest.router.members
+      .serverMemberReadMany({ serverId })
+      .then((data) => {
+        const members = new Collection<string, PartialMember>();
+        for (const member of data.members) {
+          const newMember = new PartialMember(this.client, {
+            serverId,
+            id: member.user.id,
+            ...member,
+          });
+          members.set(newMember.id, newMember);
+        }
+        return members;
+      });
   }
 
   /**
    * Kicks a member from a server.
    * @param serverId The ID of the server to kick the member from.
-   * @param memberId The ID of the member to kick.
+   * @param userId The ID of the member to kick.
    * @returns A Promise that resolves with the kicked member, or null if the member was not cached.
    */
-  kick(serverId: string, memberId: string): Promise<Member | null> {
-    return this.client.rest.router
-      .kickMember(serverId, memberId)
+  kick(serverId: string, userId: string): Promise<Member | null> {
+    return this.client.rest.router.members
+      .serverMemberDelete({ serverId, userId })
       .then(
         (_) =>
-          this.client.members.cache.get(buildMemberKey(serverId, memberId)) ??
+          this.client.members.cache.get(buildMemberKey(serverId, userId)) ??
           null
       );
   }
@@ -114,75 +116,77 @@ export class GlobalMemberManager extends CacheableStructManager<
   /**
    * Gets a list of the roles assigned to a member using the ID of the member.
    * @param serverId The ID of the server to get the member roles from.
-   * @param memberId The ID of the member to get the roles for.
+   * @param userId The ID of the member to get the roles for.
    * @returns A Promise that resolves with an array of role IDs.
    */
-  getRoles(serverId: string, memberId: string): Promise<number[]> {
-    return this.client.rest.router
-      .getMemberRoles(serverId, memberId)
+  getRoles(serverId: string, userId: string): Promise<number[]> {
+    return this.client.rest.router.roleMembership
+      .roleMembershipReadMany({ serverId, userId })
       .then((data) => data.roleIds);
   }
 
   /**
    * Updates a member's nickname. Returns the new name.
    * @param serverId The ID of the server to update the member nickname for.
-   * @param memberId The ID of the member to update the nickname for.
+   * @param userId The ID of the member to update the nickname for.
    * @param newNickname The new nickname for the member.
    * @returns A Promise that resolves with the updated nickname.
    */
   updateNickname(
     serverId: string,
-    memberId: string,
+    userId: string,
     newNickname: string
   ): Promise<string> {
-    return this.client.rest.router
-      .updateMemberNickname(serverId, memberId, newNickname)
+    return this.client.rest.router.members
+      .memberNicknameUpdate({
+        serverId,
+        userId,
+        requestBody: { nickname: newNickname },
+      })
       .then((data) => data.nickname);
   }
 
   /**
    * Deletes a member's nickname.
    * @param serverId The ID of the server to delete the member nickname from.
-   * @param memberId The ID of the member to delete the nickname for.
+   * @param userId The ID of the member to delete the nickname for.
    * @returns A Promise that resolves with no value upon completion.
    */
-  resetNickname(serverId: string, memberId: string): Promise<void> {
-    return this.client.rest.router
-      .deleteMemberNickname(serverId, memberId)
+  resetNickname(serverId: string, userId: string): Promise<void> {
+    return this.client.rest.router.members
+      .memberNicknameDelete({ serverId, userId })
       .then(() => void 0);
   }
 
   /**
    * Awards XP to a member.
    * @param serverId The ID of the server to award XP on.
-   * @param memberId The ID of the member to award XP to.
+   * @param userId The ID of the member to award XP to.
    * @param amount The amount of XP to award.
    * @returns A Promise that resolves with the member's new total XP.
    */
-  giveXP(serverId: string, memberId: string, amount: number): Promise<number> {
-    return this.client.rest.router
-      .awardMemberXP(serverId, memberId, amount)
+  giveXP(serverId: string, userId: string, amount: number): Promise<number> {
+    return this.client.rest.router.serverXp
+      .serverXpForUserCreate({ serverId, userId, requestBody: { amount } })
       .then((data) => data.total);
   }
 
   /**
    * Fetch a member's social links.
    * @param serverId The ID of the server.
-   * @param memberId The ID of the member.
+   * @param userId The ID of the member.
    * @param type The type of social link to fetch.
    * @returns A Promise that resolves with the member's social link.
    */
   fetchSocialLinks(
     serverId: string,
-    memberId: string,
-    type: Schema<"SocialLink">["type"]
-  ): Promise<Schema<"SocialLink">> {
-    return this.client.rest.router
-      .getMemberSocialLinks(serverId, memberId, type)
+    userId: string,
+    type: SocialLinkPayload["type"]
+  ): Promise<SocialLinkPayload> {
+    return this.client.rest.router.socialLinks
+      .memberSocialLinkRead({ serverId, userId, socialLinkType: type })
       .then((data) => {
-        const existingMember = this.cache.get(
-          buildMemberKey(serverId, memberId)
-        );
+        const existingMember = this.cache.get(buildMemberKey(serverId, userId));
         if (this.shouldCacheSocialLinks)
           existingMember?.socialLinks.set(
             data.socialLink.type,

@@ -3,13 +3,11 @@ import { Base } from "../Base";
 import type { Client } from "../Client";
 import type { Message } from "../Message";
 import type {
-  ChannelType as APIChannelType,
-  RestBody,
-  RestPath,
-  RestQuery,
-  Schema,
-} from "@guildedjs/guilded-api-typings";
-import type { MessageContent } from "../../typings";
+  ChannelsService,
+  ChatService,
+  ServerChannelPayload,
+} from "@guildedjs/api";
+import type { MessageContent, OptionBody } from "../../typings";
 
 /**
  * Represents a channel in a server on Guilded.
@@ -70,7 +68,7 @@ export class Channel extends Base {
 
   constructor(
     client: Client,
-    data: Schema<"ServerChannel"> & { deleted?: boolean }
+    data: ServerChannelPayload & { deleted?: boolean }
   ) {
     super(client, data);
     this.serverId = data.serverId;
@@ -103,9 +101,7 @@ export class Channel extends Base {
     return this._updatedAt ? new Date(this._updatedAt) : null;
   }
 
-  _update(
-    data: Partial<Schema<"ServerChannel"> & { deleted?: boolean }>
-  ): this {
+  _update(data: Partial<ServerChannelPayload & { deleted?: boolean }>): this {
     if ("name" in data && typeof data.name !== "undefined") {
       this.name = data.name;
     }
@@ -146,7 +142,7 @@ export class Channel extends Base {
    * @param options - Additional options for the message fetch.
    */
   fetchMessages(
-    options?: RestQuery<RestPath<"/channels/{channelId}/messages">["get"]>
+    options?: OptionBody<ChatService["channelMessageReadMany"]>
   ): Promise<Collection<string, Message>> {
     return this.client.messages.fetchMany(this.id, options ?? {});
   }
@@ -163,7 +159,7 @@ export class Channel extends Base {
    * Update the channel with new data.
    * @param options - The new data for the channel.
    */
-  update(options: RestBody<RestPath<"/channels/{channelId}">["patch"]>) {
+  update(options: OptionBody<ChannelsService["channelUpdate"]>) {
     return this.client.channels.update(this.id, options);
   }
 
@@ -211,7 +207,10 @@ export enum ChannelType {
 /**
  * A map of API channel types to channel types.
  */
-export const channelTypeToEnumMap: Record<APIChannelType, ChannelType> = {
+export const channelTypeToEnumMap: Record<
+  ServerChannelPayload["type"],
+  ChannelType
+> = {
   announcements: ChannelType.Announcements,
   chat: ChannelType.Chat,
   calendar: ChannelType.Calendar,

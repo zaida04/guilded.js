@@ -19,4 +19,4 @@ export {
 	EmbedAuthor,
 	EmbedFooter,
 	EmbedImage,
-} from "@guildedjs/guilded-api-typings";
+} from "@guildedjs/api";

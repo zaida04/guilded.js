@@ -11,8 +11,8 @@ export class GlobalGroupManager extends GlobalManager {
    * @returns A Promise that resolves when the operation is complete.
    */
   addMember(groupId: string, userId: string): Promise<void> {
-    return this.client.rest.router
-      .addMemberToGroup(groupId, userId)
+    return this.client.rest.router.groupMembership
+      .groupMembershipCreate({ groupId, userId })
       .then(() => void 0);
   }
 
@@ -23,8 +23,8 @@ export class GlobalGroupManager extends GlobalManager {
    * @returns A Promise that resolves when the operation is complete.
    */
   removeMember(groupId: string, userId: string): Promise<void> {
-    return this.client.rest.router
-      .removeMemberFromGroup(groupId, userId)
+    return this.client.rest.router.groupMembership
+      .groupMembershipDelete({ groupId, userId })
       .then(() => void 0);
   }
 }

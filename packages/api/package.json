@@ -1,0 +1,81 @@
+{
+  "name": "@guildedjs/api",
+  "version": "0.1.0",
+  "description": "Multi-use wrapper over the entire Guilded API. Utilities for making REST requests to the Guilded API with ratelimit handling. Also contains utilities for connecting to Guilded's WebSocket gateway and receiving events.",
+  "author": "Zaid \"Nico\" <contact@nico.engineer>",
+  "license": "MIT",
+  "main": "dist/index.js",
+  "types": "types/index.d.ts",
+  "scripts": {
+    "build": "tsc && gen-esm-wrapper . ./dist/index.mjs",
+    "build:typecheck": "tsc --noEmit",
+    "prepublishOnly": "rimraf dist/ && rimraf types/ && pnpm run build",
+    "generate:api:ws": "openapi-typescript \"https://www.guilded.gg/api/v1/socket-open-api-schema.json\" --output lib/generated/api-typings/v1/ws.ts",
+    "generate:api:rest": "openapi-typescript \"https://www.guilded.gg/api/v1/open-api-schema.json\" --output lib/generated/api-typings/v1/rest.ts",
+    "generate:api:router": "pnpx openapi-typescript-codegen --input \"https://www.guilded.gg/api/v1/open-api-schema.json\" --output lib/generated/router --name GuildedRouter --useOptions --postfixModels Payload --useUnionTypes --exportSchemas true"
+  },
+  "devDependencies": {
+    "@types/node-fetch": "2.6.4",
+    "@types/qs": "^6.9.7",
+    "@types/ws": "8.5.4",
+    "openapi-typescript": "^6.2.4",
+    "openapi-typescript-codegen": "^0.24.0",
+    "typed-emitter": "2.1.0",
+    "typescript": "5.0.4",
+    "ws": "8.13.0"
+  },
+  "dependencies": {
+    "form-data": "^4.0.0",
+    "node-fetch": "2.6.11",
+    "qs": "^6.11.2",
+    "typed-emitter": "2.1.0"
+  },
+  "contributors": [
+    {
+      "name": "Zaid \"Nico\"",
+      "email": "contact@nico.engineer",
+      "url": "https://github.com/zaida04"
+    },
+    {
+      "name": "Skillz4Killz",
+      "email": "guildedjs@drskillz.33mail.com",
+      "url": "https://github.com/Skillz4Killz"
+    },
+    {
+      "name": "Uhuh \"Dylan\"",
+      "email": "dylan@panku.io",
+      "url": "https://github.com/uhuh"
+    },
+    {
+      "name": "DaStormer",
+      "email": "dastormer@stormdevelopmentz.xyz",
+      "url": "https://github.com/DaStormer"
+    }
+  ],
+  "exports": {
+    ".": {
+      "require": "./dist/index.js",
+      "import": "./dist/index.mjs"
+    },
+    "./": "./"
+  },
+  "keywords": [
+    "guilded",
+    "guildedjs",
+    "guilded.js",
+    "guilded-api"
+  ],
+  "files": [
+    "dist",
+    "types"
+  ],
+  "homepage": "https://github.com/zaida04/guilded.js/tree/main/packages/rest#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zaida04/guilded.js.git"
+  },
+  "bugs": {
+    "url": "https://github.com/zaida04/guilded.js/issues"
+  },
+  "gitHead": "eee38a19e0bfa812d7136cc78a6bc99e0b402b0c"
+}

@@ -6,23 +6,18 @@
   "license": "MIT",
   "types": "types/index.d.ts",
   "main": "dist/index.js",
-  "typedoc": {
-    "entryPoint": "lib/index.ts"
-  },
   "scripts": {
     "build": "tsc && gen-esm-wrapper . ./dist/index.mjs",
     "build:typecheck": "tsc --noEmit",
     "prepublishOnly": "rimraf dist/ && rimraf types/ && pnpm run build"
   },
   "devDependencies": {
-    "@guildedjs/guilded-api-typings": "workspace:*",
     "@types/node": "18.16.12",
     "typescript": "5.0.4"
   },
   "dependencies": {
     "@discordjs/collection": "^1.5.1",
-    "@guildedjs/rest": "workspace:*",
-    "@guildedjs/ws": "workspace:*",
+    "@guildedjs/api": "workspace:*",
     "typed-emitter": "2.1.0"
   },
   "contributors": [

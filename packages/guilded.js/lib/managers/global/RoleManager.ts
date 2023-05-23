@@ -11,12 +11,12 @@ export class GlobalRoleManager extends GlobalManager {
    * @param amount The amount of XP to award.
    * @returns A Promise that resolves with the total XP awarded to the role.
    */
-  giveXP(serverId: string, roleId: number, amount: number): Promise<number> {
-    return this.client.rest.router.awardRoleXP(
+  giveXP(serverId: string, roleId: number, amount: number): Promise<void> {
+    return this.client.rest.router.serverXp.serverXpForRoleCreate({
       serverId,
-      roleId.toString(),
-      amount
-    );
+      roleId,
+      requestBody: { amount },
+    });
   }
 
   /**
@@ -28,11 +28,11 @@ export class GlobalRoleManager extends GlobalManager {
    */
   addRoleToMember(
     serverId: string,
-    memberId: string,
+    userId: string,
     roleId: number
   ): Promise<void> {
-    return this.client.rest.router
-      .assignRoleToMember(serverId, memberId, roleId)
+    return this.client.rest.router.roleMembership
+      .roleMembershipCreate({ serverId, userId, roleId })
       .then(() => void 0);
   }
 
@@ -45,11 +45,11 @@ export class GlobalRoleManager extends GlobalManager {
    */
   removeRoleFromMember(
     serverId: string,
-    memberId: string,
+    userId: string,
     roleId: number
   ): Promise<void> {
-    return this.client.rest.router
-      .removeRoleFromMember(serverId, memberId, roleId)
+    return this.client.rest.router.roleMembership
+      .roleMembershipDelete({ serverId, userId, roleId })
       .then(() => void 0);
   }
 }
