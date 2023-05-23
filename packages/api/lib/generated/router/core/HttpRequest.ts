@@ -8,10 +8,10 @@ export class HttpRequest {
   constructor(public readonly rest: RestManager) {}
 
   public request<T>(options: ApiRequestOptions) {
-    const formattedPath = options.url;
+    let formattedPath = options.url;
     if (options.path) {
       for (const key in options.path) {
-        formattedPath.replace(`{${key}}`, options.path[key]);
+        formattedPath = formattedPath.replace(`{${key}}`, options.path[key]);
       }
     }
 
