@@ -1,14 +1,14 @@
-import type { GetStaticProps, NextPage } from "next";
+import type { NextPage } from "next";
 import { LayoutWrapper } from "../../components/LayoutWrapper";
-import { PackageBadge } from "../../components/PackageBadge";
-import fetchDocs from "../../lib/loader";
+// import { PackageBadge } from "../../components/PackageBadge";
+// import fetchDocs from "../../lib/loader.ts.ignore";
 
 type Props = { packages: string[] };
-export const getStaticProps: GetStaticProps<Props> = async () => {
-  const docs = fetchDocs();
-  const packageNames = docs.children!.map((x) => x.name);
-  return { props: { packages: packageNames } };
-};
+// export const getStaticProps: GetStaticProps<Props> = async () => {
+// 	const docs = fetchDocs();
+// 	const packageNames = docs.children!.map((x) => x.name);
+// 	return { props: { packages: packageNames } };
+// };
 
 const Docs: NextPage<Props> = ({ packages }) => {
   return (

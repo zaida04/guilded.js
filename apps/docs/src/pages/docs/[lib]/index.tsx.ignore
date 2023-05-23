@@ -2,7 +2,7 @@ import type { GetStaticPaths, GetStaticProps, NextPage } from "next";
 import { LayoutWrapper } from "../../../components/LayoutWrapper";
 import { EntityChildCard } from "../../../components/entity/EntityCard";
 import { EntityList } from "../../../components/entity/EntityList";
-import fetchDocs from "../../../lib/loader";
+import fetchDocs from "../../../lib/loader.ts.ignore";
 import type { EntityType } from "../../../lib/types";
 import { getUnscopedPackageName } from "../../../lib/util";
 

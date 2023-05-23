@@ -2,8 +2,8 @@
 /* eslint-disable sonarjs/no-nested-switch */
 import Link from "next/link";
 import type { DeclarationReflection } from "typedoc/dist/lib/models/reflections/declaration";
-import type { Type } from "./util";
-import { unionMap } from "./util";
+import type { Type } from "./util.ts.ignore";
+import { unionMap } from "./util.ts.ignore";
 
 const resultTransform = (lib: string) => (type: Type, index: number) => {
 	if (type.isLink) return <Link className="text-guilded hover:underline underline-offset-2" href={`/docs/${type.pkg ?? lib}/${type.name}`} key={index}>{type.name}</Link>

@@ -3,7 +3,7 @@ import type { DeclarationReflection } from "typedoc/dist/lib/models/reflections/
 import { LayoutWrapper } from "../../../components/LayoutWrapper";
 import { Qualities } from "../../../components/quality/Qualities";
 import { QualityCard } from "../../../components/quality/QualityCard";
-import fetchDocs from "../../../lib/loader";
+import fetchDocs from "../../../lib/loader.ts.ignore";
 import type { Entity } from "../../../lib/types";
 import { getUnscopedPackageName } from "../../../lib/util";
 

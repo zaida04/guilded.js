@@ -1,6 +1,6 @@
 import Link from "next/link";
 import type { DeclarationReflection } from "typedoc/dist/lib/models/reflections/declaration";
-import { unionMap } from "./util";
+import { unionMap } from "./util.ts.ignore";
 
 type ParamTypeValue = { isLink?: boolean, name: string, pkg?: string };
 type ParamType = { name: string, type: ParamTypeValue };
