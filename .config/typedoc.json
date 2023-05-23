@@ -1,0 +1,7 @@
+{
+    "$schema": "https://typedoc.org/schema.json",
+    "entryPointStrategy": "packages",
+    "entryPoints": ["../packages/*"],
+    "name": "Guilded.JS",
+    "readme": "../README.md"
+}

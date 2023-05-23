@@ -6,9 +6,6 @@
   "license": "MIT",
   "types": "types/index.d.ts",
   "main": "dist/index.js",
-  "typedoc": {
-    "entryPoint": "lib/index.ts"
-  },
   "scripts": {
     "build": "tsc && gen-esm-wrapper . ./dist/index.mjs",
     "build:typecheck": "tsc --noEmit",
