@@ -5,6 +5,7 @@
   "author": "Zaid \"Nico\" <contact@nico.engineer>",
   "license": "MIT",
   "main": "./dist/index.js",
+  "private": true,
   "scripts": {
     "build": "tsc",
     "docker:build": "docker build -t guildedjs/proxy-service:latest -f ./Dockerfile ../../",

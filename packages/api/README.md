@@ -4,7 +4,7 @@
 [![npm](https://img.shields.io/npm/v/@guildedjs/api?color=crimson&logo=npm)](https://www.npmjs.com/package/@guildedjs/api)
 [![CI workflows](https://github.com/zaida04/guilded.js/actions/workflows/ci.yml/badge.svg)](https://github.com/zaida04/guilded.js/actions/workflows/ci.yml)
 
-Multi-use wrapper over the entire Guilded API. Utilities for making REST requests to the Guilded API with ratelimit handling. Also contains utilities for connecting to Guilded's WebSocket gateway and receiving events.
+Multi-use wrapper over the entire Guilded API. Covers rest requests and ws connections.
 
 > ⚠️ If you intend to use `guilded.js` you won't need to install this, as it's already a dependency of that package.
 

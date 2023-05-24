@@ -4,7 +4,7 @@
 [![npm](https://img.shields.io/npm/v/@guildedjs/gil?color=crimson&logo=npm)](https://www.npmjs.com/package/@guildedjs/gil)
 [![CI workflows](https://github.com/zaida04/guilded.js/actions/workflows/ci.yml/badge.svg)](https://github.com/zaida04/guilded.js/actions/workflows/ci.yml)
 
-Framework for `guilded.js` that allows you to build bots with ease.
+Command & event framework for `guilded.js` that allows you to build bots with ease.
 
 ## Installation
 

@@ -13,7 +13,10 @@ const { Client } = require("guilded.js");
 // import { Client } from "guilded.js";
 const client = new Client({ token: "TOKEN_HERE" });
 
-client.on("ready", () => console.log(`Bot is successfully logged in`));
+client.on("ready", () => {
+  console.log(`Bot is successfully logged in`);
+});
+
 client.on("messageCreated", (message) => {
   if (message.content === "poggers") {
     return message.reply("test indeed");
@@ -25,13 +28,13 @@ client.login();
 
 ## 📝 About
 
-`guilded.js` is a library written in TypeScript usable in either TypeScript or JavaScript projects. It provides structures, abstraction, and utilities for interaction between the guilded API and your bot. It includes the other various pieces that make up the Guilded.JS collection of packages.
+`guilded.js` is a library written in TypeScript usable in either TypeScript or JavaScript projects. It provides structures, abstraction, and utilities for interaction between your bot and the Guilded API.
 
 ## 📥 Installation
 
 <a href="https://npmjs.org/package/guilded.js"><img src="https://nodei.co/npm/guilded.js.png" alt="NPM"></a>
 
-**Recommended that you use node v16+**
+**Recommended that you use node v18+**
 
 - `npm install guilded.js`
 - `yarn add guilded.js`

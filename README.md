@@ -21,7 +21,7 @@ This repo serves as a monorepo that houses several packages, mainly the `guilded
 
 - `guilded.js` (**[GitHub](https://github.com/zaida04/guilded.js/tree/main/packages/guilded.js#readme), [NPM](https://www.npmjs.com/package/guilded.js)**) - Main library that ties everything together. Has additional logic for caching.
 - `@guildedjs/gil` (**[GitHub](https://github.com/zaida04/guilded.js/tree/main/packages/gil#readme), [NPM](https://www.npmjs.com/package/@guildedjs/gil)**) - Framework allowing you to build bots with ease.
-- `@guildedjs/api` (**[GitHub](https://github.com/zaida04/guilded.js/tree/main/packages/api#readme), [NPM](https://www.npmjs.com/package/@guildedjs/api)**) - Multi-use wrapper over the entire Guilded APi. Utilities for making REST requests to the Guilded API with ratelimit handling. Also contains utilities for connecting to Guilded's WebSocket gateway and receiving events.
+- `@guildedjs/api` (**[GitHub](https://github.com/zaida04/guilded.js/tree/main/packages/api#readme), [NPM](https://www.npmjs.com/package/@guildedjs/api)**) - Multi-use wrapper over the entire Guilded API. Covers rest requests and ws connections.
 
 ## 📥 Installation
 
