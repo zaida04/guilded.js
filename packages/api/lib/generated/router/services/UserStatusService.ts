@@ -1,7 +1,5 @@
 /* istanbul ignore file */
-
 /* eslint-disable */
-
 import { HttpRequest } from "../core/HttpRequest";
 
 export class UserStatusService {
@@ -27,6 +25,10 @@ export class UserStatusService {
        * Emote ID to apply
        */
       emoteId: number;
+      /**
+       * An ISO 8601 timestamp that will be used to indicate when an expiration occurs. Expiration usually will not occur exactly at this time. Bot logic should not expect a guarantee of timing as a result, but can expect that it'll happen very shortly afterwards
+       */
+      expiresAt?: string;
     };
   }): Promise<void> {
     return this.httpRequest.request({

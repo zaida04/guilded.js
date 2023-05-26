@@ -201,6 +201,46 @@ export class Client extends (EventEmitter as unknown as new () => TypedEmitter<C
   fetchServers(): Promise<Collection<string, Server>> {
     return this.users.fetchServers(this.user!.id);
   }
+
+  /**
+   * Set current logged in client's status
+   * @param options The options for setting the status.
+   * @param options.content The content of the status.
+   * @param options.emoteId The id of the emote to use for the status.
+   * @param options.expiresAt The time the status should expire.
+   */
+  setStatus(options: {
+    content?: string;
+    emoteId: number;
+    expiresAt?: Date | string | number;
+  }) {
+    let resolvedDate;
+    if (options.expiresAt instanceof Date) {
+      resolvedDate = options.expiresAt;
+    } else if (typeof options.expiresAt === "string") {
+      resolvedDate = new Date(options.expiresAt);
+    } else if (typeof options.expiresAt === "number") {
+      resolvedDate = new Date(Date.now() + options.expiresAt);
+    }
+
+    return this.rest.router.userStatus.userStatusCreate({
+      userId: this.user!.id,
+      requestBody: {
+        content: options.content,
+        emoteId: options.emoteId,
+        expiresAt: resolvedDate?.toISOString() ?? undefined,
+      },
+    });
+  }
+
+  /**
+   * Clear current logged in client's status
+   */
+  clearStatus() {
+    return this.rest.router.userStatus.userStatusDelete({
+      userId: this.user!.id,
+    });
+  }
 }
 
 /**
