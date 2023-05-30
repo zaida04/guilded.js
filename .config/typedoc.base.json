@@ -1,5 +1,4 @@
 {
     "$schema": "https://typedoc.org/schema.json",
-    "exclude": ["**/node_modules/**", "**/dist/**", "**/*.test.ts", "**/*.d.ts"],
-    "excludeExternals": true
+    "exclude": ["**/node_modules/**", "**/dist/**", "**/*.test.ts", "**/*.d.ts"]
 }
