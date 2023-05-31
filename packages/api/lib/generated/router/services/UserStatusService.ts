@@ -1,9 +1,10 @@
 /* istanbul ignore file */
 /* eslint-disable */
-import { HttpRequest } from "../core/HttpRequest";
+import type { CancelablePromise } from "../core/CancelablePromise";
+import type { BaseHttpRequest } from "../core/BaseHttpRequest";
 
 export class UserStatusService {
-  constructor(public readonly httpRequest: HttpRequest) {}
+  constructor(public readonly httpRequest: BaseHttpRequest) {}
 
   /**
    * Update your status
@@ -30,7 +31,7 @@ export class UserStatusService {
        */
       expiresAt?: string;
     };
-  }): Promise<void> {
+  }): CancelablePromise<void> {
     return this.httpRequest.request({
       method: "PUT",
       url: "/users/{userId}/status",
@@ -52,7 +53,7 @@ export class UserStatusService {
     userId,
   }: {
     userId: string | "@me";
-  }): Promise<void> {
+  }): CancelablePromise<void> {
     return this.httpRequest.request({
       method: "DELETE",
       url: "/users/{userId}/status",

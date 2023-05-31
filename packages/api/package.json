@@ -10,16 +10,22 @@
     "build": "tsc && gen-esm-wrapper . ./dist/index.mjs",
     "build:typecheck": "tsc --noEmit",
     "prepublishOnly": "rimraf dist/ && rimraf types/ && pnpm run build",
-    "generate:api:ws": "openapi-typescript \"https://www.guilded.gg/api/v1/socket-open-api-schema.json\" --output lib/generated/api-typings/v1/ws.ts",
-    "generate:api:rest": "openapi-typescript \"https://www.guilded.gg/api/v1/open-api-schema.json\" --output lib/generated/api-typings/v1/rest.ts",
-    "generate:api:router": "pnpx openapi-typescript-codegen --input \"https://www.guilded.gg/api/v1/open-api-schema.json\" --output lib/generated/router --name GuildedRouter --useOptions --postfixModels Payload --useUnionTypes --exportSchemas true"
+    "router:preserve": "ts-node scripts/pre-gen-router.ts",
+    "router:restore": "ts-node scripts/post-gen-router.ts",
+    "generate:ws": "openapi-typescript \"https://www.guilded.gg/api/v1/socket-open-api-schema.json\" --output lib/generated/api-typings/v1/ws.ts",
+    "generate:rest": "openapi-typescript \"https://www.guilded.gg/api/v1/open-api-schema.json\" --output lib/generated/api-typings/v1/rest.ts",
+    "generate:long:router": "pnpx openapi-typescript-codegen --input \"https://www.guilded.gg/api/v1/open-api-schema.json\" --output lib/generated/router --name GuildedRouter --useOptions --postfixModels Payload --useUnionTypes",
+    "generate:router": "pnpm router:preserve && pnpm generate:long:router && prettier -w lib/generated/router/**/*.ts && pnpm router:restore"
   },
   "devDependencies": {
+    "@types/fs-extra": "^11.0.1",
     "@types/node-fetch": "2.6.4",
     "@types/qs": "^6.9.7",
     "@types/ws": "8.5.4",
+    "fs-extra": "^11.1.1",
     "openapi-typescript": "^6.2.4",
     "openapi-typescript-codegen": "^0.24.0",
+    "ts-node": "10.9.1",
     "typescript": "5.0.4"
   },
   "dependencies": {

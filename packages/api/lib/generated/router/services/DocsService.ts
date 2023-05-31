@@ -1,12 +1,12 @@
 /* istanbul ignore file */
-
 /* eslint-disable */
 import type { Doc } from "../models/Doc";
 
-import { HttpRequest } from "../core/HttpRequest";
+import type { CancelablePromise } from "../core/CancelablePromise";
+import type { BaseHttpRequest } from "../core/BaseHttpRequest";
 
 export class DocsService {
-  constructor(public readonly httpRequest: HttpRequest) {}
+  constructor(public readonly httpRequest: BaseHttpRequest) {}
 
   /**
    * Create a doc
@@ -28,7 +28,7 @@ export class DocsService {
        */
       content: Record<string, any> | string;
     };
-  }): Promise<{
+  }): CancelablePromise<{
     doc: Doc;
   }> {
     return this.httpRequest.request({
@@ -56,7 +56,7 @@ export class DocsService {
     channelId: string;
     before?: string;
     limit?: number;
-  }): Promise<{
+  }): CancelablePromise<{
     docs: Array<Doc>;
   }> {
     return this.httpRequest.request({
@@ -83,7 +83,7 @@ export class DocsService {
   }: {
     channelId: string;
     docId: number;
-  }): Promise<{
+  }): CancelablePromise<{
     doc: Doc;
   }> {
     return this.httpRequest.request({
@@ -118,7 +118,7 @@ export class DocsService {
        */
       content: string;
     };
-  }): Promise<{
+  }): CancelablePromise<{
     doc: Doc;
   }> {
     return this.httpRequest.request({
@@ -144,7 +144,7 @@ export class DocsService {
   }: {
     channelId: string;
     docId: number;
-  }): Promise<void> {
+  }): CancelablePromise<void> {
     return this.httpRequest.request({
       method: "DELETE",
       url: "/channels/{channelId}/docs/{docId}",

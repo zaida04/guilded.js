@@ -1,13 +1,13 @@
 /* istanbul ignore file */
-
 /* eslint-disable */
 import type { CalendarEvent } from "../models/CalendarEvent";
 import type { CalendarEventRsvp } from "../models/CalendarEventRsvp";
 
-import { HttpRequest } from "../core/HttpRequest";
+import type { CancelablePromise } from "../core/CancelablePromise";
+import type { BaseHttpRequest } from "../core/BaseHttpRequest";
 
 export class CalendarEventsService {
-  constructor(public readonly httpRequest: HttpRequest) {}
+  constructor(public readonly httpRequest: BaseHttpRequest) {}
 
   /**
    * Create a calendar event
@@ -45,7 +45,7 @@ export class CalendarEventsService {
        */
       url?: string;
       /**
-       * The color of the event when viewing in the calendar
+       * The integer value corresponds to the decimal RGB representation for the color. The color of the event when viewing in the calendar
        */
       color?: number;
       /**
@@ -113,7 +113,7 @@ export class CalendarEventsService {
         >;
       };
     };
-  }): Promise<{
+  }): CancelablePromise<{
     calendarEvent: CalendarEvent;
   }> {
     return this.httpRequest.request({
@@ -143,7 +143,7 @@ export class CalendarEventsService {
     before?: string;
     after?: string;
     limit?: number;
-  }): Promise<{
+  }): CancelablePromise<{
     calendarEvents: Array<CalendarEvent>;
   }> {
     return this.httpRequest.request({
@@ -171,7 +171,7 @@ export class CalendarEventsService {
   }: {
     channelId: string;
     calendarEventId: number;
-  }): Promise<{
+  }): CancelablePromise<{
     calendarEvent: CalendarEvent;
   }> {
     return this.httpRequest.request({
@@ -219,7 +219,7 @@ export class CalendarEventsService {
        */
       url?: string;
       /**
-       * The color of the event when viewing in the calendar
+       * The integer value corresponds to the decimal RGB representation for the color. The color of the event when viewing in the calendar
        */
       color?: number;
       /**
@@ -254,7 +254,7 @@ export class CalendarEventsService {
         description?: string;
       };
     };
-  }): Promise<{
+  }): CancelablePromise<{
     calendarEvent: CalendarEvent;
   }> {
     return this.httpRequest.request({
@@ -280,7 +280,7 @@ export class CalendarEventsService {
   }: {
     channelId: string;
     calendarEventId: number;
-  }): Promise<void> {
+  }): CancelablePromise<void> {
     return this.httpRequest.request({
       method: "DELETE",
       url: "/channels/{channelId}/events/{calendarEventId}",
@@ -304,7 +304,7 @@ export class CalendarEventsService {
     channelId: string;
     calendarEventId: number;
     userId: string | "@me";
-  }): Promise<{
+  }): CancelablePromise<{
     calendarEventRsvp: CalendarEventRsvp;
   }> {
     return this.httpRequest.request({
@@ -338,7 +338,7 @@ export class CalendarEventsService {
        */
       status: "going" | "maybe" | "declined" | "invited";
     };
-  }): Promise<{
+  }): CancelablePromise<{
     calendarEventRsvp: CalendarEventRsvp;
   }> {
     return this.httpRequest.request({
@@ -367,7 +367,7 @@ export class CalendarEventsService {
     channelId: string;
     calendarEventId: number;
     userId: string | "@me";
-  }): Promise<void> {
+  }): CancelablePromise<void> {
     return this.httpRequest.request({
       method: "DELETE",
       url: "/channels/{channelId}/events/{calendarEventId}/rsvps/{userId}",
@@ -390,7 +390,7 @@ export class CalendarEventsService {
   }: {
     channelId: string;
     calendarEventId: number;
-  }): Promise<{
+  }): CancelablePromise<{
     calendarEventRsvps: Array<CalendarEventRsvp>;
   }> {
     return this.httpRequest.request({
@@ -422,7 +422,7 @@ export class CalendarEventsService {
        */
       status: "going" | "maybe" | "declined" | "invited";
     };
-  }): Promise<void> {
+  }): CancelablePromise<void> {
     return this.httpRequest.request({
       method: "PUT",
       url: "/channels/{channelId}/events/{calendarEventId}/rsvps",

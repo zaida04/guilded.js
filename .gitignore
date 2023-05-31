@@ -3,6 +3,7 @@ dist/
 types/
 coverage/
 .nyc_output/
+packages/api/preserve/**
 
 .npmrc
 *.tsbuildinfo

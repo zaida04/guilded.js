@@ -1,10 +1,10 @@
 /* istanbul ignore file */
-
 /* eslint-disable */
+import type { CancelablePromise } from "../core/CancelablePromise";
+import type { BaseHttpRequest } from "../core/BaseHttpRequest";
 
-import { HttpRequest } from "../core/HttpRequest";
 export class GroupMembershipService {
-  constructor(public readonly httpRequest: HttpRequest) {}
+  constructor(public readonly httpRequest: BaseHttpRequest) {}
 
   /**
    * Add member to group
@@ -23,7 +23,7 @@ export class GroupMembershipService {
      * Member ID to add to the group
      */
     userId: string | "@me";
-  }): Promise<void> {
+  }): CancelablePromise<void> {
     return this.httpRequest.request({
       method: "PUT",
       url: "/groups/{groupId}/members/{userId}",
@@ -51,7 +51,7 @@ export class GroupMembershipService {
      * Member ID to remove from the group
      */
     userId: string | "@me";
-  }): Promise<void> {
+  }): CancelablePromise<void> {
     return this.httpRequest.request({
       method: "DELETE",
       url: "/groups/{groupId}/members/{userId}",

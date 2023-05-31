@@ -1,12 +1,12 @@
 /* istanbul ignore file */
-
 /* eslint-disable */
 import type { CalendarEventComment } from "../models/CalendarEventComment";
 
-import { HttpRequest } from "../core/HttpRequest";
+import type { CancelablePromise } from "../core/CancelablePromise";
+import type { BaseHttpRequest } from "../core/BaseHttpRequest";
 
 export class CalendarEventCommentsService {
-  constructor(public readonly httpRequest: HttpRequest) {}
+  constructor(public readonly httpRequest: BaseHttpRequest) {}
 
   /**
    * Create a comment on an event
@@ -26,7 +26,7 @@ export class CalendarEventCommentsService {
        */
       content: string;
     };
-  }): Promise<{
+  }): CancelablePromise<{
     calendarEventComment: CalendarEventComment;
   }> {
     return this.httpRequest.request({
@@ -52,7 +52,7 @@ export class CalendarEventCommentsService {
   }: {
     channelId: string;
     calendarEventId: number;
-  }): Promise<{
+  }): CancelablePromise<{
     calendarEventComments: Array<CalendarEventComment>;
   }> {
     return this.httpRequest.request({
@@ -78,7 +78,7 @@ export class CalendarEventCommentsService {
     channelId: string;
     calendarEventId: number;
     calendarEventCommentId: number;
-  }): Promise<{
+  }): CancelablePromise<{
     calendarEventComment: CalendarEventComment;
   }> {
     return this.httpRequest.request({
@@ -112,7 +112,7 @@ export class CalendarEventCommentsService {
        */
       content: string;
     };
-  }): Promise<{
+  }): CancelablePromise<{
     calendarEventComment: CalendarEventComment;
   }> {
     return this.httpRequest.request({
@@ -141,7 +141,7 @@ export class CalendarEventCommentsService {
     channelId: string;
     calendarEventId: number;
     calendarEventCommentId: number;
-  }): Promise<void> {
+  }): CancelablePromise<void> {
     return this.httpRequest.request({
       method: "DELETE",
       url: "/channels/{channelId}/events/{calendarEventId}/comments/{calendarEventCommentId}",

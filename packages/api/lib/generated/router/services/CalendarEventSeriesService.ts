@@ -1,10 +1,10 @@
 /* istanbul ignore file */
-
 /* eslint-disable */
+import type { CancelablePromise } from "../core/CancelablePromise";
+import type { BaseHttpRequest } from "../core/BaseHttpRequest";
 
-import { HttpRequest } from "../core/HttpRequest";
 export class CalendarEventSeriesService {
-  constructor(public readonly httpRequest: HttpRequest) {}
+  constructor(public readonly httpRequest: BaseHttpRequest) {}
 
   /**
    * Update a calendar event series
@@ -40,7 +40,7 @@ export class CalendarEventSeriesService {
        */
       url?: string;
       /**
-       * The color of the event when viewing in the calendar
+       * The integer value corresponds to the decimal RGB representation for the color. The color of the event when viewing in the calendar
        */
       color?: number;
       /**
@@ -112,7 +112,7 @@ export class CalendarEventSeriesService {
        */
       calendarEventId?: number;
     };
-  }): Promise<void> {
+  }): CancelablePromise<void> {
     return this.httpRequest.request({
       method: "PATCH",
       url: "/channels/{channelId}/event_series/{calendarEventSeriesId}",
@@ -143,7 +143,7 @@ export class CalendarEventSeriesService {
        */
       calendarEventId?: number;
     };
-  }): Promise<void> {
+  }): CancelablePromise<void> {
     return this.httpRequest.request({
       method: "DELETE",
       url: "/channels/{channelId}/event_series/{calendarEventSeriesId}",

@@ -1,10 +1,10 @@
 /* istanbul ignore file */
-
 /* eslint-disable */
-import { HttpRequest } from "../core/HttpRequest";
+import type { CancelablePromise } from "../core/CancelablePromise";
+import type { BaseHttpRequest } from "../core/BaseHttpRequest";
 
 export class RoleMembershipService {
-  constructor(public readonly httpRequest: HttpRequest) {}
+  constructor(public readonly httpRequest: BaseHttpRequest) {}
 
   /**
    * Assign role to member
@@ -25,7 +25,7 @@ export class RoleMembershipService {
      * The role ID to apply to the user
      */
     roleId: number;
-  }): Promise<void> {
+  }): CancelablePromise<void> {
     return this.httpRequest.request({
       method: "PUT",
       url: "/servers/{serverId}/members/{userId}/roles/{roleId}",
@@ -56,7 +56,7 @@ export class RoleMembershipService {
      * The role ID to remove from the user
      */
     roleId: number;
-  }): Promise<void> {
+  }): CancelablePromise<void> {
     return this.httpRequest.request({
       method: "DELETE",
       url: "/servers/{serverId}/members/{userId}/roles/{roleId}",
@@ -83,7 +83,7 @@ export class RoleMembershipService {
      * The ID of the member to obtain roles from
      */
     userId: string | "@me";
-  }): Promise<{
+  }): CancelablePromise<{
     /**
      * The IDs of the roles that the member currently has
      */

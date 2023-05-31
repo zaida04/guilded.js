@@ -1,10 +1,10 @@
 /* istanbul ignore file */
-
 /* eslint-disable */
+import type { CancelablePromise } from "../core/CancelablePromise";
+import type { BaseHttpRequest } from "../core/BaseHttpRequest";
 
-import { HttpRequest } from "../core/HttpRequest";
 export class ReactionsService {
-  constructor(public readonly httpRequest: HttpRequest) {}
+  constructor(public readonly httpRequest: BaseHttpRequest) {}
 
   /**
    * [deprecated] Create reaction
@@ -29,7 +29,7 @@ export class ReactionsService {
      * Emote ID to apply
      */
     emoteId: number;
-  }): Promise<void> {
+  }): CancelablePromise<void> {
     return this.httpRequest.request({
       method: "PUT",
       url: "/channels/{channelId}/content/{contentId}/emotes/{emoteId}",
@@ -64,7 +64,7 @@ export class ReactionsService {
      * Emote ID to remove
      */
     emoteId: number;
-  }): Promise<void> {
+  }): CancelablePromise<void> {
     return this.httpRequest.request({
       method: "DELETE",
       url: "/channels/{channelId}/content/{contentId}/emotes/{emoteId}",
@@ -98,7 +98,7 @@ export class ReactionsService {
      * Emote ID to apply
      */
     emoteId: number;
-  }): Promise<void> {
+  }): CancelablePromise<void> {
     return this.httpRequest.request({
       method: "PUT",
       url: "/channels/{channelId}/topics/{forumTopicId}/emotes/{emoteId}",
@@ -132,7 +132,7 @@ export class ReactionsService {
      * Emote ID to remove
      */
     emoteId: number;
-  }): Promise<void> {
+  }): CancelablePromise<void> {
     return this.httpRequest.request({
       method: "DELETE",
       url: "/channels/{channelId}/topics/{forumTopicId}/emotes/{emoteId}",
@@ -162,7 +162,7 @@ export class ReactionsService {
     forumTopicId: number;
     forumTopicCommentId: number;
     emoteId: number;
-  }): Promise<void> {
+  }): CancelablePromise<void> {
     return this.httpRequest.request({
       method: "PUT",
       url: "/channels/{channelId}/topics/{forumTopicId}/comments/{forumTopicCommentId}/emotes/{emoteId}",
@@ -193,7 +193,7 @@ export class ReactionsService {
     forumTopicId: number;
     forumTopicCommentId: number;
     emoteId: number;
-  }): Promise<void> {
+  }): CancelablePromise<void> {
     return this.httpRequest.request({
       method: "DELETE",
       url: "/channels/{channelId}/topics/{forumTopicId}/comments/{forumTopicCommentId}/emotes/{emoteId}",
@@ -219,7 +219,7 @@ export class ReactionsService {
     channelId: string;
     calendarEventId: number;
     emoteId: number;
-  }): Promise<void> {
+  }): CancelablePromise<void> {
     return this.httpRequest.request({
       method: "PUT",
       url: "/channels/{channelId}/events/{calendarEventId}/emotes/{emoteId}",
@@ -244,7 +244,7 @@ export class ReactionsService {
     channelId: string;
     calendarEventId: number;
     emoteId: number;
-  }): Promise<void> {
+  }): CancelablePromise<void> {
     return this.httpRequest.request({
       method: "DELETE",
       url: "/channels/{channelId}/events/{calendarEventId}/emotes/{emoteId}",
@@ -271,7 +271,7 @@ export class ReactionsService {
     calendarEventId: number;
     calendarEventCommentId: number;
     emoteId: number;
-  }): Promise<void> {
+  }): CancelablePromise<void> {
     return this.httpRequest.request({
       method: "PUT",
       url: "/channels/{channelId}/events/{calendarEventId}/comments/{calendarEventCommentId}/emotes/{emoteId}",
@@ -299,7 +299,7 @@ export class ReactionsService {
     calendarEventId: number;
     calendarEventCommentId: number;
     emoteId: number;
-  }): Promise<void> {
+  }): CancelablePromise<void> {
     return this.httpRequest.request({
       method: "DELETE",
       url: "/channels/{channelId}/events/{calendarEventId}/comments/{calendarEventCommentId}/emotes/{emoteId}",
@@ -325,7 +325,7 @@ export class ReactionsService {
     channelId: string;
     docId: number;
     emoteId: number;
-  }): Promise<void> {
+  }): CancelablePromise<void> {
     return this.httpRequest.request({
       method: "PUT",
       url: "/channels/{channelId}/docs/{docId}/emotes/{emoteId}",
@@ -350,7 +350,7 @@ export class ReactionsService {
     channelId: string;
     docId: number;
     emoteId: number;
-  }): Promise<void> {
+  }): CancelablePromise<void> {
     return this.httpRequest.request({
       method: "DELETE",
       url: "/channels/{channelId}/docs/{docId}/emotes/{emoteId}",
@@ -377,7 +377,7 @@ export class ReactionsService {
     docId: number;
     docCommentId: number;
     emoteId: number;
-  }): Promise<void> {
+  }): CancelablePromise<void> {
     return this.httpRequest.request({
       method: "PUT",
       url: "/channels/{channelId}/docs/{docId}/comments/{docCommentId}/emotes/{emoteId}",
@@ -405,7 +405,7 @@ export class ReactionsService {
     docId: number;
     docCommentId: number;
     emoteId: number;
-  }): Promise<void> {
+  }): CancelablePromise<void> {
     return this.httpRequest.request({
       method: "DELETE",
       url: "/channels/{channelId}/docs/{docId}/comments/{docCommentId}/emotes/{emoteId}",
@@ -434,7 +434,7 @@ export class ReactionsService {
      * Emote ID to apply
      */
     emoteId: number;
-  }): Promise<void> {
+  }): CancelablePromise<void> {
     return this.httpRequest.request({
       method: "PUT",
       url: "/channels/{channelId}/announcements/{announcementId}/emotes/{emoteId}",
@@ -462,7 +462,7 @@ export class ReactionsService {
      * Emote ID to apply
      */
     emoteId: number;
-  }): Promise<void> {
+  }): CancelablePromise<void> {
     return this.httpRequest.request({
       method: "DELETE",
       url: "/channels/{channelId}/announcements/{announcementId}/emotes/{emoteId}",
@@ -495,7 +495,7 @@ export class ReactionsService {
      * Emote ID to apply
      */
     emoteId: number;
-  }): Promise<void> {
+  }): CancelablePromise<void> {
     return this.httpRequest.request({
       method: "PUT",
       url: "/channels/{channelId}/announcements/{announcementId}/comments/{announcementCommentId}/emotes/{emoteId}",
@@ -529,7 +529,7 @@ export class ReactionsService {
      * Emote ID to apply
      */
     emoteId: number;
-  }): Promise<void> {
+  }): CancelablePromise<void> {
     return this.httpRequest.request({
       method: "DELETE",
       url: "/channels/{channelId}/announcements/{announcementId}/comments/{announcementCommentId}/emotes/{emoteId}",
@@ -555,7 +555,7 @@ export class ReactionsService {
     channelId: string;
     messageId: string;
     emoteId: number;
-  }): Promise<void> {
+  }): CancelablePromise<void> {
     return this.httpRequest.request({
       method: "PUT",
       url: "/channels/{channelId}/messages/{messageId}/emotes/{emoteId}",
@@ -582,7 +582,7 @@ export class ReactionsService {
     messageId: string;
     emoteId: number;
     userId?: string | "@me";
-  }): Promise<void> {
+  }): CancelablePromise<void> {
     return this.httpRequest.request({
       method: "DELETE",
       url: "/channels/{channelId}/messages/{messageId}/emotes/{emoteId}",
@@ -610,7 +610,7 @@ export class ReactionsService {
     channelId: string;
     messageId: string;
     emoteId?: number;
-  }): Promise<void> {
+  }): CancelablePromise<void> {
     return this.httpRequest.request({
       method: "DELETE",
       url: "/channels/{channelId}/messages/{messageId}/emotes",

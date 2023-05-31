@@ -1,12 +1,12 @@
 /* istanbul ignore file */
-
 /* eslint-disable */
 import type { AnnouncementComment } from "../models/AnnouncementComment";
 
-import { HttpRequest } from "../core/HttpRequest";
+import type { CancelablePromise } from "../core/CancelablePromise";
+import type { BaseHttpRequest } from "../core/BaseHttpRequest";
 
 export class AnnouncementCommentsService {
-  constructor(public readonly httpRequest: HttpRequest) {}
+  constructor(public readonly httpRequest: BaseHttpRequest) {}
 
   /**
    * Create a comment on an announcement
@@ -26,7 +26,7 @@ export class AnnouncementCommentsService {
        */
       content: string;
     };
-  }): Promise<{
+  }): CancelablePromise<{
     announcementComment: AnnouncementComment;
   }> {
     return this.httpRequest.request({
@@ -52,7 +52,7 @@ export class AnnouncementCommentsService {
   }: {
     channelId: string;
     announcementId: string;
-  }): Promise<{
+  }): CancelablePromise<{
     announcementComments: Array<AnnouncementComment>;
   }> {
     return this.httpRequest.request({
@@ -78,7 +78,7 @@ export class AnnouncementCommentsService {
     channelId: string;
     announcementId: string;
     announcementCommentId: number;
-  }): Promise<{
+  }): CancelablePromise<{
     announcementComment: AnnouncementComment;
   }> {
     return this.httpRequest.request({
@@ -112,7 +112,7 @@ export class AnnouncementCommentsService {
        */
       content: string;
     };
-  }): Promise<{
+  }): CancelablePromise<{
     announcementComment: AnnouncementComment;
   }> {
     return this.httpRequest.request({
@@ -141,7 +141,7 @@ export class AnnouncementCommentsService {
     channelId: string;
     announcementId: string;
     announcementCommentId: number;
-  }): Promise<void> {
+  }): CancelablePromise<void> {
     return this.httpRequest.request({
       method: "DELETE",
       url: "/channels/{channelId}/announcements/{announcementId}/comments/{announcementCommentId}",

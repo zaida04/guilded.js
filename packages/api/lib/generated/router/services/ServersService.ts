@@ -1,12 +1,12 @@
 /* istanbul ignore file */
-
 /* eslint-disable */
 import type { Server } from "../models/Server";
 
-import { HttpRequest } from "../core/HttpRequest";
+import type { CancelablePromise } from "../core/CancelablePromise";
+import type { BaseHttpRequest } from "../core/BaseHttpRequest";
 
 export class ServersService {
-  constructor(public readonly httpRequest: HttpRequest) {}
+  constructor(public readonly httpRequest: BaseHttpRequest) {}
 
   /**
    * Get a server
@@ -14,7 +14,7 @@ export class ServersService {
    * @returns any Success
    * @throws ApiError
    */
-  public serverRead({ serverId }: { serverId: string }): Promise<{
+  public serverRead({ serverId }: { serverId: string }): CancelablePromise<{
     server: Server;
   }> {
     return this.httpRequest.request({

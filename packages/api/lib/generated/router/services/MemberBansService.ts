@@ -1,12 +1,12 @@
 /* istanbul ignore file */
-
 /* eslint-disable */
 import type { ServerMemberBan } from "../models/ServerMemberBan";
 
-import { HttpRequest } from "../core/HttpRequest";
+import type { CancelablePromise } from "../core/CancelablePromise";
+import type { BaseHttpRequest } from "../core/BaseHttpRequest";
 
 export class MemberBansService {
-  constructor(public readonly httpRequest: HttpRequest) {}
+  constructor(public readonly httpRequest: BaseHttpRequest) {}
 
   /**
    * Create a server ban
@@ -30,7 +30,7 @@ export class MemberBansService {
        */
       reason?: string;
     };
-  }): Promise<{
+  }): CancelablePromise<{
     serverMemberBan: ServerMemberBan;
   }> {
     return this.httpRequest.request({
@@ -59,7 +59,7 @@ export class MemberBansService {
      * The ID of the user to get a server ban for
      */
     userId: string | "@me";
-  }): Promise<{
+  }): CancelablePromise<{
     serverMemberBan: ServerMemberBan;
   }> {
     return this.httpRequest.request({
@@ -87,7 +87,7 @@ export class MemberBansService {
      * The ID of the user to unban from this server
      */
     userId: string | "@me";
-  }): Promise<void> {
+  }): CancelablePromise<void> {
     return this.httpRequest.request({
       method: "DELETE",
       url: "/servers/{serverId}/bans/{userId}",
@@ -103,7 +103,11 @@ export class MemberBansService {
    * @returns any Success
    * @throws ApiError
    */
-  public serverMemberBanReadMany({ serverId }: { serverId: string }): Promise<{
+  public serverMemberBanReadMany({
+    serverId,
+  }: {
+    serverId: string;
+  }): CancelablePromise<{
     serverMemberBans: Array<ServerMemberBan>;
   }> {
     return this.httpRequest.request({

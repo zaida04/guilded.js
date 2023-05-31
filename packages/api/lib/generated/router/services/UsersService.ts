@@ -1,12 +1,13 @@
 /* istanbul ignore file */
-
 /* eslint-disable */
 import type { Server } from "../models/Server";
 import type { User } from "../models/User";
-import { HttpRequest } from "../core/HttpRequest";
+
+import type { CancelablePromise } from "../core/CancelablePromise";
+import type { BaseHttpRequest } from "../core/BaseHttpRequest";
 
 export class UsersService {
-  constructor(public readonly httpRequest: HttpRequest) {}
+  constructor(public readonly httpRequest: BaseHttpRequest) {}
 
   /**
    * Get a user
@@ -14,7 +15,7 @@ export class UsersService {
    * @returns any Success
    * @throws ApiError
    */
-  public userRead({ userId }: { userId: string | "@me" }): Promise<{
+  public userRead({ userId }: { userId: string | "@me" }): CancelablePromise<{
     user: User;
   }> {
     return this.httpRequest.request({
@@ -32,7 +33,11 @@ export class UsersService {
    * @returns any Success
    * @throws ApiError
    */
-  public userServerReadMany({ userId }: { userId: string | "@me" }): Promise<{
+  public userServerReadMany({
+    userId,
+  }: {
+    userId: string | "@me";
+  }): CancelablePromise<{
     servers: Array<Server>;
   }> {
     return this.httpRequest.request({

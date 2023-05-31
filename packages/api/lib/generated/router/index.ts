@@ -1,7 +1,12 @@
 /* istanbul ignore file */
-
 /* eslint-disable */
 export { GuildedRouter } from "./GuildedRouter";
+
+export { ApiError } from "./core/ApiError";
+export { BaseHttpRequest } from "./core/BaseHttpRequest";
+export { CancelablePromise, CancelError } from "./core/CancelablePromise";
+export { OpenAPI } from "./core/OpenAPI";
+export type { OpenAPIConfig } from "./core/OpenAPI";
 
 export type { Announcement as AnnouncementPayload } from "./models/Announcement";
 export type { AnnouncementComment as AnnouncementCommentPayload } from "./models/AnnouncementComment";
@@ -41,45 +46,6 @@ export type { User as UserPayload } from "./models/User";
 export type { UserStatus as UserStatusPayload } from "./models/UserStatus";
 export type { UserSummary as UserSummaryPayload } from "./models/UserSummary";
 export type { Webhook as WebhookPayload } from "./models/Webhook";
-
-export { $Announcement } from "./schemas/$Announcement";
-export { $AnnouncementComment } from "./schemas/$AnnouncementComment";
-export { $AnnouncementCommentReaction } from "./schemas/$AnnouncementCommentReaction";
-export { $AnnouncementReaction } from "./schemas/$AnnouncementReaction";
-export { $CalendarEvent } from "./schemas/$CalendarEvent";
-export { $CalendarEventComment } from "./schemas/$CalendarEventComment";
-export { $CalendarEventCommentReaction } from "./schemas/$CalendarEventCommentReaction";
-export { $CalendarEventReaction } from "./schemas/$CalendarEventReaction";
-export { $CalendarEventRsvp } from "./schemas/$CalendarEventRsvp";
-export { $CalendarEventSeries } from "./schemas/$CalendarEventSeries";
-export { $ChatEmbed } from "./schemas/$ChatEmbed";
-export { $ChatMessage } from "./schemas/$ChatMessage";
-export { $ChatMessageReaction } from "./schemas/$ChatMessageReaction";
-export { $Doc } from "./schemas/$Doc";
-export { $DocComment } from "./schemas/$DocComment";
-export { $DocCommentReaction } from "./schemas/$DocCommentReaction";
-export { $DocReaction } from "./schemas/$DocReaction";
-export { $Emote } from "./schemas/$Emote";
-export { $ForumTopic } from "./schemas/$ForumTopic";
-export { $ForumTopicComment } from "./schemas/$ForumTopicComment";
-export { $ForumTopicCommentReaction } from "./schemas/$ForumTopicCommentReaction";
-export { $ForumTopicReaction } from "./schemas/$ForumTopicReaction";
-export { $ForumTopicSummary } from "./schemas/$ForumTopicSummary";
-export { $Group } from "./schemas/$Group";
-export { $ListItem } from "./schemas/$ListItem";
-export { $ListItemSummary } from "./schemas/$ListItemSummary";
-export { $Mentions } from "./schemas/$Mentions";
-export { $Role } from "./schemas/$Role";
-export { $Server } from "./schemas/$Server";
-export { $ServerChannel } from "./schemas/$ServerChannel";
-export { $ServerMember } from "./schemas/$ServerMember";
-export { $ServerMemberBan } from "./schemas/$ServerMemberBan";
-export { $ServerMemberSummary } from "./schemas/$ServerMemberSummary";
-export { $SocialLink } from "./schemas/$SocialLink";
-export { $User } from "./schemas/$User";
-export { $UserStatus } from "./schemas/$UserStatus";
-export { $UserSummary } from "./schemas/$UserSummary";
-export { $Webhook } from "./schemas/$Webhook";
 
 export { AnnouncementCommentsService } from "./services/AnnouncementCommentsService";
 export { AnnouncementsService } from "./services/AnnouncementsService";

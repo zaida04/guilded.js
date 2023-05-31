@@ -1,12 +1,12 @@
 /* istanbul ignore file */
-
 /* eslint-disable */
 import type { Group } from "../models/Group";
 
-import { HttpRequest } from "../core/HttpRequest";
+import type { CancelablePromise } from "../core/CancelablePromise";
+import type { BaseHttpRequest } from "../core/BaseHttpRequest";
 
 export class GroupsService {
-  constructor(public readonly httpRequest: HttpRequest) {}
+  constructor(public readonly httpRequest: BaseHttpRequest) {}
 
   /**
    * Create a group
@@ -37,7 +37,7 @@ export class GroupsService {
        */
       isPublic?: boolean;
     };
-  }): Promise<{
+  }): CancelablePromise<{
     group: Group;
   }> {
     return this.httpRequest.request({
@@ -56,7 +56,7 @@ export class GroupsService {
    * @returns any Success
    * @throws ApiError
    */
-  public groupReadMany({ serverId }: { serverId: string }): Promise<{
+  public groupReadMany({ serverId }: { serverId: string }): CancelablePromise<{
     groups: Array<Group>;
   }> {
     return this.httpRequest.request({
@@ -79,7 +79,7 @@ export class GroupsService {
   }: {
     serverId: string;
     groupId: string;
-  }): Promise<{
+  }): CancelablePromise<{
     group: Group;
   }> {
     return this.httpRequest.request({
@@ -124,7 +124,7 @@ export class GroupsService {
        */
       isPublic?: boolean;
     };
-  }): Promise<{
+  }): CancelablePromise<{
     group: Group;
   }> {
     return this.httpRequest.request({
@@ -151,7 +151,7 @@ export class GroupsService {
   }: {
     serverId: string;
     groupId: string;
-  }): Promise<void> {
+  }): CancelablePromise<void> {
     return this.httpRequest.request({
       method: "DELETE",
       url: "/servers/{serverId}/groups/{groupId}",

@@ -1,12 +1,12 @@
 /* istanbul ignore file */
-
 /* eslint-disable */
 import type { Announcement } from "../models/Announcement";
 
-import { HttpRequest } from "../core/HttpRequest";
+import type { CancelablePromise } from "../core/CancelablePromise";
+import type { BaseHttpRequest } from "../core/BaseHttpRequest";
 
 export class AnnouncementsService {
-  constructor(public readonly httpRequest: HttpRequest) {}
+  constructor(public readonly httpRequest: BaseHttpRequest) {}
 
   /**
    * Create an announcement
@@ -28,7 +28,7 @@ export class AnnouncementsService {
        */
       content: Record<string, any> | string;
     };
-  }): Promise<{
+  }): CancelablePromise<{
     announcement: Announcement;
   }> {
     return this.httpRequest.request({
@@ -56,7 +56,7 @@ export class AnnouncementsService {
     channelId: string;
     before?: string;
     limit?: number;
-  }): Promise<{
+  }): CancelablePromise<{
     announcements: Array<Announcement>;
   }> {
     return this.httpRequest.request({
@@ -83,7 +83,7 @@ export class AnnouncementsService {
   }: {
     channelId: string;
     announcementId: string;
-  }): Promise<{
+  }): CancelablePromise<{
     announcement: Announcement;
   }> {
     return this.httpRequest.request({
@@ -118,7 +118,7 @@ export class AnnouncementsService {
        */
       content?: Record<string, any> | string;
     };
-  }): Promise<{
+  }): CancelablePromise<{
     announcement: Announcement;
   }> {
     return this.httpRequest.request({
@@ -144,7 +144,7 @@ export class AnnouncementsService {
   }: {
     channelId: string;
     announcementId: string;
-  }): Promise<void> {
+  }): CancelablePromise<void> {
     return this.httpRequest.request({
       method: "DELETE",
       url: "/channels/{channelId}/announcements/{announcementId}",

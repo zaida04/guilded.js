@@ -1,12 +1,13 @@
 /* istanbul ignore file */
-
 /* eslint-disable */
 import type { ForumTopic } from "../models/ForumTopic";
 import type { ForumTopicSummary } from "../models/ForumTopicSummary";
-import { HttpRequest } from "../core/HttpRequest";
+
+import type { CancelablePromise } from "../core/CancelablePromise";
+import type { BaseHttpRequest } from "../core/BaseHttpRequest";
 
 export class ForumsService {
-  constructor(public readonly httpRequest: HttpRequest) {}
+  constructor(public readonly httpRequest: BaseHttpRequest) {}
 
   /**
    * Create a topic in a forum
@@ -28,7 +29,7 @@ export class ForumsService {
        */
       content: Record<string, any> | string;
     };
-  }): Promise<{
+  }): CancelablePromise<{
     forumTopic: ForumTopic;
   }> {
     return this.httpRequest.request({
@@ -55,7 +56,7 @@ export class ForumsService {
     channelId: string;
     before?: string;
     limit?: number;
-  }): Promise<{
+  }): CancelablePromise<{
     forumTopics: Array<ForumTopicSummary>;
   }> {
     return this.httpRequest.request({
@@ -82,7 +83,7 @@ export class ForumsService {
   }: {
     channelId: string;
     forumTopicId: number;
-  }): Promise<{
+  }): CancelablePromise<{
     forumTopic: ForumTopic;
   }> {
     return this.httpRequest.request({
@@ -117,7 +118,7 @@ export class ForumsService {
        */
       content?: string;
     };
-  }): Promise<{
+  }): CancelablePromise<{
     forumTopic: ForumTopic;
   }> {
     return this.httpRequest.request({
@@ -143,7 +144,7 @@ export class ForumsService {
   }: {
     channelId: string;
     forumTopicId: number;
-  }): Promise<void> {
+  }): CancelablePromise<void> {
     return this.httpRequest.request({
       method: "DELETE",
       url: "/channels/{channelId}/topics/{forumTopicId}",
@@ -165,7 +166,7 @@ export class ForumsService {
   }: {
     channelId: string;
     forumTopicId: number;
-  }): Promise<void> {
+  }): CancelablePromise<void> {
     return this.httpRequest.request({
       method: "PUT",
       url: "/channels/{channelId}/topics/{forumTopicId}/pin",
@@ -187,7 +188,7 @@ export class ForumsService {
   }: {
     channelId: string;
     forumTopicId: number;
-  }): Promise<void> {
+  }): CancelablePromise<void> {
     return this.httpRequest.request({
       method: "DELETE",
       url: "/channels/{channelId}/topics/{forumTopicId}/pin",
@@ -209,7 +210,7 @@ export class ForumsService {
   }: {
     channelId: string;
     forumTopicId: number;
-  }): Promise<void> {
+  }): CancelablePromise<void> {
     return this.httpRequest.request({
       method: "PUT",
       url: "/channels/{channelId}/topics/{forumTopicId}/lock",
@@ -231,7 +232,7 @@ export class ForumsService {
   }: {
     channelId: string;
     forumTopicId: number;
-  }): Promise<void> {
+  }): CancelablePromise<void> {
     return this.httpRequest.request({
       method: "DELETE",
       url: "/channels/{channelId}/topics/{forumTopicId}/lock",

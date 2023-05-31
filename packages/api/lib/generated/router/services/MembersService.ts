@@ -1,12 +1,13 @@
 /* istanbul ignore file */
-
 /* eslint-disable */
 import type { ServerMember } from "../models/ServerMember";
 import type { ServerMemberSummary } from "../models/ServerMemberSummary";
-import { HttpRequest } from "../core/HttpRequest";
+
+import type { CancelablePromise } from "../core/CancelablePromise";
+import type { BaseHttpRequest } from "../core/BaseHttpRequest";
 
 export class MembersService {
-  constructor(public readonly httpRequest: HttpRequest) {}
+  constructor(public readonly httpRequest: BaseHttpRequest) {}
 
   /**
    * Update a member's nickname
@@ -29,7 +30,7 @@ export class MembersService {
        */
       nickname: string;
     };
-  }): Promise<{
+  }): CancelablePromise<{
     /**
      * The nickname that was assigned to the member
      */
@@ -61,7 +62,7 @@ export class MembersService {
      * The ID of the user to remove nickname from
      */
     userId: string | "@me";
-  }): Promise<void> {
+  }): CancelablePromise<void> {
     return this.httpRequest.request({
       method: "DELETE",
       url: "/servers/{serverId}/members/{userId}/nickname",
@@ -83,7 +84,7 @@ export class MembersService {
   }: {
     serverId: string;
     userId: string | "@me";
-  }): Promise<{
+  }): CancelablePromise<{
     member: ServerMember;
   }> {
     return this.httpRequest.request({
@@ -114,7 +115,7 @@ export class MembersService {
      * The ID of the user to kick. If the value provided here is your own user's ID, the request will attempt to make you leave the server
      */
     userId: string | "@me";
-  }): Promise<void> {
+  }): CancelablePromise<void> {
     return this.httpRequest.request({
       method: "DELETE",
       url: "/servers/{serverId}/members/{userId}",
@@ -131,7 +132,11 @@ export class MembersService {
    * @returns any Success
    * @throws ApiError
    */
-  public serverMemberReadMany({ serverId }: { serverId: string }): Promise<{
+  public serverMemberReadMany({
+    serverId,
+  }: {
+    serverId: string;
+  }): CancelablePromise<{
     members: Array<ServerMemberSummary>;
   }> {
     return this.httpRequest.request({

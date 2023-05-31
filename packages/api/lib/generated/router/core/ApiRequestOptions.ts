@@ -1,5 +1,4 @@
 /* istanbul ignore file */
-
 /* eslint-disable */
 export type ApiRequestOptions = {
   readonly method:

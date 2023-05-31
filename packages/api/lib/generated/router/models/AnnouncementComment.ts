@@ -1,5 +1,4 @@
 /* istanbul ignore file */
-
 /* eslint-disable */
 
 import type { Mentions } from "./Mentions";

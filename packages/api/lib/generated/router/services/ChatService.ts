@@ -3,10 +3,12 @@
 import type { ChatEmbed } from "../models/ChatEmbed";
 import type { ChatMessage } from "../models/ChatMessage";
 import type { Mentions } from "../models/Mentions";
-import { HttpRequest } from "../core/HttpRequest";
+
+import type { CancelablePromise } from "../core/CancelablePromise";
+import type { BaseHttpRequest } from "../core/BaseHttpRequest";
 
 export class ChatService {
-  constructor(public readonly httpRequest: HttpRequest) {}
+  constructor(public readonly httpRequest: BaseHttpRequest) {}
 
   /**
    * Create a channel message
@@ -43,7 +45,7 @@ export class ChatService {
        */
       embeds?: Array<ChatEmbed>;
     };
-  }): Promise<{
+  }): CancelablePromise<{
     message: ChatMessage;
   }> {
     return this.httpRequest.request({
@@ -84,7 +86,7 @@ export class ChatService {
      * Whether to include private messages between all users in response
      */
     includePrivate?: boolean;
-  }): Promise<{
+  }): CancelablePromise<{
     messages: Array<ChatMessage>;
   }> {
     return this.httpRequest.request({
@@ -117,7 +119,7 @@ export class ChatService {
      */
     channelId: string;
     messageId: string;
-  }): Promise<{
+  }): CancelablePromise<{
     message: ChatMessage;
   }> {
     return this.httpRequest.request({
@@ -155,7 +157,7 @@ export class ChatService {
        */
       embeds?: Array<ChatEmbed>;
     };
-  }): Promise<{
+  }): CancelablePromise<{
     message: ChatMessage & {
       /**
        * The ID of the message
@@ -236,7 +238,7 @@ export class ChatService {
   }: {
     channelId: string;
     messageId: string;
-  }): Promise<void> {
+  }): CancelablePromise<void> {
     return this.httpRequest.request({
       method: "DELETE",
       url: "/channels/{channelId}/messages/{messageId}",

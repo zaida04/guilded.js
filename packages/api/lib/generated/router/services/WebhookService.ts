@@ -1,11 +1,12 @@
 /* istanbul ignore file */
-
 /* eslint-disable */
 import type { Webhook } from "../models/Webhook";
 
-import { HttpRequest } from "../core/HttpRequest";
+import type { CancelablePromise } from "../core/CancelablePromise";
+import type { BaseHttpRequest } from "../core/BaseHttpRequest";
+
 export class WebhookService {
-  constructor(public readonly httpRequest: HttpRequest) {}
+  constructor(public readonly httpRequest: BaseHttpRequest) {}
 
   /**
    * Create a webhook
@@ -27,7 +28,7 @@ export class WebhookService {
        */
       channelId: string;
     };
-  }): Promise<{
+  }): CancelablePromise<{
     webhook: Webhook;
   }> {
     return this.httpRequest.request({
@@ -56,7 +57,7 @@ export class WebhookService {
      * ID of the channel you want to filter for webhooks
      */
     channelId: string;
-  }): Promise<{
+  }): CancelablePromise<{
     webhooks: Array<Webhook>;
   }> {
     return this.httpRequest.request({
@@ -82,7 +83,7 @@ export class WebhookService {
   }: {
     serverId: string;
     webhookId: string;
-  }): Promise<{
+  }): CancelablePromise<{
     webhook: Webhook;
   }> {
     return this.httpRequest.request({
@@ -117,7 +118,7 @@ export class WebhookService {
        */
       channelId?: string;
     };
-  }): Promise<{
+  }): CancelablePromise<{
     webhook: Webhook;
   }> {
     return this.httpRequest.request({
@@ -143,7 +144,7 @@ export class WebhookService {
   }: {
     serverId: string;
     webhookId: string;
-  }): Promise<void> {
+  }): CancelablePromise<void> {
     return this.httpRequest.request({
       method: "DELETE",
       url: "/servers/{serverId}/webhooks/{webhookId}",

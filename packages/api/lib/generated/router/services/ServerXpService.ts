@@ -1,10 +1,10 @@
 /* istanbul ignore file */
-
 /* eslint-disable */
-import { HttpRequest } from "../core/HttpRequest";
+import type { CancelablePromise } from "../core/CancelablePromise";
+import type { BaseHttpRequest } from "../core/BaseHttpRequest";
 
 export class ServerXpService {
-  constructor(public readonly httpRequest: HttpRequest) {}
+  constructor(public readonly httpRequest: BaseHttpRequest) {}
 
   /**
    * Award XP to a member
@@ -27,7 +27,7 @@ export class ServerXpService {
        */
       amount: number;
     };
-  }): Promise<{
+  }): CancelablePromise<{
     /**
      * The total XP after this operation
      */
@@ -66,7 +66,7 @@ export class ServerXpService {
        */
       total: number;
     };
-  }): Promise<{
+  }): CancelablePromise<{
     /**
      * The total XP after this operation
      */
@@ -106,7 +106,7 @@ export class ServerXpService {
        */
       amount: number;
     };
-  }): Promise<void> {
+  }): CancelablePromise<void> {
     return this.httpRequest.request({
       method: "POST",
       url: "/servers/{serverId}/roles/{roleId}/xp",

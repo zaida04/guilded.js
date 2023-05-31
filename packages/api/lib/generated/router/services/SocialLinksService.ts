@@ -1,11 +1,12 @@
 /* istanbul ignore file */
-
 /* eslint-disable */
 import type { SocialLink } from "../models/SocialLink";
-import { HttpRequest } from "../core/HttpRequest";
+
+import type { CancelablePromise } from "../core/CancelablePromise";
+import type { BaseHttpRequest } from "../core/BaseHttpRequest";
 
 export class SocialLinksService {
-  constructor(public readonly httpRequest: HttpRequest) {}
+  constructor(public readonly httpRequest: BaseHttpRequest) {}
 
   /**
    * Retrieves a member's public social links
@@ -36,7 +37,7 @@ export class SocialLinksService {
       | "patreon"
       | "roblox"
       | "epic";
-  }): Promise<{
+  }): CancelablePromise<{
     socialLink: SocialLink;
   }> {
     return this.httpRequest.request({

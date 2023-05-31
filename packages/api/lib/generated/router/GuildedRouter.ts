@@ -1,7 +1,7 @@
 /* istanbul ignore file */
-
 /* eslint-disable */
-import { HttpRequest } from "./core/HttpRequest";
+import type { BaseHttpRequest } from "./core/BaseHttpRequest";
+import { FetchHttpRequest } from "./core/FetchHttpRequest";
 
 import { AnnouncementCommentsService } from "./services/AnnouncementCommentsService";
 import { AnnouncementsService } from "./services/AnnouncementsService";
@@ -21,6 +21,7 @@ import { MemberBansService } from "./services/MemberBansService";
 import { MembersService } from "./services/MembersService";
 import { ReactionsService } from "./services/ReactionsService";
 import { RoleMembershipService } from "./services/RoleMembershipService";
+import { RolesService } from "./services/RolesService";
 import { ServersService } from "./services/ServersService";
 import { ServerXpService } from "./services/ServerXpService";
 import { SocialLinksService } from "./services/SocialLinksService";
@@ -48,6 +49,7 @@ export class GuildedRouter {
   public readonly members: MembersService;
   public readonly reactions: ReactionsService;
   public readonly roleMembership: RoleMembershipService;
+  public readonly roles: RolesService;
   public readonly servers: ServersService;
   public readonly serverXp: ServerXpService;
   public readonly socialLinks: SocialLinksService;
@@ -55,10 +57,10 @@ export class GuildedRouter {
   public readonly userStatus: UserStatusService;
   public readonly webhook: WebhookService;
 
-  public readonly request: HttpRequest;
+  public readonly request: BaseHttpRequest;
 
   constructor(rest: RestManager) {
-    this.request = new HttpRequest(rest);
+    this.request = new FetchHttpRequest(rest);
 
     this.announcementComments = new AnnouncementCommentsService(this.request);
     this.announcements = new AnnouncementsService(this.request);
@@ -78,6 +80,7 @@ export class GuildedRouter {
     this.members = new MembersService(this.request);
     this.reactions = new ReactionsService(this.request);
     this.roleMembership = new RoleMembershipService(this.request);
+    this.roles = new RolesService(this.request);
     this.servers = new ServersService(this.request);
     this.serverXp = new ServerXpService(this.request);
     this.socialLinks = new SocialLinksService(this.request);
