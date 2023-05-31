@@ -18,6 +18,7 @@ import {
   WSPayload,
 } from "@guildedjs/api";
 import { ThreadChannel } from "./channels/ThreadChannel";
+import type { CollectorOptions } from "./collectors/Collector";
 
 export enum MessageType {
   Default,
@@ -222,6 +223,10 @@ export class Message extends Base<ChatMessagePayload> {
       messageId: this.id,
       type: "chat",
     }) as Promise<ThreadChannel>;
+  }
+
+  awaitReactions(options: CollectorOptions<MessageReaction>) {
+    return this.client.reactions.awaitReactions(this.id, options);
   }
 
   /**

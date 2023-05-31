@@ -1,5 +1,9 @@
 import { CacheableStructManager } from "./CacheableStructManager";
-import type { MessageReaction } from "../../structures";
+import {
+  CollectorOptions,
+  MessageReaction,
+  ReactionCollector,
+} from "../../structures";
 
 /**
  * A class representing a global reaction manager that extends the CacheableStructManager class.
@@ -36,5 +40,26 @@ export class GlobalReactionManager extends CacheableStructManager<
     return this.client.rest.router.reactions
       .channelMessageReactionDelete({ channelId, messageId, emoteId })
       .then(() => void 0);
+  }
+
+  /**
+   * Wait & collect reactions on a message.
+   * @param messageId ID of the message to listen for reactions on
+   * @param options Configuration for the collector
+   * @returns Collection of reactions collected with the ID as the key and the reaction as the value
+   * @example
+   * const reactions = await client.reactions.awaitReactions('message-id-here', { max: 4, time: 60_000 });
+   */
+  awaitReactions(
+    messageId: string,
+    options: CollectorOptions<MessageReaction>
+  ) {
+    return new ReactionCollector(this.client, {
+      ...options,
+      filter: (item) => {
+        if (item.messageId !== messageId) return false;
+        return options.filter?.(item) ?? true;
+      },
+    }).start();
   }
 }
