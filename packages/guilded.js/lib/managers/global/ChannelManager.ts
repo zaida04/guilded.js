@@ -1,12 +1,14 @@
 import { ChannelsService, ServerChannelPayload } from "@guildedjs/api";
 import {
   Channel,
+  ChatChannel,
   DocChannel,
   ForumChannel,
   ListChannel,
 } from "../../structures";
 import { CacheableStructManager } from "./CacheableStructManager";
 import { OptionBody } from "../../typings";
+import { ThreadChannel } from "../../structures/channels/ThreadChannel";
 
 /**
  * Manages channels on the global scope. This can hold channels of any type, with all of them extending Channel.
@@ -33,6 +35,14 @@ export class GlobalChannelManager extends CacheableStructManager<
     return this.client.rest.router.channels
       .channelCreate({ requestBody: options })
       .then((data) => {
+        if (
+          data.channel.messageId &&
+          data.channel.rootId &&
+          data.channel.parentId
+        ) {
+          return new ThreadChannel(this.client, data.channel);
+        }
+
         const newChannel = new (transformTypeToChannel(data.channel.type))(
           this.client,
           data.channel
@@ -112,10 +122,11 @@ export class GlobalChannelManager extends CacheableStructManager<
  * @returns Channel class for the given channel type
  */
 export const transformTypeToChannel = (str: ServerChannelPayload["type"]) =>
-  typeToChannel[str as "forums" | "docs" | "list"] ?? Channel;
+  typeToChannel[str as "chat" | "forums" | "docs" | "list"] ?? Channel;
 
 /** Mapping between the string APIChannelType and the corresponding channel class */
 export const typeToChannel = {
+  chat: ChatChannel,
   forums: ForumChannel,
   docs: DocChannel,
   list: ListChannel,

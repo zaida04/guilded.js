@@ -17,6 +17,7 @@ import {
   MentionsPayload,
   WSPayload,
 } from "@guildedjs/api";
+import { ThreadChannel } from "./channels/ThreadChannel";
 
 export enum MessageType {
   Default,
@@ -213,6 +214,14 @@ export class Message extends Base<ChatMessagePayload> {
       ...resolveContentToData(content),
       replyMessageIds: [this.id],
     });
+  }
+
+  createThread(name: string): Promise<ThreadChannel> {
+    return this.client.channels.create({
+      name,
+      messageId: this.id,
+      type: "chat",
+    }) as Promise<ThreadChannel>;
   }
 
   /**
