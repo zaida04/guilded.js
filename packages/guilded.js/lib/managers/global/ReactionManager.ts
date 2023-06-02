@@ -30,7 +30,7 @@ export class GlobalReactionManager extends CacheableStructManager<
   }
 
   /**
-   * Deletes either a whole reaction emote from a message or a specific user's.
+   * Deletes either a whole reaction emote from a message or a specific user's if a userId is provided.
    * @param channelId The ID of the channel where the message was sent.
    * @param contentId The ID of the message.
    * @param emoteId The ID of the emote to delete.
