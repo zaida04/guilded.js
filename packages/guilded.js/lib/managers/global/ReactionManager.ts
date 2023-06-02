@@ -30,15 +30,15 @@ export class GlobalReactionManager extends CacheableStructManager<
   }
 
   /**
-   * Deletes a reaction emote from a message.
+   * Deletes either a whole reaction emote from a message or a specific user's.
    * @param channelId The ID of the channel where the message was sent.
    * @param contentId The ID of the message.
    * @param emoteId The ID of the emote to delete.
    * @returns A Promise that resolves with no value upon successful completion.
    */
-  delete(channelId: string, messageId: string, emoteId: number): Promise<void> {
+  delete(channelId: string, messageId: string, emoteId: number, userId?: string): Promise<void> {
     return this.client.rest.router.reactions
-      .channelMessageReactionDelete({ channelId, messageId, emoteId })
+      .channelMessageReactionDelete({ channelId, messageId, emoteId, userId })
       .then(() => void 0);
   }
 
