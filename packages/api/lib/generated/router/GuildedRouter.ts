@@ -29,6 +29,7 @@ import { UsersService } from "./services/UsersService";
 import { UserStatusService } from "./services/UserStatusService";
 import { WebhookService } from "./services/WebhookService";
 import { RestManager } from "../../rest/RestManager";
+import { ServerSubscriptionService } from "./services/ServerSubscriptionService";
 
 export class GuildedRouter {
   public readonly announcementComments: AnnouncementCommentsService;
@@ -56,6 +57,7 @@ export class GuildedRouter {
   public readonly users: UsersService;
   public readonly userStatus: UserStatusService;
   public readonly webhook: WebhookService;
+  public readonly serverSubscriptions: ServerSubscriptionService;
 
   public readonly request: BaseHttpRequest;
 
@@ -87,5 +89,6 @@ export class GuildedRouter {
     this.users = new UsersService(this.request);
     this.userStatus = new UserStatusService(this.request);
     this.webhook = new WebhookService(this.request);
+    this.serverSubscriptions = new ServerSubscriptionService(this.request);
   }
 }

@@ -175,4 +175,37 @@ export class RolesService {
       mediaType: "application/json",
     });
   }
+
+  /**
+   * Update a role permission
+   * @returns any Success
+   * @throws ApiError
+   */
+  public rolePermissionUpdate({
+    serverId,
+    roleId,
+    requestBody,
+  }: {
+    serverId: string;
+    roleId: number;
+    requestBody: {
+      /**
+       * A JSON object of [Enums/Permissions](https://www.guilded.gg/docs/api/Permissions) with `true` or `false` values.
+       */
+      permissions: Record<string, any>;
+    };
+  }): CancelablePromise<{
+    role: Role;
+  }> {
+    return this.httpRequest.request({
+      method: "PATCH",
+      url: "/servers/{serverId}/roles/{roleId}/permissions",
+      path: {
+        serverId: serverId,
+        roleId: roleId,
+      },
+      body: requestBody,
+      mediaType: "application/json",
+    });
+  }
 }

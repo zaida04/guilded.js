@@ -41,6 +41,7 @@ export type { ServerChannel as ServerChannelPayload } from "./models/ServerChann
 export type { ServerMember as ServerMemberPayload } from "./models/ServerMember";
 export type { ServerMemberBan as ServerMemberBanPayload } from "./models/ServerMemberBan";
 export type { ServerMemberSummary as ServerMemberSummaryPayload } from "./models/ServerMemberSummary";
+export type { ServerSubscriptionTier as ServerSubscriptionTierPayload } from "./models/ServerSubscriptionTier";
 export type { SocialLink as SocialLinkPayload } from "./models/SocialLink";
 export type { User as UserPayload } from "./models/User";
 export type { UserStatus as UserStatusPayload } from "./models/UserStatus";
@@ -67,6 +68,7 @@ export { ReactionsService } from "./services/ReactionsService";
 export { RoleMembershipService } from "./services/RoleMembershipService";
 export { RolesService } from "./services/RolesService";
 export { ServersService } from "./services/ServersService";
+export { ServerSubscriptionService } from "./services/ServerSubscriptionService";
 export { ServerXpService } from "./services/ServerXpService";
 export { SocialLinksService } from "./services/SocialLinksService";
 export { UsersService } from "./services/UsersService";

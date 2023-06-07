@@ -27,7 +27,7 @@ This repo serves as a monorepo that houses several packages, mainly the `guilded
 
 <a href="https://npmjs.org/package/guilded.js"><img src="https://nodei.co/npm/guilded.js.png" alt="NPM"></a>
 
-**Recommended that you use node v12+**
+**Recommended that you use node v18+**
 
 - `npm install guilded.js`
 - `yarn add guilded.js`
