@@ -201,7 +201,7 @@ export class RestManager {
       if (bodyIsJSON && typeof requestOptions.body === "string")
         requestOptions.body = JSON.parse(requestOptions.body);
 
-      this.emitter.emit("error", requestOptions, responseDetails);
+      // this.emitter.emit("error", requestOptions, responseDetails);
       // Occurs when bot has a permission missing
       if (responseDetails.status === 403) {
         throw new PermissionsError(
