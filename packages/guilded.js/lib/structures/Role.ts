@@ -63,12 +63,14 @@ export class Role extends Base<{ id: number; serverId: string }, number> {
     this.icon = data.icon ?? null;
     this.position = data.position;
     this.isBase = data.isBase ?? false;
+    this.botUserId = data.botUserId ?? null;
   }
 
-  _update(data: RolePayload) {
+  _update(data: RolePayload): this {
     if ("updatedAt" in data) {
       this._updatedAt = data.updatedAt ? Date.parse(data.updatedAt) : null;
     }
+    return this;
   }
 
   get createdAt(): Date {
