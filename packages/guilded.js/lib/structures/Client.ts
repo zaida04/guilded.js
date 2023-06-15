@@ -23,6 +23,7 @@ import type { ClientEvents } from "../typings";
 import type { SkeletonWSPayload } from "@guildedjs/api";
 import type { Server } from "./Server";
 import type { Collection } from "@discordjs/collection";
+import { GlobalSubscriptionManager } from "../managers/global/SubscriptionManager";
 
 /**
  * The main class for interacting with the api.
@@ -121,6 +122,11 @@ export class Client extends (EventEmitter as unknown as new () => TypedEmitter<C
    * A manager for calendars, used to manage and interact with calendars.
    */
   calendars = new GlobalCalendarManager(this);
+
+  /**
+   * A manager for server subscriptions, used to manage and interact with server subscriptions.
+   */
+  subscriptions = new GlobalSubscriptionManager(this);
 
   /**
    * The user belonging to this bot.
