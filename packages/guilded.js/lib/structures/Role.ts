@@ -42,6 +42,9 @@ export class Role extends Base<{ id: number; serverId: string }, number> {
   /** Whether this is the default role for members */
   isBase: boolean;
 
+  /** The bot user ID this role has been defined for. */
+  botUserId: string | null;
+
   /**
    * @param client - The client instance
    * @param data - The data for this role
