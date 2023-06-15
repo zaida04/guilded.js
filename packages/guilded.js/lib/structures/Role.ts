@@ -42,6 +42,9 @@ export class Role extends Base<{ id: number; serverId: string }, number> {
   /** Whether this is the default role for members */
   isBase: boolean;
 
+  /** The bot user ID this role has been defined for. */
+  botUserId: string | null;
+
   /**
    * @param client - The client instance
    * @param data - The data for this role
@@ -60,12 +63,14 @@ export class Role extends Base<{ id: number; serverId: string }, number> {
     this.icon = data.icon ?? null;
     this.position = data.position;
     this.isBase = data.isBase ?? false;
+    this.botUserId = data.botUserId ?? null;
   }
 
-  _update(data: RolePayload) {
+  _update(data: RolePayload): this {
     if ("updatedAt" in data) {
       this._updatedAt = data.updatedAt ? Date.parse(data.updatedAt) : null;
     }
+    return this;
   }
 
   get createdAt(): Date {
