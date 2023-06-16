@@ -24,10 +24,10 @@ export class ServerSubscriptionTier extends Base<
   type: ServerSubscriptionTierType;
 
   /** The description associated with the server subscription tier (max length 256) */
-  description?: string;
+  description: string | null;
 
   /** The ID of the role */
-  roleId?: number;
+  roleId: number | null;
 
   /** The cost of the tier in cents USD per month (min 200; max 10000) */
   cost: number;
@@ -40,8 +40,8 @@ export class ServerSubscriptionTier extends Base<
     super(client, { id: data.type, ...data });
     this.serverId = data.serverId;
     this._createdAt = Date.parse(data.createdAt);
-    this.description = data.description;
-    this.roleId = data.roleId;
+    this.description = data.description ?? null;
+    this.roleId = data.roleId ?? null;
     this.cost = data.cost;
     this.type = data.type;
   }
