@@ -11,12 +11,12 @@ export class GlobalSubscriptionManager extends GlobalManager {
   /**
    * Fetches a subscription tier from a server.
    * @param serverId The ID of the server to fetch the subscription tier from.
-   * @param serverSubscriptionTierType The subscription tier to fetch.
+   * @param tier The type of subscription tier to fetch.
    * @returns A Promise that resolves with the fetched subscription tier.
    */
   async fetch(
     serverId: string,
-    serverSubscriptionTierType: ServerSubscriptionTierType
+    tier: ServerSubscriptionTierType
   ): Promise<ServerSubscriptionTier> {
     const data =
       await this.client.rest.router.serverSubscriptions.serverSubscriptionTierRead(
