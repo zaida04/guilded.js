@@ -22,9 +22,7 @@ export class GlobalSubscriptionManager extends GlobalManager {
       await this.client.rest.router.serverSubscriptions.serverSubscriptionTierRead(
         { serverId, serverSubscriptionTierType }
       );
-    return new ServerSubscriptionTier(this.client, {
-      ...data.serverSubscriptionTier,
-    });
+    return new ServerSubscriptionTier(this.client, data.serverSubscriptionTier);
   }
 
   /**
