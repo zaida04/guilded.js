@@ -1,16 +1,20 @@
-import { UserPayload, WSPayload } from "@guildedjs/api";
+import type { UserPayload, WSPayload } from "@guildedjs/api";
 import { Base } from "./Base";
 import type { Client } from "./Client";
 
 export class User extends Base<UserPayload> {
 	/** The name for this user */
 	name: string;
+
 	/** The type of this user */
 	readonly type: UserType;
+
 	/** The avatar image associated with this user */
 	avatar: string | null = null;
+
 	/** The banner image associated with this user */
 	banner: string | null = null;
+
 	/** When this user was created */
 	readonly _createdAt: number | null;
 
@@ -43,6 +47,7 @@ export class User extends Base<UserPayload> {
 export class ClientUser extends User {
 	// User who has created this bot
 	readonly createdBy: string;
+
 	// The bot ID (not to be confused with the user ID) of this bot
 	readonly botId: string;
 
@@ -51,7 +56,7 @@ export class ClientUser extends User {
 		data: WSPayload<"_WelcomeMessage">["user"] & {
 			createdBy: string;
 			botId: string;
-		}
+		},
 	) {
 		super(client, { ...data, type: "bot" });
 		this.createdBy = data.createdBy;

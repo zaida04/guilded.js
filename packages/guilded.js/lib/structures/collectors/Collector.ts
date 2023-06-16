@@ -8,97 +8,108 @@ import type { Client } from "../Client";
  * to have your code wait until further input from a user.
  */
 export abstract class Collector<T extends CollectableStructure> {
-    /** Collection of successfully collected entries */
-    readonly entries = new Collection<T["id"], T>();
-    /** Whether the collector is actively collecting elements */
-    isActive = false;
-    /** Method to resolve the promise this collector has when instantiated */
-    protected resolve: ((value: CollectorReturnValue<T>) => void) | null = null;
-    /** Timeout for max time */
-    protected maxTimeout: NodeJS.Timeout | null = null;
-    /** Bound function for item receiving */
-    protected boundItemReceiver = this.itemReceived.bind(this);
+	/** Collection of successfully collected entries */
+	readonly entries = new Collection<T["id"], T>();
 
-    constructor(public readonly client: Client, public options: Partial<CollectorOptions<T>>) {
-        /** Check if timeLimit is specified */
-        if (!options.timeLimit) throw new Error("You must specify a time limit in milliseconds for this collector.");
-    }
+	/** Whether the collector is actively collecting elements */
+	isActive = false;
 
-    /**
-     * Start the collector
-     * @returns A promise that resolves with a `CollectorReturnValue` object
-     */
-    start(): Promise<CollectorReturnValue<T>> {
-        return new Promise((resolve) => {
-            this.resolve = resolve;
-            this.maxTimeout = setTimeout(() => resolve({ reason: CollectorEndReasons.TIME, entries: this.entries }), this.options.timeLimit);
-            this.hookEvents();
-            this.isActive = true;
-        });
-    }
+	/** Method to resolve the promise this collector has when instantiated */
+	protected resolve: ((value: CollectorReturnValue<T>) => void) | null = null;
 
-    /**
-     * Receives an item
-     * @param entry - The item received
-     * @returns Whether the item passes the filter function or not
-     */
-    async itemReceived(entry: T): Promise<boolean> {
-        const elementPassesFilter = (await this.options.filter?.(entry)) ?? true;
-        if (elementPassesFilter) {
-            this.entries.set(entry.id, entry);
+	/** Timeout for max time */
+	protected maxTimeout: NodeJS.Timeout | null = null;
 
-            if (this.entries.size >= (this.options.max ?? Infinity)) {
-                clearTimeout(this.maxTimeout!);
-                this.maxTimeout = null;
-                this.resolve!({ reason: CollectorEndReasons.MAX, entries: this.entries });
-                this._cleanup();
-                this.isActive = false;
-            }
-            return true;
-        }
-        return false;
-    }
+	/** Bound function for item receiving */
+	protected boundItemReceiver = this.itemReceived.bind(this);
 
-    /**
-     * Increment the max number of event listeners for the client
-     * @returns The new max number of event listeners for the client
-     */
-    protected incrementMaxEventListeners(): number {
-        const incrementedAmount = this.client.getMaxListeners() + 1;
-        this.client.setMaxListeners(incrementedAmount);
-        return incrementedAmount;
-    }
+	constructor(public readonly client: Client, public options: Partial<CollectorOptions<T>>) {
+		/** Check if timeLimit is specified */
+		if (!options.timeLimit) throw new Error("You must specify a time limit in milliseconds for this collector.");
+	}
 
-    /**
-     * Decrement the max number of event listeners for the client
-     * @returns The new max number of event listeners for the client
-     */
-    protected decrementMaxEventListeners(): number {
-        const decrementAmount = this.client.getMaxListeners() - 1;
-        if (decrementAmount !== 0) {
-            this.client.setMaxListeners(decrementAmount);
-            return decrementAmount;
-        }
-        return 0;
-    }
+	/**
+	 * Start the collector
+	 *
+	 * @returns A promise that resolves with a `CollectorReturnValue` object
+	 */
+	start(): Promise<CollectorReturnValue<T>> {
+		return new Promise((resolve) => {
+			this.resolve = resolve;
+			this.maxTimeout = setTimeout(() => resolve({ reason: CollectorEndReasons.TIME, entries: this.entries }), this.options.timeLimit);
+			this.hookEvents();
+			this.isActive = true;
+		});
+	}
 
-    /**
-     * Hook events to the collector
-     */
-    abstract hookEvents(): void;
+	/**
+	 * Receives an item
+	 *
+	 * @param entry - The item received
+	 * @returns Whether the item passes the filter function or not
+	 */
+	async itemReceived(entry: T): Promise<boolean> {
+		const elementPassesFilter = (await this.options.filter?.(entry)) ?? true;
+		if (elementPassesFilter) {
+			this.entries.set(entry.id, entry);
 
-    /**
-     * Clean up the collector
-     */
-    abstract _cleanup(): void;
+			if (this.entries.size >= (this.options.max ?? Number.POSITIVE_INFINITY)) {
+				clearTimeout(this.maxTimeout!);
+				this.maxTimeout = null;
+				this.resolve!({ reason: CollectorEndReasons.MAX, entries: this.entries });
+				this._cleanup();
+				this.isActive = false;
+			}
+
+			return true;
+		}
+
+		return false;
+	}
+
+	/**
+	 * Increment the max number of event listeners for the client
+	 *
+	 * @returns The new max number of event listeners for the client
+	 */
+	protected incrementMaxEventListeners(): number {
+		const incrementedAmount = this.client.getMaxListeners() + 1;
+		this.client.setMaxListeners(incrementedAmount);
+		return incrementedAmount;
+	}
+
+	/**
+	 * Decrement the max number of event listeners for the client
+	 *
+	 * @returns The new max number of event listeners for the client
+	 */
+	protected decrementMaxEventListeners(): number {
+		const decrementAmount = this.client.getMaxListeners() - 1;
+		if (decrementAmount !== 0) {
+			this.client.setMaxListeners(decrementAmount);
+			return decrementAmount;
+		}
+
+		return 0;
+	}
+
+	/**
+	 * Hook events to the collector
+	 */
+	abstract hookEvents(): void;
+
+	/**
+	 * Clean up the collector
+	 */
+	abstract _cleanup(): void;
 }
 
 /**
  * Reasons why a collector has ended
  */
 export enum CollectorEndReasons {
-    MAX = "MAX_AMOUNT",
-    TIME = "TIME_EXPIRED",
+	MAX = "MAX_AMOUNT",
+	TIME = "TIME_EXPIRED",
 }
 
 /**
@@ -112,11 +123,11 @@ type CollectorReturnValue<T extends CollectableStructure> = { reason: CollectorE
 type CollectableStructure = { id: string };
 
 /** options for constructing a collector */
-export interface CollectorOptions<T> {
-    /** a function that determines whether an entry is collected or not */
-    filter?: (item: T) => MaybePromise<boolean>;
-    /** the max amount of time this collector run for before exiting (ms) */
-    timeLimit: number;
-    /** the max amount of entries allowed to be collected */
-    max?: number;
-}
+export type CollectorOptions<T> = {
+	/** a function that determines whether an entry is collected or not */
+	filter?(item: T): MaybePromise<boolean>;
+	/** the max amount of time this collector run for before exiting (ms) */
+	timeLimit: number;
+	/** the max amount of entries allowed to be collected */
+	max?: number;
+};

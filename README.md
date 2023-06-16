@@ -19,9 +19,9 @@ This repo serves as a monorepo that houses several packages, mainly the `guilded
 
 ## 📦 Packages
 
-- `guilded.js` (**[GitHub](https://github.com/zaida04/guilded.js/tree/main/packages/guilded.js#readme), [NPM](https://www.npmjs.com/package/guilded.js)**) - Main library that ties everything together. Has additional logic for caching.
-- `@guildedjs/gil` (**[GitHub](https://github.com/zaida04/guilded.js/tree/main/packages/gil#readme), [NPM](https://www.npmjs.com/package/@guildedjs/gil)**) - Framework allowing you to build bots with ease.
-- `@guildedjs/api` (**[GitHub](https://github.com/zaida04/guilded.js/tree/main/packages/api#readme), [NPM](https://www.npmjs.com/package/@guildedjs/api)**) - Multi-use wrapper over the entire Guilded API. Covers rest requests and ws connections.
+-   `guilded.js` (**[GitHub](https://github.com/zaida04/guilded.js/tree/main/packages/guilded.js#readme), [NPM](https://www.npmjs.com/package/guilded.js)**) - Main library that ties everything together. Has additional logic for caching.
+-   `@guildedjs/gil` (**[GitHub](https://github.com/zaida04/guilded.js/tree/main/packages/gil#readme), [NPM](https://www.npmjs.com/package/@guildedjs/gil)**) - Framework allowing you to build bots with ease.
+-   `@guildedjs/api` (**[GitHub](https://github.com/zaida04/guilded.js/tree/main/packages/api#readme), [NPM](https://www.npmjs.com/package/@guildedjs/api)**) - Multi-use wrapper over the entire Guilded API. Covers rest requests and ws connections.
 
 ## 📥 Installation
 
@@ -29,8 +29,8 @@ This repo serves as a monorepo that houses several packages, mainly the `guilded
 
 **Recommended that you use node v18+**
 
-- `npm install guilded.js`
-- `yarn add guilded.js`
+-   `npm install guilded.js`
+-   `yarn add guilded.js`
 
 ## ⚡ Usage
 
@@ -43,9 +43,9 @@ const client = new Client({ token: "TOKEN_HERE" });
 
 client.on("ready", () => console.log(`Bot is successfully logged in`));
 client.on("messageCreated", (message) => {
-  if (message.content === "test") {
-    return message.reply("test indeed");
-  }
+    if (message.content === "test") {
+        return message.reply("test indeed");
+    }
 });
 
 client.login();

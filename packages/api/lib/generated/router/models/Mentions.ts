@@ -5,39 +5,39 @@
  * Metadata of who or what is mentioned in content
  */
 export type Mentions = {
-  /**
-   * Info on mentioned users
-   */
-  users?: Array<{
     /**
-     * The ID of the user
+     * Info on mentioned users
      */
-    id: string;
-  }>;
-  /**
-   * Info on mentioned channels
-   */
-  channels?: Array<{
+    users?: Array<{
+        /**
+         * The ID of the user
+         */
+        id: string;
+    }>;
     /**
-     * The ID of the channel
+     * Info on mentioned channels
      */
-    id: string;
-  }>;
-  /**
-   * Info on mentioned roles
-   */
-  roles?: Array<{
+    channels?: Array<{
+        /**
+         * The ID of the channel
+         */
+        id: string;
+    }>;
     /**
-     * The ID of the role
+     * Info on mentioned roles
      */
-    id: number;
-  }>;
-  /**
-   * If @everyone was mentioned
-   */
-  everyone?: boolean;
-  /**
-   * If @here was mentioned
-   */
-  here?: boolean;
+    roles?: Array<{
+        /**
+         * The ID of the role
+         */
+        id: number;
+    }>;
+    /**
+     * If @everyone was mentioned
+     */
+    everyone?: boolean;
+    /**
+     * If @here was mentioned
+     */
+    here?: boolean;
 };

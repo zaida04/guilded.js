@@ -13,8 +13,7 @@ export class CommandsMonitor extends Monitor {
         // If the message is not using the valid prefix or bot mention cancel the command
         // IF THE MESSAGE IS ONLY BOT MENTION, SEND THE PREFIX
         if (this.client.botMention) {
-            if (this.client.botMention === message.content)
-                return this.client.messages.send(message.channelId, { content: this.parsePrefix(message.serverId), replyMessageIds: [message.id] });
+            if (this.client.botMention === message.content) return this.client.messages.send(message.channelId, { content: this.parsePrefix(message.serverId), replyMessageIds: [message.id] });
             // IF THE MESSAGE STARTS WITH BOT MENTION, USE MENTION AS PREFIX
             else if (message.content.startsWith(this.client.botMention)) prefix = this.client.botMention;
         }
@@ -157,10 +156,7 @@ export class CommandsMonitor extends Monitor {
                             args[argument.name] = responseArg;
                             params.shift();
                             // TODO: perm checks to delete message
-                            await Promise.all([
-                                this.client.messages.delete(message.channelId, message.id),
-                                this.client.messages.delete(message.channelId, response.id),
-                            ]);
+                            await Promise.all([this.client.messages.delete(message.channelId, message.id), this.client.messages.delete(message.channelId, response.id)]);
                             continue;
                         }
                     }

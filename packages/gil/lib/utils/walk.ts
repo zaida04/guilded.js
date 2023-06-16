@@ -8,13 +8,7 @@ import { yellowBright } from "colorette";
 export async function* walk(dir: string): AsyncGenerator<any, any, unknown> {
     const folder = await opendir(dir).catch((error) => {
         if (error.message.startsWith("ENOENT: no such file or directory")) {
-            console.log(
-                yellowBright(
-                    `[WARN] Missing folder: ${dir.slice(
-                        Math.max(0, dir.lastIndexOf("/")),
-                    )}. To make this warning go away, simply create the folder in your src folder.`,
-                ),
-            );
+            console.log(yellowBright(`[WARN] Missing folder: ${dir.slice(Math.max(0, dir.lastIndexOf("/")))}. To make this warning go away, simply create the folder in your src folder.`));
         } else console.log(error);
     });
     if (!folder) return;

@@ -14,9 +14,4 @@ export * from "./Server";
 export * from "./User";
 export * from "./Client";
 
-export {
-	EmbedField,
-	EmbedAuthor,
-	EmbedFooter,
-	EmbedImage,
-} from "@guildedjs/api";
+export type { EmbedField, EmbedAuthor, EmbedFooter, EmbedImage } from "@guildedjs/api";
