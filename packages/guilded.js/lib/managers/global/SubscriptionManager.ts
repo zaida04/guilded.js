@@ -20,7 +20,7 @@ export class GlobalSubscriptionManager extends GlobalManager {
   ): Promise<ServerSubscriptionTier> {
     const data =
       await this.client.rest.router.serverSubscriptions.serverSubscriptionTierRead(
-        { serverId, serverSubscriptionTierType }
+        { serverId, serverSubscriptionTierType: tier }
       );
     return new ServerSubscriptionTier(this.client, data.serverSubscriptionTier);
   }
