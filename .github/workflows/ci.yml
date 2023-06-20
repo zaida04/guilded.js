@@ -1,57 +1,57 @@
 name: CI workflows
 on:
-   push:
-      branches:
-         - main
-      paths:
-         - "packages/**"
-         - "apps/**"
-         - "services/**"
-         - "typedoc.json"
-   pull_request:
+    push:
+        branches:
+            - main
+        paths:
+            - "packages/**"
+            - "apps/**"
+            - "services/**"
+            - "typedoc.json"
+    pull_request:
 
 jobs:
-   ci-workflow:
-      runs-on: ubuntu-latest
-      steps:
-         - name: Clone repo
-           uses: actions/checkout@v3
+    ci-workflow:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Clone repo
+              uses: actions/checkout@v3
 
-         - uses: pnpm/action-setup@v2
-           name: Install pnpm
-           id: pnpm-install
-           with:
-              version: 7
-              run_install: false
+            - uses: pnpm/action-setup@v2
+              name: Install pnpm
+              id: pnpm-install
+              with:
+                  version: 7
+                  run_install: false
 
-         - name: Get pnpm store directory
-           id: pnpm-cache
-           shell: bash
-           run: |
-              echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
+            - name: Get pnpm store directory
+              id: pnpm-cache
+              shell: bash
+              run: |
+                  echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
 
-         - uses: actions/cache@v3
-           name: Setup pnpm cache
-           with:
-              path: ${{ steps.pnpm-cache.outputs.STORE_PATH }}
-              key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
-              restore-keys: |
-                 ${{ runner.os }}-pnpm-store-
+            - uses: actions/cache@v3
+              name: Setup pnpm cache
+              with:
+                  path: ${{ steps.pnpm-cache.outputs.STORE_PATH }}
+                  key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+                  restore-keys: |
+                      ${{ runner.os }}-pnpm-store-
 
-         - name: Set up Node v16
-           uses: actions/setup-node@v3
-           with:
-              node-version: "16"
-              cache: "pnpm"
+            - name: Set up Node v16
+              uses: actions/setup-node@v3
+              with:
+                  node-version: "16"
+                  cache: "pnpm"
 
-         - name: Install dependencies
-           run: pnpm install -r
+            - name: Install dependencies
+              run: pnpm install -r
 
-         - name: Run TypeScript Compiler
-           run: pnpm run build
+            - name: Run TypeScript Compiler
+              run: pnpm run build
 
-         - name: Run linter
-           run: pnpm run lint
+            - name: Run linter
+              run: pnpm run lint
 
-         # - name: Run tests
-         #   run: pnpm run test
+            # - name: Run tests
+            #   run: pnpm run test

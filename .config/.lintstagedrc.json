@@ -1,5 +1,5 @@
 {
     "$schema": "https://json.schemastore.org/lintstagedrc.schema.json",
-    "*.{js,ts,tsx,jsx}": ["prettier --write"],
-    "*.{json,md,html,js,jsx,ts,tsx}": ["prettier --write"]
+    "*.{js,ts,tsx,jsx}": ["pnpm prettier"],
+    "*.{json,md,html,js,jsx,ts,tsx}": ["pnpm prettier"]
 }
