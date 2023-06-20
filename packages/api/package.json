@@ -1,6 +1,6 @@
 {
     "name": "@guildedjs/api",
-    "version": "0.3.0",
+    "version": "0.3.1",
     "description": "Multi-use wrapper over the entire Guilded API. Utilities for making REST requests to the Guilded API with ratelimit handling. Also contains utilities for connecting to Guilded's WebSocket gateway and receiving events.",
     "author": "Zaid \"Nico\" <contact@nico.engineer>",
     "license": "MIT",
