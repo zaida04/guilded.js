@@ -4,623 +4,545 @@ import type { CancelablePromise } from "../core/CancelablePromise";
 import type { BaseHttpRequest } from "../core/BaseHttpRequest";
 
 export class ReactionsService {
-  constructor(public readonly httpRequest: BaseHttpRequest) {}
+    constructor(public readonly httpRequest: BaseHttpRequest) {}
 
-  /**
-   * [deprecated] Create reaction
-   * [deprecated] Please use [this route](/docs/api/reactions/ChannelMessageReactionCreate) instead
-   * @returns void
-   * @throws ApiError
-   */
-  public contentReactionCreate({
-    channelId,
-    contentId,
-    emoteId,
-  }: {
     /**
-     * Channel ID where the content exists
+     * [deprecated] Create reaction
+     * [deprecated] Please use [this route](/docs/api/reactions/ChannelMessageReactionCreate) instead
+     * @returns void
+     * @throws ApiError
      */
-    channelId: string;
+    public contentReactionCreate({
+        channelId,
+        contentId,
+        emoteId,
+    }: {
+        /**
+         * Channel ID where the content exists
+         */
+        channelId: string;
+        /**
+         * Content ID of the content
+         */
+        contentId: string;
+        /**
+         * Emote ID to apply
+         */
+        emoteId: number;
+    }): CancelablePromise<void> {
+        return this.httpRequest.request({
+            method: "PUT",
+            url: "/channels/{channelId}/content/{contentId}/emotes/{emoteId}",
+            path: {
+                channelId: channelId,
+                contentId: contentId,
+                emoteId: emoteId,
+            },
+        });
+    }
+
     /**
-     * Content ID of the content
+     * [deprecated] Delete reaction
+     * [deprecated] Please use [this route](/docs/api/reactions/ChannelMessageReactionDelete) instead
+     * @returns void
+     * @throws ApiError
      */
-    contentId: string;
+    public contentReactionDelete({
+        channelId,
+        contentId,
+        emoteId,
+    }: {
+        /**
+         * Channel ID where the content exists
+         */
+        channelId: string;
+        /**
+         * Content ID of the content
+         */
+        contentId: string;
+        /**
+         * Emote ID to remove
+         */
+        emoteId: number;
+    }): CancelablePromise<void> {
+        return this.httpRequest.request({
+            method: "DELETE",
+            url: "/channels/{channelId}/content/{contentId}/emotes/{emoteId}",
+            path: {
+                channelId: channelId,
+                contentId: contentId,
+                emoteId: emoteId,
+            },
+        });
+    }
+
     /**
-     * Emote ID to apply
+     * Create forum topic reaction
+     * @returns void
+     * @throws ApiError
      */
-    emoteId: number;
-  }): CancelablePromise<void> {
-    return this.httpRequest.request({
-      method: "PUT",
-      url: "/channels/{channelId}/content/{contentId}/emotes/{emoteId}",
-      path: {
-        channelId: channelId,
-        contentId: contentId,
-        emoteId: emoteId,
-      },
-    });
-  }
+    public forumTopicReactionCreate({
+        channelId,
+        forumTopicId,
+        emoteId,
+    }: {
+        /**
+         * Channel ID where the forum topic exists
+         */
+        channelId: string;
+        /**
+         * Forum Topic ID
+         */
+        forumTopicId: number;
+        /**
+         * Emote ID to apply
+         */
+        emoteId: number;
+    }): CancelablePromise<void> {
+        return this.httpRequest.request({
+            method: "PUT",
+            url: "/channels/{channelId}/topics/{forumTopicId}/emotes/{emoteId}",
+            path: {
+                channelId: channelId,
+                forumTopicId: forumTopicId,
+                emoteId: emoteId,
+            },
+        });
+    }
 
-  /**
-   * [deprecated] Delete reaction
-   * [deprecated] Please use [this route](/docs/api/reactions/ChannelMessageReactionDelete) instead
-   * @returns void
-   * @throws ApiError
-   */
-  public contentReactionDelete({
-    channelId,
-    contentId,
-    emoteId,
-  }: {
     /**
-     * Channel ID where the content exists
+     * Delete forum topic reaction
+     * @returns void
+     * @throws ApiError
      */
-    channelId: string;
+    public forumTopicReactionDelete({
+        channelId,
+        forumTopicId,
+        emoteId,
+    }: {
+        /**
+         * Channel ID where the forum topic exists
+         */
+        channelId: string;
+        /**
+         * Forum Topic ID
+         */
+        forumTopicId: number;
+        /**
+         * Emote ID to remove
+         */
+        emoteId: number;
+    }): CancelablePromise<void> {
+        return this.httpRequest.request({
+            method: "DELETE",
+            url: "/channels/{channelId}/topics/{forumTopicId}/emotes/{emoteId}",
+            path: {
+                channelId: channelId,
+                forumTopicId: forumTopicId,
+                emoteId: emoteId,
+            },
+        });
+    }
+
     /**
-     * Content ID of the content
+     * Create forum topic comment reaction
+     * @returns void
+     * @throws ApiError
      */
-    contentId: string;
+    public forumTopicCommentReactionCreate({
+        channelId,
+        forumTopicId,
+        forumTopicCommentId,
+        emoteId,
+    }: {
+        /**
+         * Channel ID where the forum topic exists
+         */
+        channelId: string;
+        forumTopicId: number;
+        forumTopicCommentId: number;
+        emoteId: number;
+    }): CancelablePromise<void> {
+        return this.httpRequest.request({
+            method: "PUT",
+            url: "/channels/{channelId}/topics/{forumTopicId}/comments/{forumTopicCommentId}/emotes/{emoteId}",
+            path: {
+                channelId: channelId,
+                forumTopicId: forumTopicId,
+                forumTopicCommentId: forumTopicCommentId,
+                emoteId: emoteId,
+            },
+        });
+    }
+
     /**
-     * Emote ID to remove
+     * Delete forum topic comment reaction
+     * @returns void
+     * @throws ApiError
      */
-    emoteId: number;
-  }): CancelablePromise<void> {
-    return this.httpRequest.request({
-      method: "DELETE",
-      url: "/channels/{channelId}/content/{contentId}/emotes/{emoteId}",
-      path: {
-        channelId: channelId,
-        contentId: contentId,
-        emoteId: emoteId,
-      },
-    });
-  }
+    public forumTopicCommentReactionDelete({
+        channelId,
+        forumTopicId,
+        forumTopicCommentId,
+        emoteId,
+    }: {
+        /**
+         * Channel ID where the forum topic exists
+         */
+        channelId: string;
+        forumTopicId: number;
+        forumTopicCommentId: number;
+        emoteId: number;
+    }): CancelablePromise<void> {
+        return this.httpRequest.request({
+            method: "DELETE",
+            url: "/channels/{channelId}/topics/{forumTopicId}/comments/{forumTopicCommentId}/emotes/{emoteId}",
+            path: {
+                channelId: channelId,
+                forumTopicId: forumTopicId,
+                forumTopicCommentId: forumTopicCommentId,
+                emoteId: emoteId,
+            },
+        });
+    }
 
-  /**
-   * Create forum topic reaction
-   * @returns void
-   * @throws ApiError
-   */
-  public forumTopicReactionCreate({
-    channelId,
-    forumTopicId,
-    emoteId,
-  }: {
     /**
-     * Channel ID where the forum topic exists
+     * Create calendar event reaction
+     * @returns void
+     * @throws ApiError
      */
-    channelId: string;
+    public calendarEventReactionCreate({ channelId, calendarEventId, emoteId }: { channelId: string; calendarEventId: number; emoteId: number }): CancelablePromise<void> {
+        return this.httpRequest.request({
+            method: "PUT",
+            url: "/channels/{channelId}/events/{calendarEventId}/emotes/{emoteId}",
+            path: {
+                channelId: channelId,
+                calendarEventId: calendarEventId,
+                emoteId: emoteId,
+            },
+        });
+    }
+
     /**
-     * Forum Topic ID
+     * Delete calendar event reaction
+     * @returns void
+     * @throws ApiError
      */
-    forumTopicId: number;
+    public calendarEventReactionDelete({ channelId, calendarEventId, emoteId }: { channelId: string; calendarEventId: number; emoteId: number }): CancelablePromise<void> {
+        return this.httpRequest.request({
+            method: "DELETE",
+            url: "/channels/{channelId}/events/{calendarEventId}/emotes/{emoteId}",
+            path: {
+                channelId: channelId,
+                calendarEventId: calendarEventId,
+                emoteId: emoteId,
+            },
+        });
+    }
+
     /**
-     * Emote ID to apply
+     * Create calendar event comment reaction
+     * @returns void
+     * @throws ApiError
      */
-    emoteId: number;
-  }): CancelablePromise<void> {
-    return this.httpRequest.request({
-      method: "PUT",
-      url: "/channels/{channelId}/topics/{forumTopicId}/emotes/{emoteId}",
-      path: {
-        channelId: channelId,
-        forumTopicId: forumTopicId,
-        emoteId: emoteId,
-      },
-    });
-  }
+    public calendarEventCommentReactionCreate({
+        channelId,
+        calendarEventId,
+        calendarEventCommentId,
+        emoteId,
+    }: {
+        channelId: string;
+        calendarEventId: number;
+        calendarEventCommentId: number;
+        emoteId: number;
+    }): CancelablePromise<void> {
+        return this.httpRequest.request({
+            method: "PUT",
+            url: "/channels/{channelId}/events/{calendarEventId}/comments/{calendarEventCommentId}/emotes/{emoteId}",
+            path: {
+                channelId: channelId,
+                calendarEventId: calendarEventId,
+                calendarEventCommentId: calendarEventCommentId,
+                emoteId: emoteId,
+            },
+        });
+    }
 
-  /**
-   * Delete forum topic reaction
-   * @returns void
-   * @throws ApiError
-   */
-  public forumTopicReactionDelete({
-    channelId,
-    forumTopicId,
-    emoteId,
-  }: {
     /**
-     * Channel ID where the forum topic exists
+     * Delete calendar event comment reaction
+     * @returns void
+     * @throws ApiError
      */
-    channelId: string;
+    public calendarEventCommentReactionDelete({
+        channelId,
+        calendarEventId,
+        calendarEventCommentId,
+        emoteId,
+    }: {
+        channelId: string;
+        calendarEventId: number;
+        calendarEventCommentId: number;
+        emoteId: number;
+    }): CancelablePromise<void> {
+        return this.httpRequest.request({
+            method: "DELETE",
+            url: "/channels/{channelId}/events/{calendarEventId}/comments/{calendarEventCommentId}/emotes/{emoteId}",
+            path: {
+                channelId: channelId,
+                calendarEventId: calendarEventId,
+                calendarEventCommentId: calendarEventCommentId,
+                emoteId: emoteId,
+            },
+        });
+    }
+
     /**
-     * Forum Topic ID
+     * Create doc reaction
+     * @returns void
+     * @throws ApiError
      */
-    forumTopicId: number;
+    public docReactionCreate({ channelId, docId, emoteId }: { channelId: string; docId: number; emoteId: number }): CancelablePromise<void> {
+        return this.httpRequest.request({
+            method: "PUT",
+            url: "/channels/{channelId}/docs/{docId}/emotes/{emoteId}",
+            path: {
+                channelId: channelId,
+                docId: docId,
+                emoteId: emoteId,
+            },
+        });
+    }
+
     /**
-     * Emote ID to remove
+     * Delete doc reaction
+     * @returns void
+     * @throws ApiError
      */
-    emoteId: number;
-  }): CancelablePromise<void> {
-    return this.httpRequest.request({
-      method: "DELETE",
-      url: "/channels/{channelId}/topics/{forumTopicId}/emotes/{emoteId}",
-      path: {
-        channelId: channelId,
-        forumTopicId: forumTopicId,
-        emoteId: emoteId,
-      },
-    });
-  }
+    public docReactionDelete({ channelId, docId, emoteId }: { channelId: string; docId: number; emoteId: number }): CancelablePromise<void> {
+        return this.httpRequest.request({
+            method: "DELETE",
+            url: "/channels/{channelId}/docs/{docId}/emotes/{emoteId}",
+            path: {
+                channelId: channelId,
+                docId: docId,
+                emoteId: emoteId,
+            },
+        });
+    }
 
-  /**
-   * Create forum topic comment reaction
-   * @returns void
-   * @throws ApiError
-   */
-  public forumTopicCommentReactionCreate({
-    channelId,
-    forumTopicId,
-    forumTopicCommentId,
-    emoteId,
-  }: {
     /**
-     * Channel ID where the forum topic exists
+     * Create doc comment reaction
+     * @returns void
+     * @throws ApiError
      */
-    channelId: string;
-    forumTopicId: number;
-    forumTopicCommentId: number;
-    emoteId: number;
-  }): CancelablePromise<void> {
-    return this.httpRequest.request({
-      method: "PUT",
-      url: "/channels/{channelId}/topics/{forumTopicId}/comments/{forumTopicCommentId}/emotes/{emoteId}",
-      path: {
-        channelId: channelId,
-        forumTopicId: forumTopicId,
-        forumTopicCommentId: forumTopicCommentId,
-        emoteId: emoteId,
-      },
-    });
-  }
+    public docCommentReactionCreate({ channelId, docId, docCommentId, emoteId }: { channelId: string; docId: number; docCommentId: number; emoteId: number }): CancelablePromise<void> {
+        return this.httpRequest.request({
+            method: "PUT",
+            url: "/channels/{channelId}/docs/{docId}/comments/{docCommentId}/emotes/{emoteId}",
+            path: {
+                channelId: channelId,
+                docId: docId,
+                docCommentId: docCommentId,
+                emoteId: emoteId,
+            },
+        });
+    }
 
-  /**
-   * Delete forum topic comment reaction
-   * @returns void
-   * @throws ApiError
-   */
-  public forumTopicCommentReactionDelete({
-    channelId,
-    forumTopicId,
-    forumTopicCommentId,
-    emoteId,
-  }: {
     /**
-     * Channel ID where the forum topic exists
+     * Delete doc comment reaction
+     * @returns void
+     * @throws ApiError
      */
-    channelId: string;
-    forumTopicId: number;
-    forumTopicCommentId: number;
-    emoteId: number;
-  }): CancelablePromise<void> {
-    return this.httpRequest.request({
-      method: "DELETE",
-      url: "/channels/{channelId}/topics/{forumTopicId}/comments/{forumTopicCommentId}/emotes/{emoteId}",
-      path: {
-        channelId: channelId,
-        forumTopicId: forumTopicId,
-        forumTopicCommentId: forumTopicCommentId,
-        emoteId: emoteId,
-      },
-    });
-  }
+    public docCommentReactionDelete({ channelId, docId, docCommentId, emoteId }: { channelId: string; docId: number; docCommentId: number; emoteId: number }): CancelablePromise<void> {
+        return this.httpRequest.request({
+            method: "DELETE",
+            url: "/channels/{channelId}/docs/{docId}/comments/{docCommentId}/emotes/{emoteId}",
+            path: {
+                channelId: channelId,
+                docId: docId,
+                docCommentId: docCommentId,
+                emoteId: emoteId,
+            },
+        });
+    }
 
-  /**
-   * Create calendar event reaction
-   * @returns void
-   * @throws ApiError
-   */
-  public calendarEventReactionCreate({
-    channelId,
-    calendarEventId,
-    emoteId,
-  }: {
-    channelId: string;
-    calendarEventId: number;
-    emoteId: number;
-  }): CancelablePromise<void> {
-    return this.httpRequest.request({
-      method: "PUT",
-      url: "/channels/{channelId}/events/{calendarEventId}/emotes/{emoteId}",
-      path: {
-        channelId: channelId,
-        calendarEventId: calendarEventId,
-        emoteId: emoteId,
-      },
-    });
-  }
-
-  /**
-   * Delete calendar event reaction
-   * @returns void
-   * @throws ApiError
-   */
-  public calendarEventReactionDelete({
-    channelId,
-    calendarEventId,
-    emoteId,
-  }: {
-    channelId: string;
-    calendarEventId: number;
-    emoteId: number;
-  }): CancelablePromise<void> {
-    return this.httpRequest.request({
-      method: "DELETE",
-      url: "/channels/{channelId}/events/{calendarEventId}/emotes/{emoteId}",
-      path: {
-        channelId: channelId,
-        calendarEventId: calendarEventId,
-        emoteId: emoteId,
-      },
-    });
-  }
-
-  /**
-   * Create calendar event comment reaction
-   * @returns void
-   * @throws ApiError
-   */
-  public calendarEventCommentReactionCreate({
-    channelId,
-    calendarEventId,
-    calendarEventCommentId,
-    emoteId,
-  }: {
-    channelId: string;
-    calendarEventId: number;
-    calendarEventCommentId: number;
-    emoteId: number;
-  }): CancelablePromise<void> {
-    return this.httpRequest.request({
-      method: "PUT",
-      url: "/channels/{channelId}/events/{calendarEventId}/comments/{calendarEventCommentId}/emotes/{emoteId}",
-      path: {
-        channelId: channelId,
-        calendarEventId: calendarEventId,
-        calendarEventCommentId: calendarEventCommentId,
-        emoteId: emoteId,
-      },
-    });
-  }
-
-  /**
-   * Delete calendar event comment reaction
-   * @returns void
-   * @throws ApiError
-   */
-  public calendarEventCommentReactionDelete({
-    channelId,
-    calendarEventId,
-    calendarEventCommentId,
-    emoteId,
-  }: {
-    channelId: string;
-    calendarEventId: number;
-    calendarEventCommentId: number;
-    emoteId: number;
-  }): CancelablePromise<void> {
-    return this.httpRequest.request({
-      method: "DELETE",
-      url: "/channels/{channelId}/events/{calendarEventId}/comments/{calendarEventCommentId}/emotes/{emoteId}",
-      path: {
-        channelId: channelId,
-        calendarEventId: calendarEventId,
-        calendarEventCommentId: calendarEventCommentId,
-        emoteId: emoteId,
-      },
-    });
-  }
-
-  /**
-   * Create doc reaction
-   * @returns void
-   * @throws ApiError
-   */
-  public docReactionCreate({
-    channelId,
-    docId,
-    emoteId,
-  }: {
-    channelId: string;
-    docId: number;
-    emoteId: number;
-  }): CancelablePromise<void> {
-    return this.httpRequest.request({
-      method: "PUT",
-      url: "/channels/{channelId}/docs/{docId}/emotes/{emoteId}",
-      path: {
-        channelId: channelId,
-        docId: docId,
-        emoteId: emoteId,
-      },
-    });
-  }
-
-  /**
-   * Delete doc reaction
-   * @returns void
-   * @throws ApiError
-   */
-  public docReactionDelete({
-    channelId,
-    docId,
-    emoteId,
-  }: {
-    channelId: string;
-    docId: number;
-    emoteId: number;
-  }): CancelablePromise<void> {
-    return this.httpRequest.request({
-      method: "DELETE",
-      url: "/channels/{channelId}/docs/{docId}/emotes/{emoteId}",
-      path: {
-        channelId: channelId,
-        docId: docId,
-        emoteId: emoteId,
-      },
-    });
-  }
-
-  /**
-   * Create doc comment reaction
-   * @returns void
-   * @throws ApiError
-   */
-  public docCommentReactionCreate({
-    channelId,
-    docId,
-    docCommentId,
-    emoteId,
-  }: {
-    channelId: string;
-    docId: number;
-    docCommentId: number;
-    emoteId: number;
-  }): CancelablePromise<void> {
-    return this.httpRequest.request({
-      method: "PUT",
-      url: "/channels/{channelId}/docs/{docId}/comments/{docCommentId}/emotes/{emoteId}",
-      path: {
-        channelId: channelId,
-        docId: docId,
-        docCommentId: docCommentId,
-        emoteId: emoteId,
-      },
-    });
-  }
-
-  /**
-   * Delete doc comment reaction
-   * @returns void
-   * @throws ApiError
-   */
-  public docCommentReactionDelete({
-    channelId,
-    docId,
-    docCommentId,
-    emoteId,
-  }: {
-    channelId: string;
-    docId: number;
-    docCommentId: number;
-    emoteId: number;
-  }): CancelablePromise<void> {
-    return this.httpRequest.request({
-      method: "DELETE",
-      url: "/channels/{channelId}/docs/{docId}/comments/{docCommentId}/emotes/{emoteId}",
-      path: {
-        channelId: channelId,
-        docId: docId,
-        docCommentId: docCommentId,
-        emoteId: emoteId,
-      },
-    });
-  }
-
-  /**
-   * Create announcement reaction
-   * @returns void
-   * @throws ApiError
-   */
-  public announcementReactionCreate({
-    channelId,
-    announcementId,
-    emoteId,
-  }: {
-    channelId: string;
-    announcementId: string;
     /**
-     * Emote ID to apply
+     * Create announcement reaction
+     * @returns void
+     * @throws ApiError
      */
-    emoteId: number;
-  }): CancelablePromise<void> {
-    return this.httpRequest.request({
-      method: "PUT",
-      url: "/channels/{channelId}/announcements/{announcementId}/emotes/{emoteId}",
-      path: {
-        channelId: channelId,
-        announcementId: announcementId,
-        emoteId: emoteId,
-      },
-    });
-  }
+    public announcementReactionCreate({
+        channelId,
+        announcementId,
+        emoteId,
+    }: {
+        channelId: string;
+        announcementId: string;
+        /**
+         * Emote ID to apply
+         */
+        emoteId: number;
+    }): CancelablePromise<void> {
+        return this.httpRequest.request({
+            method: "PUT",
+            url: "/channels/{channelId}/announcements/{announcementId}/emotes/{emoteId}",
+            path: {
+                channelId: channelId,
+                announcementId: announcementId,
+                emoteId: emoteId,
+            },
+        });
+    }
 
-  /**
-   * Delete announcement reaction
-   * @returns void
-   * @throws ApiError
-   */
-  public announcementReactionDelete({
-    channelId,
-    announcementId,
-    emoteId,
-  }: {
-    channelId: string;
-    announcementId: string;
     /**
-     * Emote ID to apply
+     * Delete announcement reaction
+     * @returns void
+     * @throws ApiError
      */
-    emoteId: number;
-  }): CancelablePromise<void> {
-    return this.httpRequest.request({
-      method: "DELETE",
-      url: "/channels/{channelId}/announcements/{announcementId}/emotes/{emoteId}",
-      path: {
-        channelId: channelId,
-        announcementId: announcementId,
-        emoteId: emoteId,
-      },
-    });
-  }
+    public announcementReactionDelete({
+        channelId,
+        announcementId,
+        emoteId,
+    }: {
+        channelId: string;
+        announcementId: string;
+        /**
+         * Emote ID to apply
+         */
+        emoteId: number;
+    }): CancelablePromise<void> {
+        return this.httpRequest.request({
+            method: "DELETE",
+            url: "/channels/{channelId}/announcements/{announcementId}/emotes/{emoteId}",
+            path: {
+                channelId: channelId,
+                announcementId: announcementId,
+                emoteId: emoteId,
+            },
+        });
+    }
 
-  /**
-   * Create an announcement comment reaction
-   * @returns void
-   * @throws ApiError
-   */
-  public announcementCommentReactionCreate({
-    channelId,
-    announcementId,
-    announcementCommentId,
-    emoteId,
-  }: {
     /**
-     * Channel ID where the announcement comment exists
+     * Create an announcement comment reaction
+     * @returns void
+     * @throws ApiError
      */
-    channelId: string;
-    announcementId: string;
-    announcementCommentId: number;
+    public announcementCommentReactionCreate({
+        channelId,
+        announcementId,
+        announcementCommentId,
+        emoteId,
+    }: {
+        /**
+         * Channel ID where the announcement comment exists
+         */
+        channelId: string;
+        announcementId: string;
+        announcementCommentId: number;
+        /**
+         * Emote ID to apply
+         */
+        emoteId: number;
+    }): CancelablePromise<void> {
+        return this.httpRequest.request({
+            method: "PUT",
+            url: "/channels/{channelId}/announcements/{announcementId}/comments/{announcementCommentId}/emotes/{emoteId}",
+            path: {
+                channelId: channelId,
+                announcementId: announcementId,
+                announcementCommentId: announcementCommentId,
+                emoteId: emoteId,
+            },
+        });
+    }
+
     /**
-     * Emote ID to apply
+     * Delete an announcement comment reaction
+     * @returns void
+     * @throws ApiError
      */
-    emoteId: number;
-  }): CancelablePromise<void> {
-    return this.httpRequest.request({
-      method: "PUT",
-      url: "/channels/{channelId}/announcements/{announcementId}/comments/{announcementCommentId}/emotes/{emoteId}",
-      path: {
-        channelId: channelId,
-        announcementId: announcementId,
-        announcementCommentId: announcementCommentId,
-        emoteId: emoteId,
-      },
-    });
-  }
+    public announcementCommentReactionDelete({
+        channelId,
+        announcementId,
+        announcementCommentId,
+        emoteId,
+    }: {
+        /**
+         * Channel ID where the announcement comment exists
+         */
+        channelId: string;
+        announcementId: string;
+        announcementCommentId: number;
+        /**
+         * Emote ID to apply
+         */
+        emoteId: number;
+    }): CancelablePromise<void> {
+        return this.httpRequest.request({
+            method: "DELETE",
+            url: "/channels/{channelId}/announcements/{announcementId}/comments/{announcementCommentId}/emotes/{emoteId}",
+            path: {
+                channelId: channelId,
+                announcementId: announcementId,
+                announcementCommentId: announcementCommentId,
+                emoteId: emoteId,
+            },
+        });
+    }
 
-  /**
-   * Delete an announcement comment reaction
-   * @returns void
-   * @throws ApiError
-   */
-  public announcementCommentReactionDelete({
-    channelId,
-    announcementId,
-    announcementCommentId,
-    emoteId,
-  }: {
     /**
-     * Channel ID where the announcement comment exists
+     * Create a message reaction
+     * @returns void
+     * @throws ApiError
      */
-    channelId: string;
-    announcementId: string;
-    announcementCommentId: number;
+    public channelMessageReactionCreate({ channelId, messageId, emoteId }: { channelId: string; messageId: string; emoteId: number }): CancelablePromise<void> {
+        return this.httpRequest.request({
+            method: "PUT",
+            url: "/channels/{channelId}/messages/{messageId}/emotes/{emoteId}",
+            path: {
+                channelId: channelId,
+                messageId: messageId,
+                emoteId: emoteId,
+            },
+        });
+    }
+
     /**
-     * Emote ID to apply
+     * Delete a message reaction
+     * @returns void
+     * @throws ApiError
      */
-    emoteId: number;
-  }): CancelablePromise<void> {
-    return this.httpRequest.request({
-      method: "DELETE",
-      url: "/channels/{channelId}/announcements/{announcementId}/comments/{announcementCommentId}/emotes/{emoteId}",
-      path: {
-        channelId: channelId,
-        announcementId: announcementId,
-        announcementCommentId: announcementCommentId,
-        emoteId: emoteId,
-      },
-    });
-  }
+    public channelMessageReactionDelete({ channelId, messageId, emoteId, userId }: { channelId: string; messageId: string; emoteId: number; userId?: string | "@me" }): CancelablePromise<void> {
+        return this.httpRequest.request({
+            method: "DELETE",
+            url: "/channels/{channelId}/messages/{messageId}/emotes/{emoteId}",
+            path: {
+                channelId: channelId,
+                messageId: messageId,
+                emoteId: emoteId,
+            },
+            query: {
+                userId: userId,
+            },
+        });
+    }
 
-  /**
-   * Create a message reaction
-   * @returns void
-   * @throws ApiError
-   */
-  public channelMessageReactionCreate({
-    channelId,
-    messageId,
-    emoteId,
-  }: {
-    channelId: string;
-    messageId: string;
-    emoteId: number;
-  }): CancelablePromise<void> {
-    return this.httpRequest.request({
-      method: "PUT",
-      url: "/channels/{channelId}/messages/{messageId}/emotes/{emoteId}",
-      path: {
-        channelId: channelId,
-        messageId: messageId,
-        emoteId: emoteId,
-      },
-    });
-  }
-
-  /**
-   * Delete a message reaction
-   * @returns void
-   * @throws ApiError
-   */
-  public channelMessageReactionDelete({
-    channelId,
-    messageId,
-    emoteId,
-    userId,
-  }: {
-    channelId: string;
-    messageId: string;
-    emoteId: number;
-    userId?: string | "@me";
-  }): CancelablePromise<void> {
-    return this.httpRequest.request({
-      method: "DELETE",
-      url: "/channels/{channelId}/messages/{messageId}/emotes/{emoteId}",
-      path: {
-        channelId: channelId,
-        messageId: messageId,
-        emoteId: emoteId,
-      },
-      query: {
-        userId: userId,
-      },
-    });
-  }
-
-  /**
-   * Bulk delete a message's reactions
-   * @returns void
-   * @throws ApiError
-   */
-  public channelMessageReactionDeleteMany({
-    channelId,
-    messageId,
-    emoteId,
-  }: {
-    channelId: string;
-    messageId: string;
-    emoteId?: number;
-  }): CancelablePromise<void> {
-    return this.httpRequest.request({
-      method: "DELETE",
-      url: "/channels/{channelId}/messages/{messageId}/emotes",
-      path: {
-        channelId: channelId,
-        messageId: messageId,
-      },
-      query: {
-        emoteId: emoteId,
-      },
-    });
-  }
+    /**
+     * Bulk delete a message's reactions
+     * @returns void
+     * @throws ApiError
+     */
+    public channelMessageReactionDeleteMany({ channelId, messageId, emoteId }: { channelId: string; messageId: string; emoteId?: number }): CancelablePromise<void> {
+        return this.httpRequest.request({
+            method: "DELETE",
+            url: "/channels/{channelId}/messages/{messageId}/emotes",
+            path: {
+                channelId: channelId,
+                messageId: messageId,
+            },
+            query: {
+                emoteId: emoteId,
+            },
+        });
+    }
 }

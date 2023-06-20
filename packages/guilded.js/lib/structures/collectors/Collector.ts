@@ -10,12 +10,16 @@ import type { Client } from "../Client";
 export abstract class Collector<T extends CollectableStructure> {
     /** Collection of successfully collected entries */
     readonly entries = new Collection<T["id"], T>();
+
     /** Whether the collector is actively collecting elements */
     isActive = false;
+
     /** Method to resolve the promise this collector has when instantiated */
     protected resolve: ((value: CollectorReturnValue<T>) => void) | null = null;
+
     /** Timeout for max time */
     protected maxTimeout: NodeJS.Timeout | null = null;
+
     /** Bound function for item receiving */
     protected boundItemReceiver = this.itemReceived.bind(this);
 
@@ -26,6 +30,7 @@ export abstract class Collector<T extends CollectableStructure> {
 
     /**
      * Start the collector
+     *
      * @returns A promise that resolves with a `CollectorReturnValue` object
      */
     start(): Promise<CollectorReturnValue<T>> {
@@ -39,6 +44,7 @@ export abstract class Collector<T extends CollectableStructure> {
 
     /**
      * Receives an item
+     *
      * @param entry - The item received
      * @returns Whether the item passes the filter function or not
      */
@@ -47,20 +53,26 @@ export abstract class Collector<T extends CollectableStructure> {
         if (elementPassesFilter) {
             this.entries.set(entry.id, entry);
 
-            if (this.entries.size >= (this.options.max ?? Infinity)) {
+            if (this.entries.size >= (this.options.max ?? Number.POSITIVE_INFINITY)) {
                 clearTimeout(this.maxTimeout!);
                 this.maxTimeout = null;
-                this.resolve!({ reason: CollectorEndReasons.MAX, entries: this.entries });
+                this.resolve!({
+                    reason: CollectorEndReasons.MAX,
+                    entries: this.entries,
+                });
                 this._cleanup();
                 this.isActive = false;
             }
+
             return true;
         }
+
         return false;
     }
 
     /**
      * Increment the max number of event listeners for the client
+     *
      * @returns The new max number of event listeners for the client
      */
     protected incrementMaxEventListeners(): number {
@@ -71,6 +83,7 @@ export abstract class Collector<T extends CollectableStructure> {
 
     /**
      * Decrement the max number of event listeners for the client
+     *
      * @returns The new max number of event listeners for the client
      */
     protected decrementMaxEventListeners(): number {
@@ -79,6 +92,7 @@ export abstract class Collector<T extends CollectableStructure> {
             this.client.setMaxListeners(decrementAmount);
             return decrementAmount;
         }
+
         return 0;
     }
 
@@ -104,7 +118,10 @@ export enum CollectorEndReasons {
 /**
  * The value returned by a collector when it ends
  */
-type CollectorReturnValue<T extends CollectableStructure> = { reason: CollectorEndReasons; entries: Collection<T["id"], T> };
+export type CollectorReturnValue<T extends CollectableStructure> = {
+    reason: CollectorEndReasons;
+    entries: Collection<T["id"], T>;
+};
 
 /**
  * The base structure of objects that can be collected by a collector
@@ -112,11 +129,11 @@ type CollectorReturnValue<T extends CollectableStructure> = { reason: CollectorE
 type CollectableStructure = { id: string };
 
 /** options for constructing a collector */
-export interface CollectorOptions<T> {
+export type CollectorOptions<T> = {
     /** a function that determines whether an entry is collected or not */
-    filter?: (item: T) => MaybePromise<boolean>;
+    filter?(item: T): MaybePromise<boolean>;
     /** the max amount of time this collector run for before exiting (ms) */
     timeLimit: number;
     /** the max amount of entries allowed to be collected */
     max?: number;
-}
+};

@@ -4,6 +4,7 @@ types/
 coverage/
 .nyc_output/
 packages/api/preserve/**
+.turbo
 
 .npmrc
 *.tsbuildinfo

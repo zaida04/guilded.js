@@ -6,14 +6,11 @@ import type { WebhookContentPayload } from "./structs/Webhook";
  * /webhooks/:webhookId/:webhookToken
  */
 export type RESTPostWebhookBody = {
-  avatar_url?: string;
-  content?: string;
-  embeds?: APIEmbed[];
-  payload_json?: Pick<
-    RESTPostWebhookBody,
-    "avatar_url" | "content" | "embeds" | "username"
-  >;
-  username?: string;
+    avatar_url?: string;
+    content?: string;
+    embeds?: APIEmbed[];
+    payload_json?: Pick<RESTPostWebhookBody, "avatar_url" | "content" | "embeds" | "username">;
+    username?: string;
 };
 
 export type RESTPostWebhookResult = WebhookContentPayload;

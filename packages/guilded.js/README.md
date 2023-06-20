@@ -14,13 +14,13 @@ const { Client } = require("guilded.js");
 const client = new Client({ token: "TOKEN_HERE" });
 
 client.on("ready", () => {
-  console.log(`Bot is successfully logged in`);
+    console.log(`Bot is successfully logged in`);
 });
 
 client.on("messageCreated", (message) => {
-  if (message.content === "poggers") {
-    return message.reply("test indeed");
-  }
+    if (message.content === "poggers") {
+        return message.reply("test indeed");
+    }
 });
 
 client.login();
@@ -36,8 +36,8 @@ client.login();
 
 **Recommended that you use node v18+**
 
-- `npm install guilded.js`
-- `yarn add guilded.js`
+-   `npm install guilded.js`
+-   `yarn add guilded.js`
 
 ## 📃 Documentation
 
@@ -52,7 +52,7 @@ Please see the main [README.md](https://github.com/zaida04/guilded.js) for info 
 
 ## 🤝 Acknowledgements
 
-- [`Discord.js`](https://discord.js.org/#/) - Inspiration and caching strategy
+-   [`Discord.js`](https://discord.js.org/#/) - Inspiration and caching strategy
 
 ## ⚖️ LICENSING
 

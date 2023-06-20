@@ -1,30 +1,31 @@
 {
-  "name": "@guildedjs/docs",
-  "version": "0.1.0",
-  "private": true,
-  "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start"
-  },
-  "devDependencies": {
-    "@types/node": "18.16.12",
-    "@types/react": "18.2.6",
-    "@types/react-dom": "18.2.4",
-    "autoprefixer": "^10.4.14",
-    "postcss": "^8.4.23",
-    "tailwindcss": "^3.3.2",
-    "typedoc": "0.23.24",
-    "typescript": "5.0.4"
-  },
-  "dependencies": {
-    "@fortawesome/fontawesome-svg-core": "^6.4.0",
-    "@fortawesome/free-solid-svg-icons": "^6.4.0",
-    "@fortawesome/react-fontawesome": "^0.2.0",
-    "@next/font": "^13.4.2",
-    "next": "13.4.2",
-    "react": "18.2.0",
-    "react-code-blocks": "0.0.9-0",
-    "react-dom": "18.2.0"
-  }
+    "name": "@guildedjs/docs",
+    "version": "0.1.0",
+    "private": true,
+    "scripts": {
+        "lint": "eslint --ignore-path ../../.config/.eslintignore --config ../../.config/.eslintrc.web.js src",
+        "dev": "next dev",
+        "build": "next build",
+        "start": "next start"
+    },
+    "devDependencies": {
+        "@types/node": "18.16.12",
+        "@types/react": "18.2.6",
+        "@types/react-dom": "18.2.4",
+        "autoprefixer": "^10.4.14",
+        "postcss": "^8.4.23",
+        "tailwindcss": "^3.3.2",
+        "typedoc": "0.23.24",
+        "typescript": "5.0.4"
+    },
+    "dependencies": {
+        "@fortawesome/fontawesome-svg-core": "^6.4.0",
+        "@fortawesome/free-solid-svg-icons": "^6.4.0",
+        "@fortawesome/react-fontawesome": "^0.2.0",
+        "@next/font": "^13.4.2",
+        "next": "13.4.2",
+        "react": "18.2.0",
+        "react-code-blocks": "0.0.9-0",
+        "react-dom": "18.2.0"
+    }
 }

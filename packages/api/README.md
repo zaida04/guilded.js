@@ -12,8 +12,8 @@ Multi-use wrapper over the entire Guilded API. Covers rest requests and ws conne
 
 You can install this package from [NPM](https://www.npmjs.com/package/@guildedjs/api)
 
-- `npm install @guildedjs/api`
-- `yarn add @guildedjs/api`
+-   `npm install @guildedjs/api`
+-   `yarn add @guildedjs/api`
 
 ## Contributing
 

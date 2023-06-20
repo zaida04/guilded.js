@@ -10,8 +10,8 @@ Command & event framework for `guilded.js` that allows you to build bots with ea
 
 You can install this package from [NPM](https://www.npmjs.com/package/@guildedjs/gil)
 
-- `npm install @guildedjs/gil guilded.js`
-- `yarn add @guildedjs/gil guilded.js`
+-   `npm install @guildedjs/gil guilded.js`
+-   `yarn add @guildedjs/gil guilded.js`
 
 ## Guide
 
