@@ -1,44 +1,41 @@
 name: CI workflows
 on:
-    push:
-        branches:
-            - main
-        paths:
-            - "packages/**"
-            - "apps/**"
-            - "services/**"
-            - "typedoc.json"
-    pull_request:
+   push:
+      branches:
+         - main
+      paths:
+         - "packages/**"
+         - "apps/**"
+         - "services/**"
+         - "typedoc.json"
+   pull_request:
 
 jobs:
-    ci-workflow:
-        runs-on: ubuntu-latest
-        steps:
-            - name: Clone repo
-              uses: actions/checkout@v3
+   ci-workflow:
+      runs-on: ubuntu-latest
+      steps:
+         - name: Clone repo
+           uses: actions/checkout@v3
 
-            - name: Install PNPM
-              uses: pnpm/action-setup@6e1964dde3397a825e79e4607ad57f3f7ca2c7cb
-              with:
-                  version: 6.32.7
+         - name: Install PNPM
+           uses: pnpm/action-setup@6e1964dde3397a825e79e4607ad57f3f7ca2c7cb
+           with:
+              version: 6.32.7
 
-            - name: Set up Node v16
-              uses: actions/setup-node@v3
-              with:
-                  node-version: "16"
-                  cache: "pnpm"
+         - name: Set up Node v16
+           uses: actions/setup-node@v3
+           with:
+              node-version: "16"
+              cache: "pnpm"
 
-            - name: Install dependencies
-              run: pnpm install -r
+         - name: Install dependencies
+           run: pnpm install -r
 
-            - name: Run TypeScript Compiler
-              run: pnpm run build
+         - name: Run TypeScript Compiler
+           run: pnpm run build
 
-            - name: Generate TypeDoc output
-              run: pnpm run docs
+         - name: Run linter
+           run: pnpm run lint
 
-            - name: Run linter
-              run: pnpm run lint
-
-            # - name: Run tests
-            #   run: pnpm run test
+         # - name: Run tests
+         #   run: pnpm run test
