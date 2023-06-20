@@ -1,158 +1,188 @@
 import { Collection } from "@discordjs/collection";
 import type { ChatService } from "@guildedjs/api";
-import type { CollectorOptions } from "../../structures";
+import type { CollectorOptions, CollectorReturnValue } from "../../structures";
 import { MessageCollector } from "../../structures";
-import type { Embed } from "../../structures/Embed";
 import { Message } from "../../structures/Message";
-import type { MessageContent, OptionBody, OptionQuery } from "../../typings";
+import type { MaybePromise, MessageContent, OptionQuery } from "../../typings";
 import { resolveContentToData } from "../../util";
 import { CacheableStructManager } from "./CacheableStructManager";
 
 /**
  * Manager for handling caching and interactions for Messages
  */
-export class GlobalMessageManager extends CacheableStructManager<string, Message> {
-    /**
-     * Whether or not messages should be cached.
-     */
-    get shouldCacheMessage() {
-        return this.client.options.cache?.cacheMessages !== false;
+export class GlobalMessageManager extends CacheableStructManager<
+  string,
+  Message
+> {
+  /**
+   * Whether or not messages should be cached.
+   */
+  get shouldCacheMessage(): boolean {
+    return this.client.options.cache?.cacheMessages !== false;
+  }
+
+  /**
+   * Fetches multiple messages from a channel.
+   *
+   * @param channelId The ID of the channel to fetch messages from.
+   * @param options Additional options for the fetch.
+   * @returns A promise that resolves with a collection of messages.
+   */
+  async fetchMany(
+    channelId: string,
+    options: Omit<
+      OptionQuery<ChatService["channelMessageReadMany"]>,
+      "channelId"
+    >
+  ): Promise<Collection<string, Message>> {
+    const data = await this.client.rest.router.chat.channelMessageReadMany({
+      channelId,
+      ...options,
+    });
+    const messages = new Collection<string, Message>();
+
+    for (const message of data.messages) {
+      const newMessage = new Message(this.client, message);
+      messages.set(newMessage.id, newMessage);
     }
 
-    /**
-     * Fetches multiple messages from a channel.
-     *
-     * @param channelId The ID of the channel to fetch messages from.
-     * @param options Additional options for the fetch.
-     * @returns A promise that resolves with a collection of messages.
-     */
-    fetchMany(channelId: string, options: Omit<OptionQuery<ChatService["channelMessageReadMany"]>, "channelId">): Promise<Collection<string, Message>> {
-        return this.client.rest.router.chat.channelMessageReadMany({ channelId, ...options }).then((data) => {
-            const messages = new Collection<string, Message>();
-            for (const message of data.messages) {
-                const newMessage = new Message(this.client, message);
-                messages.set(newMessage.id, newMessage);
-            }
+    return messages;
+  }
 
-            return messages;
-        });
+  /**
+   * Fetches a message from a channel.
+   *
+   * @param channelId The ID of the channel to fetch the message from.
+   * @param messageId The ID of the message to fetch.
+   * @param force Whether or not to force the fetch.
+   * @returns A promise that resolves with the requested message.
+   */
+  async fetch(
+    channelId: string,
+    messageId: string,
+    force?: boolean
+  ): Promise<Message> {
+    if (!force) {
+      const existingMessage = this.client.messages.cache.get(messageId);
+      if (existingMessage) return existingMessage;
     }
 
-    /**
-     * Fetches a message from a channel.
-     *
-     * @param channelId The ID of the channel to fetch the message from.
-     * @param messageId The ID of the message to fetch.
-     * @param force Whether or not to force the fetch.
-     * @returns A promise that resolves with the requested message.
-     */
-    fetch(channelId: string, messageId: string, force?: boolean): Promise<Message> {
-        if (!force) {
-            const existingMessage = this.client.messages.cache.get(messageId);
-            if (existingMessage) return Promise.resolve(existingMessage);
-        }
+    const data = await this.client.rest.router.chat.channelMessageRead({
+      channelId,
+      messageId,
+    });
+    const newMessage = new Message(this.client, data.message);
+    this.client.messages.cache.set(newMessage.id, newMessage);
+    return newMessage;
+  }
 
-        return this.client.rest.router.chat.channelMessageRead({ channelId, messageId }).then((data) => {
-            const newMessage = new Message(this.client, data.message);
-            this.client.messages.cache.set(newMessage.id, newMessage);
-            return newMessage;
-        });
-    }
+  /**
+   * Sends a message to a channel.
+   *
+   * @param channelId The ID of the channel to send the message to.
+   * @param content The content of the message.
+   * @returns A promise that resolves with the created message.
+   * @example
+   * let replyObj = {
+   *  content: 'This is text, supports **markdown**.',
+   *  embeds: [{
+   *    title: 'This is an embed title!',
+   *    description: 'A description may go here'
+   *  }]
+   * };
+   * await message.client.messages.send(message.channelId, replyObj)
+   */
+  async send(channelId: string, content: MessageContent): Promise<Message> {
+    const data = await this.client.rest.router.chat.channelMessageCreate({
+      channelId,
+      requestBody: resolveContentToData(content),
+    });
 
-    /**
-     * Sends a message to a channel.
-     *
-     * @param channelId The ID of the channel to send the message to.
-     * @param content The content of the message.
-     * @returns A promise that resolves with the created message.
-     * @example
-     * let replyObj = {
-     *  content: 'This is text, supports **markdown**.',
-     *  embeds: [{
-     *    title: 'This is an embed title!',
-     *    description: 'A description may go here'
-     *  }]
-     * };
-     * message.client.messages.send(message.channelId, replyObj)
-     */
-    send(channelId: string, content: MessageContent): Promise<Message> {
-        return this.client.rest.router.chat
-            .channelMessageCreate({
-                channelId,
-                requestBody: resolveContentToData(content),
-            })
-            .then((data) => {
-                // This is in the case of which the WS gateway beats us to adding the message to the cache. If they haven't, then we do it ourselves.
-                const existingMessage = this.client.messages.cache.get(data.message.id);
-                if (existingMessage) return existingMessage;
-                const newMessage = new Message(this.client, data.message);
-                this.client.messages.cache.set(newMessage.id, newMessage);
-                return newMessage;
-            });
-    }
+    const existingMessage = this.client.messages.cache.get(data.message.id);
+    if (existingMessage) return existingMessage;
 
-    /**
-     * Adds a reaction to a message.
-     *
-     * @param channelId The ID of the channel containing the message.
-     * @param contentId The ID of the message to add a reaction to.
-     * @param emoteId The ID of the emote to add as a reaction.
-     * @returns A promise that resolves to nothing when the reaction is added.
-     */
-    addReaction(channelId: string, contentId: string, emoteId: number): Promise<void> {
-        return this.client.reactions.create(channelId, contentId, emoteId);
-    }
+    const newMessage = new Message(this.client, data.message);
+    this.client.messages.cache.set(newMessage.id, newMessage);
+    return newMessage;
+  }
 
-    /**
-     * Deletes a reaction from a message.
-     *
-     * @param channelId The ID of the channel containing the message.
-     * @param contentId The ID of the message to delete the reaction from.
-     * @param emoteId The ID of the emote to delete as a reaction.
-     * @returns A promise that resolves to nothing when the reaction is deleted.
-     */
-    deleteReaction(channelId: string, contentId: string, emoteId: number): Promise<void> {
-        return this.client.reactions.delete(channelId, contentId, emoteId);
-    }
+  /**
+   * Adds a reaction to a message.
+   *
+   * @param channelId The ID of the channel containing the message.
+   * @param contentId The ID of the message to add a reaction to.
+   * @param emoteId The ID of the emote to add as a reaction.
+   * @returns A promise that resolves to nothing when the reaction is added.
+   */
+  async addReaction(
+    channelId: string,
+    contentId: string,
+    emoteId: number
+  ): Promise<void> {
+    await this.client.reactions.create(channelId, contentId, emoteId);
+  }
 
-    /**
-     * Updates a message in a channel.
-     *
-     * @param channelId The ID of the channel containing the message.
-     * @param messageId The ID of the message to update.
-     * @param content The new content of the message.
-     * @returns A promise that resolves with the updated message.
-     */
-    update(channelId: string, messageId: string, content: MessageContent): Promise<Message> {
-        return this.client.rest.router.chat
-            .channelMessageUpdate({
-                channelId,
-                messageId,
-                requestBody: resolveContentToData(content),
-            })
-            .then((data) => {
-                // This is in the case of which the WS gateway beats us to modifying the message in the cache. If they haven't, then we do it ourselves.
-                const existingMessage = this.client.messages.cache.get(data.message.id);
-                if (existingMessage) return existingMessage._update(data.message);
+  /**
+   * Deletes a reaction from a message.
+   *
+   * @param channelId The ID of the channel containing the message.
+   * @param contentId The ID of the message to delete the reaction from.
+   * @param emoteId The ID of the emote to delete as a reaction.
+   * @returns A promise that resolves to nothing when the reaction is deleted.
+   */
+  async deleteReaction(
+    channelId: string,
+    contentId: string,
+    emoteId: number
+  ): Promise<void> {
+    await this.client.reactions.delete(channelId, contentId, emoteId);
+  }
 
-                const newMessage = new Message(this.client, data.message);
-                this.client.messages.cache.set(newMessage.id, newMessage);
-                return newMessage;
-            });
-    }
+  /**
+   * Updates a message in a channel.
+   *
+   * @param channelId The ID of the channel containing the message.
+   * @param messageId The ID of the message to update.
+   * @param content The new content of the message.
+   * @returns A promise that resolves with the updated message.
+   */
+  async update(
+    channelId: string,
+    messageId: string,
+    content: MessageContent
+  ): Promise<Message> {
+    const data = await this.client.rest.router.chat.channelMessageUpdate({
+      channelId,
+      messageId,
+      requestBody: resolveContentToData(content),
+    });
 
-    /** Delete a channel message. */
-    delete(channelId: string, messageId: string): Promise<void> {
-        return this.client.rest.router.chat.channelMessageDelete({ channelId, messageId }).then(() => void 0);
-    }
+    const existingMessage = this.client.messages.cache.get(data.message.id);
+    if (existingMessage) return existingMessage._update(data.message);
 
-    async awaitMessages(channelId: string, options: CollectorOptions<Message>) {
-        return new MessageCollector(this.client, {
-            ...options,
-            filter: (item) => {
-                if (item.channelId !== channelId) return false;
-                return options.filter?.(item) ?? true;
-            },
-        }).start();
-    }
+    const newMessage = new Message(this.client, data.message);
+    this.client.messages.cache.set(newMessage.id, newMessage);
+    return newMessage;
+  }
+
+  /** Delete a channel message. */
+  async delete(channelId: string, messageId: string): Promise<void> {
+    await this.client.rest.router.chat.channelMessageDelete({
+      channelId,
+      messageId,
+    });
+  }
+
+  async awaitMessages(
+    channelId: string,
+    options: CollectorOptions<Message>
+  ): Promise<CollectorReturnValue<Message>> {
+    return new MessageCollector(this.client, {
+      ...options,
+      filter: (item): MaybePromise<boolean> => {
+        if (item.channelId !== channelId) return false;
+        return options.filter?.(item) ?? true;
+      },
+    }).start();
+  }
 }
