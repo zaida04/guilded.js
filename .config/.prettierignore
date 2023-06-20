@@ -3,6 +3,7 @@
 **/types/**
 **/.next/**
 
+pnpm-lock.yaml
 .eslintrc.js
 *.d.ts
 

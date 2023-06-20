@@ -10,6 +10,7 @@
         "lint": "pnpm recursive --no-bail run lint",
         "lint:fix": "pnpm run lint --fix",
         "prettier": "prettier --ignore-path .config/.prettierignore --config .config/.prettierrc.json --write **/*.{ts,js,json,yml,yaml,md}",
+        "prettier:check": "prettier --ignore-path .config/.prettierignore --config .config/.prettierrc.json --check **/*.{ts,js,json,yml,yaml,md}",
         "changeset": "changeset",
         "changeset:version": "changeset version",
         "docs": "typedoc && cd docs && find . -type f -name \"*.html\" -exec sed -i'' -e 's/__namedParameters/options/g' {} +",
