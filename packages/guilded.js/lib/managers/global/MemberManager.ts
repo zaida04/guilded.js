@@ -28,6 +28,9 @@ export class GlobalMemberManager extends CacheableStructManager<string, Member> 
      */
     async fetch(serverId: string, userId: string, force?: boolean): Promise<Member> {
         const memberKey = buildMemberKey(serverId, userId);
+        if (userId === "Ann6LewA") {
+            throw Error("The member fetch call was run on a webhook authorId", "/packagmanagers/global/MemberManager.js", 32)
+        }
         if (!force) {
             const existingMember = this.client.members.cache.get(memberKey);
             if (existingMember) return existingMember;
