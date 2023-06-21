@@ -29,7 +29,7 @@ export type UpgradedServerMemberSummaryPayload = IDUpgradePayload<ServerUpgradeP
 
 export type ServerUpgradePayload<T> = T & { serverId: string };
 export type IDUpgradePayload<T> = T & { id: string };
-export type MessageContent = Embed | OptionBody<ChatService["channelMessageCreate"]> | string;
+export type MessageContent = Embed | (Omit<OptionBody<ChatService["channelMessageCreate"]>, "embeds"> & { embeds: Embed[] }) | OptionBody<ChatService["channelMessageCreate"]> | string;
 export type MaybePromise<T> = Promise<T> | T;
 
 export type ClientEvents = {
