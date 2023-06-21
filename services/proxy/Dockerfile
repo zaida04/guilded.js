@@ -4,7 +4,7 @@ WORKDIR /opt/build
 
 RUN apk add --update \
 && apk add --no-cache --virtual .build-deps curl \
-&& curl -L https://unpkg.com/@pnpm/self-installer | node
+&& corepack enable && corepack prepare pnpm@8.6.3 --activate
 
 COPY tsconfig.json package.json pnpm-lock.yaml pnpm-workspace.yaml ./
 COPY ./packages/api/. ./packages/api/

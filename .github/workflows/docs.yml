@@ -18,7 +18,7 @@ jobs:
             - name: Install PNPM
               uses: pnpm/action-setup@6e1964dde3397a825e79e4607ad57f3f7ca2c7cb
               with:
-                  version: 6.32.7
+                  version: 8.6.3
 
             - name: Install Node v14
               uses: actions/setup-node@v3
