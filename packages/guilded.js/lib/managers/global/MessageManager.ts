@@ -106,15 +106,15 @@ export class GlobalMessageManager extends CacheableStructManager<string, Message
     }
 
     /**
-     * Deletes a reaction from a message.
+     * Deletes either a whole reaction emote from a message or a specific user's if a userId is provided.
      *
      * @param channelId The ID of the channel containing the message.
      * @param contentId The ID of the message to delete the reaction from.
      * @param emoteId The ID of the emote to delete as a reaction.
      * @returns A promise that resolves to nothing when the reaction is deleted.
      */
-    async deleteReaction(channelId: string, contentId: string, emoteId: number): Promise<void> {
-        await this.client.reactions.delete(channelId, contentId, emoteId);
+    async deleteReaction(channelId: string, contentId: string, emoteId: number, userId?: string): Promise<void> {
+        await this.client.reactions.delete(channelId, contentId, emoteId, userId);
     }
 
     /**
