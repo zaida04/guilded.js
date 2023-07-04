@@ -245,16 +245,17 @@ export class Message extends Base<ChatMessagePayload> {
     }
 
     /**
-     * Delete a reaction emote.
+     * Deletes either a whole reaction emote from a message or a specific user's if a userId is provided.
      *
      * @param emoteId - The ID of the emote to delete.
      * @returns A promise that resolves when the emote has been deleted.
      */
-    deleteReaction(emoteId: number): Promise<void> {
+    deleteReaction(emoteId: number, userId?: string): Promise<void> {
         return this.client.rest.router.reactions.channelMessageReactionDelete({
             channelId: this.channelId,
             messageId: this.id,
             emoteId,
+            userId,
         });
     }
 
