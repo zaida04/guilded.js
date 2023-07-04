@@ -1,0 +1,16 @@
+{
+    "name": "bot-starter-js",
+    "private": true,
+    "version": "0.0.0",
+    "description": "Example project for using the guilded.js package",
+    "author": "Zaid \"Nico\" <contact@nico.engineer>",
+    "main": "dist/index.js",
+    "scripts": {
+        "start": "node src/index.js"
+    },
+    "dependencies": {
+        "dotenv": "^16.0.3",
+        "guilded.js": "0.22.2"
+    },
+    "repository": "https://github.com/guildedjs/guilded.js"
+}

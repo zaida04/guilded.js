@@ -1,0 +1,44 @@
+{
+    "name": "create-guilded-app",
+    "version": "0.0.1",
+    "description": "Create a guilded.js bot with ease",
+    "author": "Zaid \"Nico\" <contact@nico.engineer>",
+    "license": "MIT",
+    "types": "types/index.d.ts",
+    "main": "dist/index.js",
+    "bin": "dist/cli.js",
+    "scripts": {
+        "lint": "eslint --ignore-path ../../.config/.eslintignore --config ../../.config/.eslintrc.js lib",
+        "build": "tsc",
+        "build:typecheck": "tsc --noEmit",
+        "prepublishOnly": "rimraf dist/ && rimraf types/ && pnpm run build"
+    },
+    "devDependencies": {
+        "@types/node": "18.16.12",
+        "typescript": "5.0.4"
+    },
+    "dependencies": {
+        "create-create-app": "^7.3.0"
+    },
+    "keywords": [
+        "guilded",
+        "guilded.gg",
+        "guilded-api",
+        "guildedjs",
+        "guilded.js",
+        "guilded-bot"
+    ],
+    "files": [
+        "dist",
+        "types",
+        "templates"
+    ],
+    "homepage": "https://github.com/zaida04/guilded.js/blob/main/packages/create-guilded-app/README.md",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/zaida04/guilded.js.git"
+    },
+    "bugs": {
+        "url": "https://github.com/zaida04/guilded.js/issues"
+    }
+}
