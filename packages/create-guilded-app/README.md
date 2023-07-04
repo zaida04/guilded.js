@@ -12,7 +12,6 @@ Create a guilded.js bot with ease
 
 ```bash
 npx create-guilded-app example-project-1
-npm init create-guilded-app example-project-1
 pnpm dlx create-guilded-app example-project-1
 yarn create guilded-app example-project-1
 ```

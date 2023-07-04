@@ -1,12 +1,14 @@
 {
     "name": "create-guilded-app",
-    "version": "0.0.1",
+    "version": "1.0.0",
     "description": "Create a guilded.js bot with ease",
     "author": "Zaid \"Nico\" <contact@nico.engineer>",
     "license": "MIT",
-    "types": "types/index.d.ts",
-    "main": "dist/index.js",
-    "bin": "dist/cli.js",
+    "types": "types/cli.d.ts",
+    "main": "dist/cli.js",
+    "bin": {
+        "create-guilded-app": "./dist/cli.js"
+    },
     "scripts": {
         "lint": "eslint --ignore-path ../../.config/.eslintignore --config ../../.config/.eslintrc.js lib",
         "build": "tsc",

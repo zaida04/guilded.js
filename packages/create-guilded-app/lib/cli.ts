@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
+import { resolve } from "node:path";
 import { create } from "create-create-app";
-import { resolve } from "path";
 
 const templateRoot = resolve(__dirname, "..", "templates");
 
@@ -14,7 +14,7 @@ A simple guide is available at https://guilded.js.org/guide
 Happy coding!
 `;
 
-create("create-guilded-app", {
+void create("create-guilded-app", {
     templateRoot,
     caveat,
     defaultTemplate: "bot-starter-js",
