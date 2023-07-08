@@ -2,3 +2,4 @@ packages:
     - "packages/**"
     - "services/**"
     - "apps/**"
+    - "!packages/create-guilded-app/templates/**"

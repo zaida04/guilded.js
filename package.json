@@ -57,7 +57,7 @@
         }
     ],
     "engines": {
-        "npm": " only-allow pnpm",
+        "npm": "only-allow pnpm",
         "node": ">= 16.0.0"
     }
 }

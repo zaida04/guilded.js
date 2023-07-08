@@ -4,9 +4,7 @@
 **/.next/**
 
 .eslintrc.js
-*.d.ts
+**/*.d.ts
 
-packages/**/*.js
-packages/api/lib/v1/rest.ts
-packages/api/lib/v1/ws.ts
-apps/**/*.js
+**/*.js
+lib/generated/**

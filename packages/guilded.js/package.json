@@ -56,7 +56,8 @@
         "guilded.gg",
         "guilded-api",
         "guildedjs",
-        "guilded.js"
+        "guilded.js",
+        "guilded-bot"
     ],
     "files": [
         "dist",

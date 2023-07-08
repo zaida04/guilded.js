@@ -36,5 +36,6 @@ module.exports = {
 		"no-promise-executor-return": "off",
 		"jsdoc/no-undefined-types": "off",
 		"prettier/prettier": "off",
+		"n/shebang": "off"
 	}
 };
