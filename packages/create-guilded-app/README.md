@@ -4,17 +4,15 @@
 [![npm](https://img.shields.io/npm/v/create-guilded-app?color=crimson&logo=npm)](https://www.npmjs.com/package/create-guilded-app)
 [![CI workflows](https://github.com/zaida04/guilded.js/actions/workflows/ci.yml/badge.svg)](https://github.com/zaida04/guilded.js/actions/workflows/ci.yml)
 
-Create a guilded.js bot with ease
+Create a guilded.js bot with ease in under a minute.
 
 > created by [create-create-app](https://github.com/uetchy/create-create-app).
 
 ## Usage
 
-```bash
-npx create-guilded-app example-project-1
-pnpm dlx create-guilded-app example-project-1
-yarn create guilded-app example-project-1
-```
+-   `yarn create guilded-app <project-name>`
+-   `pnpm create guilded-app <project-name>`
+-   `npm init guilded-app <project-name>`
 
 ## Contributing
 

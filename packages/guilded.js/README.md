@@ -36,8 +36,17 @@ client.login();
 
 **Recommended that you use node v18+**
 
+### Using `create-guilded-app`
+
+-   `yarn create guilded-app <project-name>`
+-   `pnpm create guilded-app <project-name>`
+-   `npm init guilded-app <project-name>`
+
+### Manual Installation
+
 -   `npm install guilded.js`
 -   `yarn add guilded.js`
+-   `pnpm add guilded.js`
 
 ## 📃 Documentation
 
