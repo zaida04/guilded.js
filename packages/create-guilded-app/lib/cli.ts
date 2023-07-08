@@ -17,7 +17,7 @@ Happy coding!
 void create("create-guilded-app", {
     templateRoot,
     caveat,
-    defaultTemplate: "bot-starter-js",
+    defaultTemplate: "command-handler-starter-js",
     promptForAuthor: false,
     promptForEmail: false,
     promptForTemplate: true,

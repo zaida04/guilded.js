@@ -165,52 +165,6 @@ importers:
         specifier: 5.0.4
         version: 5.0.4
 
-  packages/create-guilded-app/templates/bot-starter-js:
-    dependencies:
-      dotenv:
-        specifier: ^16.0.3
-        version: 16.0.3
-      guilded.js:
-        specifier: 0.22.2
-        version: 0.22.2
-
-  packages/create-guilded-app/templates/bot-starter-ts:
-    dependencies:
-      dotenv:
-        specifier: ^16.0.3
-        version: 16.0.3
-      guilded.js:
-        specifier: 0.22.2
-        version: 0.22.2
-    devDependencies:
-      typescript:
-        specifier: 5.0.4
-        version: 5.0.4
-
-  packages/create-guilded-app/templates/command-handler-starter-js:
-    dependencies:
-      '@discordjs/collection':
-        specifier: ^1.5.1
-        version: 1.5.1
-      dotenv:
-        specifier: ^16.0.3
-        version: 16.0.3
-      guilded.js:
-        specifier: 0.22.2
-        version: 0.22.2
-
-  packages/create-guilded-app/templates/command-handler-starter-js copy:
-    dependencies:
-      '@discordjs/collection':
-        specifier: ^1.5.1
-        version: 1.5.1
-      dotenv:
-        specifier: ^16.0.3
-        version: 16.0.3
-      guilded.js:
-        specifier: 0.22.2
-        version: 0.22.2
-
   packages/gil:
     dependencies:
       '@discordjs/collection':
@@ -752,21 +706,6 @@ packages:
       '@fortawesome/fontawesome-svg-core': 6.4.0
       prop-types: 15.8.1
       react: 18.2.0
-    dev: false
-
-  /@guildedjs/api@0.3.0:
-    resolution: {integrity: sha512-xc0srEIn7dajcJRtSNthjGMSZRJgOV+/k41Z/DIgixCNqf3h/uVFWxOcaVJrbo2BIaDUjItipNKH46yja9rQpQ==}
-    dependencies:
-      '@types/ws': 8.5.4
-      form-data: 4.0.0
-      node-fetch: 2.6.11
-      qs: 6.11.2
-      typed-emitter: 2.1.0
-      ws: 8.13.0
-    transitivePeerDependencies:
-      - bufferutil
-      - encoding
-      - utf-8-validate
     dev: false
 
   /@humanwhocodes/config-array@0.11.10:
@@ -2462,6 +2401,7 @@ packages:
   /dotenv@16.0.3:
     resolution: {integrity: sha512-7GO6HghkA5fYG9TYnNxi14/7K9f5occMlp3zXAuSxn7CKCxt9xbNWG7yF8hTCSUchlfWSe3uLmlPfigevRItzQ==}
     engines: {node: '>=12'}
+    dev: true
 
   /dotenv@16.3.1:
     resolution: {integrity: sha512-IPzF4w4/Rd94bA9imS68tZBaYyBWSCE47V1RGuMrB94iyTOIEwRmVL2x/4An+6mETpLrKJ5hQkB8W4kFAadeIQ==}
@@ -3759,18 +3699,6 @@ packages:
   /grapheme-splitter@1.0.4:
     resolution: {integrity: sha512-bzh50DW9kTPM00T8y4o8vQg89Di9oLJVLW/KaOGIXJWP/iqCN6WKYkbNOF04vFLJhwcpYUh9ydh/+5vpOqV4YQ==}
     dev: true
-
-  /guilded.js@0.22.2:
-    resolution: {integrity: sha512-pXdgHjkKuuvaQWsdSIa30uubk8B+2M5JXdIlD2Uskr9ZuE6ehZ9xzrbzC3dM6eU+5Cno5ltd1xjxk+ObZyjXGw==}
-    dependencies:
-      '@discordjs/collection': 1.5.1
-      '@guildedjs/api': 0.3.0
-      typed-emitter: 2.1.0
-    transitivePeerDependencies:
-      - bufferutil
-      - encoding
-      - utf-8-validate
-    dev: false
 
   /handlebars@4.7.7:
     resolution: {integrity: sha512-aAcXm5OAfE/8IXkcZvCepKU3VzW1/39Fb5ZuqMtgI/hT8X2YgoMvBY5dLhq/cpOvw7Lk1nK/UF71aLG/ZnVYRA==}
