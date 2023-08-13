@@ -156,6 +156,7 @@ export const resolveContentToData = (content: MessageContent): { content?: strin
 
 /**
  * Convert date to a timestamp
+ *
  * @param date - The date to convert
  */
 export function parseToStamp(date: string | undefined): number | null {

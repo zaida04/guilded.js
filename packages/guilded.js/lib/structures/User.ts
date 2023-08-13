@@ -1,7 +1,7 @@
 import type { UserPayload, WSPayload } from "@guildedjs/api";
+import { parseToStamp } from "../util";
 import { Base } from "./Base";
 import type { Client } from "./Client";
-import { parseToStamp } from "../util";
 
 export class User extends Base<UserPayload> {
     /** The name for this user */

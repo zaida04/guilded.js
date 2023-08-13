@@ -1,7 +1,7 @@
 import type { RolePayload } from "@guildedjs/api";
+import { parseToStamp } from "../util";
 import { Base } from "./Base";
 import type { Client } from "./Client";
-import { parseToStamp } from "../util";
 
 /**
  * Represents a Guilded role in a server

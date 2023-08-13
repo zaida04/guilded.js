@@ -1,13 +1,17 @@
-import { CategoryPayload } from "@guildedjs/api";
-import { Base } from "./Base";
-import { Client } from "./Client";
+import type { CategoryPayload } from "@guildedjs/api";
 import { parseToStamp } from "../util";
+import { Base } from "./Base";
+import type { Client } from "./Client";
 
 export class Category extends Base<CategoryPayload, number> {
     serverId: string;
+
     name!: string;
+
     _createdAt: number;
+
     groupId: string;
+
     _updatedAt!: number | null;
 
     constructor(client: Client, data: CategoryPayload) {

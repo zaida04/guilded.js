@@ -1,7 +1,7 @@
-import { CategoriesService } from "@guildedjs/api";
+import type { CategoriesService } from "@guildedjs/api";
 import { Category } from "../../structures/Category";
+import type { OptionBody } from "../../typings";
 import { CacheableStructManager } from "./CacheableStructManager";
-import { OptionBody } from "../../typings";
 
 /**
  * Manager for interacting with Catregories on Guilded.
@@ -10,6 +10,7 @@ export class CategoryManager extends CacheableStructManager<number, Category> {
     /**
      * Create a new category
      *
+     * @param serverId The ID of the server to create the category in.
      * @param options Category creation options
      * @returns Promise that resolves with the newly created category
      */

@@ -1,9 +1,9 @@
 import type { WebhookPayload } from "@guildedjs/api";
 import type { GlobalWebhookManager } from "../managers/global";
+import { parseToStamp } from "../util";
 import { Base } from "./Base";
 import type { Client } from "./Client";
 import type { User } from "./User";
-import { parseToStamp } from "../util";
 
 /**
  * Object representing received webhook data. This object is NOT to be used to send data to webhooks. That would be WebhookClient

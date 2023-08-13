@@ -1,10 +1,10 @@
 import type { Collection } from "@discordjs/collection";
 import type { ChannelsService, ChatService, ServerChannelPayload } from "@guildedjs/api";
 import type { MessageContent, OptionBody } from "../../typings";
+import { parseToStamp } from "../../util";
 import { Base } from "../Base";
 import type { Client } from "../Client";
 import type { Message } from "../Message";
-import { parseToStamp } from "../../util";
 
 /**
  * Represents a channel in a server on Guilded.

@@ -1,9 +1,9 @@
 import { Collection } from "@discordjs/collection";
 import type { CalendarEventPayload, MentionsPayload, CalendarEventRsvpPayload } from "@guildedjs/api";
+import { parseToStamp } from "../util";
 import { Base } from "./Base";
 import type { Client } from "./Client";
 import type { User } from "./User";
-import { parseToStamp } from "../util";
 
 /**
  * Represents a calendar event on Guilded
