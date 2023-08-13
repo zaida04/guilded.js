@@ -87,6 +87,30 @@ export class GlobalChannelManager extends CacheableStructManager<string, Channel
         const cachedChannel = this.cache.get(channelId);
         return cachedChannel ?? null;
     }
+
+    /**
+     * Archive a channel by ID
+     *
+     * @param channelId ID of the channel to archive
+     * @returns Promise that resolves with the archived channel or null if not cached
+     */
+    async archive(channelId: string): Promise<Channel | null> {
+        await this.client.rest.router.channels.channelArchiveCreate({ channelId });
+        const existingChannel = this.cache.get(channelId);
+        return existingChannel ?? null;
+    }
+
+    /**
+     * Unarchive a channel by ID
+     *
+     * @param channelId ID of the channel to unarchive
+     * @returns Promise that resolves with the unarchived channel or null if not cached
+     */
+    async unarchive(channelId: string): Promise<Channel | null> {
+        await this.client.rest.router.channels.channelArchiveDelete({ channelId });
+        const existingChannel = this.cache.get(channelId);
+        return existingChannel ?? null;
+    }
 }
 
 /**

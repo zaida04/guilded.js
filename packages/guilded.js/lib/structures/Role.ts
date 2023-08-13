@@ -1,4 +1,5 @@
 import type { RolePayload } from "@guildedjs/api";
+import { parseToStamp } from "../util";
 import { Base } from "./Base";
 import type { Client } from "./Client";
 
@@ -52,7 +53,7 @@ export class Role extends Base<{ id: number; serverId: string }, number> {
     constructor(client: Client, data: RolePayload) {
         super(client, data);
         this.serverId = data.serverId;
-        this._createdAt = Date.parse(data.createdAt);
+        this._createdAt = parseToStamp(data.createdAt)!;
         this._updatedAt = null;
         this.name = data.name;
         this.isDisplayedSeparately = data.isDisplayedSeparately ?? false;
@@ -68,7 +69,7 @@ export class Role extends Base<{ id: number; serverId: string }, number> {
 
     _update(data: RolePayload): this {
         if ("updatedAt" in data) {
-            this._updatedAt = data.updatedAt ? Date.parse(data.updatedAt) : null;
+            this._updatedAt = data.updatedAt ? parseToStamp(data.updatedAt) : null;
         }
 
         return this;

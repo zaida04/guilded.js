@@ -1,5 +1,5 @@
 import type { ServerPayload } from "@guildedjs/api";
-import { buildMemberKey } from "../util";
+import { buildMemberKey, parseToStamp } from "../util";
 import { Base } from "./Base";
 import type { Client } from "./Client";
 import type { Member } from "./Member";
@@ -45,7 +45,7 @@ export class Server extends Base<ServerPayload> {
     constructor(client: Client, data: ServerPayload) {
         super(client, data);
         this.ownerId = data.ownerId;
-        this._createdAt = Date.parse(data.createdAt);
+        this._createdAt = parseToStamp(data.createdAt)!;
         this._update(data);
     }
 

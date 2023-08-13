@@ -1,5 +1,6 @@
 import { Collection } from "@discordjs/collection";
 import type { CalendarEventPayload, MentionsPayload, CalendarEventRsvpPayload } from "@guildedjs/api";
+import { parseToStamp } from "../util";
 import { Base } from "./Base";
 import type { Client } from "./Client";
 import type { User } from "./User";
@@ -88,7 +89,7 @@ export class CalendarEvent extends Base<CalendarEventPayload, number> {
         this.startsAt = data.startsAt;
         this.duration = data.duration ?? null;
         this.isPrivate = data.isPrivate ?? false;
-        this._createdAt = Date.parse(data.createdAt);
+        this._createdAt = parseToStamp(data.createdAt)!;
         this.createdBy = data.createdBy;
         this.rsvpLimit = data.rsvpLimit ?? null;
         this.rsvps = new Collection();
@@ -207,7 +208,7 @@ export class CalendarEventRsvp extends Base<CalendarEventRsvpPayload, string> {
         this.userId = data.userId;
         this.status = data.status;
         this.createdBy = data.createdBy;
-        this._createdAt = Date.parse(data.createdAt);
+        this._createdAt = parseToStamp(data.createdAt)!;
         this.updatedBy = null;
         this.updatedAt = null;
 

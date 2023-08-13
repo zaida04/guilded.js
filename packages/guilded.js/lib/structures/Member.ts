@@ -1,7 +1,7 @@
 import { Collection } from "@discordjs/collection";
 import type { ServerMemberPayload, SocialLinkPayload, UserSummaryPayload } from "@guildedjs/api";
 import type { UpgradedServerMemberBanPayload, UpgradedServerMemberPayload, UpgradedServerMemberSummaryPayload } from "../typings";
-import { buildMemberKey } from "../util";
+import { buildMemberKey, parseToStamp } from "../util";
 import { Base } from "./Base";
 import type { Client } from "./Client";
 import type { User } from "./User";
@@ -34,7 +34,7 @@ export class Member extends Base<UpgradedServerMemberPayload> {
     constructor(client: Client, data: UpgradedServerMemberPayload) {
         super(client, data);
         this.serverId = data.serverId;
-        this._joinedAt = Date.parse(data.joinedAt);
+        this._joinedAt = parseToStamp(data.joinedAt);
         this.kicked = false;
         this.banned = false;
         this.isOwner = false;
@@ -233,7 +233,7 @@ export class MemberBan extends Base<UpgradedServerMemberBanPayload> {
         super(client, { ...data, id: transformedBanId });
 
         this.serverId = data.serverId;
-        this._createdAt = Date.parse(data.createdAt);
+        this._createdAt = parseToStamp(data.createdAt)!;
         this.createdById = data.createdBy;
         this.target = data.user;
         this.reason = data.reason ?? null;

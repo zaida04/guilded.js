@@ -1,4 +1,6 @@
+/* generated using openapi-typescript-codegen -- do no edit */
 /* istanbul ignore file */
+/* tslint:disable */
 /* eslint-disable */
 export { GuildedRouter } from "./GuildedRouter";
 
@@ -18,6 +20,7 @@ export type { CalendarEventCommentReaction as CalendarEventCommentReactionPayloa
 export type { CalendarEventReaction as CalendarEventReactionPayload } from "./models/CalendarEventReaction";
 export type { CalendarEventRsvp as CalendarEventRsvpPayload } from "./models/CalendarEventRsvp";
 export type { CalendarEventSeries as CalendarEventSeriesPayload } from "./models/CalendarEventSeries";
+export type { Category as CategoryPayload } from "./models/Category";
 export type { ChatEmbed as ChatEmbedPayload } from "./models/ChatEmbed";
 export type { ChatMessage as ChatMessagePayload } from "./models/ChatMessage";
 export type { ChatMessageReaction as ChatMessageReactionPayload } from "./models/ChatMessageReaction";
@@ -40,6 +43,7 @@ export type { Server as ServerPayload } from "./models/Server";
 export type { ServerChannel as ServerChannelPayload } from "./models/ServerChannel";
 export type { ServerMember as ServerMemberPayload } from "./models/ServerMember";
 export type { ServerMemberBan as ServerMemberBanPayload } from "./models/ServerMemberBan";
+export type { ServerMemberPermissions as ServerMemberPermissionsPayload } from "./models/ServerMemberPermissions";
 export type { ServerMemberSummary as ServerMemberSummaryPayload } from "./models/ServerMemberSummary";
 export type { ServerSubscriptionTier as ServerSubscriptionTierPayload } from "./models/ServerSubscriptionTier";
 export type { SocialLink as SocialLinkPayload } from "./models/SocialLink";
@@ -53,6 +57,7 @@ export { AnnouncementsService } from "./services/AnnouncementsService";
 export { CalendarEventCommentsService } from "./services/CalendarEventCommentsService";
 export { CalendarEventsService } from "./services/CalendarEventsService";
 export { CalendarEventSeriesService } from "./services/CalendarEventSeriesService";
+export { CategoriesService } from "./services/CategoriesService";
 export { ChannelsService } from "./services/ChannelsService";
 export { ChatService } from "./services/ChatService";
 export { DocCommentsService } from "./services/DocCommentsService";

@@ -30,6 +30,7 @@ import { UserStatusService } from "./services/UserStatusService";
 import { WebhookService } from "./services/WebhookService";
 import { RestManager } from "../../rest/RestManager";
 import { ServerSubscriptionService } from "./services/ServerSubscriptionService";
+import { CategoriesService } from "./services/CategoriesService";
 
 export class GuildedRouter {
     public readonly announcementComments: AnnouncementCommentsService;
@@ -37,6 +38,7 @@ export class GuildedRouter {
     public readonly calendarEventComments: CalendarEventCommentsService;
     public readonly calendarEvents: CalendarEventsService;
     public readonly calendarEventSeries: CalendarEventSeriesService;
+    public readonly categories: CategoriesService;
     public readonly channels: ChannelsService;
     public readonly chat: ChatService;
     public readonly docComments: DocCommentsService;
@@ -69,6 +71,7 @@ export class GuildedRouter {
         this.calendarEventComments = new CalendarEventCommentsService(this.request);
         this.calendarEvents = new CalendarEventsService(this.request);
         this.calendarEventSeries = new CalendarEventSeriesService(this.request);
+        this.categories = new CategoriesService(this.request);
         this.channels = new ChannelsService(this.request);
         this.chat = new ChatService(this.request);
         this.docComments = new DocCommentsService(this.request);

@@ -3,7 +3,6 @@ import type { GroupsService } from "@guildedjs/api";
 import { Group } from "../../structures";
 import type { OptionBody } from "../../typings";
 import { CacheableStructManager } from "./CacheableStructManager";
-import { GlobalManager } from "./GlobalManager";
 
 /**
  * Manager for interacting with Groups on Guilded.

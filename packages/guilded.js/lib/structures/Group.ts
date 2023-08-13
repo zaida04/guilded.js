@@ -5,7 +5,7 @@ import type { Client } from "./Client";
 /**
  * A group in a server in Guilded
  */
-export class Group extends Base {
+export class Group extends Base<GroupPayload> {
     /** The name of the group */
     public name!: string;
 

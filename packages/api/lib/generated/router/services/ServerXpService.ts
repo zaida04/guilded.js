@@ -1,4 +1,6 @@
+/* generated using openapi-typescript-codegen -- do no edit */
 /* istanbul ignore file */
+/* tslint:disable */
 /* eslint-disable */
 import type { CancelablePromise } from "../core/CancelablePromise";
 import type { BaseHttpRequest } from "../core/BaseHttpRequest";
@@ -78,6 +80,76 @@ export class ServerXpService {
             path: {
                 serverId: serverId,
                 userId: userId,
+            },
+            body: requestBody,
+            mediaType: "application/json",
+        });
+    }
+
+    /**
+     * Bulk award XP to members
+     * Take note of the max number of `userIds` that can be submitted on each request. If you require more, please batch your requests
+     * @returns any Success
+     * @throws ApiError
+     */
+    public serverXpForUserCreateMany({
+        serverId,
+        requestBody,
+    }: {
+        serverId: string;
+        requestBody: {
+            /**
+             * The amount of XP to award
+             */
+            amount: number;
+            userIds: Array<string | "@me">;
+        };
+    }): CancelablePromise<{
+        /**
+         * Each key of the object will be a user ID, and its value will be the total for that user after this operation
+         */
+        totalsByUserId: Record<string, number>;
+    }> {
+        return this.httpRequest.request({
+            method: "POST",
+            url: "/servers/{serverId}/xp",
+            path: {
+                serverId: serverId,
+            },
+            body: requestBody,
+            mediaType: "application/json",
+        });
+    }
+
+    /**
+     * Bulk set members' XP
+     * Take note of the max number of `userIds` that can be submitted on each request. If you require more, please batch your requests
+     * @returns any Success
+     * @throws ApiError
+     */
+    public serverXpForUserUpdateMany({
+        serverId,
+        requestBody,
+    }: {
+        serverId: string;
+        requestBody: {
+            /**
+             * The total XP to set on each user
+             */
+            total?: number;
+            userIds: Array<string | "@me">;
+        };
+    }): CancelablePromise<{
+        /**
+         * Each key of the object will be a user ID, and its value will be the total for that user after this operation
+         */
+        totalsByUserId: Record<string, number>;
+    }> {
+        return this.httpRequest.request({
+            method: "PUT",
+            url: "/servers/{serverId}/xp",
+            path: {
+                serverId: serverId,
             },
             body: requestBody,
             mediaType: "application/json",

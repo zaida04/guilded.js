@@ -1,4 +1,5 @@
 import type { UserPayload, WSPayload } from "@guildedjs/api";
+import { parseToStamp } from "../util";
 import { Base } from "./Base";
 import type { Client } from "./Client";
 
@@ -21,7 +22,7 @@ export class User extends Base<UserPayload> {
     constructor(client: Client, data: UserPayload) {
         super(client, data);
         this.name = data.name;
-        this._createdAt = Date.parse(data.createdAt);
+        this._createdAt = parseToStamp(data.createdAt)!;
         this.type = data.type === "bot" ? UserType.Bot : UserType.User;
 
         this._update(data);

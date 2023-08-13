@@ -1,4 +1,5 @@
 import type { ForumTopicPayload, MentionsPayload, ForumTopicSummaryPayload } from "@guildedjs/api";
+import { parseToStamp } from "../util";
 import { Base } from "./Base";
 import type { Client } from "./Client";
 
@@ -70,7 +71,7 @@ export class ForumTopic extends Base<ForumTopicPayload, number> {
         super(client, data);
         this.serverId = data.serverId;
         this.channelId = data.channelId;
-        this._createdAt = Date.parse(data.createdAt);
+        this._createdAt = parseToStamp(data.createdAt)!;
         this.createdBy = data.createdBy;
         this.isPinned = false;
         this.isLocked = false;
@@ -108,7 +109,7 @@ export class ForumTopic extends Base<ForumTopicPayload, number> {
 
     _update(data: Partial<ForumTopicPayload & { _deletedAt?: Date }>): this {
         if ("updatedAt" in data && typeof data.updatedAt !== "undefined") {
-            this._updatedAt = data.updatedAt ? Date.parse(data.updatedAt) : null;
+            this._updatedAt = data.updatedAt ? parseToStamp(data.updatedAt) : null;
         }
 
         if ("_deletedAt" in data && typeof data._deletedAt !== "undefined") {
@@ -116,7 +117,7 @@ export class ForumTopic extends Base<ForumTopicPayload, number> {
         }
 
         if ("bumpedAt" in data && typeof data.bumpedAt !== "undefined") {
-            this._bumpedAt = data.bumpedAt ? Date.parse(data.bumpedAt) : null;
+            this._bumpedAt = data.bumpedAt ? parseToStamp(data.bumpedAt) : null;
         }
 
         if ("isPinned" in data && typeof data.isPinned !== "undefined") {
@@ -189,7 +190,7 @@ export class PartialForumTopic extends Base<ForumTopicSummaryPayload, number> {
         super(client, data);
         this.serverId = data.serverId;
         this.channelId = data.channelId;
-        this._createdAt = Date.parse(data.createdAt);
+        this._createdAt = parseToStamp(data.createdAt)!;
         this.createdBy = data.createdBy;
         this.isPinned = false;
 
@@ -198,11 +199,11 @@ export class PartialForumTopic extends Base<ForumTopicSummaryPayload, number> {
 
     _update(data: Partial<ForumTopicPayload & { _deletedAt?: Date }>): this {
         if ("updatedAt" in data && typeof data.updatedAt !== "undefined") {
-            this._updatedAt = data.updatedAt ? Date.parse(data.updatedAt) : null;
+            this._updatedAt = data.updatedAt ? parseToStamp(data.updatedAt) : null;
         }
 
         if ("bumpedAt" in data && typeof data.bumpedAt !== "undefined") {
-            this._bumpedAt = data.bumpedAt ? Date.parse(data.bumpedAt) : null;
+            this._bumpedAt = data.bumpedAt ? parseToStamp(data.bumpedAt) : null;
         }
 
         if ("isPinned" in data && typeof data.isPinned !== "undefined") {

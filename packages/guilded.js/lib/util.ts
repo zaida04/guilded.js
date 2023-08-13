@@ -153,3 +153,12 @@ export const resolveContentToData = (content: MessageContent): { content?: strin
         embeds: content.embeds?.map((x) => (x instanceof Embed ? x.toJSON() : x)),
     };
 };
+
+/**
+ * Convert date to a timestamp
+ *
+ * @param date - The date to convert
+ */
+export function parseToStamp(date: string | undefined): number | null {
+    return date ? Date.parse(date) : null;
+}

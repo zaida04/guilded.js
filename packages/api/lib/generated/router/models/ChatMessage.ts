@@ -1,4 +1,6 @@
+/* generated using openapi-typescript-codegen -- do no edit */
 /* istanbul ignore file */
+/* tslint:disable */
 /* eslint-disable */
 
 import type { ChatEmbed } from "./ChatEmbed";
@@ -42,6 +44,7 @@ export type ChatMessage = {
      * If set, this message did not notify mention or reply recipients
      */
     isSilent?: boolean;
+    isPinned?: boolean;
     mentions?: Mentions;
     /**
      * The ISO 8601 timestamp that the message was created at

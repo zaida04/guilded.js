@@ -1,6 +1,6 @@
 import type { ChatMessagePayload, EmotePayload, MentionsPayload, WSPayload } from "@guildedjs/api";
 import type { MessageContent } from "../typings";
-import { buildMemberKey, buildReactionKey, resolveContentToData } from "../util";
+import { buildMemberKey, buildReactionKey, parseToStamp, resolveContentToData } from "../util";
 import { Base } from "./Base";
 import type { Client } from "./Client";
 import { Embed } from "./Embed";
@@ -78,7 +78,7 @@ export class Message extends Base<ChatMessagePayload> {
         this.replyMessageIds = data.replyMessageIds ?? [];
         this.createdById = data.createdBy;
         this.createdByWebhookId = data.createdByWebhookId ?? null;
-        this._createdAt = Date.parse(data.createdAt);
+        this._createdAt = parseToStamp(data.createdAt)!;
         this._updatedAt = null;
         this.isPrivate = data.isPrivate ?? false;
         this.isSilent = data.isSilent ?? false;
@@ -98,12 +98,12 @@ export class Message extends Base<ChatMessagePayload> {
         }
 
         if ("updatedAt" in data) {
-            this._updatedAt = data.updatedAt ? Date.parse(data.updatedAt) : null;
+            this._updatedAt = parseToStamp(data.updatedAt);
         }
 
         if ("deletedAt" in data) {
             this.deleted = true;
-            this._deletedAt = Date.parse(data.deletedAt);
+            this._deletedAt = parseToStamp(data.deletedAt);
         }
 
         if ("embeds" in data) {

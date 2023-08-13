@@ -1,4 +1,6 @@
+/* generated using openapi-typescript-codegen -- do no edit */
 /* istanbul ignore file */
+/* tslint:disable */
 /* eslint-disable */
 import type { ServerMember } from "../models/ServerMember";
 import type { ServerMemberSummary } from "../models/ServerMemberSummary";

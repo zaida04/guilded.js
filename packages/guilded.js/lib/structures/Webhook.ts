@@ -1,5 +1,6 @@
 import type { WebhookPayload } from "@guildedjs/api";
 import type { GlobalWebhookManager } from "../managers/global";
+import { parseToStamp } from "../util";
 import { Base } from "./Base";
 import type { Client } from "./Client";
 import type { User } from "./User";
@@ -46,7 +47,7 @@ export class Webhook extends Base<WebhookPayload> {
     constructor(client: Client, data: WebhookPayload) {
         super(client, data);
         this.serverId = data.serverId;
-        this._createdAt = Date.parse(data.createdAt);
+        this._createdAt = parseToStamp(data.createdAt)!;
         this.authorID = data.createdBy;
         this._update(data);
     }
@@ -103,7 +104,7 @@ export class Webhook extends Base<WebhookPayload> {
         if ("channelId" in data && data.channelId !== undefined) this.channelID = data.channelId;
         if ("token" in data && data.token !== undefined) this.token = data.token ?? null;
         if ("deletedAt" in data && data.deletedAt !== undefined) {
-            this._deletedAt = data.deletedAt ? Date.parse(data.deletedAt) : null;
+            this._deletedAt = data.deletedAt ? parseToStamp(data.deletedAt) : null;
         }
 
         return this;

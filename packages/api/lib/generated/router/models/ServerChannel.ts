@@ -1,4 +1,6 @@
+/* generated using openapi-typescript-codegen -- do no edit */
 /* istanbul ignore file */
+/* tslint:disable */
 /* eslint-disable */
 
 export type ServerChannel = {
@@ -55,7 +57,11 @@ export type ServerChannel = {
      */
     groupId: string;
     /**
-     * Whether the channel can be accessed from users who are not member of the server. Not applicable to threads
+     * What users can access the channel. Only applicable to server channels. If not present, this channel will respect normal permissions. `public` is accessible to everyone, even those who aren't of the server. `private` is only accessible to explicitly mentioned users. Currently, threads cannot be `public` and other channels cannot be `private`. Additionally, `private` threads can only exist with an associated `messageId` that is for a private message
+     */
+    visibility?: "private" | "public" | null;
+    /**
+     * [DEPRECATED - use `visibility` instead] Whether the channel can be accessed from users who are not member of the server. Not applicable to threads
      */
     isPublic?: boolean;
     /**
