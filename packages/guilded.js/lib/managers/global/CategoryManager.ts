@@ -6,7 +6,7 @@ import { CacheableStructManager } from "./CacheableStructManager";
 /**
  * Manager for interacting with Catregories on Guilded.
  */
-export class CategoryManager extends CacheableStructManager<number, Category> {
+export class GlobalCategoryManager extends CacheableStructManager<number, Category> {
     /**
      * Create a new category
      *

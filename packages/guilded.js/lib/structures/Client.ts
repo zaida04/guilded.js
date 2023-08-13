@@ -6,6 +6,7 @@ import type TypedEmitter from "typed-emitter";
 import type { CacheStructure } from "../cache";
 import { ClientGatewayHandler } from "../gateway/ClientGatewayHandler";
 import { GlobalCalendarManager } from "../managers/global/CalendarManager";
+import { GlobalCategoryManager } from "../managers/global/CategoryManager";
 import { GlobalChannelManager } from "../managers/global/ChannelManager";
 import { GlobalDocManager } from "../managers/global/DocManager";
 import { GlobalForumTopicManager } from "../managers/global/ForumManager";
@@ -122,6 +123,11 @@ export class Client extends (EventEmitter as unknown as new () => TypedEmitter<C
      * A manager for calendars, used to manage and interact with calendars.
      */
     calendars = new GlobalCalendarManager(this);
+
+    /**
+     * A manager for categories, used to manage and interact with categories.
+     */
+    categories = new GlobalCategoryManager(this);
 
     /**
      * A manager for server subscriptions, used to manage and interact with server subscriptions.
