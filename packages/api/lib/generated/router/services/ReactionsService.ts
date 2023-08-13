@@ -1,80 +1,12 @@
+/* generated using openapi-typescript-codegen -- do no edit */
 /* istanbul ignore file */
+/* tslint:disable */
 /* eslint-disable */
 import type { CancelablePromise } from "../core/CancelablePromise";
 import type { BaseHttpRequest } from "../core/BaseHttpRequest";
 
 export class ReactionsService {
     constructor(public readonly httpRequest: BaseHttpRequest) {}
-
-    /**
-     * [deprecated] Create reaction
-     * [deprecated] Please use [this route](/docs/api/reactions/ChannelMessageReactionCreate) instead
-     * @returns void
-     * @throws ApiError
-     */
-    public contentReactionCreate({
-        channelId,
-        contentId,
-        emoteId,
-    }: {
-        /**
-         * Channel ID where the content exists
-         */
-        channelId: string;
-        /**
-         * Content ID of the content
-         */
-        contentId: string;
-        /**
-         * Emote ID to apply
-         */
-        emoteId: number;
-    }): CancelablePromise<void> {
-        return this.httpRequest.request({
-            method: "PUT",
-            url: "/channels/{channelId}/content/{contentId}/emotes/{emoteId}",
-            path: {
-                channelId: channelId,
-                contentId: contentId,
-                emoteId: emoteId,
-            },
-        });
-    }
-
-    /**
-     * [deprecated] Delete reaction
-     * [deprecated] Please use [this route](/docs/api/reactions/ChannelMessageReactionDelete) instead
-     * @returns void
-     * @throws ApiError
-     */
-    public contentReactionDelete({
-        channelId,
-        contentId,
-        emoteId,
-    }: {
-        /**
-         * Channel ID where the content exists
-         */
-        channelId: string;
-        /**
-         * Content ID of the content
-         */
-        contentId: string;
-        /**
-         * Emote ID to remove
-         */
-        emoteId: number;
-    }): CancelablePromise<void> {
-        return this.httpRequest.request({
-            method: "DELETE",
-            url: "/channels/{channelId}/content/{contentId}/emotes/{emoteId}",
-            path: {
-                channelId: channelId,
-                contentId: contentId,
-                emoteId: emoteId,
-            },
-        });
-    }
 
     /**
      * Create forum topic reaction

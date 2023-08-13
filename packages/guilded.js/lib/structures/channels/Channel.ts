@@ -4,6 +4,7 @@ import type { MessageContent, OptionBody } from "../../typings";
 import { Base } from "../Base";
 import type { Client } from "../Client";
 import type { Message } from "../Message";
+import { parseToStamp } from "../../util";
 
 /**
  * Represents a channel in a server on Guilded.
@@ -78,7 +79,7 @@ export class Channel extends Base {
         super(client, data);
         this.serverId = data.serverId;
         this.type = channelTypeToEnumMap[data.type];
-        this._createdAt = Date.parse(data.createdAt);
+        this._createdAt = parseToStamp(data.createdAt)!;
         this.createdBy = data.createdBy;
         this.groupId = data.groupId;
 
@@ -116,7 +117,7 @@ export class Channel extends Base {
         }
 
         if ("updatedAt" in data && typeof data.updatedAt !== "undefined") {
-            this._updatedAt = data.updatedAt ? Date.parse(data.updatedAt) : null;
+            this._updatedAt = data.updatedAt ? parseToStamp(data.updatedAt) : null;
         }
 
         if ("parentId" in data && typeof data.updatedAt !== "undefined") {
@@ -136,7 +137,7 @@ export class Channel extends Base {
         }
 
         if ("archivedAt" in data && typeof data.archivedAt !== "undefined") {
-            this._archivedAt = data.archivedAt ? Date.parse(data.archivedAt) : null;
+            this._archivedAt = data.archivedAt ? parseToStamp(data.archivedAt) : null;
         }
 
         return this;

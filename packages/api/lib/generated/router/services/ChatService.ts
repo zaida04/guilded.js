@@ -1,4 +1,6 @@
+/* generated using openapi-typescript-codegen -- do no edit */
 /* istanbul ignore file */
+/* tslint:disable */
 /* eslint-disable */
 import type { ChatEmbed } from "../models/ChatEmbed";
 import type { ChatMessage } from "../models/ChatMessage";
@@ -196,6 +198,7 @@ export class ChatService {
              * If set, this message did not notify mention or reply recipients
              */
             isSilent?: boolean;
+            isPinned?: boolean;
             mentions?: Mentions;
             /**
              * The ISO 8601 timestamp that the message was created at
@@ -236,6 +239,38 @@ export class ChatService {
         return this.httpRequest.request({
             method: "DELETE",
             url: "/channels/{channelId}/messages/{messageId}",
+            path: {
+                channelId: channelId,
+                messageId: messageId,
+            },
+        });
+    }
+
+    /**
+     * Pin a message
+     * @returns void
+     * @throws ApiError
+     */
+    public channelMessagePinCreate({ channelId, messageId }: { channelId: string; messageId: string }): CancelablePromise<void> {
+        return this.httpRequest.request({
+            method: "POST",
+            url: "/channels/{channelId}/messages/{messageId}/pin",
+            path: {
+                channelId: channelId,
+                messageId: messageId,
+            },
+        });
+    }
+
+    /**
+     * Unpin a message
+     * @returns void
+     * @throws ApiError
+     */
+    public channelMessagePinDelete({ channelId, messageId }: { channelId: string; messageId: string }): CancelablePromise<void> {
+        return this.httpRequest.request({
+            method: "DELETE",
+            url: "/channels/{channelId}/messages/{messageId}/pin",
             path: {
                 channelId: channelId,
                 messageId: messageId,

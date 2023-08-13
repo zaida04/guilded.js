@@ -1,4 +1,6 @@
+/* generated using openapi-typescript-codegen -- do no edit */
 /* istanbul ignore file */
+/* tslint:disable */
 /* eslint-disable */
 import type { CalendarEvent } from "../models/CalendarEvent";
 import type { CalendarEventRsvp } from "../models/CalendarEventRsvp";
@@ -364,7 +366,7 @@ export class CalendarEventsService {
         channelId: string;
         calendarEventId: number;
         requestBody: {
-            userIds: Array<string>;
+            userIds: Array<string | "@me">;
             /**
              * The status of the RSVP
              */

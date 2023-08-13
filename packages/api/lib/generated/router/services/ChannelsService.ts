@@ -1,4 +1,6 @@
+/* generated using openapi-typescript-codegen -- do no edit */
 /* istanbul ignore file */
+/* tslint:disable */
 /* eslint-disable */
 import type { ServerChannel } from "../models/ServerChannel";
 
@@ -27,9 +29,13 @@ export class ChannelsService {
              */
             topic?: string;
             /**
-             * Whether the channel can be accessed from users who are not member of the server
+             * [DEPRECATED - use `visibility` instead] Whether the channel can be accessed from users who are not member of the server. Not applicable to threads
              */
             isPublic?: boolean;
+            /**
+             * What users can access the channel. Only applicable to server channels. If not present, this channel will respect normal permissions. `public` is accessible to everyone, even those who aren't of the server. `private` is only accessible to explicitly mentioned users. Currently, threads cannot be `public` and other channels cannot be `private`. Additionally, `private` threads can only exist with an associated `messageId` that is for a private message
+             */
+            visibility?: "private" | "public" | null;
             /**
              * The type of channel. This will determine what routes to use for creating content in a channel. For example, if this "chat", then one must use the routes for creating channel messages. For threads, this **must** be "chat" for now
              */
@@ -68,7 +74,7 @@ export class ChannelsService {
 
     /**
      * Get a channel
-     * Only server channels are supported at this time (coming soon™: DM Channels!)
+     * Must be a member of the server to get the channel. Only server channels are supported at this time (coming soon™: DM Channels!)
      * @returns any Success
      * @throws ApiError
      */
@@ -105,9 +111,13 @@ export class ChannelsService {
              */
             topic?: string | null;
             /**
-             * Whether the channel can be accessed from users who are not member of the server. Not applicable to threads
+             * [DEPRECATED - use `visibility` instead] Whether the channel can be accessed from users who are not member of the server. Not applicable to threads
              */
             isPublic?: boolean;
+            /**
+             * What users can access the channel. Only applicable to server channels. If not present, this channel will respect normal permissions. `public` is accessible to everyone, even those who aren't of the server. `private` is only accessible to explicitly mentioned users. Currently, threads cannot be `public` and other channels cannot be `private`. Additionally, `private` threads can only exist with an associated `messageId` that is for a private message. At this time, you cannot update the visibility on a channel to `private`; this must be set at creation
+             */
+            visibility?: "public" | null;
         };
     }): CancelablePromise<{
         channel: ServerChannel;
@@ -133,6 +143,36 @@ export class ChannelsService {
         return this.httpRequest.request({
             method: "DELETE",
             url: "/channels/{channelId}",
+            path: {
+                channelId: channelId,
+            },
+        });
+    }
+
+    /**
+     * Archive a channel
+     * @returns void
+     * @throws ApiError
+     */
+    public channelArchiveCreate({ channelId }: { channelId: string }): CancelablePromise<void> {
+        return this.httpRequest.request({
+            method: "PUT",
+            url: "/channels/{channelId}/archive",
+            path: {
+                channelId: channelId,
+            },
+        });
+    }
+
+    /**
+     * Restore an archived channel
+     * @returns void
+     * @throws ApiError
+     */
+    public channelArchiveDelete({ channelId }: { channelId: string }): CancelablePromise<void> {
+        return this.httpRequest.request({
+            method: "DELETE",
+            url: "/channels/{channelId}/archive",
             path: {
                 channelId: channelId,
             },

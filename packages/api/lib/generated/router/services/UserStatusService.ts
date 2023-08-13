@@ -1,4 +1,6 @@
+/* generated using openapi-typescript-codegen -- do no edit */
 /* istanbul ignore file */
+/* tslint:disable */
 /* eslint-disable */
 import type { CancelablePromise } from "../core/CancelablePromise";
 import type { BaseHttpRequest } from "../core/BaseHttpRequest";
@@ -8,7 +10,7 @@ export class UserStatusService {
 
     /**
      * Update your status
-     * **Note** - at this time, you can only set a status on your own user
+     * This value can be a max of 24 hours into the futre. If you are wanting a longer expiration, set this value to null so that it never expires. **Note** - at this time, you can only set a status on your own user
      * @returns void
      * @throws ApiError
      */

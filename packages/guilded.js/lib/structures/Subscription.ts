@@ -1,6 +1,7 @@
 import type { ServerSubscriptionTierPayload } from "@guildedjs/api";
 import { Base } from "./Base";
 import type { Client } from "./Client";
+import { parseToStamp } from "../util";
 
 /**
  * Describes a subscription tier type.
@@ -36,7 +37,7 @@ export class ServerSubscriptionTier extends Base<ServerSubscriptionTierPayload, 
     constructor(client: Client, data: ServerSubscriptionTierPayload) {
         super(client, { id: data.type, ...data });
         this.serverId = data.serverId;
-        this._createdAt = Date.parse(data.createdAt);
+        this._createdAt = parseToStamp(data.createdAt)!;
         this.description = data.description ?? null;
         this.roleId = data.roleId ?? null;
         this.cost = data.cost;
