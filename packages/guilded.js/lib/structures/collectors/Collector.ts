@@ -1,4 +1,6 @@
+import EventEmitter from "node:events";
 import { Collection } from "@discordjs/collection";
+import type TypedEmitter from "typed-emitter";
 import type { MaybePromise } from "../../typings";
 import type { Client } from "../Client";
 
@@ -22,6 +24,8 @@ export abstract class Collector<T extends CollectableStructure> {
 
     /** Bound function for item receiving */
     protected boundItemReceiver = this.itemReceived.bind(this);
+
+    public emitter = new EventEmitter() as TypedEmitter<CollectorEvents<T>>;
 
     constructor(public readonly client: Client, public options: Partial<CollectorOptions<T>>) {
         /** Check if timeLimit is specified */
@@ -64,6 +68,7 @@ export abstract class Collector<T extends CollectableStructure> {
                 this.isActive = false;
             }
 
+            this.emitter.emit("collect", entry);
             return true;
         }
 
@@ -136,4 +141,9 @@ export type CollectorOptions<T> = {
     timeLimit: number;
     /** the max amount of entries allowed to be collected */
     max?: number;
+};
+
+/** events that collectors can emit */
+export type CollectorEvents<T> = {
+    collect(item: T): unknown;
 };
