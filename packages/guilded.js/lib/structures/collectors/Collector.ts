@@ -40,7 +40,13 @@ export abstract class Collector<T extends CollectableStructure> {
     start(): Promise<CollectorReturnValue<T>> {
         return new Promise((resolve) => {
             this.resolve = resolve;
-            this.maxTimeout = setTimeout(() => resolve({ reason: CollectorEndReasons.TIME, entries: this.entries }), this.options.timeLimit);
+
+            this.maxTimeout = setTimeout(() => {
+                this.resolve!({ reason: CollectorEndReasons.TIME, entries: this.entries });
+                this._cleanup();
+                this.isActive = false;
+            }, this.options.timeLimit);
+
             this.hookEvents();
             this.isActive = true;
         });
