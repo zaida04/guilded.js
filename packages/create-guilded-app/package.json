@@ -10,10 +10,9 @@
         "create-guilded-app": "./dist/cli.js"
     },
     "scripts": {
-        "lint": "eslint --ignore-path ../../.config/.eslintignore --config ../../.config/.eslintrc.js lib",
         "build": "tsc",
         "build:typecheck": "tsc --noEmit",
-        "prepublishOnly": "rimraf dist/ && rimraf types/ && pnpm run build"
+        "prepublishOnly": "rimraf dist/ && rimraf types/ && bun run build"
     },
     "devDependencies": {
         "@types/node": "18.16.12",

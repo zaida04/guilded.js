@@ -7,7 +7,6 @@
     "main": "./dist/index.js",
     "private": true,
     "scripts": {
-        "lint": "eslint --ignore-path ../../.config/.eslintignore --config ../../.config/.eslintrc.js src",
         "build": "tsc",
         "docker:build": "docker build -t guildedjs/proxy-service:latest -f ./Dockerfile ../../",
         "docker:start": "docker run --env-file=.env -p 3456:3456 guildedjs/proxy-service",

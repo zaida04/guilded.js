@@ -1,5 +1,0 @@
-{
-    "$schema": "https://json.schemastore.org/lintstagedrc.schema.json",
-    "*.{js,ts,tsx,jsx}": ["pnpm prettier"],
-    "*.{json,md,html,js,jsx,ts,tsx}": ["pnpm prettier"]
-}
