@@ -8,14 +8,7 @@ import { CacheableStructManager } from "./CacheableStructManager";
  */
 export class GlobalReactionManager extends CacheableStructManager<string, MessageReaction> {
 	get shouldCacheReaction(): boolean {
-		return (
-			this
-				.client
-				.options
-				.cache
-				?.cacheMessageReactions !==
-			false
-		);
+		return this.client.options.cache?.cacheMessageReactions !== false;
 	}
 
 	/**
@@ -26,18 +19,12 @@ export class GlobalReactionManager extends CacheableStructManager<string, Messag
 	 * @param emoteId The ID of the emote to add.
 	 * @returns A Promise that resolves with no value upon successful completion.
 	 */
-	async create(
-		channelId: string,
-		messageId: string,
-		emoteId: number,
-	): Promise<void> {
-		await this.client.rest.router.reactions.channelMessageReactionCreate(
-			{
-				channelId,
-				messageId,
-				emoteId,
-			},
-		);
+	async create(channelId: string, messageId: string, emoteId: number): Promise<void> {
+		await this.client.rest.router.reactions.channelMessageReactionCreate({
+			channelId,
+			messageId,
+			emoteId,
+		});
 	}
 
 	/**
@@ -48,20 +35,13 @@ export class GlobalReactionManager extends CacheableStructManager<string, Messag
 	 * @param emoteId The ID of the emote to delete.
 	 * @returns A Promise that resolves with no value upon successful completion.
 	 */
-	async delete(
-		channelId: string,
-		messageId: string,
-		emoteId: number,
-		userId?: string,
-	): Promise<void> {
-		await this.client.rest.router.reactions.channelMessageReactionDelete(
-			{
-				channelId,
-				messageId,
-				emoteId,
-				userId,
-			},
-		);
+	async delete(channelId: string, messageId: string, emoteId: number, userId?: string): Promise<void> {
+		await this.client.rest.router.reactions.channelMessageReactionDelete({
+			channelId,
+			messageId,
+			emoteId,
+			userId,
+		});
 	}
 
 	/**
@@ -73,33 +53,13 @@ export class GlobalReactionManager extends CacheableStructManager<string, Messag
 	 * @example
 	 * const reactions = await client.reactions.awaitReactions('message-id-here', { max: 4, time: 60_000 });
 	 */
-	awaitReactions(
-		messageId: string,
-		options: CollectorOptions<MessageReaction>,
-	): Promise<
-		CollectorReturnValue<MessageReaction>
-	> {
-		return new ReactionCollector(
-			this
-				.client,
-			{
-				...options,
-				filter: (
-					item,
-				): MaybePromise<boolean> => {
-					if (
-						item.messageId !==
-						messageId
-					)
-						return false;
-					return (
-						options.filter?.(
-							item,
-						) ??
-						true
-					);
-				},
+	awaitReactions(messageId: string, options: CollectorOptions<MessageReaction>): Promise<CollectorReturnValue<MessageReaction>> {
+		return new ReactionCollector(this.client, {
+			...options,
+			filter: (item): MaybePromise<boolean> => {
+				if (item.messageId !== messageId) return false;
+				return options.filter?.(item) ?? true;
 			},
-		).start();
+		}).start();
 	}
 }

@@ -9,14 +9,7 @@ import { CacheableStructManager } from "./CacheableStructManager";
  */
 export class GlobalForumTopicManager extends CacheableStructManager<number, ForumTopic> {
 	get shouldCacheForumTopic(): boolean {
-		return (
-			this
-				.client
-				.options
-				.cache
-				?.cacheForumTopics !==
-			false
-		);
+		return this.client.options.cache?.cacheForumTopics !== false;
 	}
 
 	/**
@@ -26,24 +19,12 @@ export class GlobalForumTopicManager extends CacheableStructManager<number, Foru
 	 * @param options The options for creating the forum topic.
 	 * @returns A Promise that resolves with the payload of the created forum topic.
 	 */
-	async create(
-		channelId: string,
-		options: OptionBody<
-			ForumsService["forumTopicCreate"]
-		>,
-	): Promise<ForumTopic> {
-		const data =
-			await this.client.rest.router.forums.forumTopicCreate(
-				{
-					channelId,
-					requestBody: options,
-				},
-			);
-		return new ForumTopic(
-			this
-				.client,
-			data.forumTopic,
-		);
+	async create(channelId: string, options: OptionBody<ForumsService["forumTopicCreate"]>): Promise<ForumTopic> {
+		const data = await this.client.rest.router.forums.forumTopicCreate({
+			channelId,
+			requestBody: options,
+		});
+		return new ForumTopic(this.client, data.forumTopic);
 	}
 
 	/**
@@ -53,44 +34,16 @@ export class GlobalForumTopicManager extends CacheableStructManager<number, Foru
 	 * @param options The options for filtering the forum topics.
 	 * @returns A Promise that resolves to a Collection of ForumTopics.
 	 */
-	async fetchMany(
-		channelId: string,
-		options: Omit<
-			OptionQuery<
-				ForumsService["forumTopicReadMany"]
-			>,
-			"channelId"
-		>,
-	): Promise<
-		Collection<
-			number,
-			PartialForumTopic
-		>
-	> {
-		const data =
-			await this.client.rest.router.forums.forumTopicReadMany(
-				{
-					channelId,
-					...options,
-				},
-			);
+	async fetchMany(channelId: string, options: Omit<OptionQuery<ForumsService["forumTopicReadMany"]>, "channelId">): Promise<Collection<number, PartialForumTopic>> {
+		const data = await this.client.rest.router.forums.forumTopicReadMany({
+			channelId,
+			...options,
+		});
 
-		const topics =
-			new Collection<
-				number,
-				PartialForumTopic
-			>();
+		const topics = new Collection<number, PartialForumTopic>();
 		for (const forumTopic of data.forumTopics) {
-			const newTopic =
-				new PartialForumTopic(
-					this
-						.client,
-					forumTopic,
-				);
-			topics.set(
-				newTopic.id,
-				newTopic,
-			);
+			const newTopic = new PartialForumTopic(this.client, forumTopic);
+			topics.set(newTopic.id, newTopic);
 		}
 
 		return topics;
@@ -103,22 +56,12 @@ export class GlobalForumTopicManager extends CacheableStructManager<number, Foru
 	 * @param forumTopicId The ID of the forum topic.
 	 * @returns a Promise that resolves to a ForumTopic.
 	 */
-	async fetch(
-		channelId: string,
-		forumTopicId: number,
-	): Promise<ForumTopic> {
-		const data =
-			await this.client.rest.router.forums.forumTopicRead(
-				{
-					channelId,
-					forumTopicId,
-				},
-			);
-		return new ForumTopic(
-			this
-				.client,
-			data.forumTopic,
-		);
+	async fetch(channelId: string, forumTopicId: number): Promise<ForumTopic> {
+		const data = await this.client.rest.router.forums.forumTopicRead({
+			channelId,
+			forumTopicId,
+		});
+		return new ForumTopic(this.client, data.forumTopic);
 	}
 
 	/**
@@ -129,45 +72,18 @@ export class GlobalForumTopicManager extends CacheableStructManager<number, Foru
 	 * @param options The options for updating the forum topic.
 	 * @returns A Promise that resolves to the updated ForumTopic. If cached locally, it will modify that object.
 	 */
-	async update(
-		channelId: string,
-		forumTopicId: number,
-		options: OptionBody<
-			ForumsService["forumTopicUpdate"]
-		>,
-	): Promise<ForumTopic> {
-		const data =
-			await this.client.rest.router.forums.forumTopicUpdate(
-				{
-					channelId,
-					forumTopicId,
-					requestBody: options,
-				},
-			);
+	async update(channelId: string, forumTopicId: number, options: OptionBody<ForumsService["forumTopicUpdate"]>): Promise<ForumTopic> {
+		const data = await this.client.rest.router.forums.forumTopicUpdate({
+			channelId,
+			forumTopicId,
+			requestBody: options,
+		});
 
-		const existingTopic =
-			this.client.topics.cache.get(
-				data
-					.forumTopic
-					.id,
-			);
-		if (
-			existingTopic
-		)
-			return existingTopic._update(
-				data.forumTopic,
-			);
+		const existingTopic = this.client.topics.cache.get(data.forumTopic.id);
+		if (existingTopic) return existingTopic._update(data.forumTopic);
 
-		const newTopic =
-			new ForumTopic(
-				this
-					.client,
-				data.forumTopic,
-			);
-		this.client.topics.cache.set(
-			newTopic.id,
-			newTopic,
-		);
+		const newTopic = new ForumTopic(this.client, data.forumTopic);
+		this.client.topics.cache.set(newTopic.id, newTopic);
 		return newTopic;
 	}
 
@@ -178,16 +94,11 @@ export class GlobalForumTopicManager extends CacheableStructManager<number, Foru
 	 * @param forumTopicId The ID of the forum topic.
 	 * @returns A Promise that resolves to nothing.
 	 */
-	async delete(
-		channelId: string,
-		forumTopicId: number,
-	): Promise<void> {
-		await this.client.rest.router.forums.forumTopicDelete(
-			{
-				channelId,
-				forumTopicId,
-			},
-		);
+	async delete(channelId: string, forumTopicId: number): Promise<void> {
+		await this.client.rest.router.forums.forumTopicDelete({
+			channelId,
+			forumTopicId,
+		});
 	}
 
 	/**
@@ -197,16 +108,11 @@ export class GlobalForumTopicManager extends CacheableStructManager<number, Foru
 	 * @param forumTopicId The ID of the forum topic.
 	 * @returns A Promise that resolves to nothing.
 	 */
-	async pin(
-		channelId: string,
-		forumTopicId: number,
-	): Promise<void> {
-		await this.client.rest.router.forums.forumTopicPin(
-			{
-				channelId,
-				forumTopicId,
-			},
-		);
+	async pin(channelId: string, forumTopicId: number): Promise<void> {
+		await this.client.rest.router.forums.forumTopicPin({
+			channelId,
+			forumTopicId,
+		});
 	}
 
 	/**
@@ -216,16 +122,11 @@ export class GlobalForumTopicManager extends CacheableStructManager<number, Foru
 	 * @param forumTopicId The ID of the forum topic.
 	 * @returns A Promise that resolves to nothing.
 	 */
-	async unpin(
-		channelId: string,
-		forumTopicId: number,
-	): Promise<void> {
-		await this.client.rest.router.forums.forumTopicUnpin(
-			{
-				channelId,
-				forumTopicId,
-			},
-		);
+	async unpin(channelId: string, forumTopicId: number): Promise<void> {
+		await this.client.rest.router.forums.forumTopicUnpin({
+			channelId,
+			forumTopicId,
+		});
 	}
 
 	/**
@@ -235,16 +136,11 @@ export class GlobalForumTopicManager extends CacheableStructManager<number, Foru
 	 * @param forumTopicId The ID of the forum topic.
 	 * @returns A Promise that resolves to nothing.
 	 */
-	async lock(
-		channelId: string,
-		forumTopicId: number,
-	): Promise<void> {
-		await this.client.rest.router.forums.forumTopicLock(
-			{
-				channelId,
-				forumTopicId,
-			},
-		);
+	async lock(channelId: string, forumTopicId: number): Promise<void> {
+		await this.client.rest.router.forums.forumTopicLock({
+			channelId,
+			forumTopicId,
+		});
 	}
 
 	/**
@@ -254,15 +150,10 @@ export class GlobalForumTopicManager extends CacheableStructManager<number, Foru
 	 * @param forumTopicId The ID
 	 * @returns A Promise that resolves to nothing.
 	 */
-	async unlock(
-		channelId: string,
-		forumTopicId: number,
-	): Promise<void> {
-		await this.client.rest.router.forums.forumTopicUnlock(
-			{
-				channelId,
-				forumTopicId,
-			},
-		);
+	async unlock(channelId: string, forumTopicId: number): Promise<void> {
+		await this.client.rest.router.forums.forumTopicUnlock({
+			channelId,
+			forumTopicId,
+		});
 	}
 }

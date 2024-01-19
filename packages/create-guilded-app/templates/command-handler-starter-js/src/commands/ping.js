@@ -1,12 +1,5 @@
 module.exports = {
-	aliases: [
-		"ping",
-	],
-	execute: (
-		msg,
-	) =>
-		msg.send(
-			"pong!",
-		),
+	aliases: ["ping"],
+	execute: (msg) => msg.send("pong!"),
 	name: "ping",
 };

@@ -9,20 +9,28 @@
             "node_modules",
             "types",
             ".next",
+            "generated",
             "*.json"
         ]
     },
     "formatter": {
         "enabled": true,
         "lineEnding": "lf",
-        "indentWidth": 200,
+        "indentWidth": 2,
         "indentStyle": "tab",
-        "lineWidth": 120
+        "lineWidth": 200
     },
     "linter": {
         "enabled": true,
         "rules": {
-            "recommended": true
+            "recommended": true,
+            "style": {
+                "noNonNullAssertion": "off",
+                "noParameterAssign": "off"
+            },
+            "suspicious": {
+                "noArrayIndexKey": "off"
+            }
         }
     }
 }

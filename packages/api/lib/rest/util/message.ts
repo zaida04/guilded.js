@@ -10,22 +10,10 @@ export type MessageAttachment = {
 export type WebhookMessageContent =
 	| string
 	| (RESTPostWebhookBody & {
-			embeds?: (
-				| APIEmbed
-				| WebhookEmbed
-			)[];
+			embeds?: (APIEmbed | WebhookEmbed)[];
 			files?: MessageAttachment[];
 	  });
-export const transformEmbedToAPIEmbed = (embeds: (APIEmbed | WebhookEmbed)[]): APIEmbed[] =>
-	embeds.map(
-		(
-			x,
-		) =>
-			x instanceof
-			WebhookEmbed
-				? x.toJSON()
-				: x,
-	);
+export const transformEmbedToAPIEmbed = (embeds: (APIEmbed | WebhookEmbed)[]): APIEmbed[] => embeds.map((x) => (x instanceof WebhookEmbed ? x.toJSON() : x));
 
 export function parseToMessage(input: EmbedStructure | string = "", embed?: EmbedStructure): APIContent {
 	return {
@@ -40,11 +28,7 @@ export function parseToMessage(input: EmbedStructure | string = "", embed?: Embe
 								{
 									marks: [],
 									object: "leaf",
-									text:
-										typeof input ===
-										"string"
-											? input
-											: "",
+									text: typeof input === "string" ? input : "",
 								},
 							],
 							object: "text",
@@ -55,26 +39,7 @@ export function parseToMessage(input: EmbedStructure | string = "", embed?: Embe
 				},
 				{
 					data: {
-						embeds: embed
-							? embed instanceof
-							  WebhookEmbed
-								? [
-										embed?.toJSON(),
-								  ]
-								: [
-										embed,
-								  ]
-							: typeof input ===
-								  "string"
-							  ? []
-							  : input instanceof
-									  WebhookEmbed
-								  ? [
-											input?.toJSON(),
-									  ]
-								  : [
-											input,
-									  ],
+						embeds: embed ? (embed instanceof WebhookEmbed ? [embed?.toJSON()] : [embed]) : typeof input === "string" ? [] : input instanceof WebhookEmbed ? [input?.toJSON()] : [input],
 					},
 					nodes: [],
 					object: "block",
@@ -93,130 +58,75 @@ export function parseToMessage(input: EmbedStructure | string = "", embed?: Embe
  * @internal
  */
 export function parseMessage(data: APIContent): parsedMessage {
-	const parsedMessageArray: parsedTextResponse[] =
-		[];
-	let parsedMessageTextContent =
-		"";
+	const parsedMessageArray: parsedTextResponse[] = [];
+	let parsedMessageTextContent = "";
 	const mentions: {
 		channels: string[];
 		reactions: string[];
 		roles: string[];
 		users: string[];
-	} =
-		{
-			channels: [],
-			reactions: [],
-			roles: [],
-			users: [],
-		};
-	const embeds: APIEmbed[] =
-		[];
-	const messageLinesWithoutEmpty =
-		data.document.nodes.filter(
-			(
-				x,
-			) =>
-				x.type ===
-				"webhookMessage"
-					? (
-							x.data as {
-								embeds: APIEmbed[];
-							}
-					  )
-							.embeds
-							.length >
-					  0
-					: true,
-		);
+	} = {
+		channels: [],
+		reactions: [],
+		roles: [],
+		users: [],
+	};
+	const embeds: APIEmbed[] = [];
+	const messageLinesWithoutEmpty = data.document.nodes.filter((x) =>
+		x.type === "webhookMessage"
+			? (
+					x.data as {
+						embeds: APIEmbed[];
+					}
+			  ).embeds.length > 0
+			: true,
+	);
 
-	for (
-		let index = 0;
-		index <
-		messageLinesWithoutEmpty.length;
-		index++
-	) {
-		const messageLine =
-			data
-				.document
-				.nodes[
-				index
-			];
-		if (
-			index
-		)
-			parsedMessageTextContent +=
-				"\n";
-		switch (
-			messageLine.type
-		) {
+	for (let index = 0; index < messageLinesWithoutEmpty.length; index++) {
+		const messageLine = data.document.nodes[index];
+		if (index) parsedMessageTextContent += "\n";
+		switch (messageLine.type) {
 			case "paragraph": {
 				for (const node of messageLine.nodes) {
-					switch (
-						node.object
-					) {
+					switch (node.object) {
 						case "text": {
 							for (const leaf of node.leaves!) {
-								if (
-									leaf.text
-								) {
-									parsedMessageArray.push(
-										{
-											content: leaf.text,
-											type: "text",
-										},
-									);
+								if (leaf.text) {
+									parsedMessageArray.push({
+										content: leaf.text,
+										type: "text",
+									});
 								}
 
-								parsedMessageTextContent +=
-									leaf.text;
+								parsedMessageTextContent += leaf.text;
 							}
 
 							break;
 						}
 
 						case "inline": {
-							const castedDataNode =
-								node.data as MessageDataNode;
-							const leaf =
-								node
-									.nodes?.[0]
-									.leaves?.[0];
-							switch (
-								node.type
-							) {
+							const castedDataNode = node.data as MessageDataNode;
+							const leaf = node.nodes?.[0].leaves?.[0];
+							switch (node.type) {
 								case "mention": {
-									switch (
-										castedDataNode
-											.mention
-											?.type
-									) {
+									switch (castedDataNode.mention?.type) {
 										case "person": {
-											mentions.users.push(
-												castedDataNode
-													.mention
-													?.id as string,
-											);
-											parsedMessageArray.push(
-												{
-													content: leaf.text,
-													mention: castedDataNode.mention,
-													type: "user",
-												},
-											);
+											mentions.users.push(castedDataNode.mention?.id as string);
+											parsedMessageArray.push({
+												content: leaf.text,
+												mention: castedDataNode.mention,
+												type: "user",
+											});
 											break;
 										}
 
 										case "role": {
-											parsedMessageArray.push(
-												{
-													content: leaf.text,
-													mention: castedDataNode.mention,
-													type: "role",
-												},
-											);
-											mentions.roles.push(
-												castedDataNode.mention?.id.toString(),
-											);
+											parsedMessageArray.push({
+												content: leaf.text,
+												mention: castedDataNode.mention,
+												type: "role",
+											});
+											mentions.roles.push(castedDataNode.mention?.id.toString());
 											break;
 										}
 									}
@@ -226,40 +136,27 @@ export function parseMessage(data: APIContent): parsedMessage {
 
 								/* istanbul ignore next */
 								case "reaction": {
-									mentions.reactions.push(
-										castedDataNode
-											.reaction
-											?.id,
-									);
-									parsedMessageArray.push(
-										{
-											content: leaf.text,
-											reaction: castedDataNode.reaction,
-											type: "reaction",
-										},
-									);
+									mentions.reactions.push(castedDataNode.reaction?.id);
+									parsedMessageArray.push({
+										content: leaf.text,
+										reaction: castedDataNode.reaction,
+										type: "reaction",
+									});
 									break;
 								}
 
 								case "channel": {
-									mentions.channels.push(
-										castedDataNode
-											.channel
-											?.id,
-									);
-									parsedMessageArray.push(
-										{
-											channel: castedDataNode.channel,
-											content: leaf.text,
-											type: "channel",
-										},
-									);
+									mentions.channels.push(castedDataNode.channel?.id);
+									parsedMessageArray.push({
+										channel: castedDataNode.channel,
+										content: leaf.text,
+										type: "channel",
+									});
 									break;
 								}
 							}
 
-							parsedMessageTextContent +=
-								leaf.text;
+							parsedMessageTextContent += leaf.text;
 							break;
 						}
 					}
@@ -272,77 +169,41 @@ export function parseMessage(data: APIContent): parsedMessage {
 			case "block-quote-container": {
 				for (const messageNodes of messageLine.nodes) {
 					for (const node of messageNodes.nodes!) {
-						switch (
-							node.object
-						) {
+						switch (node.object) {
 							case "text": {
-								if (
-									node
-										.leaves?.[0]
-										.text
-								) {
-									parsedMessageArray.push(
-										{
-											content: node
-												.leaves?.[0]
-												.text,
-											type: "text",
-										},
-									);
+								if (node.leaves?.[0].text) {
+									parsedMessageArray.push({
+										content: node.leaves?.[0].text,
+										type: "text",
+									});
 								}
 
-								parsedMessageTextContent +=
-									node
-										.leaves?.[0]
-										.text;
+								parsedMessageTextContent += node.leaves?.[0].text;
 								break;
 							}
 
 							case "inline": {
-								const castedDataNode =
-									node.data as MessageDataNode;
-								switch (
-									node.type
-								) {
+								const castedDataNode = node.data as MessageDataNode;
+								switch (node.type) {
 									case "mention": {
-										switch (
-											castedDataNode
-												.mention
-												?.type
-										) {
+										switch (castedDataNode.mention?.type) {
 											case "person": {
-												mentions.users.push(
-													castedDataNode
-														.mention
-														?.id as string,
-												);
-												parsedMessageArray.push(
-													{
-														content: node
-															.nodes?.[0]
-															.leaves?.[0]
-															.text,
-														mention: castedDataNode.mention,
-														type: "user",
-													},
-												);
+												mentions.users.push(castedDataNode.mention?.id as string);
+												parsedMessageArray.push({
+													content: node.nodes?.[0].leaves?.[0].text,
+													mention: castedDataNode.mention,
+													type: "user",
+												});
 												break;
 											}
 
 											case "role": {
-												parsedMessageArray.push(
-													{
-														content: node
-															.nodes?.[0]
-															.leaves?.[0]
-															.text,
-														mention: castedDataNode.mention,
-														type: "role",
-													},
-												);
-												mentions.roles.push(
-													castedDataNode.mention?.id.toString(),
-												);
+												parsedMessageArray.push({
+													content: node.nodes?.[0].leaves?.[0].text,
+													mention: castedDataNode.mention,
+													type: "role",
+												});
+												mentions.roles.push(castedDataNode.mention?.id.toString());
 												break;
 											}
 										}
@@ -351,49 +212,27 @@ export function parseMessage(data: APIContent): parsedMessage {
 									}
 
 									case "reaction": {
-										mentions.reactions.push(
-											castedDataNode
-												.reaction
-												?.id,
-										);
-										parsedMessageArray.push(
-											{
-												content: node
-													.nodes?.[0]
-													.leaves?.[0]
-													.text,
-												reaction: castedDataNode.reaction,
-												type: "reaction",
-											},
-										);
+										mentions.reactions.push(castedDataNode.reaction?.id);
+										parsedMessageArray.push({
+											content: node.nodes?.[0].leaves?.[0].text,
+											reaction: castedDataNode.reaction,
+											type: "reaction",
+										});
 										break;
 									}
 
 									case "channel": {
-										mentions.channels.push(
-											castedDataNode
-												.channel
-												?.id,
-										);
-										parsedMessageArray.push(
-											{
-												channel: castedDataNode.channel,
-												content: node
-													.nodes?.[0]
-													.leaves?.[0]
-													.text,
-												type: "channel",
-											},
-										);
+										mentions.channels.push(castedDataNode.channel?.id);
+										parsedMessageArray.push({
+											channel: castedDataNode.channel,
+											content: node.nodes?.[0].leaves?.[0].text,
+											type: "channel",
+										});
 										break;
 									}
 								}
 
-								parsedMessageTextContent +=
-									node
-										.nodes?.[0]
-										.leaves?.[0]
-										.text;
+								parsedMessageTextContent += node.nodes?.[0].leaves?.[0].text;
 								break;
 							}
 						}
@@ -404,28 +243,14 @@ export function parseMessage(data: APIContent): parsedMessage {
 			}
 
 			case "markdown-plain-text": {
-				if (
-					messageLine
-						.nodes?.[0]
-						.leaves?.[0]
-						.text
-				) {
-					parsedMessageArray.push(
-						{
-							content: messageLine
-								.nodes?.[0]
-								.leaves?.[0]
-								.text,
-							type: "text",
-						},
-					);
+				if (messageLine.nodes?.[0].leaves?.[0].text) {
+					parsedMessageArray.push({
+						content: messageLine.nodes?.[0].leaves?.[0].text,
+						type: "text",
+					});
 				}
 
-				parsedMessageTextContent +=
-					messageLine
-						.nodes?.[0]
-						.leaves?.[0]
-						.text;
+				parsedMessageTextContent += messageLine.nodes?.[0].leaves?.[0].text;
 				break;
 			}
 
@@ -435,8 +260,7 @@ export function parseMessage(data: APIContent): parsedMessage {
 						messageLine.data as {
 							embeds: APIEmbed[];
 						}
-					)
-						.embeds,
+					).embeds,
 				);
 				break;
 			}
@@ -482,9 +306,7 @@ export type MessageDataNode = {
 	mention?: {
 		avatar?: string;
 		color: string;
-		id:
-			| number
-			| string;
+		id: number | string;
 		matcher: string;
 		name: string;
 		nickname?: boolean;

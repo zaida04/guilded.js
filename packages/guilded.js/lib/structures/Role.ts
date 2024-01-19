@@ -14,9 +14,7 @@ export class Role extends Base<{ id: number; serverId: string }, number> {
 	_createdAt: number;
 
 	/** The date this role was last updated, if it was */
-	_updatedAt:
-		| number
-		| null;
+	_updatedAt: number | null;
 
 	/** The name of this role */
 	name: string;
@@ -37,9 +35,7 @@ export class Role extends Base<{ id: number; serverId: string }, number> {
 	colors: number[];
 
 	/** The URL of the role's icon */
-	icon:
-		| string
-		| null;
+	icon: string | null;
 
 	/** The position of this role on the hierarchy */
 	position: number;
@@ -48,95 +44,46 @@ export class Role extends Base<{ id: number; serverId: string }, number> {
 	isBase: boolean;
 
 	/** The bot user ID this role has been defined for. */
-	botUserId:
-		| string
-		| null;
+	botUserId: string | null;
 
 	/**
 	 * @param client - The client instance
 	 * @param data - The data for this role
 	 */
-	constructor(
-		client: Client,
-		data: RolePayload,
-	) {
-		super(
-			client,
-			data,
-		);
-		this.serverId =
-			data.serverId;
-		this._createdAt =
-			parseToStamp(
-				data.createdAt,
-			)!;
-		this._updatedAt =
-			null;
-		this.name =
-			data.name;
-		this.isDisplayedSeparately =
-			data.isDisplayedSeparately ??
-			false;
-		this.isSelfAssignable =
-			data.isSelfAssignable ??
-			false;
-		this.isMentionable =
-			data.isMentionable ??
-			false;
-		this.permissions =
-			data.permissions;
-		this.colors =
-			data.colors ??
-			[];
-		this.icon =
-			data.icon ??
-			null;
-		this.position =
-			data.position;
-		this.isBase =
-			data.isBase ??
-			false;
-		this.botUserId =
-			data.botUserId ??
-			null;
+	constructor(client: Client, data: RolePayload) {
+		super(client, data);
+		this.serverId = data.serverId;
+		this._createdAt = parseToStamp(data.createdAt)!;
+		this._updatedAt = null;
+		this.name = data.name;
+		this.isDisplayedSeparately = data.isDisplayedSeparately ?? false;
+		this.isSelfAssignable = data.isSelfAssignable ?? false;
+		this.isMentionable = data.isMentionable ?? false;
+		this.permissions = data.permissions;
+		this.colors = data.colors ?? [];
+		this.icon = data.icon ?? null;
+		this.position = data.position;
+		this.isBase = data.isBase ?? false;
+		this.botUserId = data.botUserId ?? null;
 	}
 
-	_update(
-		data: RolePayload,
-	): this {
-		if (
-			"updatedAt" in
-			data
-		) {
-			this._updatedAt =
-				data.updatedAt
-					? parseToStamp(
-							data.updatedAt,
-					  )
-					: null;
+	_update(data: RolePayload): this {
+		if ("updatedAt" in data) {
+			this._updatedAt = data.updatedAt ? parseToStamp(data.updatedAt) : null;
 		}
 
 		return this;
 	}
 
 	get createdAt(): Date {
-		return new Date(
-			this
-				._createdAt,
-		);
+		return new Date(this._createdAt);
 	}
 
 	/**
 	 * Returns the date and time the message was last updated, if relevant.
 	 */
 	get updatedAt(): Date | null {
-		return this
-			._updatedAt
-			? new Date(
-					this
-						._updatedAt,
-			  )
-			: null;
+		return this._updatedAt ? new Date(this._updatedAt) : null;
 	}
 
 	/**
@@ -145,16 +92,8 @@ export class Role extends Base<{ id: number; serverId: string }, number> {
 	 * @param amount - The amount of XP to award to the role
 	 * @returns A Promise that resolves to the new total XP of the role
 	 */
-	giveXP(
-		amount: number,
-	): Promise<void> {
-		return this.client.roles.giveXP(
-			this
-				.serverId,
-			this
-				.id,
-			amount,
-		);
+	giveXP(amount: number): Promise<void> {
+		return this.client.roles.giveXP(this.serverId, this.id, amount);
 	}
 
 	/**
@@ -163,16 +102,8 @@ export class Role extends Base<{ id: number; serverId: string }, number> {
 	 * @param memberId - The ID of the member to assign the role to
 	 * @returns A Promise that resolves when the role has been assigned to the member
 	 */
-	assignToMember(
-		memberId: string,
-	): Promise<void> {
-		return this.client.roles.addRoleToMember(
-			this
-				.serverId,
-			memberId,
-			this
-				.id,
-		);
+	assignToMember(memberId: string): Promise<void> {
+		return this.client.roles.addRoleToMember(this.serverId, memberId, this.id);
 	}
 
 	/**
@@ -181,15 +112,7 @@ export class Role extends Base<{ id: number; serverId: string }, number> {
 	 * @param memberId - The ID of the member to remove the role from
 	 * @returns A Promise that resolves when the role has been removed from the member
 	 */
-	removeFromMember(
-		memberId: string,
-	): Promise<void> {
-		return this.client.roles.removeRoleFromMember(
-			this
-				.serverId,
-			memberId,
-			this
-				.id,
-		);
+	removeFromMember(memberId: string): Promise<void> {
+		return this.client.roles.removeRoleFromMember(this.serverId, memberId, this.id);
 	}
 }

@@ -14,53 +14,23 @@ export class GlobalCategoryManager extends CacheableStructManager<number, Catego
 	 * @param options Category creation options
 	 * @returns Promise that resolves with the newly created category
 	 */
-	async create(
-		serverId: string,
-		options: OptionBody<
-			CategoriesService["categoryCreate"]
-		>,
-	): Promise<Category> {
-		const data =
-			await this.client.rest.router.categories.categoryCreate(
-				{
-					serverId,
-					requestBody: options,
-				},
-			);
-		const createdCategory =
-			new Category(
-				this
-					.client,
-				data.category,
-			);
-		this.cache.set(
-			createdCategory.id,
-			createdCategory,
-		);
+	async create(serverId: string, options: OptionBody<CategoriesService["categoryCreate"]>): Promise<Category> {
+		const data = await this.client.rest.router.categories.categoryCreate({
+			serverId,
+			requestBody: options,
+		});
+		const createdCategory = new Category(this.client, data.category);
+		this.cache.set(createdCategory.id, createdCategory);
 		return createdCategory;
 	}
 
-	async fetch(
-		serverId: string,
-		categoryId: number,
-	): Promise<Category> {
-		const data =
-			await this.client.rest.router.categories.categoryRead(
-				{
-					serverId,
-					categoryId,
-				},
-			);
-		const fetchedCategory =
-			new Category(
-				this
-					.client,
-				data.category,
-			);
-		this.cache.set(
-			fetchedCategory.id,
-			fetchedCategory,
-		);
+	async fetch(serverId: string, categoryId: number): Promise<Category> {
+		const data = await this.client.rest.router.categories.categoryRead({
+			serverId,
+			categoryId,
+		});
+		const fetchedCategory = new Category(this.client, data.category);
+		this.cache.set(fetchedCategory.id, fetchedCategory);
 		return fetchedCategory;
 	}
 
@@ -72,38 +42,15 @@ export class GlobalCategoryManager extends CacheableStructManager<number, Catego
 	 * @param options The options to update the category with.
 	 * @returns A Promise that resolves with the updated category.
 	 */
-	async update(
-		serverId: string,
-		categoryId: number,
-		options: OptionBody<
-			CategoriesService["categoryUpdate"]
-		>,
-	): Promise<Category> {
-		const data =
-			await this.client.rest.router.categories.categoryUpdate(
-				{
-					serverId,
-					categoryId,
-					requestBody: options,
-				},
-			);
+	async update(serverId: string, categoryId: number, options: OptionBody<CategoriesService["categoryUpdate"]>): Promise<Category> {
+		const data = await this.client.rest.router.categories.categoryUpdate({
+			serverId,
+			categoryId,
+			requestBody: options,
+		});
 
-		let category =
-			this.cache
-				.get(
-					data
-						.category
-						.id,
-				)
-				?._update(
-					data.category,
-				);
-		category ??=
-			new Category(
-				this
-					.client,
-				data.category,
-			);
+		let category = this.cache.get(data.category.id)?._update(data.category);
+		category ??= new Category(this.client, data.category);
 		return category;
 	}
 
@@ -114,23 +61,11 @@ export class GlobalCategoryManager extends CacheableStructManager<number, Catego
 	 * @param categoryId The ID of the category to delete.
 	 * @returns A Promise that resolves when the operation is complete.
 	 */
-	async delete(
-		serverId: string,
-		categoryId: number,
-	): Promise<void> {
-		await this.client.rest.router.categories.categoryDelete(
-			{
-				serverId,
-				categoryId,
-			},
-		);
-		if (
-			this.cache.has(
-				categoryId,
-			)
-		)
-			this.cache.delete(
-				categoryId,
-			);
+	async delete(serverId: string, categoryId: number): Promise<void> {
+		await this.client.rest.router.categories.categoryDelete({
+			serverId,
+			categoryId,
+		});
+		if (this.cache.has(categoryId)) this.cache.delete(categoryId);
 	}
 }

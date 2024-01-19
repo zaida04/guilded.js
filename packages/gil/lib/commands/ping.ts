@@ -2,16 +2,10 @@ import type { Message } from "guilded.js";
 import { Command } from "../structures/Command";
 
 export class PingCommand extends Command {
-	name =
-		"ping";
+	name = "ping";
 
-	execute(
-		message: Message,
-	): any {
-		return this.client.messages.send(
-			message.channelId,
-			"Pong",
-		);
+	execute(message: Message) {
+		return this.client.messages.send(message.channelId, "Pong");
 	}
 
 	init(): void {

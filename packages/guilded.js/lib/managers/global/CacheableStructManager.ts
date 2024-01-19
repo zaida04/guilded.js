@@ -11,9 +11,5 @@ import { GlobalManager } from "./GlobalManager";
  * @extends GlobalManager
  */
 export class CacheableStructManager<K, V> extends GlobalManager {
-	cache =
-		new Collection<
-			K,
-			V
-		>();
+	cache = new Collection<K, V>();
 }

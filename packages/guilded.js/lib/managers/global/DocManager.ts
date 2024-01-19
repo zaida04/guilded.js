@@ -13,19 +13,11 @@ export class GlobalDocManager extends GlobalManager {
 	 * @param options - The options for the Doc to be created.
 	 * @returns A Promise that resolves with the Doc payload of the newly created Doc.
 	 */
-	async create(
-		channelId: string,
-		options: OptionBody<
-			DocsService["docCreate"]
-		>,
-	): Promise<DocPayload> {
-		const data =
-			await this.client.rest.router.docs.docCreate(
-				{
-					channelId,
-					requestBody: options,
-				},
-			);
+	async create(channelId: string, options: OptionBody<DocsService["docCreate"]>): Promise<DocPayload> {
+		const data = await this.client.rest.router.docs.docCreate({
+			channelId,
+			requestBody: options,
+		});
 		return data.doc;
 	}
 
@@ -35,17 +27,10 @@ export class GlobalDocManager extends GlobalManager {
 	 * @param channelId - The ID of the channel where the Docs are located.
 	 * @returns A Promise that resolves with an array of Doc payloads.
 	 */
-	async fetchMany(
-		channelId: string,
-	): Promise<
-		DocPayload[]
-	> {
-		const data =
-			await this.client.rest.router.docs.docReadMany(
-				{
-					channelId,
-				},
-			);
+	async fetchMany(channelId: string): Promise<DocPayload[]> {
+		const data = await this.client.rest.router.docs.docReadMany({
+			channelId,
+		});
 		return data.docs;
 	}
 
@@ -56,17 +41,11 @@ export class GlobalDocManager extends GlobalManager {
 	 * @param docId - The ID of the Doc to fetch.
 	 * @returns A Promise that resolves with the Doc payload of the fetched Doc.
 	 */
-	async fetch(
-		channelId: string,
-		docId: number,
-	): Promise<DocPayload> {
-		const data =
-			await this.client.rest.router.docs.docRead(
-				{
-					channelId,
-					docId,
-				},
-			);
+	async fetch(channelId: string, docId: number): Promise<DocPayload> {
+		const data = await this.client.rest.router.docs.docRead({
+			channelId,
+			docId,
+		});
 		return data.doc;
 	}
 
@@ -78,21 +57,12 @@ export class GlobalDocManager extends GlobalManager {
 	 * @param options - The options for the Doc update.
 	 * @returns A Promise that resolves with the Doc payload of the updated Doc.
 	 */
-	async update(
-		channelId: string,
-		docId: number,
-		options: OptionBody<
-			DocsService["docUpdate"]
-		>,
-	): Promise<DocPayload> {
-		const data =
-			await this.client.rest.router.docs.docUpdate(
-				{
-					channelId,
-					docId,
-					requestBody: options,
-				},
-			);
+	async update(channelId: string, docId: number, options: OptionBody<DocsService["docUpdate"]>): Promise<DocPayload> {
+		const data = await this.client.rest.router.docs.docUpdate({
+			channelId,
+			docId,
+			requestBody: options,
+		});
 		return data.doc;
 	}
 
@@ -103,15 +73,10 @@ export class GlobalDocManager extends GlobalManager {
 	 * @param docId - The ID of the Doc to delete.
 	 * @returns A Promise that resolves with void when the Doc is successfully deleted.
 	 */
-	async delete(
-		channelId: string,
-		docId: number,
-	): Promise<void> {
-		await this.client.rest.router.docs.docDelete(
-			{
-				channelId,
-				docId,
-			},
-		);
+	async delete(channelId: string, docId: number): Promise<void> {
+		await this.client.rest.router.docs.docDelete({
+			channelId,
+			docId,
+		});
 	}
 }

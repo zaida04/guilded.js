@@ -12,11 +12,7 @@ export class DocChannel extends Channel {
 	/**
 	 * The docs in this channel.
 	 */
-	readonly docs =
-		new Collection<
-			number,
-			DocPayload
-		>();
+	readonly docs = new Collection<number, DocPayload>();
 
 	/**
 	 * Create a new doc in this channel.
@@ -24,16 +20,8 @@ export class DocChannel extends Channel {
 	 * @param options - The options for creating the doc.
 	 * @returns A promise that resolves with the created doc.
 	 */
-	createDoc(
-		options: OptionBody<
-			DocsService["docCreate"]
-		>,
-	): Promise<DocPayload> {
-		return this.client.docs.create(
-			this
-				.id,
-			options,
-		);
+	createDoc(options: OptionBody<DocsService["docCreate"]>): Promise<DocPayload> {
+		return this.client.docs.create(this.id, options);
 	}
 
 	/**
@@ -41,13 +29,8 @@ export class DocChannel extends Channel {
 	 *
 	 * @returns A promise that resolves with an array of all docs.
 	 */
-	getDocs(): Promise<
-		DocPayload[]
-	> {
-		return this.client.docs.fetchMany(
-			this
-				.id,
-		);
+	getDocs(): Promise<DocPayload[]> {
+		return this.client.docs.fetchMany(this.id);
 	}
 
 	/**
@@ -56,14 +39,8 @@ export class DocChannel extends Channel {
 	 * @param docId - The ID ofDocPayload the doc to fetch.
 	 * @returns A promise that resolves with the fetched doc.
 	 */
-	getDoc(
-		docId: number,
-	): Promise<DocPayload> {
-		return this.client.docs.fetch(
-			this
-				.id,
-			docId,
-		);
+	getDoc(docId: number): Promise<DocPayload> {
+		return this.client.docs.fetch(this.id, docId);
 	}
 
 	/**
@@ -73,18 +50,8 @@ export class DocChannel extends Channel {
 	 * @param options - The options for updating the doc.
 	 * @returns A promise that resolves with the updated doc.
 	 */
-	updateDoc(
-		docId: number,
-		options: OptionBody<
-			DocsService["docUpdate"]
-		>,
-	): Promise<DocPayload> {
-		return this.client.docs.update(
-			this
-				.id,
-			docId,
-			options,
-		);
+	updateDoc(docId: number, options: OptionBody<DocsService["docUpdate"]>): Promise<DocPayload> {
+		return this.client.docs.update(this.id, docId, options);
 	}
 
 	/**
@@ -93,13 +60,7 @@ export class DocChannel extends Channel {
 	 * @param docId - The ID of the doc to delete.
 	 * @returns A promise that resolves with no data.
 	 */
-	deleteDoc(
-		docId: number,
-	): Promise<void> {
-		return this.client.docs.delete(
-			this
-				.id,
-			docId,
-		);
+	deleteDoc(docId: number): Promise<void> {
+		return this.client.docs.delete(this.id, docId);
 	}
 }

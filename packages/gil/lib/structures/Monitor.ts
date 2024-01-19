@@ -27,15 +27,9 @@ export abstract class Monitor {
 		public name: string,
 	) {}
 
-	abstract execute(
-		message: Message,
-	):
-		| Promise<unknown>
-		| unknown;
+	abstract execute(message: Message): Promise<unknown> | unknown;
 
-	abstract init():
-		| Promise<unknown>
-		| unknown;
+	abstract init(): Promise<unknown> | unknown;
 }
 
 export default Monitor;

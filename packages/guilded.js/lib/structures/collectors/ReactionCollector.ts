@@ -12,13 +12,7 @@ export class ReactionCollector extends Collector<MessageReaction> {
 	 */
 	hookEvents(): void {
 		this.incrementMaxEventListeners();
-		this.client.on(
-			constants
-				.clientEvents
-				.MESSAGE_REACTION_CREATED,
-			this
-				.boundItemReceiver,
-		);
+		this.client.on(constants.clientEvents.MESSAGE_REACTION_CREATED, this.boundItemReceiver);
 	}
 
 	/**
@@ -26,13 +20,7 @@ export class ReactionCollector extends Collector<MessageReaction> {
 	 */
 	_cleanup(): void {
 		this.decrementMaxEventListeners();
-		this.client.removeListener(
-			constants
-				.clientEvents
-				.MESSAGE_REACTION_CREATED,
-			this
-				.boundItemReceiver,
-		);
+		this.client.removeListener(constants.clientEvents.MESSAGE_REACTION_CREATED, this.boundItemReceiver);
 	}
 }
 

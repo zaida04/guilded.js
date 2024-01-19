@@ -8,16 +8,11 @@ colors.coolGray = undefined;
 colors.blueGray = undefined;
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-	content: [
-		"./src/**/*.{js,ts,jsx,tsx}",
-	],
+	content: ["./src/**/*.{js,ts,jsx,tsx}"],
 	theme: {
 		extend: {
 			fontFamily: {
-				sans: [
-					"var(--font-mono)",
-					...fontFamily.sans,
-				],
+				sans: ["var(--font-mono)", ...fontFamily.sans],
 			},
 			borderWidth: {
 				".5": ".5px",

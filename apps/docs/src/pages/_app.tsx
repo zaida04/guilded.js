@@ -10,12 +10,8 @@ const Mono = localFont({
 });
 export default function App({ Component, pageProps }: AppProps) {
 	return (
-		<main
-			className={`${Mono.variable} font-sans`}
-		>
-			<Component
-				{...pageProps}
-			/>
+		<main className={`${Mono.variable} font-sans`}>
+			<Component {...pageProps} />
 		</main>
 	);
 }

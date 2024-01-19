@@ -8,12 +8,6 @@ export class GuildedAPIError extends Error {
 		public readonly request: RequestOptions,
 		public readonly response: ResponseDetails,
 	) {
-		super(
-			`[GuildedAPIError:${
-				response.status
-			}:${request.method.toUpperCase()}] ${
-				request.url
-			} - ${msg}`,
-		);
+		super(`[GuildedAPIError:${response.status}:${request.method.toUpperCase()}] ${request.url} - ${msg}`);
 	}
 }

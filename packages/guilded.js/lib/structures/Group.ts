@@ -43,107 +43,28 @@ export class Group extends Base<GroupPayload> {
 	public archivedAt!: Date | null;
 
 	// ID of the user who archived this group if it was archived
-	public archivedBy!:
-		| string
-		| null;
+	public archivedBy!: string | null;
 
-	constructor(
-		client: Client,
-		data: GroupPayload,
-	) {
-		super(
-			client,
-			data,
-		);
-		this.serverId =
-			data.serverId;
-		this.createdAt =
-			new Date(
-				Date.parse(
-					data.createdAt,
-				),
-			);
-		this.createdBy =
-			data.createdBy;
+	constructor(client: Client, data: GroupPayload) {
+		super(client, data);
+		this.serverId = data.serverId;
+		this.createdAt = new Date(Date.parse(data.createdAt));
+		this.createdBy = data.createdBy;
 
-		this._update(
-			data,
-		);
+		this._update(data);
 	}
 
-	_update(
-		data: GroupPayload,
-	): this {
-		if (
-			typeof data.name !==
-			"undefined"
-		)
-			this.name =
-				data.name;
-		if (
-			typeof data.description !==
-			"undefined"
-		)
-			this.description =
-				data.description;
-		if (
-			typeof data.updatedAt !==
-			"undefined"
-		)
-			this.updatedAt =
-				new Date(
-					Date.parse(
-						data.updatedAt,
-					),
-				);
-		if (
-			typeof data.avatar !==
-			"undefined"
-		)
-			this.avatar =
-				data.avatar;
-		if (
-			typeof data.isHome !==
-			"undefined"
-		)
-			this.isHome =
-				data.isHome;
-		if (
-			typeof data.emoteId !==
-			"undefined"
-		)
-			this.emoteId =
-				data.emoteId;
-		if (
-			typeof data.isPublic !==
-			"undefined"
-		)
-			this.isPublic =
-				data.isPublic;
-		if (
-			typeof data.updatedBy !==
-			"undefined"
-		)
-			this.updatedBy =
-				data.updatedBy;
-		if (
-			typeof data.archivedAt !==
-			"undefined"
-		)
-			this.archivedAt =
-				data.archivedAt
-					? new Date(
-							Date.parse(
-								data.archivedAt,
-							),
-					  )
-					: null;
-		if (
-			typeof data.archivedBy !==
-			"undefined"
-		)
-			this.archivedBy =
-				data.archivedBy;
+	_update(data: GroupPayload): this {
+		if (typeof data.name !== "undefined") this.name = data.name;
+		if (typeof data.description !== "undefined") this.description = data.description;
+		if (typeof data.updatedAt !== "undefined") this.updatedAt = new Date(Date.parse(data.updatedAt));
+		if (typeof data.avatar !== "undefined") this.avatar = data.avatar;
+		if (typeof data.isHome !== "undefined") this.isHome = data.isHome;
+		if (typeof data.emoteId !== "undefined") this.emoteId = data.emoteId;
+		if (typeof data.isPublic !== "undefined") this.isPublic = data.isPublic;
+		if (typeof data.updatedBy !== "undefined") this.updatedBy = data.updatedBy;
+		if (typeof data.archivedAt !== "undefined") this.archivedAt = data.archivedAt ? new Date(Date.parse(data.archivedAt)) : null;
+		if (typeof data.archivedBy !== "undefined") this.archivedBy = data.archivedBy;
 
 		return this;
 	}
@@ -154,14 +75,8 @@ export class Group extends Base<GroupPayload> {
 	 * @param memberId The ID of the member to add.
 	 * @returns A Promise that resolves with no result on success.
 	 */
-	addMember(
-		memberId: string,
-	): Promise<void> {
-		return this.client.groups.addMember(
-			this
-				.id,
-			memberId,
-		);
+	addMember(memberId: string): Promise<void> {
+		return this.client.groups.addMember(this.id, memberId);
 	}
 
 	/**
@@ -170,13 +85,7 @@ export class Group extends Base<GroupPayload> {
 	 * @param memberId The ID of the member to remove.
 	 * @returns A Promise that resolves with no result on success.
 	 */
-	removeMember(
-		memberId: string,
-	): Promise<void> {
-		return this.client.groups.removeMember(
-			this
-				.id,
-			memberId,
-		);
+	removeMember(memberId: string): Promise<void> {
+		return this.client.groups.removeMember(this.id, memberId);
 	}
 }

@@ -29,34 +29,10 @@ export type IMG_SIZE = "Large" | "Medium" | "Small";
  * @param size - The size of the asset (optional)
  * @returns A URL string for the asset
  */
-const formAssetURL = (
-	route: string,
-	hash: string,
-	extension: string,
-	width?: number,
-	height?: number,
-	size?: string,
-): string => {
-	const url =
-		new URL(
-			`https://${
-				DOMAINS.IMAGE_CDN_DOMAIN
-			}/${route}/${hash}-${size}.${extension.toLowerCase()}`,
-		);
-	if (
-		width
-	)
-		url.searchParams.append(
-			"w",
-			width.toString(),
-		);
-	if (
-		height
-	)
-		url.searchParams.append(
-			"h",
-			height.toString(),
-		);
+const formAssetURL = (route: string, hash: string, extension: string, width?: number, height?: number, size?: string): string => {
+	const url = new URL(`https://${DOMAINS.IMAGE_CDN_DOMAIN}/${route}/${hash}-${size}.${extension.toLowerCase()}`);
+	if (width) url.searchParams.append("w", width.toString());
+	if (height) url.searchParams.append("h", height.toString());
 	return url.toString();
 };
 
@@ -71,18 +47,7 @@ export const ASSET_BUILDER = {
 	 * @param size - The size of the avatar (optional)
 	 * @returns A URL string for the user avatar
 	 */
-	AVATAR_URL: (
-		hash: string,
-		size: IMG_SIZE = "Medium",
-	): string =>
-		formAssetURL(
-			"UserAvatar",
-			hash,
-			IMG_EXTENSION.PNG,
-			undefined,
-			undefined,
-			size,
-		),
+	AVATAR_URL: (hash: string, size: IMG_SIZE = "Medium"): string => formAssetURL("UserAvatar", hash, IMG_EXTENSION.PNG, undefined, undefined, size),
 	/**
 	 * Function to build a Guilded chat message image URL
 	 *
@@ -92,20 +57,7 @@ export const ASSET_BUILDER = {
 	 * @param height - The height of the image (optional)
 	 * @returns A URL string for the image in a chat message
 	 */
-	IMAGE_IN_CHAT: (
-		hash: string,
-		size = "Full",
-		width?: number,
-		height?: number,
-	): string =>
-		formAssetURL(
-			"ContentMedia",
-			hash,
-			IMG_EXTENSION.WEBP,
-			width,
-			height,
-			size,
-		),
+	IMAGE_IN_CHAT: (hash: string, size = "Full", width?: number, height?: number): string => formAssetURL("ContentMedia", hash, IMG_EXTENSION.WEBP, width, height, size),
 	/**
 	 * Function to build a Guilded user profile banner URL
 	 *
@@ -115,20 +67,7 @@ export const ASSET_BUILDER = {
 	 * @param height - The height of the banner (optional)
 	 * @returns A URL string for the user profile banner
 	 */
-	PROFILE_BANNER: (
-		hash: string,
-		size = "Hero",
-		width?: number,
-		height?: number,
-	): string =>
-		formAssetURL(
-			"UserBanner",
-			hash,
-			IMG_EXTENSION.PNG,
-			width,
-			height,
-			size,
-		),
+	PROFILE_BANNER: (hash: string, size = "Hero", width?: number, height?: number): string => formAssetURL("UserBanner", hash, IMG_EXTENSION.PNG, width, height, size),
 	/**
 	 * Builds a URL for a server banner asset.
 	 *
@@ -138,20 +77,7 @@ export const ASSET_BUILDER = {
 	 * @param height - The height of the banner asset. Defaults to undefined.
 	 * @returns The URL of the server banner asset.
 	 */
-	SERVER_BANNER: (
-		hash: string,
-		size = "Hero",
-		width?: number,
-		height?: number,
-	): string =>
-		formAssetURL(
-			"TeamBanner",
-			hash,
-			IMG_EXTENSION.PNG,
-			width,
-			height,
-			size,
-		),
+	SERVER_BANNER: (hash: string, size = "Hero", width?: number, height?: number): string => formAssetURL("TeamBanner", hash, IMG_EXTENSION.PNG, width, height, size),
 	/**
 	 * Builds a URL for a server emoji asset.
 	 *
@@ -162,23 +88,8 @@ export const ASSET_BUILDER = {
 	 * @param height - The height of the emoji asset. Defaults to undefined.
 	 * @returns The URL of the server emoji asset.
 	 */
-	SERVER_EMOJI: (
-		hash: string,
-		size = "Full",
-		extension:
-			| "APNG"
-			| "WEBP" = "WEBP",
-		width?: number,
-		height?: number,
-	): string =>
-		formAssetURL(
-			"CustomReaction",
-			hash,
-			extension.toLowerCase(),
-			width,
-			height,
-			size,
-		),
+	SERVER_EMOJI: (hash: string, size = "Full", extension: "APNG" | "WEBP" = "WEBP", width?: number, height?: number): string =>
+		formAssetURL("CustomReaction", hash, extension.toLowerCase(), width, height, size),
 	/**
 	 * Builds a URL for a server icon asset.
 	 *
@@ -186,21 +97,7 @@ export const ASSET_BUILDER = {
 	 * @param size - The size of the icon asset. Default value is "Medium".
 	 * @returns The URL of the server icon asset.
 	 */
-	SERVER_ICON: (
-		hash: string,
-		size:
-			| "Large"
-			| "Medium"
-			| "Small" = "Medium",
-	): string =>
-		formAssetURL(
-			"TeamAvatar",
-			hash,
-			IMG_EXTENSION.PNG,
-			undefined,
-			undefined,
-			size,
-		),
+	SERVER_ICON: (hash: string, size: "Large" | "Medium" | "Small" = "Medium"): string => formAssetURL("TeamAvatar", hash, IMG_EXTENSION.PNG, undefined, undefined, size),
 };
 
 /**
@@ -248,34 +145,18 @@ export const buildCalendarRsvpKey = (calendarEventId: number, userId: string): s
  * @returns REST message data.
  */
 export const resolveContentToData = (content: MessageContent): { content?: string; embeds?: ChatEmbed[] } => {
-	if (
-		typeof content ===
-		"string"
-	)
+	if (typeof content === "string")
 		return {
 			content,
 		};
-	if (
-		content instanceof
-		Embed
-	)
+	if (content instanceof Embed)
 		return {
-			embeds: [
-				content.toJSON(),
-			],
+			embeds: [content.toJSON()],
 		};
 
 	return {
 		...content,
-		embeds: content.embeds?.map(
-			(
-				x,
-			) =>
-				x instanceof
-				Embed
-					? x.toJSON()
-					: x,
-		),
+		embeds: content.embeds?.map((x) => (x instanceof Embed ? x.toJSON() : x)),
 	};
 };
 
@@ -285,9 +166,5 @@ export const resolveContentToData = (content: MessageContent): { content?: strin
  * @param date - The date to convert
  */
 export function parseToStamp(date: string | undefined): number | null {
-	return date
-		? Date.parse(
-				date,
-		  )
-		: null;
+	return date ? Date.parse(date) : null;
 }

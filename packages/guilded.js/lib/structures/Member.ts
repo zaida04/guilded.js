@@ -1,10 +1,6 @@
 import { Collection } from "@discordjs/collection";
 import type { ServerMemberPayload, SocialLinkPayload, UserSummaryPayload } from "@guildedjs/api";
-import type {
-	UpgradedServerMemberBanPayload,
-	UpgradedServerMemberPayload,
-	UpgradedServerMemberSummaryPayload,
-} from "../typings";
+import type { UpgradedServerMemberBanPayload, UpgradedServerMemberPayload, UpgradedServerMemberSummaryPayload } from "../typings";
 import { buildMemberKey, parseToStamp } from "../util";
 import { Base } from "./Base";
 import type { Client } from "./Client";
@@ -15,19 +11,13 @@ export class Member extends Base<UpgradedServerMemberPayload> {
 	readonly serverId: string;
 
 	/** The nickname for this member */
-	nickname:
-		| string
-		| null =
-		null;
+	nickname: string | null = null;
 
 	/** Date this member joined */
-	_joinedAt:
-		| number
-		| null;
+	_joinedAt: number | null;
 
 	/** Roles this member has by ID (TODO: role object when Guilded API has one) */
-	roleIds: number[] =
-		[];
+	roleIds: number[] = [];
 
 	/** Whether this member has been kicked */
 	kicked: boolean;
@@ -39,44 +29,22 @@ export class Member extends Base<UpgradedServerMemberPayload> {
 	isOwner: boolean;
 
 	/** Cached social links of this member */
-	socialLinks: Collection<
-		SocialLinkPayload["type"],
-		SocialLinkPayload
-	>;
+	socialLinks: Collection<SocialLinkPayload["type"], SocialLinkPayload>;
 
-	constructor(
-		client: Client,
-		data: UpgradedServerMemberPayload,
-	) {
-		super(
-			client,
-			data,
-		);
-		this.serverId =
-			data.serverId;
-		this._joinedAt =
-			parseToStamp(
-				data.joinedAt,
-			);
+	constructor(client: Client, data: UpgradedServerMemberPayload) {
+		super(client, data);
+		this.serverId = data.serverId;
+		this._joinedAt = parseToStamp(data.joinedAt);
 		this.kicked = false;
 		this.banned = false;
 		this.isOwner = false;
-		this.socialLinks =
-			new Collection();
+		this.socialLinks = new Collection();
 
-		this._update(
-			data,
-		);
+		this._update(data);
 	}
 
 	get joinedAt(): Date | null {
-		return this
-			._joinedAt
-			? new Date(
-					this
-						._joinedAt,
-			  )
-			: null;
+		return this._joinedAt ? new Date(this._joinedAt) : null;
 	}
 
 	_update(
@@ -87,53 +55,24 @@ export class Member extends Base<UpgradedServerMemberPayload> {
 			}
 		>,
 	): this {
-		if (
-			"nickname" in
-			data
-		) {
-			this.nickname =
-				data.nickname ??
-				null;
+		if ("nickname" in data) {
+			this.nickname = data.nickname ?? null;
 		}
 
-		if (
-			"roleIds" in
-				data &&
-			typeof data.roleIds !==
-				"undefined"
-		) {
-			this.roleIds =
-				data.roleIds;
+		if ("roleIds" in data && typeof data.roleIds !== "undefined") {
+			this.roleIds = data.roleIds;
 		}
 
-		if (
-			"kicked" in
-				data &&
-			typeof data.kicked !==
-				"undefined"
-		) {
-			this.kicked =
-				data.kicked;
+		if ("kicked" in data && typeof data.kicked !== "undefined") {
+			this.kicked = data.kicked;
 		}
 
-		if (
-			"banned" in
-				data &&
-			typeof data.banned !==
-				"undefined"
-		) {
-			this.banned =
-				data.banned;
+		if ("banned" in data && typeof data.banned !== "undefined") {
+			this.banned = data.banned;
 		}
 
-		if (
-			"isOwner" in
-				data &&
-			typeof data.isOwner !==
-				"undefined"
-		) {
-			this.isOwner =
-				data.isOwner;
+		if ("isOwner" in data && typeof data.isOwner !== "undefined") {
+			this.isOwner = data.isOwner;
 		}
 
 		return this;
@@ -145,13 +84,7 @@ export class Member extends Base<UpgradedServerMemberPayload> {
 	 * @returns The user associated with this member or null if the user is not cached.
 	 */
 	get user(): User | null {
-		return (
-			this.client.users.cache.get(
-				this
-					.id,
-			) ??
-			null
-		);
+		return this.client.users.cache.get(this.id) ?? null;
 	}
 
 	/**
@@ -159,15 +92,8 @@ export class Member extends Base<UpgradedServerMemberPayload> {
 	 *
 	 * @returns The username of this member or null if the user is not cached.
 	 */
-	get username():
-		| string
-		| null {
-		return (
-			this
-				.user
-				?.name ??
-			null
-		);
+	get username(): string | null {
+		return this.user?.name ?? null;
 	}
 
 	/**
@@ -175,15 +101,8 @@ export class Member extends Base<UpgradedServerMemberPayload> {
 	 *
 	 * @returns The nickname of this member or their username if they have no nickname, or null if the user does not exist.
 	 */
-	get displayName():
-		| string
-		| null {
-		return (
-			this
-				.nickname ??
-			this
-				.username
-		);
+	get displayName(): string | null {
+		return this.nickname ?? this.username;
 	}
 
 	/**
@@ -191,15 +110,8 @@ export class Member extends Base<UpgradedServerMemberPayload> {
 	 *
 	 * @returns A Promise that resolves with an array of role IDs assigned to this member.
 	 */
-	getRoles(): Promise<
-		number[]
-	> {
-		return this.client.members.getRoles(
-			this
-				.serverId,
-			this
-				.id,
-		);
+	getRoles(): Promise<number[]> {
+		return this.client.members.getRoles(this.serverId, this.id);
 	}
 
 	/**
@@ -208,16 +120,8 @@ export class Member extends Base<UpgradedServerMemberPayload> {
 	 * @param nickname - The new nickname for the member.
 	 * @returns A Promise that resolves with the new nickname for the member.
 	 */
-	updateNickname(
-		nickname: string,
-	): Promise<string> {
-		return this.client.members.updateNickname(
-			this
-				.serverId,
-			this
-				.id,
-			nickname,
-		);
+	updateNickname(nickname: string): Promise<string> {
+		return this.client.members.updateNickname(this.serverId, this.id, nickname);
 	}
 
 	/**
@@ -226,12 +130,7 @@ export class Member extends Base<UpgradedServerMemberPayload> {
 	 * @returns A Promise that resolves once the member's nickname has been reset.
 	 */
 	resetNickname(): Promise<void> {
-		return this.client.members.resetNickname(
-			this
-				.serverId,
-			this
-				.id,
-		);
+		return this.client.members.resetNickname(this.serverId, this.id);
 	}
 
 	/**
@@ -240,16 +139,8 @@ export class Member extends Base<UpgradedServerMemberPayload> {
 	 * @param amount - The amount of XP to award to the member.
 	 * @returns A Promise that resolves with the new total amount of XP the member has.
 	 */
-	awardXP(
-		amount: number,
-	): Promise<number> {
-		return this.client.members.giveXP(
-			this
-				.serverId,
-			this
-				.id,
-			amount,
-		);
+	awardXP(amount: number): Promise<number> {
+		return this.client.members.giveXP(this.serverId, this.id, amount);
 	}
 
 	/**
@@ -258,16 +149,8 @@ export class Member extends Base<UpgradedServerMemberPayload> {
 	 * @param roleId - The ID of the role to add to the member.
 	 * @returns A Promise that resolves once the role has been added to the member.
 	 */
-	addRole(
-		roleId: number,
-	): Promise<void> {
-		return this.client.roles.addRoleToMember(
-			this
-				.serverId,
-			this
-				.id,
-			roleId,
-		);
+	addRole(roleId: number): Promise<void> {
+		return this.client.roles.addRoleToMember(this.serverId, this.id, roleId);
 	}
 
 	/**
@@ -276,16 +159,8 @@ export class Member extends Base<UpgradedServerMemberPayload> {
 	 * @param roleId - The ID of the role to remove from the member.
 	 * @returns A Promise that resolves once the role has been removed from the member.
 	 */
-	removeRole(
-		roleId: number,
-	): Promise<void> {
-		return this.client.roles.removeRoleFromMember(
-			this
-				.serverId,
-			this
-				.id,
-			roleId,
-		);
+	removeRole(roleId: number): Promise<void> {
+		return this.client.roles.removeRoleFromMember(this.serverId, this.id, roleId);
 	}
 
 	/**
@@ -294,12 +169,7 @@ export class Member extends Base<UpgradedServerMemberPayload> {
 	 * @returns A Promise that resolves with the kicked member or null if the user is not a member of the server.
 	 */
 	kick(): Promise<Member | null> {
-		return this.client.members.kick(
-			this
-				.serverId,
-			this
-				.id,
-		);
+		return this.client.members.kick(this.serverId, this.id);
 	}
 
 	/**
@@ -308,12 +178,7 @@ export class Member extends Base<UpgradedServerMemberPayload> {
 	 * @returns A Promise that resolved to the created member ban.
 	 */
 	ban(): Promise<MemberBan> {
-		return this.client.bans.ban(
-			this
-				.serverId,
-			this
-				.id,
-		);
+		return this.client.bans.ban(this.serverId, this.id);
 	}
 }
 
@@ -326,23 +191,13 @@ export class PartialMember extends Base<UpgradedServerMemberSummaryPayload> {
 	readonly user: UserSummaryPayload;
 
 	/** Roles this member has by ID (TODO: role object when Guilded API has one) */
-	readonly roleIds: number[] =
-		[];
+	readonly roleIds: number[] = [];
 
-	constructor(
-		client: Client,
-		data: UpgradedServerMemberSummaryPayload,
-	) {
-		super(
-			client,
-			data,
-		);
-		this.serverId =
-			data.serverId;
-		this.user =
-			data.user;
-		this.roleIds =
-			data.roleIds;
+	constructor(client: Client, data: UpgradedServerMemberSummaryPayload) {
+		super(client, data);
+		this.serverId = data.serverId;
+		this.user = data.user;
+		this.roleIds = data.roleIds;
 	}
 
 	/**
@@ -351,13 +206,7 @@ export class PartialMember extends Base<UpgradedServerMemberSummaryPayload> {
 	 * @returns A promise containing the resolved full member.
 	 */
 	fetch(): Promise<Member> {
-		return this.client.members.fetch(
-			this
-				.serverId,
-			this
-				.user
-				.id,
-		);
+		return this.client.members.fetch(this.serverId, this.user.id);
 	}
 }
 
@@ -375,9 +224,7 @@ export class MemberBan extends Base<UpgradedServerMemberBanPayload> {
 	createdById: string;
 
 	/** The reason this user was banned */
-	reason:
-		| string
-		| null;
+	reason: string | null;
 
 	/** Information about the target user */
 	target: UserSummaryPayload;
@@ -388,38 +235,18 @@ export class MemberBan extends Base<UpgradedServerMemberBanPayload> {
 	 * @param client - The Guilded client instance.
 	 * @param data - The data for this member ban.
 	 */
-	constructor(
-		client: Client,
-		data: UpgradedServerMemberBanPayload,
-	) {
-		const transformedBanId =
-			buildMemberKey(
-				data.serverId,
-				data
-					.user
-					.id,
-			);
-		super(
-			client,
-			{
-				...data,
-				id: transformedBanId,
-			},
-		);
+	constructor(client: Client, data: UpgradedServerMemberBanPayload) {
+		const transformedBanId = buildMemberKey(data.serverId, data.user.id);
+		super(client, {
+			...data,
+			id: transformedBanId,
+		});
 
-		this.serverId =
-			data.serverId;
-		this._createdAt =
-			parseToStamp(
-				data.createdAt,
-			)!;
-		this.createdById =
-			data.createdBy;
-		this.target =
-			data.user;
-		this.reason =
-			data.reason ??
-			null;
+		this.serverId = data.serverId;
+		this._createdAt = parseToStamp(data.createdAt)!;
+		this.createdById = data.createdBy;
+		this.target = data.user;
+		this.reason = data.reason ?? null;
 	}
 
 	/**
@@ -428,10 +255,7 @@ export class MemberBan extends Base<UpgradedServerMemberBanPayload> {
 	 * @returns The creation date of this ban.
 	 */
 	get createdAt(): Date {
-		return new Date(
-			this
-				._createdAt,
-		);
+		return new Date(this._createdAt);
 	}
 
 	/**
@@ -440,13 +264,7 @@ export class MemberBan extends Base<UpgradedServerMemberBanPayload> {
 	 * @returns The user who banned this member, or `null` if the user is not cached.
 	 */
 	get author(): User | null {
-		return (
-			this.client.users.cache.get(
-				this
-					.createdById,
-			) ??
-			null
-		);
+		return this.client.users.cache.get(this.createdById) ?? null;
 	}
 
 	/**
@@ -455,12 +273,6 @@ export class MemberBan extends Base<UpgradedServerMemberBanPayload> {
 	 * @returns A Promise that resolves to the unbanned member or `null` if the member is not cached.
 	 */
 	unban(): Promise<MemberBan | null> {
-		return this.client.bans.unban(
-			this
-				.serverId,
-			this
-				.target
-				.id,
-		);
+		return this.client.bans.unban(this.serverId, this.target.id);
 	}
 }

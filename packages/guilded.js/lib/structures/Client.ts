@@ -34,225 +34,137 @@ export class Client extends (EventEmitter as unknown as new () => TypedEmitter<C
 	/**
 	 * The time in milliseconds since the Client connected.
 	 */
-	readyTimestamp:
-		| number
-		| null =
-		null;
+	readyTimestamp: number | null = null;
 
 	/**
 	 * The manager for the bot to make requests to the REST api.
 	 */
-	rest =
-		new RestManager(
-			{
-				...this
-					.options
-					.rest,
-				token: this
-					.options
-					.token,
-			},
-		);
+	rest = new RestManager({
+		...this.options.rest,
+		token: this.options.token,
+	});
 
 	/**
 	 * The websocket connection.
 	 */
-	ws =
-		new WebSocketManager(
-			{
-				token: this
-					.options
-					.token,
-			},
-		);
+	ws = new WebSocketManager({
+		token: this.options.token,
+	});
 
 	/**
 	 * The gateway events will be processed by this manager.
 	 */
-	gatewayHandler =
-		new ClientGatewayHandler(
-			this,
-		);
+	gatewayHandler = new ClientGatewayHandler(this);
 
 	/**
 	 * A manager for channels, used to manage and interact with channels.
 	 */
-	channels =
-		new GlobalChannelManager(
-			this,
-		);
+	channels = new GlobalChannelManager(this);
 
 	/**
 	 * A manager for docs, used to manage and interact with docs.
 	 */
-	docs =
-		new GlobalDocManager(
-			this,
-		);
+	docs = new GlobalDocManager(this);
 
 	/**
 	 * A manager for forum topics, used to manage and interact with forum topics.
 	 */
-	topics =
-		new GlobalForumTopicManager(
-			this,
-		);
+	topics = new GlobalForumTopicManager(this);
 
 	/**
 	 * A manager for groups, used to manage and interact with groups.
 	 */
-	groups =
-		new GlobalGroupManager(
-			this,
-		);
+	groups = new GlobalGroupManager(this);
 
 	/**
 	 * A manager for list items, used to manage and interact with list items.
 	 */
-	lists =
-		new GlobalListItemManager(
-			this,
-		);
+	lists = new GlobalListItemManager(this);
 
 	/**
 	 * A manager for members, used to manage and interact with members.
 	 */
-	members =
-		new GlobalMemberManager(
-			this,
-		);
+	members = new GlobalMemberManager(this);
 
 	/**
 	 * A manager for messages, used to manage and interact with messages.
 	 */
-	messages =
-		new GlobalMessageManager(
-			this,
-		);
+	messages = new GlobalMessageManager(this);
 
 	/**
 	 * A manager for roles, used to manage and interact with roles.
 	 */
-	roles =
-		new GlobalRoleManager(
-			this,
-		);
+	roles = new GlobalRoleManager(this);
 
 	/**
 	 * A manager for users, used to manage and interact with users.
 	 */
-	users =
-		new GlobalUserManager(
-			this,
-		);
+	users = new GlobalUserManager(this);
 
 	/**
 	 * A manager for guild bans, used to manage and interact with bans.
 	 */
-	bans =
-		new GlobalGuildBanManager(
-			this,
-		);
+	bans = new GlobalGuildBanManager(this);
 
 	/**
 	 * A manager for webhooks, used to manage and interact with webhooks.
 	 */
-	webhooks =
-		new GlobalWebhookManager(
-			this,
-		);
+	webhooks = new GlobalWebhookManager(this);
 
 	/**
 	 * A manager for servers, used to manage and interact with servers.
 	 */
-	servers =
-		new GlobalServerManager(
-			this,
-		);
+	servers = new GlobalServerManager(this);
 
 	/**
 	 * A manager for reactions, used to manage and interact with reactions.
 	 */
-	reactions =
-		new GlobalReactionManager(
-			this,
-		);
+	reactions = new GlobalReactionManager(this);
 
 	/**
 	 * A manager for calendars, used to manage and interact with calendars.
 	 */
-	calendars =
-		new GlobalCalendarManager(
-			this,
-		);
+	calendars = new GlobalCalendarManager(this);
 
 	/**
 	 * A manager for categories, used to manage and interact with categories.
 	 */
-	categories =
-		new GlobalCategoryManager(
-			this,
-		);
+	categories = new GlobalCategoryManager(this);
 
 	/**
 	 * A manager for server subscriptions, used to manage and interact with server subscriptions.
 	 */
-	subscriptions =
-		new GlobalSubscriptionManager(
-			this,
-		);
+	subscriptions = new GlobalSubscriptionManager(this);
 
 	/**
 	 * The user belonging to this bot.
 	 */
-	user: ClientUser | null =
-		null;
+	user: ClientUser | null = null;
 
 	/**
 	 * @param options The options for the client.
 	 * @throws {Error} Must provide options in client constructor in the form of an object.
 	 * @throws {Error} No token provided.
 	 */
-	constructor(
-		public options: ClientOptions,
-	) {
+	constructor(public options: ClientOptions) {
 		// eslint-disable-next-line constructor-super
 		super();
-		if (
-			typeof options !==
-			"object"
-		)
-			throw new Error(
-				"Must provide options in client constructor in the form of an object.",
-			);
-		if (
-			typeof options?.token ===
-			"undefined"
-		)
-			throw new Error(
-				"No token provided.",
-			);
+		if (typeof options !== "object") throw new Error("Must provide options in client constructor in the form of an object.");
+		if (typeof options?.token === "undefined") throw new Error("No token provided.");
 	}
 
 	/**
 	 * The amount of time the bot has been online in milliseconds.
 	 */
 	get uptime(): number {
-		return this
-			.readyTimestamp
-			? Date.now() -
-					this
-						.readyTimestamp
-			: 0;
+		return this.readyTimestamp ? Date.now() - this.readyTimestamp : 0;
 	}
 
 	/**
 	 * The bot's token.
 	 */
 	get token(): string {
-		return this
-			.options
-			.token;
+		return this.options.token;
 	}
 
 	/**
@@ -268,75 +180,20 @@ export class Client extends (EventEmitter as unknown as new () => TypedEmitter<C
 	login(opts?: {
 		fresh?: boolean;
 	}): void {
-		if (
-			opts?.fresh
-		)
-			this.ws =
-				new WebSocketManager(
-					{
-						token: this
-							.options
-							.token,
-					},
-				);
+		if (opts?.fresh)
+			this.ws = new WebSocketManager({
+				token: this.options.token,
+			});
 		this.ws.emitter
-			.on(
-				"error",
-				(
-					reason,
-					err,
-				) =>
-					this.emit(
-						"error",
-						`[WS] ${reason}`,
-						err,
-					),
-			)
-			.on(
-				"ready",
-				(
-					user,
-				) => {
-					this.user =
-						new ClientUser(
-							this,
-							user,
-						);
-					this.readyTimestamp =
-						Date.now();
-					this.emit(
-						"ready",
-					);
-				},
-			)
-			.on(
-				"gatewayEvent",
-				(
-					event,
-					data,
-				) =>
-					this.gatewayHandler.handleWSMessage(
-						event,
-						data,
-					),
-			)
-			.on(
-				"debug",
-				(
-					data,
-				) =>
-					this.emit(
-						"debug",
-						data,
-					),
-			)
-			.on(
-				"exit",
-				() =>
-					this.emit(
-						"exit",
-					),
-			);
+			.on("error", (reason, err) => this.emit("error", `[WS] ${reason}`, err))
+			.on("ready", (user) => {
+				this.user = new ClientUser(this, user);
+				this.readyTimestamp = Date.now();
+				this.emit("ready");
+			})
+			.on("gatewayEvent", (event, data) => this.gatewayHandler.handleWSMessage(event, data))
+			.on("debug", (data) => this.emit("debug", data))
+			.on("exit", () => this.emit("exit"));
 		this.ws.connect();
 	}
 
@@ -346,19 +203,10 @@ export class Client extends (EventEmitter as unknown as new () => TypedEmitter<C
 	 * @throws {Error} There is no active connection to disconnect.
 	 */
 	disconnect(): void {
-		if (
-			!this
-				.ws
-				.isAlive
-		)
-			throw new Error(
-				"There is no active connection to disconnect.",
-			);
+		if (!this.ws.isAlive) throw new Error("There is no active connection to disconnect.");
 		this.ws.emitter.removeAllListeners();
 		this.ws.destroy();
-		this.emit(
-			"exit",
-		);
+		this.emit("exit");
 	}
 
 	/**
@@ -366,17 +214,8 @@ export class Client extends (EventEmitter as unknown as new () => TypedEmitter<C
 	 *
 	 * @returns The logged in client's servers.
 	 */
-	fetchServers(): Promise<
-		Collection<
-			string,
-			Server
-		>
-	> {
-		return this.users.fetchServers(
-			this
-				.user
-				?.id,
-		);
+	fetchServers(): Promise<Collection<string, Server>> {
+		return this.users.fetchServers(this.user?.id);
 	}
 
 	/**
@@ -390,64 +229,36 @@ export class Client extends (EventEmitter as unknown as new () => TypedEmitter<C
 	async setStatus(options: {
 		content?: string;
 		emoteId: number;
-		expiresAt?:
-			| Date
-			| number
-			| string;
+		expiresAt?: Date | number | string;
 	}): Promise<void> {
-		let resolvedDate;
-		if (
-			options.expiresAt instanceof
-			Date
-		) {
-			resolvedDate =
-				options.expiresAt;
-		} else if (
-			typeof options.expiresAt ===
-			"string"
-		) {
-			resolvedDate =
-				new Date(
-					options.expiresAt,
-				);
-		} else if (
-			typeof options.expiresAt ===
-			"number"
-		) {
-			resolvedDate =
-				new Date(
-					Date.now() +
-						options.expiresAt,
-				);
+		let resolvedDate: Date;
+		if (options.expiresAt instanceof Date) {
+			resolvedDate = options.expiresAt;
+		} else if (typeof options.expiresAt === "string") {
+			resolvedDate = new Date(options.expiresAt);
+		} else if (typeof options.expiresAt === "number") {
+			resolvedDate = new Date(Date.now() + options.expiresAt);
+		} else {
+			resolvedDate = new Date(Date.now());
 		}
 
-		await this.rest.router.userStatus.userStatusCreate(
-			{
-				userId: this
-					.user
-					?.id,
-				requestBody: {
-					content: options.content,
-					emoteId: options.emoteId,
-					expiresAt:
-						resolvedDate?.toISOString() ??
-						undefined,
-				},
+		await this.rest.router.userStatus.userStatusCreate({
+			userId: this.user!.id,
+			requestBody: {
+				content: options.content,
+				emoteId: options.emoteId,
+				expiresAt: resolvedDate.toISOString() ?? undefined,
 			},
-		);
+		});
 	}
 
 	/**
 	 * Clear current logged in client's status
 	 */
 	async clearStatus(): Promise<void> {
-		await this.rest.router.userStatus.userStatusDelete(
-			{
-				userId: this
-					.user
-					?.id,
-			},
-		);
+		await this.rest.router.userStatus.userStatusDelete({
+			userId: this.user?.id,
+		});
 	}
 }
 
@@ -490,10 +301,7 @@ export type ClientOptions = {
 		/**
 		 * A boolean returning function that dictates whether an event is discarded
 		 */
-		discardEvent?(
-			event: string,
-			data: SkeletonWSPayload,
-		): boolean;
+		discardEvent?(event: string, data: SkeletonWSPayload): boolean;
 	};
 
 	/**
@@ -505,13 +313,7 @@ export type ClientOptions = {
 		 *
 		 * @remarks You can use this to provide your own implementation of CacheStructure, which will be used to cache data in the client in a future update.
 		 */
-		structureBuilder?<
-			K,
-			V,
-		>(): CacheStructure<
-			K,
-			V
-		>;
+		structureBuilder?<K, V>(): CacheStructure<K, V>;
 
 		/**
 		 * Whether to fetch the author of a message when it is created and cache it.

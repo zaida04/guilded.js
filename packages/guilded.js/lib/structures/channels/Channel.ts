@@ -23,9 +23,7 @@ export class Channel extends Base {
 	/**
 	 * The topic of the channel.
 	 */
-	topic!:
-		| string
-		| null;
+	topic!: string | null;
 
 	/**
 	 * The timestamp when the channel was created.
@@ -40,9 +38,7 @@ export class Channel extends Base {
 	/**
 	 * The timestamp when the channel was last updated.
 	 */
-	_updatedAt!:
-		| number
-		| null;
+	_updatedAt!: number | null;
 
 	/**
 	 * The ID of the server that the channel belongs to.
@@ -52,16 +48,12 @@ export class Channel extends Base {
 	/**
 	 * The ID of the parent channel.
 	 */
-	parentId!:
-		| string
-		| null;
+	parentId!: string | null;
 
 	/**
 	 * The ID of the category that the channel belongs to.
 	 */
-	categoryId!:
-		| number
-		| null;
+	categoryId!: number | null;
 
 	/**
 	 * The ID of the group that the channel belongs to.
@@ -76,16 +68,12 @@ export class Channel extends Base {
 	/**
 	 * The user ID of the user who archived the channel.
 	 */
-	archivedBy!:
-		| string
-		| null;
+	archivedBy!: string | null;
 
 	/**
 	 * The timestamp when the channel was archived.
 	 */
-	_archivedAt!:
-		| number
-		| null;
+	_archivedAt!: number | null;
 
 	constructor(
 		client: Client,
@@ -93,64 +81,35 @@ export class Channel extends Base {
 			deleted?: boolean;
 		},
 	) {
-		super(
-			client,
-			data,
-		);
-		this.serverId =
-			data.serverId;
-		this.type =
-			channelTypeToEnumMap[
-				data.type
-			];
-		this._createdAt =
-			parseToStamp(
-				data.createdAt,
-			)!;
-		this.createdBy =
-			data.createdBy;
-		this.groupId =
-			data.groupId;
+		super(client, data);
+		this.serverId = data.serverId;
+		this.type = channelTypeToEnumMap[data.type];
+		this._createdAt = parseToStamp(data.createdAt)!;
+		this.createdBy = data.createdBy;
+		this.groupId = data.groupId;
 
-		this._update(
-			data,
-		);
+		this._update(data);
 	}
 
 	/**
 	 * The timestamp when the channel was created as a Date object.
 	 */
 	get createdAt(): Date {
-		return new Date(
-			this
-				._createdAt,
-		);
+		return new Date(this._createdAt);
 	}
 
 	/**
 	 * The timestamp when the channel was archived as a Date object, or null if the channel is not archived.
 	 */
 	get archivedAt(): Date | null {
-		return this
-			._archivedAt
-			? new Date(
-					this
-						._archivedAt,
-			  )
-			: null;
+		return this._archivedAt ? new Date(this._archivedAt) : null;
 	}
 
 	/**
 	 * The timestamp when the channel was last updated as a Date object, or null if the channel has not been updated.
 	 */
 	get updatedAt(): Date | null {
-		return this
-			._updatedAt
-			? new Date(
-					this
-						._updatedAt,
-			  )
-			: null;
+		return this._updatedAt ? new Date(this._updatedAt) : null;
 	}
 
 	_update(
@@ -160,95 +119,36 @@ export class Channel extends Base {
 			}
 		>,
 	): this {
-		if (
-			"name" in
-				data &&
-			typeof data.name !==
-				"undefined"
-		) {
-			this.name =
-				data.name;
+		if ("name" in data && typeof data.name !== "undefined") {
+			this.name = data.name;
 		}
 
-		if (
-			"topic" in
-			data
-		) {
-			this.topic =
-				data.topic ??
-				null;
+		if ("topic" in data) {
+			this.topic = data.topic ?? null;
 		}
 
-		if (
-			"updatedAt" in
-				data &&
-			typeof data.updatedAt !==
-				"undefined"
-		) {
-			this._updatedAt =
-				data.updatedAt
-					? parseToStamp(
-							data.updatedAt,
-					  )
-					: null;
+		if ("updatedAt" in data && typeof data.updatedAt !== "undefined") {
+			this._updatedAt = data.updatedAt ? parseToStamp(data.updatedAt) : null;
 		}
 
-		if (
-			"parentId" in
-				data &&
-			typeof data.updatedAt !==
-				"undefined"
-		) {
-			this.parentId =
-				data.parentId ??
-				null;
+		if ("parentId" in data && typeof data.updatedAt !== "undefined") {
+			this.parentId = data.parentId ?? null;
 		}
 
-		if (
-			"categoryId" in
-				data &&
-			typeof data.categoryId !==
-				"undefined"
-		) {
-			this.categoryId =
-				data.categoryId ??
-				null;
+		if ("categoryId" in data && typeof data.categoryId !== "undefined") {
+			this.categoryId = data.categoryId ?? null;
 		}
 
-		if (
-			"isPublic" in
-				data &&
-			typeof data.isPublic !==
-				"undefined"
-		) {
-			this.isPublic =
-				data.isPublic ??
-				false;
+		if ("isPublic" in data && typeof data.isPublic !== "undefined") {
+			this.isPublic = data.isPublic ?? false;
 		}
 
-		if (
-			"archivedBy" in
-				data &&
-			typeof data.archivedBy !==
-				"undefined"
-		) {
-			this.archivedBy =
-				data.archivedBy ??
-				null;
+		if ("archivedBy" in data && typeof data.archivedBy !== "undefined") {
+			this.archivedBy = data.archivedBy ?? null;
 		}
 
-		if (
-			"archivedAt" in
-				data &&
-			typeof data.archivedAt !==
-				"undefined"
-		) {
-			this._archivedAt =
-				data.archivedAt
-					? parseToStamp(
-							data.archivedAt,
-					  )
-					: null;
+		if ("archivedAt" in data && typeof data.archivedAt !== "undefined") {
+			this._archivedAt = data.archivedAt ? parseToStamp(data.archivedAt) : null;
 		}
 
 		return this;
@@ -259,22 +159,8 @@ export class Channel extends Base {
 	 *
 	 * @param options - Additional options for the message fetch.
 	 */
-	fetchMessages(
-		options?: OptionBody<
-			ChatService["channelMessageReadMany"]
-		>,
-	): Promise<
-		Collection<
-			string,
-			Message
-		>
-	> {
-		return this.client.messages.fetchMany(
-			this
-				.id,
-			options ??
-				{},
-		);
+	fetchMessages(options?: OptionBody<ChatService["channelMessageReadMany"]>): Promise<Collection<string, Message>> {
+		return this.client.messages.fetchMany(this.id, options ?? {});
 	}
 
 	/**
@@ -282,14 +168,8 @@ export class Channel extends Base {
 	 *
 	 * @param messageId - The ID of the message to fetch.
 	 */
-	fetchMessage(
-		messageId: string,
-	): Promise<Message> {
-		return this.client.messages.fetch(
-			this
-				.id,
-			messageId,
-		);
+	fetchMessage(messageId: string): Promise<Message> {
+		return this.client.messages.fetch(this.id, messageId);
 	}
 
 	/**
@@ -297,26 +177,15 @@ export class Channel extends Base {
 	 *
 	 * @param options - The new data for the channel.
 	 */
-	update(
-		options: OptionBody<
-			ChannelsService["channelUpdate"]
-		>,
-	): Promise<Channel> {
-		return this.client.channels.update(
-			this
-				.id,
-			options,
-		);
+	update(options: OptionBody<ChannelsService["channelUpdate"]>): Promise<Channel> {
+		return this.client.channels.update(this.id, options);
 	}
 
 	/**
 	 * Delete the channel.
 	 */
 	delete(): Promise<Channel | null> {
-		return this.client.channels.delete(
-			this
-				.id,
-		);
+		return this.client.channels.delete(this.id);
 	}
 
 	/**
@@ -333,14 +202,8 @@ export class Channel extends Base {
 	 * };
 	 * channel.send(replyObj)
 	 */
-	send(
-		content: MessageContent,
-	): Promise<Message> {
-		return this.client.messages.send(
-			this
-				.id,
-			content,
-		);
+	send(content: MessageContent): Promise<Message> {
+		return this.client.messages.send(this.id, content);
 	}
 }
 

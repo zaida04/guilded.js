@@ -4,91 +4,43 @@ import type { Command } from "../structures/Command";
 import { Inhibitor } from "../structures/Inhibitor";
 
 export class CooldownInhibitor extends Inhibitor {
-	name =
-		"cooldown";
+	name = "cooldown";
 
 	/**
 	 * The collection of users that are in cooldown
 	 */
-	membersInCooldown =
-		new Collection<
-			string,
-			Cooldown
-		>();
+	membersInCooldown = new Collection<string, Cooldown>();
 
-	async execute(
-		message: Message,
-		command: Command,
-	): Promise<boolean> {
-		if (
-			!command.cooldown
-		)
-			return false;
+	async execute(message: Message, command: Command): Promise<boolean> {
+		if (!command.cooldown) return false;
 
 		const key = `${message.createdById}-${command.name}`;
-		const cooldown =
-			this.membersInCooldown.get(
-				key,
-			);
-		if (
-			cooldown
-		) {
-			if (
-				cooldown.used >=
-				(command
-					.cooldown
-					.allowedUses ||
-					1)
-			) {
-				const now =
-					Date.now();
-				if (
-					cooldown.timestamp >
-					now
-				) {
-					await this.client.cooldownReached(
-						message,
-						command,
-						{
-							now,
-							cooldown,
-						},
-					);
+		const cooldown = this.membersInCooldown.get(key);
+		if (cooldown) {
+			if (cooldown.used >= (command.cooldown.allowedUses || 1)) {
+				const now = Date.now();
+				if (cooldown.timestamp > now) {
+					await this.client.cooldownReached(message, command, {
+						now,
+						cooldown,
+					});
 					return true;
 				}
 
 				cooldown.used = 0;
 			}
 
-			this.membersInCooldown.set(
-				key,
-				{
-					used:
-						cooldown.used +
-						1,
-					timestamp:
-						Date.now() +
-						command
-							.cooldown
-							.seconds *
-							1_000,
-				},
-			);
+			this.membersInCooldown.set(key, {
+				used: cooldown.used + 1,
+				timestamp: Date.now() + command.cooldown.seconds * 1_000,
+			});
 			return false;
 		}
 
-		this.membersInCooldown.set(
-			key,
-			{
-				used: 1,
-				timestamp:
-					Date.now() +
-					command
-						.cooldown
-						.seconds *
-						1_000,
-			},
-		);
+		this.membersInCooldown.set(key, {
+			used: 1,
+			timestamp: Date.now() + command.cooldown.seconds * 1_000,
+		});
 		return false;
 	}
 

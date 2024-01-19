@@ -15,15 +15,7 @@ export class ChatChannel extends Channel {
 	 * @param options - The options for creating the webhook.
 	 * @returns A promise that resolves with the created webhook.
 	 */
-	createWebhook(
-		options: OptionBody<
-			WebhookService["webhookCreate"]
-		>,
-	): Promise<Webhook> {
-		return this.client.webhooks.create(
-			this
-				.serverId,
-			options,
-		);
+	createWebhook(options: OptionBody<WebhookService["webhookCreate"]>): Promise<Webhook> {
+		return this.client.webhooks.create(this.serverId, options);
 	}
 }

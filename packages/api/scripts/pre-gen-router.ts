@@ -5,22 +5,9 @@ export const pathsToPreserve = ["lib/generated/router/core", "lib/generated/rout
 
 const main = async (): Promise<void> => {
 	for (const path of pathsToPreserve) {
-		await move(
-			join(
-				__dirname,
-				"..",
-				path,
-			),
-			join(
-				__dirname,
-				"..",
-				"preserve",
-				path,
-			),
-			{
-				overwrite: true,
-			},
-		);
+		await move(join(__dirname, "..", path), join(__dirname, "..", "preserve", path), {
+			overwrite: true,
+		});
 	}
 };
 

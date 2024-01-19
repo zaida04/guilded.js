@@ -15,14 +15,7 @@ export class GlobalMemberManager extends CacheableStructManager<string, Member> 
 	 * Whether or not social links should be cached.
 	 */
 	get shouldCacheSocialLinks(): boolean {
-		return (
-			this
-				.client
-				.options
-				.cache
-				?.cacheSocialLinks !==
-			false
-		);
+		return this.client.options.cache?.cacheSocialLinks !== false;
 	}
 
 	/**
@@ -33,74 +26,26 @@ export class GlobalMemberManager extends CacheableStructManager<string, Member> 
 	 * @param force Whether to force a fetch from the API.
 	 * @returns A Promise that resolves with the fetched member.
 	 */
-	async fetch(
-		serverId: string,
-		userId: string,
-		force?: boolean,
-	): Promise<Member> {
-		if (
-			userId ===
-			"Ann6LewA"
-		)
-			throw new Error(
-				"You cannot fetch a webhook as a member. The provided ID (Ann6LewA) is only given to webhooks.",
-			);
+	async fetch(serverId: string, userId: string, force?: boolean): Promise<Member> {
+		if (userId === "Ann6LewA") throw new Error("You cannot fetch a webhook as a member. The provided ID (Ann6LewA) is only given to webhooks.");
 
-		const memberKey =
-			buildMemberKey(
-				serverId,
-				userId,
-			);
-		if (
-			!force
-		) {
-			const existingMember =
-				this.client.members.cache.get(
-					memberKey,
-				);
-			if (
-				existingMember
-			)
-				return existingMember;
+		const memberKey = buildMemberKey(serverId, userId);
+		if (!force) {
+			const existingMember = this.client.members.cache.get(memberKey);
+			if (existingMember) return existingMember;
 		}
 
-		const data =
-			await this.client.rest.router.members.serverMemberRead(
-				{
-					serverId,
-					userId,
-				},
-			);
-		const newMember =
-			new Member(
-				this
-					.client,
-				{
-					...data.member,
-					serverId,
-					id: data
-						.member
-						.user
-						.id,
-				},
-			);
-		this.client.users.cache.set(
-			data
-				.member
-				.user
-				.id,
-			new User(
-				this
-					.client,
-				data
-					.member
-					.user,
-			),
-		);
-		this.client.members.cache.set(
-			memberKey,
-			newMember,
-		);
+		const data = await this.client.rest.router.members.serverMemberRead({
+			serverId,
+			userId,
+		});
+		const newMember = new Member(this.client, {
+			...data.member,
+			serverId,
+			id: data.member.user.id,
+		});
+		this.client.users.cache.set(data.member.user.id, new User(this.client, data.member.user));
+		this.client.members.cache.set(memberKey, newMember);
 		return newMember;
 	}
 
@@ -110,42 +55,18 @@ export class GlobalMemberManager extends CacheableStructManager<string, Member> 
 	 * @param serverId The ID of the server to fetch members from.
 	 * @returns A Promise that resolves with a collection of partial members.
 	 */
-	async fetchMany(
-		serverId: string,
-	): Promise<
-		Collection<
-			string,
-			PartialMember
-		>
-	> {
-		const data =
-			await this.client.rest.router.members.serverMemberReadMany(
-				{
-					serverId,
-				},
-			);
-		const members =
-			new Collection<
-				string,
-				PartialMember
-			>();
+	async fetchMany(serverId: string): Promise<Collection<string, PartialMember>> {
+		const data = await this.client.rest.router.members.serverMemberReadMany({
+			serverId,
+		});
+		const members = new Collection<string, PartialMember>();
 		for (const member of data.members) {
-			const newMember =
-				new PartialMember(
-					this
-						.client,
-					{
-						serverId,
-						id: member
-							.user
-							.id,
-						...member,
-					},
-				);
-			members.set(
-				newMember.id,
-				newMember,
-			);
+			const newMember = new PartialMember(this.client, {
+				serverId,
+				id: member.user.id,
+				...member,
+			});
+			members.set(newMember.id, newMember);
 		}
 
 		return members;
@@ -158,25 +79,12 @@ export class GlobalMemberManager extends CacheableStructManager<string, Member> 
 	 * @param userId The ID of the member to kick.
 	 * @returns A Promise that resolves with the kicked member, or null if the member was not cached.
 	 */
-	async kick(
-		serverId: string,
-		userId: string,
-	): Promise<Member | null> {
-		await this.client.rest.router.members.serverMemberDelete(
-			{
-				serverId,
-				userId,
-			},
-		);
-		return (
-			this.client.members.cache.get(
-				buildMemberKey(
-					serverId,
-					userId,
-				),
-			) ??
-			null
-		);
+	async kick(serverId: string, userId: string): Promise<Member | null> {
+		await this.client.rest.router.members.serverMemberDelete({
+			serverId,
+			userId,
+		});
+		return this.client.members.cache.get(buildMemberKey(serverId, userId)) ?? null;
 	}
 
 	/**
@@ -186,14 +94,8 @@ export class GlobalMemberManager extends CacheableStructManager<string, Member> 
 	 * @param userId The ID of the user to ban.
 	 * @returns A Promise that resolves with the banned member, or null if the member was not cached.
 	 */
-	async ban(
-		serverId: string,
-		userId: string,
-	): Promise<MemberBan | null> {
-		return this.client.bans.ban(
-			serverId,
-			userId,
-		);
+	async ban(serverId: string, userId: string): Promise<MemberBan | null> {
+		return this.client.bans.ban(serverId, userId);
 	}
 
 	/**
@@ -204,16 +106,8 @@ export class GlobalMemberManager extends CacheableStructManager<string, Member> 
 	 * @param removeBanIfCached Whether to remove the ban from the cache if it exists.
 	 * @returns A Promise that resolves with the unbanned member ban or `null` if it isn't cached.
 	 */
-	async unban(
-		serverId: string,
-		userId: string,
-		removeBanIfCached = false,
-	): Promise<MemberBan | null> {
-		return this.client.bans.unban(
-			serverId,
-			userId,
-			removeBanIfCached,
-		);
+	async unban(serverId: string, userId: string, removeBanIfCached = false): Promise<MemberBan | null> {
+		return this.client.bans.unban(serverId, userId, removeBanIfCached);
 	}
 
 	/**
@@ -223,19 +117,11 @@ export class GlobalMemberManager extends CacheableStructManager<string, Member> 
 	 * @param userId The ID of the member to get the roles for.
 	 * @returns A Promise that resolves with an array of role IDs.
 	 */
-	async getRoles(
-		serverId: string,
-		userId: string,
-	): Promise<
-		number[]
-	> {
-		const data =
-			await this.client.rest.router.roleMembership.roleMembershipReadMany(
-				{
-					serverId,
-					userId,
-				},
-			);
+	async getRoles(serverId: string, userId: string): Promise<number[]> {
+		const data = await this.client.rest.router.roleMembership.roleMembershipReadMany({
+			serverId,
+			userId,
+		});
 		return data.roleIds;
 	}
 
@@ -247,21 +133,14 @@ export class GlobalMemberManager extends CacheableStructManager<string, Member> 
 	 * @param newNickname The new nickname for the member.
 	 * @returns A Promise that resolves with the updated nickname.
 	 */
-	async updateNickname(
-		serverId: string,
-		userId: string,
-		newNickname: string,
-	): Promise<string> {
-		const data =
-			await this.client.rest.router.members.memberNicknameUpdate(
-				{
-					serverId,
-					userId,
-					requestBody: {
-						nickname: newNickname,
-					},
-				},
-			);
+	async updateNickname(serverId: string, userId: string, newNickname: string): Promise<string> {
+		const data = await this.client.rest.router.members.memberNicknameUpdate({
+			serverId,
+			userId,
+			requestBody: {
+				nickname: newNickname,
+			},
+		});
 		return data.nickname;
 	}
 
@@ -272,16 +151,11 @@ export class GlobalMemberManager extends CacheableStructManager<string, Member> 
 	 * @param userId The ID of the member to delete the nickname for.
 	 * @returns A Promise that resolves with no value upon completion.
 	 */
-	async resetNickname(
-		serverId: string,
-		userId: string,
-	): Promise<void> {
-		await this.client.rest.router.members.memberNicknameDelete(
-			{
-				serverId,
-				userId,
-			},
-		);
+	async resetNickname(serverId: string, userId: string): Promise<void> {
+		await this.client.rest.router.members.memberNicknameDelete({
+			serverId,
+			userId,
+		});
 	}
 
 	/**
@@ -292,21 +166,14 @@ export class GlobalMemberManager extends CacheableStructManager<string, Member> 
 	 * @param amount The amount of XP to award.
 	 * @returns A Promise that resolves with the member's new total XP.
 	 */
-	async giveXP(
-		serverId: string,
-		userId: string,
-		amount: number,
-	): Promise<number> {
-		const data =
-			await this.client.rest.router.serverXp.serverXpForUserCreate(
-				{
-					serverId,
-					userId,
-					requestBody: {
-						amount,
-					},
-				},
-			);
+	async giveXP(serverId: string, userId: string, amount: number): Promise<number> {
+		const data = await this.client.rest.router.serverXp.serverXpForUserCreate({
+			serverId,
+			userId,
+			requestBody: {
+				amount,
+			},
+		});
 		return data.total;
 	}
 
@@ -318,36 +185,14 @@ export class GlobalMemberManager extends CacheableStructManager<string, Member> 
 	 * @param type The type of social link to fetch.
 	 * @returns A Promise that resolves with the member's social link.
 	 */
-	async fetchSocialLinks(
-		serverId: string,
-		userId: string,
-		type: SocialLinkPayload["type"],
-	): Promise<SocialLinkPayload> {
-		const data =
-			await this.client.rest.router.socialLinks.memberSocialLinkRead(
-				{
-					serverId,
-					userId,
-					socialLinkType: type,
-				},
-			);
-		const existingMember =
-			this.cache.get(
-				buildMemberKey(
-					serverId,
-					userId,
-				),
-			);
-		if (
-			this
-				.shouldCacheSocialLinks
-		)
-			existingMember?.socialLinks.set(
-				data
-					.socialLink
-					.type,
-				data.socialLink,
-			);
+	async fetchSocialLinks(serverId: string, userId: string, type: SocialLinkPayload["type"]): Promise<SocialLinkPayload> {
+		const data = await this.client.rest.router.socialLinks.memberSocialLinkRead({
+			serverId,
+			userId,
+			socialLinkType: type,
+		});
+		const existingMember = this.cache.get(buildMemberKey(serverId, userId));
+		if (this.shouldCacheSocialLinks) existingMember?.socialLinks.set(data.socialLink.type, data.socialLink);
 		return data.socialLink;
 	}
 }

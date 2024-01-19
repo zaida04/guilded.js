@@ -14,13 +14,7 @@ export class MessageCollector extends Collector<Message> {
 	 */
 	hookEvents(): void {
 		this.incrementMaxEventListeners();
-		this.client.on(
-			constants
-				.clientEvents
-				.MESSAGE_CREATED,
-			this
-				.boundItemReceiver,
-		);
+		this.client.on(constants.clientEvents.MESSAGE_CREATED, this.boundItemReceiver);
 	}
 
 	/**
@@ -28,12 +22,6 @@ export class MessageCollector extends Collector<Message> {
 	 */
 	_cleanup(): void {
 		this.decrementMaxEventListeners();
-		this.client.removeListener(
-			constants
-				.clientEvents
-				.MESSAGE_CREATED,
-			this
-				.boundItemReceiver,
-		);
+		this.client.removeListener(constants.clientEvents.MESSAGE_CREATED, this.boundItemReceiver);
 	}
 }

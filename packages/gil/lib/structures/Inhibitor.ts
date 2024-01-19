@@ -8,16 +8,9 @@ export abstract class Inhibitor {
 		public name: string,
 	) {}
 
-	abstract execute(
-		message: Message,
-		command: Command,
-	):
-		| Promise<boolean>
-		| boolean;
+	abstract execute(message: Message, command: Command): Promise<boolean> | boolean;
 
-	abstract init():
-		| Promise<unknown>
-		| unknown;
+	abstract init(): Promise<unknown> | unknown;
 }
 
 export default Inhibitor;

@@ -16,36 +16,16 @@ export class GlobalUserManager extends CacheableStructManager<string, User> {
 	 * @param force Whether to force a fetch from the API.
 	 * @returns A Promise that resolves with the fetched user.
 	 */
-	async fetchClient(
-		force?: boolean,
-	): Promise<User> {
-		if (
-			!force
-		) {
-			const existingUser =
-				this.client.users.cache.get(
-					this
-						.client
-						.user
-						?.id,
-				);
-			if (
-				existingUser
-			)
-				return existingUser;
+	async fetchClient(force?: boolean): Promise<User> {
+		if (!force) {
+			const existingUser = this.client.users.cache.get(this.client.user?.id);
+			if (existingUser) return existingUser;
 		}
 
-		const data =
-			await this.client.rest.router.users.userRead(
-				{
-					userId: "@me",
-				},
-			);
-		return new User(
-			this
-				.client,
-			data.user,
-		);
+		const data = await this.client.rest.router.users.userRead({
+			userId: "@me",
+		});
+		return new User(this.client, data.user);
 	}
 
 	/**
@@ -54,52 +34,18 @@ export class GlobalUserManager extends CacheableStructManager<string, User> {
 	 * @param userId The ID of the user to fetch servers for.
 	 * @returns A promise that resolves to a Collection with the returned servers.
 	 */
-	async fetchServers(
-		userId: string,
-	): Promise<
-		Collection<
-			string,
-			Server
-		>
-	> {
-		if (
-			userId !==
-			this
-				.client
-				.user
-				?.id
-		)
-			throw new Error(
-				"Only the logged in client is supported at this time.",
-			);
+	async fetchServers(userId: string): Promise<Collection<string, Server>> {
+		if (userId !== this.client.user?.id) throw new Error("Only the logged in client is supported at this time.");
 
-		const data =
-			await this.client.rest.router.users.userServerReadMany(
-				{
-					userId,
-				},
-			);
-		const servers =
-			new Collection<
-				string,
-				Server
-			>();
+		const data = await this.client.rest.router.users.userServerReadMany({
+			userId,
+		});
+		const servers = new Collection<string, Server>();
 
 		for (const server of data.servers) {
-			const createdServer =
-				new Server(
-					this
-						.client,
-					server,
-				);
-			servers.set(
-				server.id,
-				createdServer,
-			);
-			this.client.servers.cache.set(
-				server.id,
-				createdServer,
-			);
+			const createdServer = new Server(this.client, server);
+			servers.set(server.id, createdServer);
+			this.client.servers.cache.set(server.id, createdServer);
 		}
 
 		return servers;

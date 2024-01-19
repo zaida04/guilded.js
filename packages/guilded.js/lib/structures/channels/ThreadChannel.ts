@@ -18,20 +18,11 @@ export class ThreadChannel extends Channel {
 	 */
 	messageId: string;
 
-	constructor(
-		client: Client,
-		data: ServerChannelPayload,
-	) {
-		super(
-			client,
-			data,
-		);
+	constructor(client: Client, data: ServerChannelPayload) {
+		super(client, data);
 
-		this.rootId =
-			data.rootId!;
-		this.parentId =
-			data.parentId!;
-		this.messageId =
-			data.messageId!;
+		this.rootId = data.rootId!;
+		this.parentId = data.parentId!;
+		this.messageId = data.messageId!;
 	}
 }

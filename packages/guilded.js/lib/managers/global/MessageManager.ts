@@ -15,14 +15,7 @@ export class GlobalMessageManager extends CacheableStructManager<string, Message
 	 * Whether or not messages should be cached.
 	 */
 	get shouldCacheMessage(): boolean {
-		return (
-			this
-				.client
-				.options
-				.cache
-				?.cacheMessages !==
-			false
-		);
+		return this.client.options.cache?.cacheMessages !== false;
 	}
 
 	/**
@@ -32,44 +25,16 @@ export class GlobalMessageManager extends CacheableStructManager<string, Message
 	 * @param options Additional options for the fetch.
 	 * @returns A promise that resolves with a collection of messages.
 	 */
-	async fetchMany(
-		channelId: string,
-		options: Omit<
-			OptionQuery<
-				ChatService["channelMessageReadMany"]
-			>,
-			"channelId"
-		>,
-	): Promise<
-		Collection<
-			string,
-			Message
-		>
-	> {
-		const data =
-			await this.client.rest.router.chat.channelMessageReadMany(
-				{
-					channelId,
-					...options,
-				},
-			);
-		const messages =
-			new Collection<
-				string,
-				Message
-			>();
+	async fetchMany(channelId: string, options: Omit<OptionQuery<ChatService["channelMessageReadMany"]>, "channelId">): Promise<Collection<string, Message>> {
+		const data = await this.client.rest.router.chat.channelMessageReadMany({
+			channelId,
+			...options,
+		});
+		const messages = new Collection<string, Message>();
 
 		for (const message of data.messages) {
-			const newMessage =
-				new Message(
-					this
-						.client,
-					message,
-				);
-			messages.set(
-				newMessage.id,
-				newMessage,
-			);
+			const newMessage = new Message(this.client, message);
+			messages.set(newMessage.id, newMessage);
 		}
 
 		return messages;
@@ -83,41 +48,18 @@ export class GlobalMessageManager extends CacheableStructManager<string, Message
 	 * @param force Whether or not to force the fetch.
 	 * @returns A promise that resolves with the requested message.
 	 */
-	async fetch(
-		channelId: string,
-		messageId: string,
-		force?: boolean,
-	): Promise<Message> {
-		if (
-			!force
-		) {
-			const existingMessage =
-				this.client.messages.cache.get(
-					messageId,
-				);
-			if (
-				existingMessage
-			)
-				return existingMessage;
+	async fetch(channelId: string, messageId: string, force?: boolean): Promise<Message> {
+		if (!force) {
+			const existingMessage = this.client.messages.cache.get(messageId);
+			if (existingMessage) return existingMessage;
 		}
 
-		const data =
-			await this.client.rest.router.chat.channelMessageRead(
-				{
-					channelId,
-					messageId,
-				},
-			);
-		const newMessage =
-			new Message(
-				this
-					.client,
-				data.message,
-			);
-		this.client.messages.cache.set(
-			newMessage.id,
-			newMessage,
-		);
+		const data = await this.client.rest.router.chat.channelMessageRead({
+			channelId,
+			messageId,
+		});
+		const newMessage = new Message(this.client, data.message);
+		this.client.messages.cache.set(newMessage.id, newMessage);
 		return newMessage;
 	}
 
@@ -137,41 +79,17 @@ export class GlobalMessageManager extends CacheableStructManager<string, Message
 	 * };
 	 * await message.client.messages.send(message.channelId, replyObj)
 	 */
-	async send(
-		channelId: string,
-		content: MessageContent,
-	): Promise<Message> {
-		const data =
-			await this.client.rest.router.chat.channelMessageCreate(
-				{
-					channelId,
-					requestBody: resolveContentToData(
-						content,
-					),
-				},
-			);
+	async send(channelId: string, content: MessageContent): Promise<Message> {
+		const data = await this.client.rest.router.chat.channelMessageCreate({
+			channelId,
+			requestBody: resolveContentToData(content),
+		});
 
-		const existingMessage =
-			this.client.messages.cache.get(
-				data
-					.message
-					.id,
-			);
-		if (
-			existingMessage
-		)
-			return existingMessage;
+		const existingMessage = this.client.messages.cache.get(data.message.id);
+		if (existingMessage) return existingMessage;
 
-		const newMessage =
-			new Message(
-				this
-					.client,
-				data.message,
-			);
-		this.client.messages.cache.set(
-			newMessage.id,
-			newMessage,
-		);
+		const newMessage = new Message(this.client, data.message);
+		this.client.messages.cache.set(newMessage.id, newMessage);
 		return newMessage;
 	}
 
@@ -183,16 +101,8 @@ export class GlobalMessageManager extends CacheableStructManager<string, Message
 	 * @param emoteId The ID of the emote to add as a reaction.
 	 * @returns A promise that resolves to nothing when the reaction is added.
 	 */
-	async addReaction(
-		channelId: string,
-		contentId: string,
-		emoteId: number,
-	): Promise<void> {
-		await this.client.reactions.create(
-			channelId,
-			contentId,
-			emoteId,
-		);
+	async addReaction(channelId: string, contentId: string, emoteId: number): Promise<void> {
+		await this.client.reactions.create(channelId, contentId, emoteId);
 	}
 
 	/**
@@ -203,18 +113,8 @@ export class GlobalMessageManager extends CacheableStructManager<string, Message
 	 * @param emoteId The ID of the emote to delete as a reaction.
 	 * @returns A promise that resolves to nothing when the reaction is deleted.
 	 */
-	async deleteReaction(
-		channelId: string,
-		contentId: string,
-		emoteId: number,
-		userId?: string,
-	): Promise<void> {
-		await this.client.reactions.delete(
-			channelId,
-			contentId,
-			emoteId,
-			userId,
-		);
+	async deleteReaction(channelId: string, contentId: string, emoteId: number, userId?: string): Promise<void> {
+		await this.client.reactions.delete(channelId, contentId, emoteId, userId);
 	}
 
 	/**
@@ -225,88 +125,36 @@ export class GlobalMessageManager extends CacheableStructManager<string, Message
 	 * @param content The new content of the message.
 	 * @returns A promise that resolves with the updated message.
 	 */
-	async update(
-		channelId: string,
-		messageId: string,
-		content: MessageContent,
-	): Promise<Message> {
-		const data =
-			await this.client.rest.router.chat.channelMessageUpdate(
-				{
-					channelId,
-					messageId,
-					requestBody: resolveContentToData(
-						content,
-					),
-				},
-			);
+	async update(channelId: string, messageId: string, content: MessageContent): Promise<Message> {
+		const data = await this.client.rest.router.chat.channelMessageUpdate({
+			channelId,
+			messageId,
+			requestBody: resolveContentToData(content),
+		});
 
-		const existingMessage =
-			this.client.messages.cache.get(
-				data
-					.message
-					.id,
-			);
-		if (
-			existingMessage
-		)
-			return existingMessage._update(
-				data.message,
-			);
+		const existingMessage = this.client.messages.cache.get(data.message.id);
+		if (existingMessage) return existingMessage._update(data.message);
 
-		const newMessage =
-			new Message(
-				this
-					.client,
-				data.message,
-			);
-		this.client.messages.cache.set(
-			newMessage.id,
-			newMessage,
-		);
+		const newMessage = new Message(this.client, data.message);
+		this.client.messages.cache.set(newMessage.id, newMessage);
 		return newMessage;
 	}
 
 	/** Delete a channel message. */
-	async delete(
-		channelId: string,
-		messageId: string,
-	): Promise<void> {
-		await this.client.rest.router.chat.channelMessageDelete(
-			{
-				channelId,
-				messageId,
-			},
-		);
+	async delete(channelId: string, messageId: string): Promise<void> {
+		await this.client.rest.router.chat.channelMessageDelete({
+			channelId,
+			messageId,
+		});
 	}
 
-	async awaitMessages(
-		channelId: string,
-		options: CollectorOptions<Message>,
-	): Promise<
-		CollectorReturnValue<Message>
-	> {
-		return new MessageCollector(
-			this
-				.client,
-			{
-				...options,
-				filter: (
-					item,
-				): MaybePromise<boolean> => {
-					if (
-						item.channelId !==
-						channelId
-					)
-						return false;
-					return (
-						options.filter?.(
-							item,
-						) ??
-						true
-					);
-				},
+	async awaitMessages(channelId: string, options: CollectorOptions<Message>): Promise<CollectorReturnValue<Message>> {
+		return new MessageCollector(this.client, {
+			...options,
+			filter: (item): MaybePromise<boolean> => {
+				if (item.channelId !== channelId) return false;
+				return options.filter?.(item) ?? true;
 			},
-		).start();
+		}).start();
 	}
 }

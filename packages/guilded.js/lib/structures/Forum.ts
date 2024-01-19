@@ -35,23 +35,17 @@ export class ForumTopic extends Base<ForumTopicPayload, number> {
 	/**
 	 * The date time the forum topic was last updated, or null if it hasn't been updated.
 	 */
-	_updatedAt!:
-		| number
-		| null;
+	_updatedAt!: number | null;
 
 	/**
 	 * The date time the forum topic was last bumped, or null if it hasn't been bumped.
 	 */
-	_bumpedAt!:
-		| number
-		| null;
+	_bumpedAt!: number | null;
 
 	/**
 	 * The date time the forum topic was deleted, or null if it hasn't been deleted.
 	 */
-	_deletedAt:
-		| number
-		| null;
+	_deletedAt: number | null;
 
 	/**
 	 * Whether the forum topic is pinned.
@@ -73,32 +67,17 @@ export class ForumTopic extends Base<ForumTopicPayload, number> {
 	 */
 	mentions!: MentionsPayload;
 
-	constructor(
-		client: Client,
-		data: ForumTopicPayload,
-	) {
-		super(
-			client,
-			data,
-		);
-		this.serverId =
-			data.serverId;
-		this.channelId =
-			data.channelId;
-		this._createdAt =
-			parseToStamp(
-				data.createdAt,
-			)!;
-		this.createdBy =
-			data.createdBy;
+	constructor(client: Client, data: ForumTopicPayload) {
+		super(client, data);
+		this.serverId = data.serverId;
+		this.channelId = data.channelId;
+		this._createdAt = parseToStamp(data.createdAt)!;
+		this.createdBy = data.createdBy;
 		this.isPinned = false;
 		this.isLocked = false;
-		this._deletedAt =
-			null;
+		this._deletedAt = null;
 
-		this._update(
-			data,
-		);
+		this._update(data);
 	}
 
 	/**
@@ -107,10 +86,7 @@ export class ForumTopic extends Base<ForumTopicPayload, number> {
 	 * @returns A Date object
 	 */
 	get createdAt(): Date {
-		return new Date(
-			this
-				._createdAt,
-		);
+		return new Date(this._createdAt);
 	}
 
 	/**
@@ -119,13 +95,7 @@ export class ForumTopic extends Base<ForumTopicPayload, number> {
 	 * @returns A Date object
 	 */
 	get deletedAt(): Date | null {
-		return this
-			._deletedAt
-			? new Date(
-					this
-						._deletedAt,
-			  )
-			: null;
+		return this._deletedAt ? new Date(this._deletedAt) : null;
 	}
 
 	/**
@@ -134,13 +104,7 @@ export class ForumTopic extends Base<ForumTopicPayload, number> {
 	 * @returns A Date object
 	 */
 	get updatedAt(): Date | null {
-		return this
-			._updatedAt
-			? new Date(
-					this
-						._updatedAt,
-			  )
-			: null;
+		return this._updatedAt ? new Date(this._updatedAt) : null;
 	}
 
 	_update(
@@ -150,92 +114,36 @@ export class ForumTopic extends Base<ForumTopicPayload, number> {
 			}
 		>,
 	): this {
-		if (
-			"updatedAt" in
-				data &&
-			typeof data.updatedAt !==
-				"undefined"
-		) {
-			this._updatedAt =
-				data.updatedAt
-					? parseToStamp(
-							data.updatedAt,
-					  )
-					: null;
+		if ("updatedAt" in data && typeof data.updatedAt !== "undefined") {
+			this._updatedAt = data.updatedAt ? parseToStamp(data.updatedAt) : null;
 		}
 
-		if (
-			"_deletedAt" in
-				data &&
-			typeof data._deletedAt !==
-				"undefined"
-		) {
-			this._deletedAt =
-				data._deletedAt.getTime();
+		if ("_deletedAt" in data && typeof data._deletedAt !== "undefined") {
+			this._deletedAt = data._deletedAt.getTime();
 		}
 
-		if (
-			"bumpedAt" in
-				data &&
-			typeof data.bumpedAt !==
-				"undefined"
-		) {
-			this._bumpedAt =
-				data.bumpedAt
-					? parseToStamp(
-							data.bumpedAt,
-					  )
-					: null;
+		if ("bumpedAt" in data && typeof data.bumpedAt !== "undefined") {
+			this._bumpedAt = data.bumpedAt ? parseToStamp(data.bumpedAt) : null;
 		}
 
-		if (
-			"isPinned" in
-				data &&
-			typeof data.isPinned !==
-				"undefined"
-		) {
-			this.isPinned =
-				data.isPinned;
+		if ("isPinned" in data && typeof data.isPinned !== "undefined") {
+			this.isPinned = data.isPinned;
 		}
 
-		if (
-			"isLocked" in
-				data &&
-			typeof data.isLocked !==
-				"undefined"
-		) {
-			this.isLocked =
-				data.isLocked;
+		if ("isLocked" in data && typeof data.isLocked !== "undefined") {
+			this.isLocked = data.isLocked;
 		}
 
-		if (
-			"title" in
-				data &&
-			typeof data.title !==
-				"undefined"
-		) {
-			this.title =
-				data.title;
+		if ("title" in data && typeof data.title !== "undefined") {
+			this.title = data.title;
 		}
 
-		if (
-			"content" in
-				data &&
-			typeof data.content !==
-				"undefined"
-		) {
-			this.content =
-				data.content;
+		if ("content" in data && typeof data.content !== "undefined") {
+			this.content = data.content;
 		}
 
-		if (
-			"mentions" in
-				data &&
-			typeof data.mentions !==
-				"undefined"
-		) {
-			this.mentions =
-				data.mentions;
+		if ("mentions" in data && typeof data.mentions !== "undefined") {
+			this.mentions = data.mentions;
 		}
 
 		return this;
@@ -252,16 +160,12 @@ export class PartialForumTopic extends Base<ForumTopicSummaryPayload, number> {
 	/**
 	 * The date time the forum topic was last updated, or null if it hasn't been updated.
 	 */
-	_updatedAt!:
-		| number
-		| null;
+	_updatedAt!: number | null;
 
 	/**
 	 * The date time the forum topic was last bumped, or null if it hasn't been bumped.
 	 */
-	_bumpedAt!:
-		| number
-		| null;
+	_bumpedAt!: number | null;
 
 	/**
 	 * The title of the forum topic.
@@ -288,29 +192,15 @@ export class PartialForumTopic extends Base<ForumTopicSummaryPayload, number> {
 	 */
 	readonly channelId: string;
 
-	constructor(
-		client: Client,
-		data: ForumTopicSummaryPayload,
-	) {
-		super(
-			client,
-			data,
-		);
-		this.serverId =
-			data.serverId;
-		this.channelId =
-			data.channelId;
-		this._createdAt =
-			parseToStamp(
-				data.createdAt,
-			)!;
-		this.createdBy =
-			data.createdBy;
+	constructor(client: Client, data: ForumTopicSummaryPayload) {
+		super(client, data);
+		this.serverId = data.serverId;
+		this.channelId = data.channelId;
+		this._createdAt = parseToStamp(data.createdAt)!;
+		this.createdBy = data.createdBy;
 		this.isPinned = false;
 
-		this._update(
-			data,
-		);
+		this._update(data);
 	}
 
 	_update(
@@ -320,52 +210,20 @@ export class PartialForumTopic extends Base<ForumTopicSummaryPayload, number> {
 			}
 		>,
 	): this {
-		if (
-			"updatedAt" in
-				data &&
-			typeof data.updatedAt !==
-				"undefined"
-		) {
-			this._updatedAt =
-				data.updatedAt
-					? parseToStamp(
-							data.updatedAt,
-					  )
-					: null;
+		if ("updatedAt" in data && typeof data.updatedAt !== "undefined") {
+			this._updatedAt = data.updatedAt ? parseToStamp(data.updatedAt) : null;
 		}
 
-		if (
-			"bumpedAt" in
-				data &&
-			typeof data.bumpedAt !==
-				"undefined"
-		) {
-			this._bumpedAt =
-				data.bumpedAt
-					? parseToStamp(
-							data.bumpedAt,
-					  )
-					: null;
+		if ("bumpedAt" in data && typeof data.bumpedAt !== "undefined") {
+			this._bumpedAt = data.bumpedAt ? parseToStamp(data.bumpedAt) : null;
 		}
 
-		if (
-			"isPinned" in
-				data &&
-			typeof data.isPinned !==
-				"undefined"
-		) {
-			this.isPinned =
-				data.isPinned;
+		if ("isPinned" in data && typeof data.isPinned !== "undefined") {
+			this.isPinned = data.isPinned;
 		}
 
-		if (
-			"title" in
-				data &&
-			typeof data.title !==
-				"undefined"
-		) {
-			this.title =
-				data.title;
+		if ("title" in data && typeof data.title !== "undefined") {
+			this.title = data.title;
 		}
 
 		return this;
@@ -377,10 +235,7 @@ export class PartialForumTopic extends Base<ForumTopicSummaryPayload, number> {
 	 * @returns A Date object
 	 */
 	get createdAt(): Date {
-		return new Date(
-			this
-				._createdAt,
-		);
+		return new Date(this._createdAt);
 	}
 
 	/**
@@ -389,13 +244,7 @@ export class PartialForumTopic extends Base<ForumTopicSummaryPayload, number> {
 	 * @returns A Date object
 	 */
 	get updatedAt(): Date | null {
-		return this
-			._updatedAt
-			? new Date(
-					this
-						._updatedAt,
-			  )
-			: null;
+		return this._updatedAt ? new Date(this._updatedAt) : null;
 	}
 
 	/**
@@ -404,11 +253,6 @@ export class PartialForumTopic extends Base<ForumTopicSummaryPayload, number> {
 	 * @returns A promise containing the resolved full member.
 	 */
 	fetch(): Promise<ForumTopic> {
-		return this.client.topics.fetch(
-			this
-				.serverId,
-			this
-				.id,
-		);
+		return this.client.topics.fetch(this.serverId, this.id);
 	}
 }

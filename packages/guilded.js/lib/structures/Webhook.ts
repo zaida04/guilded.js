@@ -32,10 +32,7 @@ export class Webhook extends Base<WebhookPayload> {
 	/**
 	 * The date this webhook was deleted if it was deleted
 	 */
-	_deletedAt:
-		| number
-		| null =
-		null;
+	_deletedAt: number | null = null;
 
 	/**
 	 * The user who created this webhook
@@ -45,29 +42,14 @@ export class Webhook extends Base<WebhookPayload> {
 	/**
 	 * The token of this webhook
 	 */
-	token!:
-		| string
-		| null;
+	token!: string | null;
 
-	constructor(
-		client: Client,
-		data: WebhookPayload,
-	) {
-		super(
-			client,
-			data,
-		);
-		this.serverId =
-			data.serverId;
-		this._createdAt =
-			parseToStamp(
-				data.createdAt,
-			)!;
-		this.authorID =
-			data.createdBy;
-		this._update(
-			data,
-		);
+	constructor(client: Client, data: WebhookPayload) {
+		super(client, data);
+		this.serverId = data.serverId;
+		this._createdAt = parseToStamp(data.createdAt)!;
+		this.authorID = data.createdBy;
+		this._update(data);
 	}
 
 	/**
@@ -76,10 +58,7 @@ export class Webhook extends Base<WebhookPayload> {
 	 * @returns The creation date of this webhook
 	 */
 	get createdAt(): Date {
-		return new Date(
-			this
-				._createdAt,
-		);
+		return new Date(this._createdAt);
 	}
 
 	/**
@@ -88,13 +67,7 @@ export class Webhook extends Base<WebhookPayload> {
 	 * @returns The deletion date of this webhook if it was deleted, otherwise null
 	 */
 	get deletedAt(): Date | null {
-		return this
-			._deletedAt
-			? new Date(
-					this
-						._deletedAt,
-			  )
-			: null;
+		return this._deletedAt ? new Date(this._deletedAt) : null;
 	}
 
 	/**
@@ -103,13 +76,7 @@ export class Webhook extends Base<WebhookPayload> {
 	 * @returns The author of this webhook, or null if the author is not cached
 	 */
 	get user(): User | null {
-		return (
-			this.client.users.cache.get(
-				this
-					.id,
-			) ??
-			null
-		);
+		return this.client.users.cache.get(this.id) ?? null;
 	}
 
 	/**
@@ -118,18 +85,8 @@ export class Webhook extends Base<WebhookPayload> {
 	 * @param options The new options for this webhook
 	 * @returns A promise that resolves with the updated webhook
 	 */
-	update(
-		options: Parameters<
-			GlobalWebhookManager["update"]
-		>[2],
-	): Promise<Webhook> {
-		return this.client.webhooks.update(
-			this
-				.serverId,
-			this
-				.id,
-			options,
-		);
+	update(options: Parameters<GlobalWebhookManager["update"]>[2]): Promise<Webhook> {
+		return this.client.webhooks.update(this.serverId, this.id, options);
 	}
 
 	/**
@@ -138,55 +95,16 @@ export class Webhook extends Base<WebhookPayload> {
 	 * @returns A promise that resolves with this webhook after it has been deleted
 	 */
 	async delete(): Promise<this> {
-		await this.client.webhooks.delete(
-			this
-				.serverId,
-			this
-				.id,
-		);
+		await this.client.webhooks.delete(this.serverId, this.id);
 		return this;
 	}
 
-	_update(
-		data: Partial<WebhookPayload>,
-	): this {
-		if (
-			"name" in
-				data &&
-			data.name !==
-				undefined
-		)
-			this.name =
-				data.name;
-		if (
-			"channelId" in
-				data &&
-			data.channelId !==
-				undefined
-		)
-			this.channelID =
-				data.channelId;
-		if (
-			"token" in
-				data &&
-			data.token !==
-				undefined
-		)
-			this.token =
-				data.token ??
-				null;
-		if (
-			"deletedAt" in
-				data &&
-			data.deletedAt !==
-				undefined
-		) {
-			this._deletedAt =
-				data.deletedAt
-					? parseToStamp(
-							data.deletedAt,
-					  )
-					: null;
+	_update(data: Partial<WebhookPayload>): this {
+		if ("name" in data && data.name !== undefined) this.name = data.name;
+		if ("channelId" in data && data.channelId !== undefined) this.channelID = data.channelId;
+		if ("token" in data && data.token !== undefined) this.token = data.token ?? null;
+		if ("deletedAt" in data && data.deletedAt !== undefined) {
+			this._deletedAt = data.deletedAt ? parseToStamp(data.deletedAt) : null;
 		}
 
 		return this;

@@ -2,29 +2,12 @@ import { Argument } from "../structures/Argument";
 import type { CommandArgument } from "../structures/Command";
 
 export class RemainingStringArgument extends Argument {
-	name =
-		"...string";
+	name = "...string";
 
-	execute(
-		argument: CommandArgument,
-		parameters: string[],
-	):
-		| string
-		| undefined {
-		if (
-			!parameters.length
-		)
-			return;
+	execute(argument: CommandArgument, parameters: string[]): string | undefined {
+		if (!parameters.length) return;
 
-		return argument.lowercase
-			? parameters
-					.join(
-						" ",
-					)
-					.toLowerCase()
-			: parameters.join(
-					" ",
-			  );
+		return argument.lowercase ? parameters.join(" ").toLowerCase() : parameters.join(" ");
 	}
 
 	init(): void {

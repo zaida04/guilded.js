@@ -41,60 +41,15 @@ export const COLORS: { [key: string]: number } = {
  * Taken from https://github.com/discordjs/discord.js/blob/stable/src/util/Util.js#L436
  */
 export function resolveColor(color: number | string | [number, number, number]): number {
-	if (
-		typeof color ===
-		"string"
-	) {
-		if (
-			color ===
-			"RANDOM"
-		)
-			return Math.floor(
-				Math.random() *
-					(0xffffff +
-						1),
-			);
-		color =
-			COLORS[
-				color.toUpperCase()
-			] ??
-			Number.parseInt(
-				color.replace(
-					"#",
-					"",
-				),
-				16,
-			);
-	} else if (
-		Array.isArray(
-			color,
-		)
-	) {
-		color =
-			(color[0] <<
-				16) +
-			(color[1] <<
-				8) +
-			color[2];
+	if (typeof color === "string") {
+		if (color === "RANDOM") return Math.floor(Math.random() * (0xffffff + 1));
+		color = COLORS[color.toUpperCase()] ?? Number.parseInt(color.replace("#", ""), 16);
+	} else if (Array.isArray(color)) {
+		color = (color[0] << 16) + (color[1] << 8) + color[2];
 	}
 
-	if (
-		color <
-			0 ||
-		color >
-			0xffffff
-	)
-		throw new RangeError(
-			"COLOR_RANGE",
-		);
-	if (
-		Number.isNaN(
-			color,
-		)
-	)
-		throw new TypeError(
-			"COLOR_CONVERT",
-		);
+	if (color < 0 || color > 0xffffff) throw new RangeError("COLOR_RANGE");
+	if (Number.isNaN(color)) throw new TypeError("COLOR_CONVERT");
 
 	return color;
 }

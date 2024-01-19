@@ -16,13 +16,7 @@ export abstract class Command {
 	/**
 	 * Where is this command allowed to run in? By default, it is allowed to run in a server only!
 	 */
-	allowedIn?: (
-		| "dm"
-		| "server"
-	)[] =
-		[
-			"server",
-		];
+	allowedIn?: ("dm" | "server")[] = ["server"];
 
 	/**
 	 * The description of the command
@@ -40,10 +34,7 @@ export abstract class Command {
 	/**
 	 * The subcommands for this command.
 	 */
-	subcommands?: Collection<
-		string,
-		Command
-	>;
+	subcommands?: Collection<string, Command>;
 
 	/**
 	 * The name of the parent command. If nested subcommands, use `-` to separate the names. For example: `.settings staff modrole` would be parentCommand: "settings-staff"
@@ -55,36 +46,12 @@ export abstract class Command {
 		public name: string,
 	) {}
 
-	abstract execute(
-		message: Message,
-		args: Record<
-			string,
-			unknown
-		>,
-	):
-		| Promise<unknown>
-		| unknown;
+	abstract execute(message: Message, args: Record<string, unknown>): Promise<unknown> | unknown;
 
-	abstract init():
-		| Promise<unknown>
-		| unknown;
+	abstract init(): Promise<unknown> | unknown;
 
 	get fullName(): string {
-		return `${
-			this
-				.parentCommand
-				? `${this.parentCommand
-						.split(
-							"-",
-						)
-						.join(
-							" ",
-						)} `
-				: ""
-		}${
-			this
-				.name
-		}`;
+		return `${this.parentCommand ? `${this.parentCommand.split("-").join(" ")} ` : ""}${this.name}`;
 	}
 }
 
@@ -96,10 +63,7 @@ export type CommandArgument = {
 	/**
 	 * The default value for this argument/subcommand.
 	 */
-	defaultValue?:
-		| boolean
-		| number
-		| string;
+	defaultValue?: boolean | number | string;
 	/**
 	 * If the type is string or subcommand you can provide literals. The argument MUST be exactly the same as the literals to be accepted. For example, you can list the subcommands here to make sure it matches.
 	 */
@@ -119,9 +83,7 @@ export type CommandArgument = {
 	/**
 	 * The function that runs if this argument is required and is missing.
 	 */
-	missing?(
-		message: Message,
-	): unknown;
+	missing?(message: Message): unknown;
 	/**
 	 * The name of the argument. Useful for when you need to alert the user X arg is missing.
 	 */
@@ -133,13 +95,7 @@ export type CommandArgument = {
 	/**
 	 * The type of the argument you would like. Defaults to string.
 	 */
-	type?:
-		| "...string"
-		| "boolean"
-		| "duration"
-		| "number"
-		| "string"
-		| "subcommand";
+	type?: "...string" | "boolean" | "duration" | "number" | "string" | "subcommand";
 };
 
 export default Command;

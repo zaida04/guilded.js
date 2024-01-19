@@ -11,14 +11,7 @@ export class GlobalServerManager extends CacheableStructManager<string, Server> 
 	 * Determines whether or not servers should be cached.
 	 */
 	get shouldCacheServer(): boolean {
-		return (
-			this
-				.client
-				.options
-				?.cache
-				?.cacheServers !==
-			false
-		);
+		return this.client.options?.cache?.cacheServers !== false;
 	}
 
 	/**
@@ -29,43 +22,17 @@ export class GlobalServerManager extends CacheableStructManager<string, Server> 
 	 * @returns A Promise that resolves with the fetched server.
 	 * @example client.servers.fetch(message.serverId)
 	 */
-	async fetch(
-		serverId: string,
-		force?: boolean,
-	): Promise<Server> {
-		if (
-			!force
-		) {
-			const existingServer =
-				this.client.servers.cache.get(
-					serverId,
-				);
-			if (
-				existingServer
-			)
-				return existingServer;
+	async fetch(serverId: string, force?: boolean): Promise<Server> {
+		if (!force) {
+			const existingServer = this.client.servers.cache.get(serverId);
+			if (existingServer) return existingServer;
 		}
 
-		const data =
-			await this.client.rest.router.servers.serverRead(
-				{
-					serverId,
-				},
-			);
-		const newServer =
-			new Server(
-				this
-					.client,
-				data.server,
-			);
-		if (
-			this
-				.shouldCacheServer
-		)
-			this.cache.set(
-				newServer.id,
-				newServer,
-			);
+		const data = await this.client.rest.router.servers.serverRead({
+			serverId,
+		});
+		const newServer = new Server(this.client, data.server);
+		if (this.shouldCacheServer) this.cache.set(newServer.id, newServer);
 		return newServer;
 	}
 }

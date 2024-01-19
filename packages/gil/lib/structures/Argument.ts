@@ -8,18 +8,9 @@ export abstract class Argument {
 		public name: string,
 	) {}
 
-	abstract execute(
-		argument: CommandArgument,
-		parameters: string[],
-		message: Message,
-		command: Command,
-	):
-		| Promise<unknown>
-		| unknown;
+	abstract execute(argument: CommandArgument, parameters: string[], message: Message, command: Command): Promise<unknown> | unknown;
 
-	abstract init():
-		| Promise<unknown>
-		| unknown;
+	abstract init(): Promise<unknown> | unknown;
 }
 
 export default Argument;

@@ -20,9 +20,7 @@ export type MemberRemovedEvent = ServerEvent & {
 
 export type MemberUpdatedEvent = ServerEvent & {
 	userId: string;
-	nickname:
-		| string
-		| null;
+	nickname: string | null;
 	oldMember: Member | null;
 };
 

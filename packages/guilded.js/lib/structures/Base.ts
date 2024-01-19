@@ -17,10 +17,8 @@ export class Base<T = { id: string }, R = string> {
 			id: R;
 		},
 	) {
-		this.id =
-			data.id;
-		this.raw =
-			data;
+		this.id = data.id;
+		this.raw = data;
 	}
 
 	/**
@@ -28,11 +26,6 @@ export class Base<T = { id: string }, R = string> {
 	 * Licensed under the Apache License 2.0 <https://github.com/discordjs/discord.js/blob/8e8d9b490a71de6cabe6f16375d7549a7c5c3737/LICENSE>
 	 */
 	public _clone(): this {
-		return Object.assign(
-			Object.create(
-				this,
-			),
-			this,
-		);
+		return Object.assign(Object.create(this), this);
 	}
 }
