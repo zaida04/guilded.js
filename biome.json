@@ -3,13 +3,15 @@
     "organizeImports": {
         "enabled": true
     },
-    "formatter": {
+    "files": {
         "ignore": [
             "dist",
             "node_modules",
             "types",
             ".next"
-        ],
+        ]
+    },
+    "formatter": {
         "enabled": true,
         "lineEnding": "lf",
         "indentWidth": 200,
