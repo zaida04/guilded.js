@@ -9,6 +9,7 @@
                 "dist"
             ],
             "inputs": [
+                "lib/**/*.{ts,tsx}",
                 "src/**/*.{ts,tsx}"
             ]
         },
@@ -20,6 +21,7 @@
                 "dist"
             ],
             "inputs": [
+                "lib/**/*.{ts,tsx}",
                 "src/**/*.{ts,tsx}"
             ]
         },
