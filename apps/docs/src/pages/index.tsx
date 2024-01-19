@@ -24,12 +24,13 @@ export const getStaticProps = (): GetStaticPropsResult<{ buildDate: number }> =>
 	const buildDate = Date.now();
 	return {
 		props: {
-			buildDate
-		}
-	}
-}
+			buildDate,
+		},
+	};
+};
 
-const description = "Guilded.js is a library written in TypeScript usable in either TypeScript or JavaScript projects. It provides structures, abstractions, and utilities for interaction with the Guilded API.";
+const description =
+	"Guilded.js is a library written in TypeScript usable in either TypeScript or JavaScript projects. It provides structures, abstractions, and utilities for interaction with the Guilded API.";
 
 export default function Home({ buildDate }: InferGetStaticPropsType<typeof getStaticProps>) {
 	return (
@@ -54,7 +55,9 @@ export default function Home({ buildDate }: InferGetStaticPropsType<typeof getSt
 						</h1>
 					</div>
 					<div className="grid place-items-center md:flex md:justify-center">
-						{["npm install guilded.js", "yarn add guilded.js", "pnpm add guilded.js"].map(click => <Copiable key={click} text={click} />)}
+						{["npm install guilded.js", "yarn add guilded.js", "pnpm add guilded.js"].map((click) => (
+							<Copiable key={click} text={click} />
+						))}
 					</div>
 					<div className="pt-2 flex justify-center">
 						<Link href="/docs">
@@ -74,5 +77,5 @@ export default function Home({ buildDate }: InferGetStaticPropsType<typeof getSt
 				</div>
 			</LayoutWrapper>
 		</>
-	)
+	);
 }

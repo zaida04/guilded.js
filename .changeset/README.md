@@ -11,6 +11,6 @@ We have a quick list of common questions to get you started engaging with this p
 
 The release steps follows this:
 
--   "pnpm run prerelease"
--   "pnpm i -r"
--   "pnpm recursive publish"
+-   "bun run prerelease"
+-   "bun install -r"
+-   "bun run publish"

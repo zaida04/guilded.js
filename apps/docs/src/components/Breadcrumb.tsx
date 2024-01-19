@@ -1,5 +1,5 @@
 import type { IconDefinition } from "@fortawesome/free-solid-svg-icons";
-import { faBox, faBook, faHome } from "@fortawesome/free-solid-svg-icons";
+import { faBook, faBox, faHome } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -13,15 +13,30 @@ export const Breadcrumb = () => {
 	if (typeof lib !== "string") return null;
 
 	const defaultPaths: Path[] = [
-		{ name: "Home", icon: faHome, path: "/" },
-		{ name: "Docs", icon: faBook, path: "/docs" },
-		{ name: lib, icon: faBox, path: `/docs/${lib}` },
+		{
+			name: "Home",
+			icon: faHome,
+			path: "/",
+		},
+		{
+			name: "Docs",
+			icon: faBook,
+			path: "/docs",
+		},
+		{
+			name: lib,
+			icon: faBox,
+			path: `/docs/${lib}`,
+		},
 	];
 
 	const splittedPaths: Path[] = asPath
 		.split("/")
 		.slice(3)
-		.map((x) => ({ name: capitalize(x), path: `/docs/${lib}/${x}` }));
+		.map((x) => ({
+			name: capitalize(x),
+			path: `/docs/${lib}/${x}`,
+		}));
 	const combinedPaths = [...defaultPaths, ...splittedPaths];
 	const activePath = combinedPaths.find((x) => x.path === asPath);
 	if (activePath) activePath.isActive = true;
@@ -32,11 +47,7 @@ export const Breadcrumb = () => {
 				{combinedPaths.map((path, index, arr) => {
 					const res = (
 						<li className="inline-flex items-center" key={index}>
-							<Link
-								className={`inline-flex items-center text-xs md:text-sm font-medium ${path.isActive ? "text-guilded" : "text-white hover:text-guilded"
-									}`}
-								href={path.path}
-							>
+							<Link className={`inline-flex items-center text-xs md:text-sm font-medium ${path.isActive ? "text-guilded" : "text-white hover:text-guilded"}`} href={path.path}>
 								{path.icon && <FontAwesomeIcon className="pr-2" icon={path.icon} />}
 								{path.name}
 							</Link>

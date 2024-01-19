@@ -2,18 +2,18 @@ import { Argument } from "../structures/Argument";
 import type { CommandArgument } from "../structures/Command";
 
 export class DurationArgument extends Argument {
-    name = "duration";
+	name = "duration";
 
-    execute(argument: CommandArgument, parameters: string[]): number | undefined {
-        const [time] = parameters;
-        if (!time) return;
+	execute(argument: CommandArgument, parameters: string[]): number | undefined {
+		const [time] = parameters;
+		if (!time) return;
 
-        return this.client.stringToMilliseconds(time);
-    }
+		return this.client.stringToMilliseconds(time);
+	}
 
-    init(): void {
-        // shut up eslint
-    }
+	init(): void {
+		// shut up eslint
+	}
 }
 
 export default DurationArgument;

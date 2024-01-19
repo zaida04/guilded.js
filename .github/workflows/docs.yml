@@ -14,26 +14,16 @@ jobs:
         steps:
             - name: Checkout repository
               uses: actions/checkout@v3
-
-            - name: Install PNPM
-              uses: pnpm/action-setup@6e1964dde3397a825e79e4607ad57f3f7ca2c7cb
-              with:
-                  version: 8.6.3
-
-            - name: Install Node v14
-              uses: actions/setup-node@v3
-              with:
-                  node-version: "16"
-                  cache: "pnpm"
+            - uses: oven-sh/setup-bun@v1
 
             - name: Install dependencies
-              run: pnpm install -r
-
+              run: bun install
+              
             - name: Build project
-              run: pnpm run build
+              run: bun run build
 
             - name: Build the docs
-              run: pnpm run docs
+              run: bun run docs
 
             - name: Commit the Docs
               uses: cpina/github-action-push-to-another-repository@main

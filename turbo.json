@@ -1,0 +1,49 @@
+{
+    "$schema": "https://turbo.build/schema.json",
+    "pipeline": {
+        "build:typecheck": {
+            "dependsOn": [
+                "^build:typecheck"
+            ],
+            "outputs": [
+                "dist"
+            ],
+            "inputs": [
+                "lib/**/*.{ts,tsx}",
+                "src/**/*.{ts,tsx}"
+            ]
+        },
+        "build": {
+            "dependsOn": [
+                "^build"
+            ],
+            "outputs": [
+                "dist"
+            ],
+            "inputs": [
+                "lib/**/*.{ts,tsx}",
+                "src/**/*.{ts,tsx}"
+            ]
+        },
+        "check": {
+            "dependsOn": [
+                "^check"
+            ],
+            "inputs": [
+                "**/*.{ts,tsx}"
+            ]
+        },
+        "check:fix": {
+            "dependsOn": [
+                "^check:fix"
+            ],
+            "cache": false
+        },
+        "prepublishOnly": {
+            "dependsOn": [
+                "^prepublishOnly"
+            ],
+            "cache": false
+        }
+    }
+}
