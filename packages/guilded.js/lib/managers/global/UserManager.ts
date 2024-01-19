@@ -18,7 +18,7 @@ export class GlobalUserManager extends CacheableStructManager<string, User> {
 	 */
 	async fetchClient(force?: boolean): Promise<User> {
 		if (!force) {
-			const existingUser = this.client.users.cache.get(this.client.user?.id);
+			const existingUser = this.client.users.cache.get(this.client.user?.id!);
 			if (existingUser) return existingUser;
 		}
 

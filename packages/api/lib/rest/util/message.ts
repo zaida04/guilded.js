@@ -107,6 +107,8 @@ export function parseMessage(data: APIContent): parsedMessage {
 						case "inline": {
 							const castedDataNode = node.data as MessageDataNode;
 							const leaf = node.nodes?.[0].leaves?.[0];
+							if (!leaf) break;
+
 							switch (node.type) {
 								case "mention": {
 									switch (castedDataNode.mention?.type) {
@@ -136,7 +138,7 @@ export function parseMessage(data: APIContent): parsedMessage {
 
 								/* istanbul ignore next */
 								case "reaction": {
-									mentions.reactions.push(castedDataNode.reaction?.id);
+									mentions.reactions.push(castedDataNode.reaction?.id!);
 									parsedMessageArray.push({
 										content: leaf.text,
 										reaction: castedDataNode.reaction,
@@ -146,7 +148,7 @@ export function parseMessage(data: APIContent): parsedMessage {
 								}
 
 								case "channel": {
-									mentions.channels.push(castedDataNode.channel?.id);
+									mentions.channels.push(castedDataNode.channel?.id!);
 									parsedMessageArray.push({
 										channel: castedDataNode.channel,
 										content: leaf.text,
@@ -190,7 +192,7 @@ export function parseMessage(data: APIContent): parsedMessage {
 											case "person": {
 												mentions.users.push(castedDataNode.mention?.id as string);
 												parsedMessageArray.push({
-													content: node.nodes?.[0].leaves?.[0].text,
+													content: node.nodes?.[0].leaves?.[0].text!,
 													mention: castedDataNode.mention,
 													type: "user",
 												});
@@ -199,7 +201,7 @@ export function parseMessage(data: APIContent): parsedMessage {
 
 											case "role": {
 												parsedMessageArray.push({
-													content: node.nodes?.[0].leaves?.[0].text,
+													content: node.nodes?.[0].leaves?.[0].text!,
 													mention: castedDataNode.mention,
 													type: "role",
 												});
@@ -212,9 +214,9 @@ export function parseMessage(data: APIContent): parsedMessage {
 									}
 
 									case "reaction": {
-										mentions.reactions.push(castedDataNode.reaction?.id);
+										mentions.reactions.push(castedDataNode.reaction?.id!);
 										parsedMessageArray.push({
-											content: node.nodes?.[0].leaves?.[0].text,
+											content: node.nodes?.[0].leaves?.[0].text!,
 											reaction: castedDataNode.reaction,
 											type: "reaction",
 										});
@@ -222,10 +224,10 @@ export function parseMessage(data: APIContent): parsedMessage {
 									}
 
 									case "channel": {
-										mentions.channels.push(castedDataNode.channel?.id);
+										mentions.channels.push(castedDataNode.channel?.id!);
 										parsedMessageArray.push({
 											channel: castedDataNode.channel,
-											content: node.nodes?.[0].leaves?.[0].text,
+											content: node.nodes?.[0].leaves?.[0].text!,
 											type: "channel",
 										});
 										break;

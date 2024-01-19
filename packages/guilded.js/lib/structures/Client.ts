@@ -215,7 +215,7 @@ export class Client extends (EventEmitter as unknown as new () => TypedEmitter<C
 	 * @returns The logged in client's servers.
 	 */
 	fetchServers(): Promise<Collection<string, Server>> {
-		return this.users.fetchServers(this.user?.id);
+		return this.users.fetchServers(this.user?.id!);
 	}
 
 	/**
@@ -257,7 +257,7 @@ export class Client extends (EventEmitter as unknown as new () => TypedEmitter<C
 	 */
 	async clearStatus(): Promise<void> {
 		await this.rest.router.userStatus.userStatusDelete({
-			userId: this.user?.id,
+			userId: this.user!.id,
 		});
 	}
 }
