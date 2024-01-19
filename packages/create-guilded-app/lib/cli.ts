@@ -15,13 +15,13 @@ Happy coding!
 `;
 
 void create("create-guilded-app", {
-    templateRoot,
-    caveat,
-    defaultTemplate: "command-handler-starter-js",
-    promptForAuthor: false,
-    promptForEmail: false,
-    promptForTemplate: true,
-    promptForDescription: false,
-    promptForLicense: true,
-    promptForPackageManager: true,
+	templateRoot,
+	caveat,
+	defaultTemplate: "command-handler-starter-js",
+	promptForAuthor: false,
+	promptForEmail: false,
+	promptForTemplate: true,
+	promptForDescription: false,
+	promptForLicense: true,
+	promptForPackageManager: true,
 });

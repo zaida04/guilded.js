@@ -9,19 +9,31 @@ import { Collector } from "./Collector";
  * @extends Collector
  */
 export class MessageCollector extends Collector<Message> {
-    /**
-     * Binds to the client's message creation event and increments its max listener count by one.
-     */
-    hookEvents(): void {
-        this.incrementMaxEventListeners();
-        this.client.on(constants.clientEvents.MESSAGE_CREATED, this.boundItemReceiver);
-    }
+	/**
+	 * Binds to the client's message creation event and increments its max listener count by one.
+	 */
+	hookEvents(): void {
+		this.incrementMaxEventListeners();
+		this.client.on(
+			constants
+				.clientEvents
+				.MESSAGE_CREATED,
+			this
+				.boundItemReceiver,
+		);
+	}
 
-    /**
-     * Unbinds from the client's message creation event and decrements its max listener count by one.
-     */
-    _cleanup(): void {
-        this.decrementMaxEventListeners();
-        this.client.removeListener(constants.clientEvents.MESSAGE_CREATED, this.boundItemReceiver);
-    }
+	/**
+	 * Unbinds from the client's message creation event and decrements its max listener count by one.
+	 */
+	_cleanup(): void {
+		this.decrementMaxEventListeners();
+		this.client.removeListener(
+			constants
+				.clientEvents
+				.MESSAGE_CREATED,
+			this
+				.boundItemReceiver,
+		);
+	}
 }

@@ -4,7 +4,16 @@ import { WebhookClient } from "../../../lib/webhook/WebhookClient";
 const client = new WebhookClient("");
 
 void (async (): Promise<unknown> => {
-    return client.send({
-        files: [{ name: "bbb.png", content: readFileSync("./bbb.png") }],
-    });
+	return client.send(
+		{
+			files: [
+				{
+					name: "bbb.png",
+					content: readFileSync(
+						"./bbb.png",
+					),
+				},
+			],
+		},
+	);
 })();
