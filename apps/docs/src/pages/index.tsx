@@ -2,6 +2,7 @@ import type { GetStaticPropsResult, InferGetStaticPropsType } from "next";
 import Head from "next/head";
 import Link from "next/link";
 import { CodeBlock, androidstudio } from "react-code-blocks";
+import Button from "../components/Button";
 import { Copiable } from "../components/Copiable";
 import { LayoutWrapper } from "../components/LayoutWrapper";
 
@@ -61,9 +62,7 @@ export default function Home({ buildDate }: InferGetStaticPropsType<typeof getSt
 					</div>
 					<div className="pt-2 flex justify-center">
 						<Link href="/docs">
-							<div className="py-2 px-4 bg-guilded rounded-lg transition-transform transform hover:scale-110">
-								<p className="text-xl text-gray font-bold">Read the Docs</p>
-							</div>
+							<Button>Read the Docs</Button>
 						</Link>
 					</div>
 					<div className="flex justify-center text-lg pt-8 text-white">
