@@ -3,5 +3,6 @@
     "entryPointStrategy": "packages",
     "entryPoints": ["../packages/*"],
     "name": "Guilded.JS",
+    "json": "../apps/docs/docs.json",
     "readme": "../README.md"
 }
