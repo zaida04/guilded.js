@@ -70,7 +70,7 @@ export class GlobalGuildBanManager extends CacheableStructManager<string, Member
 	 * @param userId The ID of the user.
 	 * @returns A Promise that resolves with the newly created member ban.
 	 */
-	async ban(serverId: string, userId: string, reason: string): Promise<MemberBan> {
+	async ban(serverId: string, userId: string, reason?: string): Promise<MemberBan> {
 		const data = await this.client.rest.router.memberBans.serverMemberBanCreate({
 			serverId,
 			userId,
