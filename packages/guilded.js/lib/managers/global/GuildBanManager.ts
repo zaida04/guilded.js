@@ -74,7 +74,9 @@ export class GlobalGuildBanManager extends CacheableStructManager<string, Member
 		const data = await this.client.rest.router.memberBans.serverMemberBanCreate({
 			serverId,
 			userId,
-			reason
+			requestBody: {
+				reason,
+			},
 		});
 		const newMemberBan = new MemberBan(this.client, {
 			serverId,
