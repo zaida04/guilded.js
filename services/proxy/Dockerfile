@@ -6,7 +6,7 @@ RUN apk add --update \
 && apk add --no-cache --virtual .build-deps curl \
 && corepack enable && corepack prepare pnpm@8.6.3 --activate
 
-COPY tsconfig.json package.json pnpm-lock.yaml pnpm-workspace.yaml ./
+COPY tsconfig.json package.json bun.lockb ./
 COPY ./packages/api/. ./packages/api/
 
 COPY ./services/proxy/package.json ./services/proxy/tsconfig.json ./services/proxy/

@@ -6,7 +6,6 @@ coverage/
 packages/api/preserve/**
 .turbo
 
-.npmrc
 *.tsbuildinfo
 *.log
 *.env

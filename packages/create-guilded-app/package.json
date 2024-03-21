@@ -12,7 +12,8 @@
     "scripts": {
         "build": "tsc",
         "build:typecheck": "tsc --noEmit",
-        "prepublishOnly": "rimraf dist/ && rimraf types/ && bun run build"
+        "prepublishOnly": "rimraf dist/ && rimraf types/ && bun run build",
+        "release": "npm publish"
     },
     "devDependencies": {
         "@types/node": "18.16.12",

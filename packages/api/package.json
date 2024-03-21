@@ -10,6 +10,7 @@
         "build": "tsc && gen-esm-wrapper . ./dist/index.mjs",
         "build:typecheck": "tsc --noEmit",
         "prepublishOnly": "rimraf dist/ && rimraf types/ && bun run build",
+        "release": "npm publish",
         "router:preserve": "ts-node scripts/pre-gen-router.ts",
         "router:restore": "ts-node scripts/post-gen-router.ts",
         "generate:ws": "openapi-typescript \"https://www.guilded.gg/api/v1/socket-open-api-schema.json\" --output lib/generated/api-typings/v1/ws.ts",
