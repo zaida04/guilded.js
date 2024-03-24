@@ -1,4 +1,4 @@
-export default abstract class LoggerAdapter {
+export abstract class LoggerAdapter {
 	public abstract error(message: string): void | Promise<void>;
 	public abstract warn(message: string): void | Promise<void>;
 	public abstract info(message: string): void | Promise<void>;

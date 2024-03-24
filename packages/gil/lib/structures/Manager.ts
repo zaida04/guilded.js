@@ -1,7 +1,7 @@
-import GilClient from "../GilClient";
+import { GilClient } from "../GilClient";
 
-export default abstract class Manager {
-	public constructor(public readonly client: GilClient) {}
+export abstract class Manager {
+	public constructor(public readonly gil: GilClient) {}
 
 	public abstract init(): void | Promise<void>;
 }

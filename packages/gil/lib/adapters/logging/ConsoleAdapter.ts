@@ -1,6 +1,6 @@
-import LoggerAdapter from "./LoggerAdapter";
+import { LoggerAdapter } from "./LoggerAdapter";
 
-export default class ConsoleAdapter extends LoggerAdapter {
+export class ConsoleAdapter extends LoggerAdapter {
 	public error(message: string): void {
 		console.error(`[ERROR] ${message}`);
 	}
