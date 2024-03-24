@@ -36,6 +36,7 @@ export class TaskManager extends Manager {
 			absolute: true,
 			concurrency: 10,
 		});
+		if (!files.length) return this.gil.logger.warn("Despite providing a task directory, no tasks were found.");
 
 		for (const file of files) {
 			const imported = await import(file);

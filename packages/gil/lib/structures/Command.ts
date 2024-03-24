@@ -52,6 +52,7 @@ export class CommandManager extends Manager {
 			absolute: true,
 			concurrency: 10,
 		});
+		if (!files.length) return this.gil.logger.warn("Despite providing a command directory, no commands were found.");
 
 		for (const file of files) {
 			const imported = await import(file);
