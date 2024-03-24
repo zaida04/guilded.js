@@ -32,6 +32,7 @@ export class GilClient {
 		await this.listeners.init();
 		await this.commands.init();
 
+		this.logger.info("Starting client...");
 		// await this.client.login();
 	}
 }
