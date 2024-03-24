@@ -7,11 +7,11 @@ interface TaskOptions {
 	// For example, you can use crons like "0 0 * * *" to run the task every day at midnight.
 	interval: string;
 }
-export default abstract class Task<CustomContext extends {}> {
+export default abstract class Task {
 	public constructor(
 		public readonly client: GilClient,
 		public readonly options: TaskOptions,
 	) {}
 
-	public abstract execute(customContext: CustomContext): unknown | Promise<unknown>;
+	public abstract execute(): unknown | Promise<unknown>;
 }
