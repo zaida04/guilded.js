@@ -1,29 +1,17 @@
-import type { BotClient } from "../BotClient";
+import GilClient from "../GilClient";
 
-export abstract class Task {
-	/**
-	 * The amount of time this task should take to run. Defaults to 1 hour(3,600,000 ms)
-	 */
-	millisecondsInterval = 60 * 60 * 1_000;
-
-	/**
-	 * Whether or not this task should run immediately on startup. Default to false.
-	 */
-	runOnStartup = false;
-
-	/**
-	 * Whether this task requires the bot to be fully ready before running. Default to false.
-	 */
-	requireReady = false;
-
-	constructor(
-		public readonly client: BotClient,
-		public name: string,
+interface TaskOptions {
+	// The internal-safe name of the task
+	name: string;
+	// The interval to run the task. You can put anything that https://github.com/breejs/bree supports.
+	// For example, you can use crons like "0 0 * * *" to run the task every day at midnight.
+	interval: string;
+}
+export default abstract class Task<CustomContext extends {}> {
+	public constructor(
+		public readonly client: GilClient,
+		public readonly options: TaskOptions,
 	) {}
 
-	abstract execute(): Promise<unknown> | unknown;
-
-	abstract init(): Promise<unknown> | unknown;
+	public abstract execute(customContext: CustomContext): unknown | Promise<unknown>;
 }
-
-export default Task;
