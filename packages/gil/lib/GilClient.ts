@@ -25,14 +25,24 @@ export class GilClient {
 	public readonly listeners = new ListenerManager(this);
 	public readonly tasks = new TaskManager(this);
 
-	public constructor(public options: GilClientOptions) {}
+	public constructor(public options: GilClientOptions) {
+		if (!options.token) throw new Error("No token provided");
+		if (!options.token.startsWith("gapi_")) throw new Error("Invalid token provided");
+	}
 
 	public async start() {
 		await this.tasks.init();
 		await this.listeners.init();
 		await this.commands.init();
+		this.hookClientInternals();
 
 		this.logger.info("Starting client...");
-		// await this.client.login();
+		await this.client.login();
+	}
+
+	private hookClientInternals() {
+		this.client.ws.emitter.on("error", this.logger.warn);
+		this.client.ws.emitter.on("exit", this.logger.warn);
+		// this.client.ws.emitter.on("debug", this.logger.debug);
 	}
 }
