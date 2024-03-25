@@ -1,8 +1,8 @@
 import { Client, ClientOptions } from "guilded.js";
 import { ConsoleAdapter } from "./adapters/logging/ConsoleAdapter";
 import { LoggerAdapter } from "./adapters/logging/LoggerAdapter";
+import { ListenerManager } from "./defaults/ListenerManager";
 import { CommandManager } from "./structures/Command";
-import { ListenerManager } from "./structures/Listener";
 import { TaskManager } from "./structures/Task";
 
 interface GilClientOptions {
