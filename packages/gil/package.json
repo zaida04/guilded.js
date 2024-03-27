@@ -21,7 +21,8 @@
     "@discordjs/collection": "^1.5.1",
     "colorette": "^2.0.20",
     "fast-glob": "^3.3.2",
-    "guilded.js": "workspace:*"
+    "guilded.js": "workspace:*",
+    "typed-emitter": "^2.1.0"
   },
   "contributors": [
     {
