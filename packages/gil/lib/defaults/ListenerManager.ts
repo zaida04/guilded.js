@@ -5,11 +5,12 @@ import { Listener } from "../structures/Listener";
 import { Manager } from "../structures/Manager";
 
 import { GilEvents } from "../GilClient";
+import CommandMessageListener from "./CommandMessageListener";
 import MessageListener from "./MessageListener";
 import ReadyListener from "./ReadyListener";
 
 export class ListenerManager extends Manager {
-	public listeners = new Collection<string, Listener<string>>();
+	public listeners = new Collection<string, Listener>();
 
 	public async init(): Promise<void> {
 		if (!this.gil.options.listenerDirectory) {
@@ -33,13 +34,14 @@ export class ListenerManager extends Manager {
 					continue;
 				}
 
-				const createdListener: Listener<keyof ClientEvents | keyof GilEvents> = new imported.default(this.gil);
+				const createdListener: Listener = new imported.default(this.gil);
 				this.gil.logger.info(`Listener ${createdListener.options.event} loaded.`);
 				this.listeners.set(createdListener.options.event, createdListener);
 			}
 		}
 		this.listeners.set("ready", new ReadyListener(this.gil));
 		this.listeners.set("messageCreated", new MessageListener(this.gil));
+		this.listeners.set("commandMessage", new CommandMessageListener(this.gil));
 
 		for (const listener of this.listeners.values()) {
 			if (listener.options.emitter === "gjs") {

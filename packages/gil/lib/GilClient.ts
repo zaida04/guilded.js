@@ -1,10 +1,11 @@
 import EventEmitter from "node:events";
-import { Client, ClientOptions, Member, Message } from "guilded.js";
+import { Client, ClientOptions } from "guilded.js";
 import TypedEmitter from "typed-emitter";
-import { DatabaseAdapter, StoredServer } from "./adapters/db/DatabaseAdapter";
+import { DatabaseAdapter } from "./adapters/db/DatabaseAdapter";
 import { ConsoleAdapter } from "./adapters/logging/ConsoleAdapter";
 import { LoggerAdapter } from "./adapters/logging/LoggerAdapter";
 import { ListenerManager } from "./defaults/ListenerManager";
+import { GilEvents } from "./events";
 import { CommandManager } from "./structures/Command";
 import { TaskManager } from "./structures/Task";
 
@@ -12,11 +13,16 @@ interface GilClientOptions {
 	token: string;
 	clientOptions?: ClientOptions;
 	customContext?: unknown;
+	// adapters
 	loggingAdapter?: LoggerAdapter;
 	databaseAdapter: DatabaseAdapter;
+	// dirs
 	taskDirectory?: string;
 	commandDirectory: string;
 	listenerDirectory?: string;
+	// other
+	operators?: string[];
+	premiumPrioritys: string[];
 }
 export class GilClient {
 	public readonly client = new Client({
@@ -52,17 +58,3 @@ export class GilClient {
 		// this.client.ws.emitter.on("debug", this.logger.debug);
 	}
 }
-
-export type GilEvents = {
-	nonCommandMessage(context: {
-		message: Message;
-		member: Member;
-		server: StoredServer;
-	}): unknown;
-	commandMessage(context: {
-		message: Message;
-		member: Member;
-		server: StoredServer;
-		prefix: string;
-	}): unknown;
-};
