@@ -1,73 +1,78 @@
 {
-    "name": "@guildedjs/gil",
-    "version": "0.5.0",
-    "description": "Framework for guilded.js that allows you to build bots with ease.",
-    "author": "Zaid \"Nico\" <contact@nico.engineer>",
-    "license": "MIT",
-    "main": "dist/index.js",
-    "types": "types/index.d.ts",
-    "scripts": {
-        "test": "ts-node test/index.ts",
-        "build": "tsc && gen-esm-wrapper . ./dist/index.mjs",
-        "build:typecheck": "tsc --noEmit",
-        "prepublishOnly": "rimraf dist/ && rimraf types/ && bun run build",
-        "release": "npm publish"
+  "name": "@guildedjs/gil",
+  "version": "0.5.0",
+  "description": "Framework for guilded.js that allows you to build bots with ease.",
+  "author": "Zaid \"Nico\" <contact@nico.engineer>",
+  "license": "MIT",
+  "main": "dist/index.js",
+  "types": "types/index.d.ts",
+  "scripts": {
+    "test": "ts-node test/index.ts",
+    "build": "tsc && gen-esm-wrapper . ./dist/index.mjs",
+    "build:typecheck": "tsc --noEmit",
+    "prepublishOnly": "rimraf dist/ && rimraf types/ && bun run build",
+    "release": "npm publish"
+  },
+  "devDependencies": {
+    "@types/mongoose": "^5.11.97",
+    "dotenv": "^16.0.3",
+    "mongoose": "^8.2.3",
+    "typescript": "5.0.4"
+  },
+  "dependencies": {
+    "@discordjs/collection": "^1.5.1",
+    "colorette": "^2.0.20",
+    "fast-glob": "^3.3.2",
+    "guilded.js": "workspace:*",
+    "lexure": "^0.17.0",
+    "typed-emitter": "^2.1.0"
+  },
+  "contributors": [
+    {
+      "name": "Zaid \"Nico\"",
+      "email": "contact@nico.engineer",
+      "url": "https://github.com/zaida04"
     },
-    "devDependencies": {
-        "dotenv": "^16.0.3",
-        "typescript": "5.0.4"
+    {
+      "name": "Skillz4Killz",
+      "email": "guildedjs@drskillz.33mail.com",
+      "url": "https://github.com/Skillz4Killz"
     },
-    "dependencies": {
-        "@discordjs/collection": "^1.5.1",
-        "colorette": "^2.0.20",
-        "guilded.js": "workspace:*"
+    {
+      "name": "Uhuh \"Dylan\"",
+      "email": "dylan@panku.io",
+      "url": "https://github.com/uhuh"
     },
-    "contributors": [
-        {
-            "name": "Zaid \"Nico\"",
-            "email": "contact@nico.engineer",
-            "url": "https://github.com/zaida04"
-        },
-        {
-            "name": "Skillz4Killz",
-            "email": "guildedjs@drskillz.33mail.com",
-            "url": "https://github.com/Skillz4Killz"
-        },
-        {
-            "name": "Uhuh \"Dylan\"",
-            "email": "dylan@panku.io",
-            "url": "https://github.com/uhuh"
-        },
-        {
-            "name": "DaStormer",
-            "email": "dastormer@stormdevelopmentz.xyz",
-            "url": "https://github.com/DaStormer"
-        }
-    ],
-    "exports": {
-        ".": {
-            "require": "./dist/index.js",
-            "import": "./dist/index.mjs"
-        },
-        "./": "./"
+    {
+      "name": "DaStormer",
+      "email": "dastormer@stormdevelopmentz.xyz",
+      "url": "https://github.com/DaStormer"
+    }
+  ],
+  "exports": {
+    ".": {
+      "require": "./dist/index.js",
+      "import": "./dist/index.mjs"
     },
-    "keywords": [
-        "guilded",
-        "guildedjs",
-        "guilded.js",
-        "guilded-api"
-    ],
-    "files": [
-        "dist",
-        "types"
-    ],
-    "homepage": "https://github.com/zaida04/guilded.js/tree/main/packages/gil#readme",
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/zaida04/guilded.js.git"
-    },
-    "bugs": {
-        "url": "https://github.com/zaida04/guilded.js/issues"
-    },
-    "gitHead": "eee38a19e0bfa812d7136cc78a6bc99e0b402b0c"
+    "./": "./"
+  },
+  "keywords": [
+    "guilded",
+    "guildedjs",
+    "guilded.js",
+    "guilded-api"
+  ],
+  "files": [
+    "dist",
+    "types"
+  ],
+  "homepage": "https://github.com/zaida04/guilded.js/tree/main/packages/gil#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zaida04/guilded.js.git"
+  },
+  "bugs": {
+    "url": "https://github.com/zaida04/guilded.js/issues"
+  },
+  "gitHead": "eee38a19e0bfa812d7136cc78a6bc99e0b402b0c"
 }
