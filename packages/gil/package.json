@@ -25,6 +25,9 @@
     "lexure": "^0.17.0",
     "typed-emitter": "^2.1.0"
   },
+  "peerDependencies": {
+    "mongoose": "8.2.3"
+  },
   "contributors": [
     {
       "name": "Zaid \"Nico\"",

@@ -22,7 +22,7 @@ interface GilClientOptions {
 	listenerDirectory?: string;
 	// other
 	operators?: string[];
-	premiumPrioritys: string[];
+	premiumPrioritys?: string[];
 }
 export class GilClient {
 	public readonly client = new Client({
@@ -53,7 +53,9 @@ export class GilClient {
 	}
 
 	private hookClientInternals() {
-		this.client.ws.emitter.on("error", this.logger.warn);
+		this.client.ws.emitter.on("error", (reason, err, data) => {
+			console.log(reason, err, data);
+		});
 		this.client.ws.emitter.on("exit", this.logger.warn);
 		// this.client.ws.emitter.on("debug", this.logger.debug);
 	}

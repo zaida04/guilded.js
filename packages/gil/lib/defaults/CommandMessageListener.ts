@@ -44,7 +44,7 @@ export default class CommandMessageListener extends Listener {
 				return;
 			}
 
-			if (command.options.serverPremiumLevel) {
+			if (command.options.serverPremiumLevel && this.gil.options.premiumPrioritys) {
 				const serverPremiumPriority = this.gil.options.premiumPrioritys.indexOf(params.server.premium_level);
 				const requiredMinimumPriority = this.gil.options.premiumPrioritys.indexOf(command.options.serverPremiumLevel);
 

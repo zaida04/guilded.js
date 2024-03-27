@@ -4,7 +4,7 @@ import { ClientEvents } from "guilded.js";
 import { Listener } from "../structures/Listener";
 import { Manager } from "../structures/Manager";
 
-import { GilEvents } from "../GilClient";
+import { GilEvents } from "../events";
 import CommandMessageListener from "./CommandMessageListener";
 import MessageListener from "./MessageListener";
 import ReadyListener from "./ReadyListener";

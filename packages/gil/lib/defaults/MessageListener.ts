@@ -26,6 +26,11 @@ export default class MessageListener extends Listener {
 		}
 
 		const server = await this.gil.db.getServer(message.serverId);
+		if (!server) {
+			this.gil.logger.debug("Server was not found", message.id);
+			return;
+		}
+
 		const member = await this.gil.client.members.fetch(message.serverId, message.authorId);
 		if (!member || member.user?.type === UserType.Bot) {
 			this.gil.logger.debug("Member was not found or is a bot", message.id);

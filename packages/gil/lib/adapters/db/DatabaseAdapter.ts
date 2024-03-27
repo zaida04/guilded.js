@@ -1,5 +1,5 @@
 export abstract class DatabaseAdapter {
-	public abstract getServer(serverId: string): Promise<StoredServer>;
+	public abstract getServer(serverId: string): Promise<StoredServer | null>;
 	public abstract getRoles(serverId: string): Promise<StoredRole[]>;
 }
 
