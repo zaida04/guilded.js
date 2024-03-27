@@ -43,10 +43,18 @@ export async function convertArguments(params: {
 
 	for (let i = 0; i < commandArgs.length; i++) {
 		const currentArg = commandArgs[i];
+		const currentInput = params.args[i];
 
 		if (currentArg.optional && params.args.length <= i) {
 			castedArguments[currentArg.name] = null;
 			continue;
+		}
+
+		if (currentInput === undefined) {
+			if (currentArg.optional) {
+				castedArguments[currentArg.name] = null;
+				continue;
+			}
 		}
 
 		const validator = validators[currentArg.type].validate;
@@ -56,7 +64,7 @@ export async function convertArguments(params: {
 			message: params.message,
 			argument: castedArguments[currentArg.name],
 			argIndex: i,
-			input: params.args[i],
+			input: currentInput,
 		});
 
 		if (validation_run.error) {

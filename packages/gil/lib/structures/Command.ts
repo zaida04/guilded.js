@@ -45,10 +45,9 @@ export abstract class Command {
 
 	public abstract execute(commandContext: CommandExecuteContext): unknown | Promise<unknown>;
 }
-
-interface CommandExecuteContext {
+export interface CommandExecuteContext<Args = Record<string, CommandArgument>> {
 	message: Message;
-	args: Record<string, CommandArgument>;
+	args: Args;
 }
 
 export class CommandManager extends Manager {
