@@ -25,10 +25,10 @@ export default class MessageListener extends Listener {
 			return;
 		}
 
-		const server = await this.gil.db.getServer(message.serverId);
+		let server = await this.gil.db.getServer(message.serverId);
 		if (!server) {
-			this.gil.logger.debug("Server was not found", message.id);
-			return;
+			this.gil.logger.debug("Server was not found, creating...", message.id);
+			server = await this.gil.db.createServer(message.serverId);
 		}
 
 		const member = await this.gil.client.members.fetch(message.serverId, message.authorId);

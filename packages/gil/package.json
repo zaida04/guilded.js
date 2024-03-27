@@ -14,7 +14,9 @@
     "release": "npm publish"
   },
   "devDependencies": {
+    "@types/mongoose": "^5.11.97",
     "dotenv": "^16.0.3",
+    "mongoose": "^8.2.3",
     "typescript": "5.0.4"
   },
   "dependencies": {
@@ -24,9 +26,6 @@
     "guilded.js": "workspace:*",
     "lexure": "^0.17.0",
     "typed-emitter": "^2.1.0"
-  },
-  "peerDependencies": {
-    "mongoose": "8.2.3"
   },
   "contributors": [
     {

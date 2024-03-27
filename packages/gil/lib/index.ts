@@ -5,5 +5,7 @@ export * from "./structures/Task";
 export * from "./structures/Manager";
 export * from "./adapters/logging/ConsoleAdapter";
 export * from "./adapters/logging/LoggerAdapter";
+export * from "./adapters/db/DatabaseAdapter";
+export * from "./adapters/db/MongoAdapter";
 // export * from "./adapters/logging/WinstonAdapter";
 // export * from "./adapters/logging/PinoAdapter";
