@@ -4,11 +4,12 @@ import { ClientEvents } from "guilded.js";
 import { Listener } from "../structures/Listener";
 import { Manager } from "../structures/Manager";
 
+import { GilEvents } from "../GilClient";
 import MessageListener from "./MessageListener";
 import ReadyListener from "./ReadyListener";
 
 export class ListenerManager extends Manager {
-	public listeners = new Collection<string, Listener<keyof ClientEvents>>();
+	public listeners = new Collection<string, Listener<string>>();
 
 	public async init(): Promise<void> {
 		if (!this.gil.options.listenerDirectory) {
@@ -32,7 +33,7 @@ export class ListenerManager extends Manager {
 					continue;
 				}
 
-				const createdListener: Listener<keyof ClientEvents> = new imported.default(this.gil);
+				const createdListener: Listener<keyof ClientEvents | keyof GilEvents> = new imported.default(this.gil);
 				this.gil.logger.info(`Listener ${createdListener.options.event} loaded.`);
 				this.listeners.set(createdListener.options.event, createdListener);
 			}
@@ -41,7 +42,11 @@ export class ListenerManager extends Manager {
 		this.listeners.set("messageCreated", new MessageListener(this.gil));
 
 		for (const listener of this.listeners.values()) {
-			this.gil.client.on(listener.options.event, listener.execute.bind(listener, { gil: this.gil }));
+			if (listener.options.emitter === "gjs") {
+				this.gil.client.on(listener.options.event as keyof ClientEvents, listener.execute.bind(listener, { gil: this.gil }));
+			} else {
+				this.gil.emitter.on(listener.options.event as keyof GilEvents, listener.execute.bind(listener, { gil: this.gil }));
+			}
 		}
 	}
 }
