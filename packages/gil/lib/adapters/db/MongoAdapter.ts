@@ -1,4 +1,3 @@
-// @ts-ignore
 import type mongoose from "mongoose";
 import { DatabaseAdapter, StoredRole, StoredServer } from "./DatabaseAdapter";
 

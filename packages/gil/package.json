@@ -14,7 +14,9 @@
     "release": "npm publish"
   },
   "devDependencies": {
+    "@types/better-sqlite3": "^7.6.9",
     "@types/mongoose": "^5.11.97",
+    "better-sqlite3": "^9.4.3",
     "dotenv": "^16.0.3",
     "mongoose": "^8.2.3",
     "pino": "^8.19.0",
