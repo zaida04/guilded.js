@@ -18,7 +18,8 @@ export class PostgresAdapter extends DatabaseAdapter {
 
 	public async getServer(serverId: string): Promise<StoredServer | null> {
 		const [server] = await this.pg`
-            SELECT * FROM ${this.pg(this.options.serverTable)} WHERE ${this.pg(this.options.serverIdKey)} = ${serverId}
+            SELECT * FROM ${this.pg(this.options.serverTable)} 
+			WHERE ${this.pg(this.options.serverIdKey)} = ${serverId}
         `;
 		if (!server) return null;
 
