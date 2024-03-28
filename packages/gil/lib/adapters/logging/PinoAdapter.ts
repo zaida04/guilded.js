@@ -18,8 +18,9 @@ export class PinoAdapter extends LoggerAdapter {
 		this.logger.info(message);
 	}
 
-	public debug(message: string, decorate?: string): void {
-		if (decorate) this.logger.debug(`[DEBUG] ${decorate}: ${message}`);
-		else this.logger.debug(`[DEBUG] ${message}`);
+	// biome-ignore lint/suspicious/noExplicitAny: Allow for verbose logging
+	public debug(message: string, decorate?: any): void {
+		if (decorate) this.logger.debug(typeof decorate === "string" ? { extra_info: decorate } : decorate, message);
+		else this.logger.debug(message);
 	}
 }
