@@ -4,9 +4,9 @@ import TypedEmitter from "typed-emitter";
 import { DatabaseAdapter } from "./adapters/db/DatabaseAdapter";
 import { ConsoleAdapter } from "./adapters/logging/ConsoleAdapter";
 import { LoggerAdapter } from "./adapters/logging/LoggerAdapter";
-import { ListenerManager } from "./defaults/ListenerManager";
 import { GilEvents } from "./events";
 import { CommandManager } from "./structures/Command";
+import { ListenerManager } from "./structures/ListenerManager";
 import { TaskManager } from "./structures/Task";
 
 interface GilClientOptions {
@@ -32,7 +32,6 @@ export class GilClient {
 	public readonly emitter = new EventEmitter() as TypedEmitter<GilEvents>;
 	public readonly logger = this.options.loggingAdapter ?? new ConsoleAdapter();
 	public readonly db = this.options.databaseAdapter;
-
 	public readonly commands = new CommandManager(this);
 	public readonly listeners = new ListenerManager(this);
 	public readonly tasks = new TaskManager(this);
