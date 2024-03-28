@@ -43,12 +43,15 @@ export abstract class Command {
 		public readonly options: CommandOptions,
 	) {}
 
-	public abstract execute(commandContext: CommandExecuteContext): unknown | Promise<unknown>;
+	public abstract execute(commandContext: CommandContext<unknown, unknown>): unknown | Promise<unknown>;
 }
+
 export interface CommandExecuteContext<Args = Record<string, CommandArgument>> {
 	message: Message;
 	args: Args;
 }
+
+export type CommandContext<T, Args = Record<string, CommandArgument>> = T & CommandExecuteContext<Args>;
 
 export class CommandManager extends Manager {
 	public readonly commands = new Collection<string, Command>();

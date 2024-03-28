@@ -12,7 +12,7 @@ import { TaskManager } from "./structures/Task";
 interface GilClientOptions {
 	token: string;
 	clientOptions?: ClientOptions;
-	customContext?: unknown;
+	customCommandContext?: (data: { serverId: string; authorId: string; messageId: string }) => Promise<Record<string, unknown>>;
 	// adapters
 	loggingAdapter?: LoggerAdapter;
 	databaseAdapter: DatabaseAdapter;

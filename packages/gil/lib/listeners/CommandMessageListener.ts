@@ -73,10 +73,19 @@ export default class CommandMessageListener extends Listener {
 			return;
 		}
 
+		const context = this.gil.options.customCommandContext
+			? await this.gil.options.customCommandContext({
+					serverId: params.server.server_id,
+					authorId: params.member.id,
+					messageId: params.message.id,
+			  })
+			: {};
+
 		try {
 			await command.execute({
 				message: params.message,
 				args: attemptConvertArguments.arguments,
+				...context,
 			});
 		} catch (e) {
 			// todo: user friendly error "something went wrong" message

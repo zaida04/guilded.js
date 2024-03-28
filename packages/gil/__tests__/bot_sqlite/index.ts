@@ -4,14 +4,15 @@ import { GilClient } from "../../lib/GilClient";
 import { BetterSQLite3Adapter } from "../../lib/adapters/db/BetterSQLite3Adapter";
 
 import sqlite from "better-sqlite3";
-import { ConsoleAdapter } from "../../lib";
+import pino from "pino";
+import { PinoAdapter } from "../../lib";
 const database = sqlite("test.db");
 
 const YokiBot = new GilClient({
 	token: process.env.TOKEN!,
 	commandDirectory: join(__dirname, "..", "shared", "commands"),
 	listenerDirectory: join(__dirname, "listeners"),
-	loggingAdapter: new ConsoleAdapter(),
+	loggingAdapter: new PinoAdapter(pino({ base: null })),
 	databaseAdapter: new BetterSQLite3Adapter({
 		sqliteInstance: database,
 		serverTable: "servers",
