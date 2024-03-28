@@ -8,11 +8,17 @@ import { GilEvents } from "./events";
 import { CommandManager } from "./structures/Command";
 import { ListenerManager } from "./structures/ListenerManager";
 import { TaskManager } from "./structures/Task";
+import { CommandCustomContextFn, CommandErrorHandler } from "./types";
 
 interface GilClientOptions {
 	token: string;
 	clientOptions?: ClientOptions;
-	customCommandContext?: (data: { serverId: string; authorId: string; messageId: string }) => Promise<Record<string, unknown>>;
+	contexts?: {
+		command: CommandCustomContextFn;
+	};
+	errorHandler?: {
+		command: CommandErrorHandler;
+	};
 	// adapters
 	loggingAdapter?: LoggerAdapter;
 	databaseAdapter: DatabaseAdapter;

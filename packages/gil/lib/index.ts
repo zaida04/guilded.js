@@ -11,3 +11,4 @@ export * from "./adapters/db/PostgresAdapter";
 export * from "./adapters/db/BetterSQLite3Adapter";
 // export * from "./adapters/logging/WinstonAdapter";
 export * from "./adapters/logging/PinoAdapter";
+export * from "./types";

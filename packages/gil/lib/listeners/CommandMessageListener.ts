@@ -73,13 +73,19 @@ export default class CommandMessageListener extends Listener {
 			return;
 		}
 
-		const context = this.gil.options.customCommandContext
-			? await this.gil.options.customCommandContext({
-					serverId: params.server.server_id,
-					authorId: params.member.id,
-					messageId: params.message.id,
+		const context = this.gil.options?.contexts?.command
+			? await this.gil.options.contexts.command({
+					server: params.server,
+					message: params.message,
 			  })
 			: {};
+
+		this.gil.emitter.emit("commandRan", {
+			message: params.message,
+			member: params.member,
+			server: params.server,
+			command,
+		});
 
 		try {
 			await command.execute({
@@ -92,6 +98,12 @@ export default class CommandMessageListener extends Listener {
 
 			this.gil.logger.error(e as Error);
 			this.gil.logger.warn(`Error executing command ${name}`, params.message.id);
+			this.gil.options.errorHandler?.command?.(e as Error, {
+				message: params.message,
+				member: params.member,
+				server: params.server,
+				command,
+			});
 		}
 	}
 

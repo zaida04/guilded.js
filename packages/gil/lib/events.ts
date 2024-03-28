@@ -1,5 +1,6 @@
 import { Member, Message } from "guilded.js";
 import { StoredServer } from "./adapters/db/DatabaseAdapter";
+import { Command } from "./structures/Command";
 
 export interface NonCommandMessageParams {
 	message: Message;
@@ -14,7 +15,15 @@ export interface CommandMessageParams {
 	prefix: string;
 }
 
+export interface CommandRanParams {
+	message: Message;
+	member: Member;
+	server: StoredServer;
+	command: Command;
+}
+
 export type GilEvents = {
 	nonCommandMessage(params: NonCommandMessageParams): unknown;
 	commandMessage(params: CommandMessageParams): unknown;
+	commandRan(params: CommandRanParams): unknown;
 };
