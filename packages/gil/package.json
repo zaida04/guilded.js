@@ -17,6 +17,7 @@
     "@types/mongoose": "^5.11.97",
     "dotenv": "^16.0.3",
     "mongoose": "^8.2.3",
+    "pino": "^8.19.0",
     "typescript": "5.0.4"
   },
   "dependencies": {

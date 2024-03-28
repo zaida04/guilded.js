@@ -8,4 +8,4 @@ export * from "./adapters/logging/LoggerAdapter";
 export * from "./adapters/db/DatabaseAdapter";
 export * from "./adapters/db/MongoAdapter";
 // export * from "./adapters/logging/WinstonAdapter";
-// export * from "./adapters/logging/PinoAdapter";
+export * from "./adapters/logging/PinoAdapter";

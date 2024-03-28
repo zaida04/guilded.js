@@ -2,6 +2,7 @@ import { join } from "path";
 import "dotenv/config";
 import { GilClient } from "../../lib/GilClient";
 import { MongoAdapter } from "../../lib/adapters/db/MongoAdapter";
+import { PinoAdapter } from "../../lib/adapters/logging/PinoAdapter";
 
 import mongoose from "mongoose";
 import Server from "./db/Server";
@@ -18,6 +19,7 @@ const YokiBot = new GilClient({
 	token: process.env.TOKEN!,
 	commandDirectory: join(__dirname, "commands"),
 	listenerDirectory: join(__dirname, "listeners"),
+	loggingAdapter: new PinoAdapter(),
 	databaseAdapter: new MongoAdapter({
 		serverModel: Server,
 		serverIdKey: "server_id",
