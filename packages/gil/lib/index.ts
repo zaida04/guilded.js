@@ -7,5 +7,7 @@ export * from "./adapters/logging/ConsoleAdapter";
 export * from "./adapters/logging/LoggerAdapter";
 export * from "./adapters/db/DatabaseAdapter";
 export * from "./adapters/db/MongoAdapter";
+export * from "./adapters/db/PostgresAdapter";
+export * from "./adapters/db/BetterSQLite3Adapter";
 // export * from "./adapters/logging/WinstonAdapter";
 export * from "./adapters/logging/PinoAdapter";

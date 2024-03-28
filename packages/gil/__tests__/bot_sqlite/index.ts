@@ -16,7 +16,6 @@ const YokiBot = new GilClient({
 		sqliteInstance: database,
 		serverTable: "servers",
 		serverIdKey: "server_id",
-		serverStaffRolesKey: "staff_roles",
 		roleTable: "roles",
 	}),
 });

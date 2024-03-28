@@ -7,7 +7,6 @@ export class BetterSQLite3Adapter extends DatabaseAdapter {
 			sqliteInstance: sqlite.Database;
 			serverTable: string;
 			serverIdKey: string;
-			serverStaffRolesKey: string;
 			roleTable: string;
 		},
 	) {

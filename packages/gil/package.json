@@ -20,6 +20,7 @@
     "dotenv": "^16.0.3",
     "mongoose": "^8.2.3",
     "pino": "^8.19.0",
+    "postgres": "^3.4.4",
     "typescript": "5.0.4"
   },
   "dependencies": {
