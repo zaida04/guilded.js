@@ -231,7 +231,7 @@ export class Client extends (EventEmitter as unknown as new () => TypedEmitter<C
 		emoteId: number;
 		expiresAt?: Date | number | string;
 	}): Promise<void> {
-		let resolvedDate: Date;
+		let resolvedDate: Date | undefined;
 		if (options.expiresAt instanceof Date) {
 			resolvedDate = options.expiresAt;
 		} else if (typeof options.expiresAt === "string") {
@@ -239,7 +239,7 @@ export class Client extends (EventEmitter as unknown as new () => TypedEmitter<C
 		} else if (typeof options.expiresAt === "number") {
 			resolvedDate = new Date(Date.now() + options.expiresAt);
 		} else {
-			resolvedDate = new Date(Date.now());
+			resolvedDate = options.expiresAt;
 		}
 
 		await this.rest.router.userStatus.userStatusCreate({
@@ -247,7 +247,7 @@ export class Client extends (EventEmitter as unknown as new () => TypedEmitter<C
 			requestBody: {
 				content: options.content,
 				emoteId: options.emoteId,
-				expiresAt: resolvedDate.toISOString() ?? undefined,
+				expiresAt: resolvedDate?.toISOString() ?? undefined,
 			},
 		});
 	}
