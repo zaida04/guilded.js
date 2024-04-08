@@ -231,13 +231,15 @@ export class Client extends (EventEmitter as unknown as new () => TypedEmitter<C
 		emoteId: number;
 		expiresAt?: Date | number | string;
 	}): Promise<void> {
-		let resolvedDate: Date;
+		let resolvedDate: Date | undefined;
 		if (options.expiresAt instanceof Date) {
 			resolvedDate = options.expiresAt;
 		} else if (typeof options.expiresAt === "string") {
 			resolvedDate = new Date(options.expiresAt);
 		} else if (typeof options.expiresAt === "number") {
 			resolvedDate = new Date(Date.now() + options.expiresAt);
+		} else {
+			resolvedDate = options.expiresAt;
 		}
 
 		await this.rest.router.userStatus.userStatusCreate({
