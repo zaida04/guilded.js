@@ -2,8 +2,15 @@
     "extends": "../../tsconfig.json",
     "compilerOptions": {
         "outDir": "./dist",
+        "types": [
+            "@types/bun"
+        ],
         "declarationDir": "./types"
     },
-    "include": ["./lib/**/*.ts"],
-    "exclude": ["*.test.ts"]
+    "include": [
+        "./lib/**/*.ts"
+    ],
+    "exclude": [
+        "*.test.ts"
+    ]
 }

@@ -25,6 +25,7 @@
   },
   "dependencies": {
     "@discordjs/collection": "^1.5.1",
+    "@types/bun": "^1.0.12",
     "colorette": "^2.0.20",
     "fast-glob": "^3.3.2",
     "guilded.js": "workspace:*",

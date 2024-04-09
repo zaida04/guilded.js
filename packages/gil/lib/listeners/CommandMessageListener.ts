@@ -111,7 +111,7 @@ export default class CommandMessageListener extends Listener {
 		}
 	}
 
-	private parseCommand(content: string, prefix: string): { name: string; args: string[] } | null {
+	public parseCommand(content: string, prefix: string): { name: string; args: string[] } | null {
 		const lexer = new lexure.Lexer(content);
 		lexer.setQuotes([
 			['"', '"'],
@@ -129,7 +129,7 @@ export default class CommandMessageListener extends Listener {
 		};
 	}
 
-	private userPermissionsCheck(options: {
+	public userPermissionsCheck(options: {
 		userRoles: string[];
 		serverRoles: StoredRole[];
 		requiredRoleType?: StoredRoleType;
