@@ -1,4 +1,3 @@
-import { Message, Role } from "guilded.js";
 import * as lexure from "lexure";
 import { GilClient } from "../GilClient";
 import { StoredRole, StoredRoleType } from "../adapters/db/DatabaseAdapter";
@@ -41,6 +40,11 @@ export default class CommandMessageListener extends Listener {
 
 			if (!permissionsCheck) {
 				this.gil.logger.debug(`User does not have permissions for command ${name}`, params.message.id);
+				await this.gil.send(params.message, "userMissingRole", {
+					args: {
+						requiredRole: [command.options.userRole!],
+					},
+				});
 				return;
 			}
 
@@ -50,7 +54,7 @@ export default class CommandMessageListener extends Listener {
 
 				if (serverPremiumPriority < requiredMinimumPriority) {
 					this.gil.logger.debug(`Server does not have the required premium level for command ${name}`, params.message.id);
-					// todo: allow user to put premium prompt message
+					await this.gil.send(params.message, "serverNotPremium");
 					return;
 				}
 			}

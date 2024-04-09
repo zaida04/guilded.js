@@ -1,20 +1,18 @@
-import { Command, CommandExecuteContext, GilClient } from "../../../lib";
+import { Command, CommandExecuteContext, CommandOptions, GilClient } from "../../../lib";
 
 export default class Help extends Command {
-	public constructor(client: GilClient) {
-		super(client, {
-			name: "help",
-			description: "Shows this help message.",
-			aliases: ["h"],
-			args: [
-				{
-					name: "command",
-					optional: true,
-					type: "string",
-				},
-			],
-		});
-	}
+	options = {
+		name: "help",
+		description: "Shows this help message.",
+		aliases: ["h"],
+		args: [
+			{
+				name: "command",
+				optional: true,
+				type: "string",
+			},
+		],
+	} satisfies CommandOptions;
 
 	public async execute(ctx: CommandExecuteContext<{ command: string }>) {
 		const { command } = ctx.args;
