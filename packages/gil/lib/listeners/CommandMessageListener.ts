@@ -73,7 +73,12 @@ export default class CommandMessageListener extends Listener {
 
 		if (attemptConvertArguments.error) {
 			this.gil.logger.debug(`Error converting arguments for command ${name}, reason: ${attemptConvertArguments.reason_code}`, params.message.id);
-			// TODO: in-depth error messages for users
+			await this.gil.send(params.message, "invalidArguments", {
+				args: {
+					reason_code: attemptConvertArguments.reason_code,
+					extra_info: attemptConvertArguments.extra_info,
+				},
+			});
 			return;
 		}
 
@@ -98,14 +103,22 @@ export default class CommandMessageListener extends Listener {
 				...context,
 			});
 		} catch (e) {
-			// todo: user friendly error "something went wrong" message
+			const error_id = this.gil.idGenerator();
 
-			this.gil.logger.error(e as Error);
+			this.gil.send(params.message, "errorCommand", {
+				args: {
+					error_message: e instanceof Error ? e.message : "An unknown error occurred",
+					support_server: this.gil.options.supportServer,
+					error_id,
+				},
+			});
+			this.gil.logger.error(e as Error, error_id);
 			this.gil.logger.warn(`Error executing command ${name}`, params.message.id);
 			this.gil.options.errorHandler?.command?.(e as Error, {
 				message: params.message,
 				member: params.member,
 				server: params.server,
+				error_id,
 				command,
 			});
 		}

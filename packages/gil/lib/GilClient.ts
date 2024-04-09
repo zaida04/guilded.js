@@ -14,6 +14,7 @@ import { CommandCustomContextFn, CommandErrorHandler } from "./types";
 interface GilClientOptions {
 	token: string;
 	clientOptions?: ClientOptions;
+	supportServer?: string;
 	contexts?: {
 		command: CommandCustomContextFn;
 	};
@@ -31,6 +32,7 @@ interface GilClientOptions {
 	// other
 	operators?: string[];
 	premiumPrioritys?: string[];
+	idGenerator?: () => string;
 }
 export class GilClient {
 	public readonly client = new Client({
@@ -47,6 +49,7 @@ export class GilClient {
 		...defaultResponses,
 		...(this.options.responses ?? {}),
 	};
+	public readonly idGenerator = this.options.idGenerator ?? (() => crypto.randomUUID());
 
 	public constructor(public options: GilClientOptions) {
 		if (!options.token) throw new Error("No token provided");
@@ -67,7 +70,7 @@ export class GilClient {
 		channel: { channelId: string },
 		key: T,
 		options?: {
-			args: DefaultResponseParams[T]["0"];
+			args: DefaultResponseParams[T][0];
 		},
 	): Promise<Message> {
 		const response = this.responses[key];

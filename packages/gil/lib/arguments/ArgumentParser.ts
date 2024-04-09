@@ -8,7 +8,7 @@ import number from "./args/number";
 import role from "./args/role";
 import string from "./args/string";
 
-export type Result<T> = ({ error: false } & T) | { error: true; reason_code: string };
+export type Result<T> = ({ error: false } & T) | { error: true; reason_code: string; extra_info?: unknown };
 export type CommandArgument = string | number | boolean | PartialMember | Message | Channel | Role | null;
 export type CommandArgumentType = "string" | "number" | "boolean" | "member" | "channel" | "role";
 export type CommandArgumentValidator = {
@@ -55,6 +55,8 @@ export async function convertArguments(params: {
 				castedArguments[currentArg.name] = null;
 				continue;
 			}
+
+			return { error: true, reason_code: "MISSING_ARGUMENT", extra_info: { argument: currentArg } };
 		}
 
 		const validator = validators[currentArg.type].validate;

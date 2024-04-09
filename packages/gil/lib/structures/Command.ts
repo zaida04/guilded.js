@@ -13,7 +13,7 @@ export interface CommandOptions {
 	// A brief description of the command
 	description?: string;
 	// The arguments this command takes
-	args?: { name: string; type: CommandArgumentType; optional?: boolean }[];
+	args?: CommandArg[];
 	// The category the command belongs to
 	category?: string;
 	// The command's aliases
@@ -37,6 +37,8 @@ export interface CommandOptions {
 	// The premium level the user must have to run this command
 	premiumUserLevel?: string;
 }
+export type CommandArg = { name: string; type: CommandArgumentType; optional?: boolean };
+
 export abstract class Command {
 	public constructor(
 		public readonly gil: GilClient,
