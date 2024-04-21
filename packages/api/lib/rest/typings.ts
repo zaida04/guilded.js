@@ -19,4 +19,8 @@ export type RestOptions = {
 	 * The version of the API to be used for making requests. By default, this will use the latest version that the library supports.
 	 */
 	version?: 1;
+	/**
+	 * The additional headers that will be added to each request done by RestManager.
+	 */
+	headers?: Record<string, string>;
 };

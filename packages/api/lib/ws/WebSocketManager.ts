@@ -85,8 +85,10 @@ export class WebSocketManager {
 
 	connect(): void {
 		this._debug(`Connecting to Guilded WS Gateway at url ${this.wsURL}.`);
+		// Since rest supplies custom headers after authorization header, WS will be the same in that regard
 		const headers: Record<string, string> = {
 			Authorization: `Bearer ${this.token}`,
+			...this.options.headers,
 		};
 
 		if (this.shouldRequestMissedEvents) {
@@ -287,6 +289,10 @@ export type WebSocketOptions = {
 	 * The version of the websocket to connect to.
 	 */
 	version?: 1;
+	/**
+	 * The additional headers that will be added to WebSocket request upon initial connection.
+	 */
+	headers?: Record<string, string>;
 };
 
 // eslint-disable-next-line @typescript-eslint/consistent-type-definitions

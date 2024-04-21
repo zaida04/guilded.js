@@ -48,6 +48,7 @@ export class Client extends (EventEmitter as unknown as new () => TypedEmitter<C
 	 * The websocket connection.
 	 */
 	ws = new WebSocketManager({
+		...this.options.ws,
 		token: this.options.token,
 	});
 
@@ -292,6 +293,25 @@ export type ClientOptions = {
 		 * @remarks If you want to use a custom API url, you can set this property to your custom url.
 		 */
 		proxyURL?: string;
+
+		/**
+		 * The headers that will be supplied in each request that the client, or more precisely, RestManager, will send.
+		 *
+		 * @remarks It's generally only recommended to supply headers that may be required for Guilded experiments, as vital headers will be supplied by Guilded.js.
+		 */
+		headers?: Record<string, string>;
+	};
+
+	/**
+	 * Options that will be given directly to WebSocket.
+	 */
+	ws?: {
+		/**
+		 * The headers that will be supplied when WebSocket is being initialized and its request is made.
+		 *
+		 * @remarks It's generally only recommended to supply headers that may be required for Guilded experiments, as vital headers will be supplied by Guilded.js.
+		 */
+		headers?: Record<string, string>;
 	};
 
 	/**
