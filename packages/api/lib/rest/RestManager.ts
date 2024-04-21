@@ -117,6 +117,9 @@ export class RestManager {
 				"User-Agent": `@guildedjs-rest/${packageDetails.version} Node.js ${process.version}`,
 				// Spread the other headers like authentication.
 				...headers,
+				// User supplided. This will be after Guilded.js default headers to allow modifying, but before request's specific one
+				// to still allow per-request modifications
+				...this.options.headers,
 				// Spread any additional headers passed from the method.
 				...data.headers,
 			},
