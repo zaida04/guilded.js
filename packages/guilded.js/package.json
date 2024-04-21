@@ -9,7 +9,7 @@
     "scripts": {
         "build": "tsc && gen-esm-wrapper . ./dist/index.mjs",
         "build:typecheck": "tsc --noEmit",
-        "prepublishOnly": "rimraf dist/ && rimraf types/ && bun run build",
+        "prepublishOnly": "rimraf dist/ && rimraf types/ && pnpm run build",
         "release": "npm publish"
     },
     "devDependencies": {

@@ -12,7 +12,7 @@
     "scripts": {
         "build": "tsc",
         "build:typecheck": "tsc --noEmit",
-        "prepublishOnly": "rimraf dist/ && rimraf types/ && bun run build",
+        "prepublishOnly": "rimraf dist/ && rimraf types/ && pnpm run build",
         "release": "npm publish"
     },
     "devDependencies": {
