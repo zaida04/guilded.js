@@ -13,18 +13,23 @@ jobs:
                   token: ${{ secrets.API_TOKEN_GITHUB }}
             - uses: oven-sh/setup-bun@v1
             
+            - name: Install Node.js
+              uses: actions/setup-node@v2
+              with:
+                  node-version: 20
+            
             - uses: pnpm/action-setup@v2
               name: Install pnpm
               id: pnpm-install
               with:
-                  version: 8.6.3
-                  run_install: false
+                  version: 8.12.1
+                  run_install: true
 
-            - name: Install dependencies
-              run: pnpm install
+            - name: Install turbo globally
+              run: pnpm install -g turbo
 
             - name: Build packages
-              run: pnpm run build
+              run: rm bun.lockb && pnpm turbo run build
 
             - name: Apply version changes to packages
               run: pnpm run changeset:version
