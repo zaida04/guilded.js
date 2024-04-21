@@ -12,15 +12,22 @@ jobs:
               with:
                   token: ${{ secrets.API_TOKEN_GITHUB }}
             - uses: oven-sh/setup-bun@v1
+            
+            - uses: pnpm/action-setup@v2
+              name: Install pnpm
+              id: pnpm-install
+              with:
+                  version: 8.6.3
+                  run_install: false
 
             - name: Install dependencies
-              run: bun install
+              run: pnpm install
 
             - name: Build packages
-              run: bun run build
+              run: pnpm run build
 
             - name: Apply version changes to packages
-              run: bun run changeset:version
+              run: pnpm run changeset:version
 
             - name: Commit package.json changes
               uses: EndBug/add-and-commit@v9
@@ -31,7 +38,7 @@ jobs:
                   push: true
 
             - name: Recursive Release
-              run: bun turbo run release --continue
+              run: pnpm recursive publish
               env:
                   NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
