@@ -6,7 +6,6 @@ coverage/
 packages/api/preserve/**
 .turbo
 
-pnpm-lock.yaml
 *.tsbuildinfo
 *.log
 *.env
@@ -19,5 +18,4 @@ docs/
 !apps/docs
 !apps/docs/src/pages/docs
 !apps/docs/next-end.d.ts
-package-lock.json
 CHANGELOG.md

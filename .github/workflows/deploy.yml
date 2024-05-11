@@ -9,8 +9,6 @@ jobs:
         steps:
             - name: Clone repo
               uses: actions/checkout@v4
-              with:
-                  token: ${{ secrets.API_TOKEN_GITHUB }}
 
             - name: Set up Node v18
               uses: actions/setup-node@v4
@@ -40,7 +38,7 @@ jobs:
                   push: true
 
             - name: Release
-              run: bun publish
+              run: npm publish
               env:
                   NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
