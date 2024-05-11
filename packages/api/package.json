@@ -9,32 +9,31 @@
     "scripts": {
         "build": "tsc && gen-esm-wrapper . ./dist/index.mjs",
         "build:typecheck": "tsc --noEmit",
-        "prepublishOnly": "rimraf dist/ && rimraf types/ && pnpm run build",
+        "prepublishOnly": "rimraf dist/ && rimraf types/ && bun run build",
         "release": "npm publish",
         "router:preserve": "ts-node scripts/pre-gen-router.ts",
         "router:restore": "ts-node scripts/post-gen-router.ts",
         "generate:ws": "openapi-typescript \"https://www.guilded.gg/api/v1/socket-open-api-schema.json\" --output lib/generated/api-typings/v1/ws.ts",
-        "generate:long:router": "pnpx openapi-typescript-codegen --input \"https://www.guilded.gg/api/v1/open-api-schema.json\" --output lib/generated/router --name GuildedRouter --useOptions --postfixModels Payload --useUnionTypes",
+        "generate:long:router": "pnpx @hey-api/openapi-ts --input \"https://www.guilded.gg/api/v1/open-api-schema.json\" --output lib/generated/router --name GuildedRouter --useOptions --postfixModels Payload --useUnionTypes",
         "generate:router": "bun run router:preserve && bun run generate:long:router && biome check --apply-unsafe lib/generated/router/**/*.ts && pnpm router:restore"
     },
     "devDependencies": {
         "@types/fs-extra": "^11.0.1",
-        "@types/node-fetch": "2.6.4",
+        "@types/node-fetch": "2.6.11",
         "@types/qs": "^6.9.7",
-        "@types/ws": "8.5.4",
+        "@types/ws": "8.5.10",
         "fs-extra": "^11.1.1",
         "openapi-typescript": "^6.2.4",
-        "openapi-typescript-codegen": "^0.24.0",
-        "ts-node": "10.9.1",
-        "typescript": "5.0.4"
+        "@hey-api/openapi-ts": "^0.43.2",
+        "ts-node": "10.9.2",
+        "typescript": "5.4.5"
     },
     "dependencies": {
-        "@types/ws": "8.5.4",
         "form-data": "^4.0.0",
-        "node-fetch": "2.6.11",
+        "node-fetch": "2.6.13",
         "qs": "^6.11.2",
         "typed-emitter": "2.1.0",
-        "ws": "8.13.0"
+        "ws": "8.17.0"
     },
     "contributors": [
         {

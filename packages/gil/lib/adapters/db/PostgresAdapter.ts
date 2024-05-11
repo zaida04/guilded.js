@@ -1,5 +1,5 @@
-import postgres from "postgres";
-import { DatabaseAdapter, StoredRole, StoredServer } from "./DatabaseAdapter";
+import type postgres from "postgres";
+import { DatabaseAdapter, type StoredRole, type StoredServer } from "./DatabaseAdapter";
 
 export class PostgresAdapter extends DatabaseAdapter {
 	private pg: postgres.Sql;

@@ -1,4 +1,4 @@
-import { Command, CommandOptions, StoredRoleType } from "../../../lib";
+import { Command, type CommandOptions } from "../../../lib";
 
 export default class Ping extends Command {
 	options = {

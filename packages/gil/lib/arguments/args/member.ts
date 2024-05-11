@@ -1,4 +1,4 @@
-import { Member, PartialMember } from "guilded.js";
+import { type Member, PartialMember } from "guilded.js";
 import { isHashId } from "../../utils/uuid";
 import type { CommandArgumentValidator } from "../ArgumentParser";
 

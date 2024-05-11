@@ -1,9 +1,9 @@
 import * as lexure from "lexure";
-import { GilClient } from "../GilClient";
-import { StoredRole, StoredRoleType } from "../adapters/db/DatabaseAdapter";
+import type { GilClient } from "../GilClient";
+import { type StoredRole, StoredRoleType } from "../adapters/db/DatabaseAdapter";
 import { convertArguments } from "../arguments/ArgumentParser";
-import { CommandMessageParams } from "../events";
-import { Listener, ListenerContext } from "../structures/Listener";
+import type { CommandMessageParams } from "../events";
+import { Listener, type ListenerContext } from "../structures/Listener";
 
 export default class CommandMessageListener extends Listener {
 	constructor(gil: GilClient) {
@@ -86,7 +86,7 @@ export default class CommandMessageListener extends Listener {
 			? await this.gil.options.contexts.command({
 					server: params.server,
 					message: params.message,
-			  })
+				})
 			: {};
 
 		this.gil.emitter.emit("commandRan", {

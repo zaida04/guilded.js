@@ -160,7 +160,7 @@ export class WebhookEmbed {
 					iconURL: iconURL ?? null,
 					proxyIconURL: proxyIconURL ?? null,
 					text,
-			  }
+				}
 			: null;
 		return this;
 	}
@@ -172,7 +172,7 @@ export class WebhookEmbed {
 					proxyURL: proxyURL ?? null,
 					url,
 					width: width ?? null,
-			  }
+				}
 			: null;
 		return this;
 	}
@@ -184,7 +184,7 @@ export class WebhookEmbed {
 					proxyURL: proxyURL ?? null,
 					url,
 					width: width ?? null,
-			  }
+				}
 			: null;
 		return this;
 	}
@@ -196,7 +196,7 @@ export class WebhookEmbed {
 					proxyURL: proxyURL ?? null,
 					url,
 					width: width ?? null,
-			  }
+				}
 			: null;
 		return this;
 	}
@@ -207,7 +207,7 @@ export class WebhookEmbed {
 				? {
 						name: name ?? null,
 						url: url ?? null,
-				  }
+					}
 				: null;
 		return this;
 	}
@@ -219,7 +219,7 @@ export class WebhookEmbed {
 					name: name ?? null,
 					proxyIconURL: proxyIconURL ?? null,
 					url: url ?? null,
-			  }
+				}
 			: null;
 		return this;
 	}
@@ -265,7 +265,7 @@ export class WebhookEmbed {
 						name: this.author.name,
 						proxy_icon_url: this.author.proxyIconURL ?? undefined,
 						url: this.author.url ?? undefined,
-				  }
+					}
 				: undefined,
 			color: this.color ?? undefined,
 			description: this.description ?? undefined,
@@ -280,7 +280,7 @@ export class WebhookEmbed {
 						icon_url: this.footer.iconURL ?? undefined,
 						proxy_icon_url: this.footer.proxyIconURL ?? undefined,
 						text: this.footer.text ?? undefined,
-				  }
+					}
 				: undefined,
 			image: this.image
 				? {
@@ -288,13 +288,13 @@ export class WebhookEmbed {
 						proxy_url: this.image.proxyURL ?? undefined,
 						url: this.image.url ?? undefined,
 						width: this.image.width ?? undefined,
-				  }
+					}
 				: undefined,
 			provider: this.provider
 				? {
 						name: this.provider.name ?? undefined,
 						url: this.provider.url ?? undefined,
-				  }
+					}
 				: undefined,
 			thumbnail: this.thumbnail
 				? {
@@ -302,7 +302,7 @@ export class WebhookEmbed {
 						proxy_url: this.thumbnail.proxyURL ?? undefined,
 						url: this.thumbnail.url ?? undefined,
 						width: this.thumbnail.width ?? undefined,
-				  }
+					}
 				: undefined,
 			timestamp: this.timestampString ?? undefined,
 			title: this.title ?? undefined,
@@ -313,7 +313,7 @@ export class WebhookEmbed {
 						proxy_url: this.video.proxyURL ?? undefined,
 						url: this.video.url ?? undefined,
 						width: this.video.width ?? undefined,
-				  }
+					}
 				: undefined,
 		};
 	}

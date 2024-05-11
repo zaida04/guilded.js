@@ -2,8 +2,8 @@ require("dotenv/config");
 if (!process.env.TOKEN) throw new Error("Please supply a Guilded API token in your .env file.");
 
 const { Collection } = require("@discordjs/collection");
-const { readdir } = require("fs/promises");
-const { join } = require("path");
+const { readdir } = require("node:fs/promises");
+const { join } = require("node:path");
 const { Client } = require("guilded.js");
 
 const client = new Client({ token: process.env.TOKEN });

@@ -1,6 +1,6 @@
-import { Member, Message } from "guilded.js";
-import { StoredServer } from "./adapters/db/DatabaseAdapter";
-import { Command } from "./structures/Command";
+import type { Member, Message } from "guilded.js";
+import type { StoredServer } from "./adapters/db/DatabaseAdapter";
+import type { Command } from "./structures/Command";
 
 export interface NonCommandMessageParams {
 	message: Message;

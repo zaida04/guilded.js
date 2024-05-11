@@ -8,13 +8,16 @@ import { getUnscopedPackageName } from "./util";
 const fetchDocs = () => docs as JSONOutput.ContainerReflection;
 
 export const packageToMembers = docs.children.reduce((prev, curr) => {
-    return {
-        ...prev,
-        [getUnscopedPackageName(curr.name)]: curr.children.map((x) => x.name),
-    };
+  return {
+    ...prev,
+    [getUnscopedPackageName(curr.name)]: curr.children.map((x) => x.name),
+  };
 }, {}) as Record<string, string[]>;
 
 export const packages = Object.keys(packageToMembers);
-export const packageLookup = (name: string) => packages.find((x) => packageToMembers[x as keyof typeof packageToMembers].includes(name));
+export const packageLookup = (name: string) =>
+  packages.find((x) =>
+    packageToMembers[x as keyof typeof packageToMembers].includes(name)
+  );
 
 export default fetchDocs;

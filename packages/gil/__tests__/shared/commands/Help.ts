@@ -1,4 +1,4 @@
-import { Command, CommandExecuteContext, CommandOptions, GilClient } from "../../../lib";
+import { Command, type CommandExecuteContext, type CommandOptions } from "../../../lib";
 
 export default class Help extends Command {
 	options = {

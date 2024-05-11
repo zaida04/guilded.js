@@ -1,6 +1,5 @@
 import { Collection } from "@discordjs/collection";
 import type { RolesService } from "@guildedjs/api";
-import { RolePayload } from "@guildedjs/api";
 import { Role } from "../../structures";
 import type { OptionBody } from "../../typings";
 import { CacheableStructManager } from "./CacheableStructManager";

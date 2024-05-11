@@ -1,4 +1,4 @@
-import React from "react";
+import type React from "react";
 import { Breadcrumb } from "./Breadcrumb";
 import { Footer } from "./Footer";
 import { Navbar } from "./Navbar";

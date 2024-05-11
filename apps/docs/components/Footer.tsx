@@ -1,4 +1,4 @@
-import React from "react";
+import type React from "react";
 
 const HoverableLink = ({ link, children }: { children: React.ReactNode[] | React.ReactNode; link: string }) => (
 	<a className="hover:underline" href={link}>

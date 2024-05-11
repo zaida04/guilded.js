@@ -1,7 +1,7 @@
 import type { NextPage } from "next";
 import { LayoutWrapper } from "../../components/LayoutWrapper";
 // import { PackageBadge } from "../../components/PackageBadge";
-// import fetchDocs from "../../lib/loader.ts.ignore";
+// import fetchDocs from "../../lib/loader.ts";
 
 type Props = { packages: string[] };
 // export const getStaticProps: GetStaticProps<Props> = async () => {

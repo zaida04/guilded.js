@@ -26,7 +26,7 @@ export class ListChannel extends Channel {
 			note: note
 				? {
 						content: note,
-				  }
+					}
 				: undefined,
 		});
 	}

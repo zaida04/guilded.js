@@ -1,23 +1,17 @@
+./packages/api/preserve/**
 node_modules/
-dist/
-types/
-coverage/
 .nyc_output/
-packages/api/preserve/**
-.turbo
+coverage/
+.vscode/
+./docs/
+.turbo/
+types/
+.idea/
+dist/
 
-pnpm-lock.yaml
 *.tsbuildinfo
 *.log
 *.env
 *.db
 
-.vscode/
-.idea/
-*.env
-docs/
-!apps/docs
-!apps/docs/src/pages/docs
-!apps/docs/next-end.d.ts
-package-lock.json
 CHANGELOG.md

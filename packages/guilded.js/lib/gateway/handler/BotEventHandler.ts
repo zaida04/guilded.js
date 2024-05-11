@@ -1,5 +1,4 @@
 import type { WSPacket } from "@guildedjs/api";
-import { WSPayload } from "@guildedjs/api";
 import { constants } from "../../constants";
 import { Server } from "../../structures/Server";
 import { GatewayEventHandler } from "./GatewayEventHandler";

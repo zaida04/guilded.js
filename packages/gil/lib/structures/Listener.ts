@@ -1,4 +1,4 @@
-import { GilClient } from "../GilClient";
+import type { GilClient } from "../GilClient";
 
 interface ListenerOptions {
 	event: string;

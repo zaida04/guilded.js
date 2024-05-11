@@ -1,4 +1,4 @@
-import { join } from "path";
+import { join } from "node:path";
 import "dotenv/config";
 import { GilClient } from "../../lib/GilClient";
 import { BetterSQLite3Adapter } from "../../lib/adapters/db/BetterSQLite3Adapter";

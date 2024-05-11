@@ -9,7 +9,7 @@ If you wish to contribute to the codebase or documentation, feel free to fork th
 To get ready to work on the codebase, please do the following:
 
 -   Fork & clone the repository, and make sure you're on the main branch
--   Run bun install -r
+-   Run bun install
 -   Code your heart out!
 -   Run bun run test to run Biome and ensure any JSDoc changes are valid
 -   Submit a pull request (Make sure you follow the conventional commit format)

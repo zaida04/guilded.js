@@ -1,6 +1,6 @@
 import "@fortawesome/fontawesome-svg-core/styles.css";
-import localFont from "@next/font/local";
 import type { AppProps } from "next/app";
+import localFont from "next/font/local";
 import "../styles/globals.css";
 
 const Mono = localFont({

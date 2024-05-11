@@ -1,5 +1,5 @@
 import type { Channel, Message, PartialMember, Role } from "guilded.js";
-import { Command } from "../structures/Command";
+import type { Command } from "../structures/Command";
 
 import boolean from "./args/boolean";
 import channel from "./args/channel";

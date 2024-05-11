@@ -9,15 +9,15 @@
     "scripts": {
         "build": "tsc && gen-esm-wrapper . ./dist/index.mjs",
         "build:typecheck": "tsc --noEmit",
-        "prepublishOnly": "rimraf dist/ && rimraf types/ && pnpm run build",
+        "prepublishOnly": "rimraf dist/ && rimraf types/ && bun run build",
         "release": "npm publish"
     },
     "devDependencies": {
-        "@types/node": "18.16.12",
-        "typescript": "5.0.4"
+        "@types/node": "18.19.33",
+        "typescript": "5.4.5"
     },
     "dependencies": {
-        "@discordjs/collection": "^1.5.1",
+        "@discordjs/collection": "^2.1.0",
         "@guildedjs/api": "workspace:*",
         "typed-emitter": "2.1.0"
     },

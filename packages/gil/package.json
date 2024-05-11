@@ -7,25 +7,24 @@
   "main": "dist/index.js",
   "types": "types/index.d.ts",
   "scripts": {
-    "test": "ts-node test/index.ts",
+    "test": "bun test",
     "build": "tsc && gen-esm-wrapper . ./dist/index.mjs",
     "build:typecheck": "tsc --noEmit",
-    "prepublishOnly": "rimraf dist/ && rimraf types/ && pnpm run build",
+    "prepublishOnly": "rimraf dist/ && rimraf types/ && bun run build",
     "release": "npm publish"
   },
   "devDependencies": {
     "@types/better-sqlite3": "^7.6.9",
-    "@types/mongoose": "^5.11.97",
+    "@types/bun": "^1.0.12",
     "better-sqlite3": "^9.4.3",
-    "dotenv": "^16.0.3",
+    "dotenv": "^16.4.5",
     "mongoose": "^8.2.3",
     "pino": "^8.19.0",
     "postgres": "^3.4.4",
-    "typescript": "5.0.4"
+    "typescript": "5.4.5"
   },
   "dependencies": {
-    "@discordjs/collection": "^1.5.1",
-    "@types/bun": "^1.0.12",
+    "@discordjs/collection": "^2.1.0",
     "colorette": "^2.0.20",
     "fast-glob": "^3.3.2",
     "guilded.js": "workspace:*",

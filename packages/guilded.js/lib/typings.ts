@@ -1,15 +1,5 @@
 import type { Collection } from "@discordjs/collection";
-import type {
-	ChatService,
-	DocPayload,
-	EmbedPayload,
-	ListItemPayload,
-	ListItemSummaryPayload,
-	ServerMemberBanPayload,
-	ServerMemberPayload,
-	ServerMemberSummaryPayload,
-	SocialLinkPayload,
-} from "@guildedjs/api";
+import type { ChatService, DocPayload, ListItemPayload, ListItemSummaryPayload, ServerMemberBanPayload, ServerMemberPayload, ServerMemberSummaryPayload, SocialLinkPayload } from "@guildedjs/api";
 import type { MemberRemovedEvent, MemberUnbannedEvent, MemberUpdatedEvent, MessageDeletedEvent, MessageReactionDeletedEvent } from "./events";
 import type { Channel, Embed, Member, MemberBan, Message, MessageReaction, Webhook } from "./structures";
 import type { CalendarEvent, CalendarEventRsvp } from "./structures/CalendarEvent";

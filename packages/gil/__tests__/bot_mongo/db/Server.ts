@@ -1,4 +1,4 @@
-import mongoose, { Schema, Document } from "mongoose";
+import mongoose, { Schema, type Document } from "mongoose";
 
 // This is for typescript
 export interface IServer extends Document {

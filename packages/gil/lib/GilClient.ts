@@ -1,15 +1,15 @@
 import EventEmitter from "node:events";
-import { Client, ClientOptions, Message } from "guilded.js";
-import TypedEmitter from "typed-emitter";
-import { DatabaseAdapter } from "./adapters/db/DatabaseAdapter";
+import { Client, type ClientOptions, type Message } from "guilded.js";
+import type TypedEmitter from "typed-emitter";
+import type { DatabaseAdapter } from "./adapters/db/DatabaseAdapter";
 import { ConsoleAdapter } from "./adapters/logging/ConsoleAdapter";
-import { LoggerAdapter } from "./adapters/logging/LoggerAdapter";
-import { GilEvents } from "./events";
+import type { LoggerAdapter } from "./adapters/logging/LoggerAdapter";
+import type { GilEvents } from "./events";
 import { CommandManager } from "./structures/Command";
 import { ListenerManager } from "./structures/ListenerManager";
-import { DefaultResponseParams, defaultResponses } from "./structures/Responses";
+import { type DefaultResponseParams, defaultResponses } from "./structures/Responses";
 import { TaskManager } from "./structures/Task";
-import { CommandCustomContextFn, CommandErrorHandler } from "./types";
+import type { CommandCustomContextFn, CommandErrorHandler } from "./types";
 
 interface GilClientOptions {
 	token: string;

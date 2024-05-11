@@ -1,5 +1,25 @@
 {
-    "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-    "extends": ["github>sapphiredev/readme:sapphire-renovate"],
-    "schedule": ["every month"]
+	"$schema": "https://docs.renovatebot.com/renovate-schema.json",
+	"extends": ["github>sapphiredev/.github:sapphire-renovate"],
+    "bun": {
+		"rangeStrategy": "bump",
+		"packageRules": [
+			{
+				"matchUpdateTypes": ["patch"],
+				"matchCurrentVersion": "/^0\\./",
+				"automerge": true,
+				"platformAutomerge": true
+			},
+			{
+				"matchUpdateTypes": ["minor", "patch"],
+				"matchCurrentVersion": ">=1.0.0",
+				"automerge": true,
+				"platformAutomerge": true
+			},
+			{
+				"matchDepTypes": ["engines"],
+				"enabled": false
+			}
+		]
+    }
 }

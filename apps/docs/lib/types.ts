@@ -1,4 +1,4 @@
-import type { DeclarationReflection } from "typedoc/dist/lib/models/reflections/declaration";
+import type { DeclarationReflection } from "typedoc";
 
 export type EntityType = { comment?: { summary: { kind: string; text: string }[] }; name: string };
 export type Entity = {
