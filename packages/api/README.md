@@ -14,6 +14,8 @@ You can install this package from [NPM](https://www.npmjs.com/package/@guildedjs
 
 -   `npm install @guildedjs/api`
 -   `yarn add @guildedjs/api`
+-   `pnpm add @guildedjs/api`
+-   `bun add @guildedjs/api`
 
 ## Contributing
 

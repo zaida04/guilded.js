@@ -10,9 +10,10 @@ Create a guilded.js bot with ease in under a minute.
 
 ## Usage
 
+-   `npm init guilded-app <project-name>`
 -   `yarn create guilded-app <project-name>`
 -   `pnpm create guilded-app <project-name>`
--   `npm init guilded-app <project-name>`
+-   `bun create guilded-app <project-name>`
 
 ## Contributing
 
