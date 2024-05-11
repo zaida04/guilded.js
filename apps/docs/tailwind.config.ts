@@ -1,14 +1,8 @@
-const colors = require("tailwindcss/colors");
-const { fontFamily } = require("tailwindcss/defaultTheme");
+import type { Config } from "tailwindcss";
+import { fontFamily } from "tailwindcss/defaultTheme";
 
-colors.lightBlue = undefined;
-colors.warmGray = undefined;
-colors.trueGray = undefined;
-colors.coolGray = undefined;
-colors.blueGray = undefined;
-/** @type {import('tailwindcss').Config} */
-module.exports = {
-	content: ["./src/**/*.{js,ts,jsx,tsx}"],
+const config: Config = {
+	content: ["./pages/**/*.{js,ts,jsx,tsx,mdx}", "./components/**/*.{js,ts,jsx,tsx,mdx}", "./app/**/*.{js,ts,jsx,tsx,mdx}"],
 	theme: {
 		extend: {
 			fontFamily: {
@@ -32,3 +26,5 @@ module.exports = {
 	},
 	plugins: [],
 };
+
+export default config;

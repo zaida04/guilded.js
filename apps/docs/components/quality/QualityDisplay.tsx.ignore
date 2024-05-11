@@ -1,17 +1,22 @@
 /* eslint-disable @typescript-eslint/switch-exhaustiveness-check */
 /* eslint-disable sonarjs/no-nested-switch */
 import Link from "next/link";
-import type { DeclarationReflection } from "typedoc/dist/lib/models/reflections/declaration";
-import type { Type } from "./util.ts.ignore";
-import { unionMap } from "./util.ts.ignore";
+import type { DeclarationReflection } from "typedoc";
+import type { Type } from "./util.ts";
+import { unionMap } from "./util.ts";
 
 const resultTransform = (lib: string) => (type: Type, index: number) => {
-	if (type.isLink) return <Link className="text-guilded hover:underline underline-offset-2" href={`/docs/${type.pkg ?? lib}/${type.name}`} key={index}>{type.name}</Link>
-	else return <span key={index}>{type.name}</span>
-}
+	if (type.isLink)
+		return (
+			<Link className="text-guilded hover:underline underline-offset-2" href={`/docs/${type.pkg ?? lib}/${type.name}`} key={index}>
+				{type.name}
+			</Link>
+		);
+	else return <span key={index}>{type.name}</span>;
+};
 
-export const QualityDisplay = ({ quality, lib }: { lib: string, quality: DeclarationReflection }): JSX.Element | null => {
-	let result: { isPromise?: boolean, types: Type[] } | null = null;
+export const QualityDisplay = ({ quality, lib }: { lib: string; quality: DeclarationReflection }): JSX.Element | null => {
+	let result: { isPromise?: boolean; types: Type[] } | null = null;
 
 	switch (quality.kind) {
 		case 1_024: {
@@ -25,14 +30,14 @@ export const QualityDisplay = ({ quality, lib }: { lib: string, quality: Declara
 				}
 
 				case "reference": {
-					result = { types: [{ "name": qualityType.name }] };
+					result = { types: [{ name: qualityType.name }] };
 					break;
 				}
 
 				case "reflection": {
 					const entity = qualityType.declaration;
 					const is__type = entity.name === "__type";
-					result = { types: [{ "name": is__type ? "Object" : entity.name, isLink: !is__type }] }
+					result = { types: [{ name: is__type ? "Object" : entity.name, isLink: !is__type }] };
 					break;
 				}
 
@@ -79,7 +84,7 @@ export const QualityDisplay = ({ quality, lib }: { lib: string, quality: Declara
 			switch (signatureType?.type) {
 				case "reference": {
 					if (signatureType.name === "Promise") {
-						result = { isPromise: true, types: signatureType.typeArguments!.map(unionMap) }
+						result = { isPromise: true, types: signatureType.typeArguments!.map(unionMap) };
 					} else {
 						result = { types: [{ name: signatureType.name }] };
 					}
@@ -101,10 +106,10 @@ export const QualityDisplay = ({ quality, lib }: { lib: string, quality: Declara
 	// i like having string in front of null, looks better.
 	result.types.sort((a, b) => {
 		const priorityChars = ["s"];
-		if (priorityChars.some(char => a.name.startsWith(char) && !b.name.startsWith(char))) return -1;
-		if (priorityChars.some(char => b.name.startsWith(char) && !a.name.startsWith(char))) return -1;
+		if (priorityChars.some((char) => a.name.startsWith(char) && !b.name.startsWith(char))) return -1;
+		if (priorityChars.some((char) => b.name.startsWith(char) && !a.name.startsWith(char))) return -1;
 
-		return a.name > b.name ? 1 : -1
+		return a.name > b.name ? 1 : -1;
 	});
 
 	for (let index = 0; index < result.types.length; index++) {
@@ -112,5 +117,14 @@ export const QualityDisplay = ({ quality, lib }: { lib: string, quality: Declara
 		result.types.splice(index, 0, { name: "or " });
 	}
 
-	return <div className="text-guilded text-xl flex">Type: <span className="pl-2 flex space-x-2">{result.isPromise && "Promise<"}{result.types.map(resultTransform(lib))}{result.isPromise && ">"}</span></div>
-}
+	return (
+		<div className="text-guilded text-xl flex">
+			Type:{" "}
+			<span className="pl-2 flex space-x-2">
+				{result.isPromise && "Promise<"}
+				{result.types.map(resultTransform(lib))}
+				{result.isPromise && ">"}
+			</span>
+		</div>
+	);
+};
