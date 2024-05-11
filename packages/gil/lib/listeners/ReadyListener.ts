@@ -1,5 +1,5 @@
-import { GilClient } from "../GilClient";
-import { Listener, ListenerContext } from "../structures/Listener";
+import type { GilClient } from "../GilClient";
+import { Listener, type ListenerContext } from "../structures/Listener";
 
 export default class ReadyListener extends Listener {
 	constructor(gil: GilClient) {

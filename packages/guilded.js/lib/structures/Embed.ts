@@ -113,7 +113,7 @@ export class Embed {
 			? {
 					iconURL: iconURL ?? null,
 					text,
-			  }
+				}
 			: null;
 		return this;
 	}
@@ -122,7 +122,7 @@ export class Embed {
 		this.image = url
 			? {
 					url,
-			  }
+				}
 			: null;
 		return this;
 	}
@@ -131,7 +131,7 @@ export class Embed {
 		this.thumbnail = url
 			? {
 					url,
-			  }
+				}
 			: null;
 		return this;
 	}
@@ -142,7 +142,7 @@ export class Embed {
 					iconURL: iconURL ?? null,
 					name: name ?? null,
 					url: url ?? null,
-			  }
+				}
 			: null;
 		return this;
 	}
@@ -187,7 +187,7 @@ export class Embed {
 						icon_url: this.author.iconURL ?? undefined,
 						name: this.author.name,
 						url: this.author.url ?? undefined,
-				  }
+					}
 				: undefined,
 			color: this.color ?? undefined,
 			description: this.description ?? undefined,
@@ -201,17 +201,17 @@ export class Embed {
 				? {
 						icon_url: this.footer.iconURL ?? undefined,
 						text: this.footer.text ?? undefined,
-				  }
+					}
 				: undefined,
 			image: this.image
 				? {
 						url: this.image.url ?? undefined,
-				  }
+					}
 				: undefined,
 			thumbnail: this.thumbnail
 				? {
 						url: this.thumbnail.url ?? undefined,
-				  }
+					}
 				: undefined,
 			timestamp: this.timestampString ?? undefined,
 			title: this.title ?? undefined,

@@ -78,7 +78,7 @@ export function parseMessage(data: APIContent): parsedMessage {
 					x.data as {
 						embeds: APIEmbed[];
 					}
-			  ).embeds.length > 0
+				).embeds.length > 0
 			: true,
 	);
 

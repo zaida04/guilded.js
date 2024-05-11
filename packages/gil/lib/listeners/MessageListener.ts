@@ -1,6 +1,6 @@
-import { Message, UserType } from "guilded.js";
-import { GilClient } from "../GilClient";
-import { Listener, ListenerContext } from "../structures/Listener";
+import { type Message, UserType } from "guilded.js";
+import type { GilClient } from "../GilClient";
+import { Listener, type ListenerContext } from "../structures/Listener";
 import { getPrefix } from "../utils/prefix";
 
 export default class MessageListener extends Listener {

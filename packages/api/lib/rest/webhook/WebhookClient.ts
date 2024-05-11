@@ -78,13 +78,13 @@ export class WebhookClient {
 			? {
 					...content,
 					embeds: resEmbeds,
-			  }
+				}
 			: {
 					content,
 					embeds: resEmbeds,
 					username: options?.username ?? this.username ?? undefined,
 					avatar_url: options?.avatarURL ?? this.avatarURL ?? undefined,
-			  };
+				};
 
 		let body: FormData | RESTPostWebhookBody = baseBody;
 		const formData = new FormData();

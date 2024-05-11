@@ -1,10 +1,10 @@
 import { Collection } from "@discordjs/collection";
 import { glob } from "fast-glob";
-import { ClientEvents } from "guilded.js";
-import { Listener } from "./Listener";
+import type { ClientEvents } from "guilded.js";
+import type { Listener } from "./Listener";
 import { Manager } from "./Manager";
 
-import { GilEvents } from "../events";
+import type { GilEvents } from "../events";
 import CommandMessageListener from "../listeners/CommandMessageListener";
 import MessageListener from "../listeners/MessageListener";
 import ReadyListener from "../listeners/ReadyListener";

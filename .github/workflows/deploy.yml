@@ -8,32 +8,28 @@ jobs:
         runs-on: ubuntu-latest
         steps:
             - name: Clone repo
-              uses: actions/checkout@v3
+              uses: actions/checkout@v4
               with:
                   token: ${{ secrets.API_TOKEN_GITHUB }}
 
-            - name: Install PNPM
-              uses: pnpm/action-setup@6e1964dde3397a825e79e4607ad57f3f7ca2c7cb
-              with:
-                  version: 8.6.3
-            
             - name: Set up Node v18
-              uses: actions/setup-node@v3
+              uses: actions/setup-node@v4
               with:
                   node-version: "18"
-                  registry-url: " https://registry.npmjs.org"
+
+            - uses: oven-sh/setup-bun@v1
             
             - name: Install dependencies
-              run: pnpm install -r
+              run: bun install
 
             - name: Install turbo globally
-              run: pnpm install -g turbo
+              run: bun install -g turbo
 
             - name: Build packages
-              run: mv bun.lockb bun.inert && pnpm turbo run build ; mv bun.inert bun.lockb
+              run: bun turbo run build
 
             - name: Apply version changes to packages
-              run: pnpm run changeset:version
+              run: bun run changeset:version
 
             - name: Commit package.json changes
               uses: EndBug/add-and-commit@v9
@@ -44,7 +40,7 @@ jobs:
                   push: true
 
             - name: Release
-              run: pnpm recursive publish
+              run: bun publish
               env:
                   NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 

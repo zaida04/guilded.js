@@ -1,10 +1,10 @@
 import { Collection } from "@discordjs/collection";
 import glob from "fast-glob";
-import { Message } from "guilded.js";
-import { GilClient } from "../GilClient";
-import { StoredRoleType } from "../adapters/db/DatabaseAdapter";
-import { CommandArgument, CommandArgumentType } from "../arguments/ArgumentParser";
-import { CommandMessageParams } from "../events";
+import type { Message } from "guilded.js";
+import type { GilClient } from "../GilClient";
+import type { StoredRoleType } from "../adapters/db/DatabaseAdapter";
+import type { CommandArgument, CommandArgumentType } from "../arguments/ArgumentParser";
+import type { CommandMessageParams } from "../events";
 import { Manager } from "./Manager";
 
 export interface CommandOptions {

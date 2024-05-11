@@ -1,6 +1,6 @@
 import { Collection } from "@discordjs/collection";
 import glob from "fast-glob";
-import { GilClient } from "../GilClient";
+import type { GilClient } from "../GilClient";
 import { Manager } from "./Manager";
 
 interface TaskOptions {

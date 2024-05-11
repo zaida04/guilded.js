@@ -1,4 +1,4 @@
-import { join } from "path";
+import { join } from "node:path";
 import "dotenv/config";
 import { GilClient } from "../../lib/GilClient";
 import { MongoAdapter } from "../../lib/adapters/db/MongoAdapter";

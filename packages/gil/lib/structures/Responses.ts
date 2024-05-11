@@ -1,6 +1,6 @@
-import { Embed, MessageContent } from "guilded.js";
+import { Embed, type MessageContent } from "guilded.js";
 import { strip } from "../utils/string";
-import { CommandArg } from "./Command";
+import type { CommandArg } from "./Command";
 
 export type Response = (...args: any[]) => MessageContent;
 export type ParamsObject<T> = T extends (...args: infer P) => any ? { [K in keyof P]: P[K] } : never;

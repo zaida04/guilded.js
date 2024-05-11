@@ -55,7 +55,7 @@ export default function Home({ buildDate }: InferGetStaticPropsType<typeof getSt
 						</h1>
 					</div>
 					<div className="grid place-items-center md:flex md:justify-center">
-						{["npm install guilded.js", "yarn add guilded.js", "pnpm add guilded.js"].map((click) => (
+						{["npm install guilded.js", "yarn add guilded.js", "pnpm add guilded.js", "bun add guilded.js"].map((click) => (
 							<Copiable key={click} text={click} />
 						))}
 					</div>

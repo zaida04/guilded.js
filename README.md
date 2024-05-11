@@ -75,9 +75,9 @@ client.login();
 
 Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
 
-We make use of [PNPM](https://pnpm.io/) and [Changeset](https://github.com/changesets/changesets) to manage our monorepo. It's recommended that if you plan on contributing, you use these tools.
+We make use of [Bun](https://bun.sh/) and [Changeset](https://github.com/changesets/changesets) to manage our monorepo. It's recommended that if you plan on contributing, you use these tools.
 
-Please run `pnpm install -r` in your local environment to properly locally symlink all the packages that depend on each other.
+Please run `bun install` in your local environment to properly locally symlink all the packages that depend on each other.
 
 Please ensure your commits pass the test, lint, and build scripts.
 

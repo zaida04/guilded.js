@@ -1,5 +1,5 @@
 import type mongoose from "mongoose";
-import { DatabaseAdapter, StoredRole, StoredServer } from "./DatabaseAdapter";
+import { DatabaseAdapter, type StoredRole, type StoredServer } from "./DatabaseAdapter";
 
 export class MongoAdapter extends DatabaseAdapter {
 	public constructor(

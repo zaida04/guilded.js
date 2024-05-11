@@ -1,5 +1,5 @@
-import sqlite from "better-sqlite3";
-import { DatabaseAdapter, StoredRole, StoredServer } from "./DatabaseAdapter";
+import type sqlite from "better-sqlite3";
+import { DatabaseAdapter, type StoredRole, type StoredServer } from "./DatabaseAdapter";
 
 export class BetterSQLite3Adapter extends DatabaseAdapter {
 	public constructor(
