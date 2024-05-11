@@ -1,4 +1,3 @@
-import { WSPayload, WSSchema } from "../../generated/api-typings";
 import type { SocialLinkPayload } from "../../generated/router";
 
 export const ROUTES = {

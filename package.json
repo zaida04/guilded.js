@@ -13,7 +13,7 @@
     "changeset:version": "changeset version",
     "docs": "typedoc && cd docs && find . -type f -name \"*.html\" -exec sed -i'' -e 's/__namedParameters/options/g' {} +",
     "prepublishOnly": "turbo run prepublishOnly",
-    "prepare": "husky init"
+    "prepare": "husky"
   },
   "devDependencies": {
     "@biomejs/biome": "1.7.3",

@@ -7,7 +7,7 @@
   "main": "dist/index.js",
   "types": "types/index.d.ts",
   "scripts": {
-    "test": "ts-node test/index.ts",
+    "test": "bun test",
     "build": "tsc && gen-esm-wrapper . ./dist/index.mjs",
     "build:typecheck": "tsc --noEmit",
     "prepublishOnly": "rimraf dist/ && rimraf types/ && bun run build",

@@ -1,5 +1,4 @@
 import { Collection } from "@discordjs/collection";
-import type { Client } from "../../structures/Client";
 import { GlobalManager } from "./GlobalManager";
 
 /**
