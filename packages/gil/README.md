@@ -12,6 +12,8 @@ You can install this package from [NPM](https://www.npmjs.com/package/@guildedjs
 
 -   `npm install @guildedjs/gil guilded.js`
 -   `yarn add @guildedjs/gil guilded.js`
+-   `pnpm add @guildedjs/gil guilded.js`
+-   `bun add @guildedjs/gil guilded.js`
 
 ## Guide
 

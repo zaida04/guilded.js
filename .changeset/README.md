@@ -12,5 +12,5 @@ We have a quick list of common questions to get you started engaging with this p
 The release steps follows this:
 
 -   "bun run prerelease"
--   "bun install -r"
+-   "bun install"
 -   "bun run publish"
