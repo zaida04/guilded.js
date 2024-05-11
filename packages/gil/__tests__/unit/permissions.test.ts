@@ -2,6 +2,7 @@ import { describe, expect, test } from "bun:test";
 import { StoredRoleType } from "../../lib/adapters/db/DatabaseAdapter";
 import CommandMessageListener from "../../lib/listeners/CommandMessageListener";
 
+// biome-ignore lint:
 const listener = new CommandMessageListener({} as any);
 const minimodRole = { role_id: "role_1", type: StoredRoleType.Minimod, server_id: "MOCK_SERVER" };
 const modRole = { role_id: "role_2", type: StoredRoleType.Mod, server_id: "MOCK_SERVER" };
