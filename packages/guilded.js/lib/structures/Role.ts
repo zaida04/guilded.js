@@ -38,7 +38,7 @@ export class Role extends Base<{ id: number; serverId: string }, number> {
 	icon: string | null;
 
 	/** The position of this role on the hierarchy */
-	position: number;
+	priority: number | null;
 
 	/** Whether this is the default role for members */
 	isBase: boolean;
@@ -62,7 +62,7 @@ export class Role extends Base<{ id: number; serverId: string }, number> {
 		this.permissions = data.permissions;
 		this.colors = data.colors ?? [];
 		this.icon = data.icon ?? null;
-		this.position = data.position;
+		this.priority = data.priority ?? null;
 		this.isBase = data.isBase ?? false;
 		this.botUserId = data.botUserId ?? null;
 	}

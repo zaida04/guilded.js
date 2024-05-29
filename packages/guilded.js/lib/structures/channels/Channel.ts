@@ -61,9 +61,9 @@ export class Channel extends Base {
 	groupId: string;
 
 	/**
-	 * Whether the channel is public.
+	 * The visibility state of the channel.
 	 */
-	isPublic!: boolean;
+	visibility!: string | null;
 
 	/**
 	 * The user ID of the user who archived the channel.
@@ -77,8 +77,9 @@ export class Channel extends Base {
 
 	constructor(
 		client: Client,
-		data: ServerChannelPayload & {
+		data: Omit<ServerChannelPayload, "visibility"> & {
 			deleted?: boolean;
+			visibility?: "private" | "public" | "" | null;
 		},
 	) {
 		super(client, data);
@@ -114,8 +115,9 @@ export class Channel extends Base {
 
 	_update(
 		data: Partial<
-			ServerChannelPayload & {
+			Omit<ServerChannelPayload, "visibility"> & {
 				deleted?: boolean;
+				visibility?: "private" | "public" | "" | null;
 			}
 		>,
 	): this {
@@ -139,8 +141,8 @@ export class Channel extends Base {
 			this.categoryId = data.categoryId ?? null;
 		}
 
-		if ("isPublic" in data && typeof data.isPublic !== "undefined") {
-			this.isPublic = data.isPublic ?? false;
+		if ("visibility" in data && typeof data.visibility !== "undefined") {
+			this.visibility = data.visibility;
 		}
 
 		if ("archivedBy" in data && typeof data.archivedBy !== "undefined") {
