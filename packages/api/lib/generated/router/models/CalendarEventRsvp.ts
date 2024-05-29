@@ -1,8 +1,7 @@
-/* generated using openapi-typescript-codegen -- do no edit */
+/* generated using openapi-typescript-codegen -- do not edit */
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-
 export type CalendarEventRsvp = {
 	/**
 	 * The ID of the calendar event
@@ -23,13 +22,7 @@ export type CalendarEventRsvp = {
 	/**
 	 * The status of the RSVP
 	 */
-	status:
-		| "going"
-		| "maybe"
-		| "declined"
-		| "invited"
-		| "waitlisted"
-		| "not responded";
+	status: "going" | "maybe" | "declined" | "invited" | "waitlisted" | "not responded";
 	/**
 	 * The ID of the user who created this RSVP
 	 */

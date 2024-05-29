@@ -1,19 +1,15 @@
-/* generated using openapi-typescript-codegen -- do no edit */
+import type { BaseHttpRequest } from "../core/BaseHttpRequest";
+import type { CancelablePromise } from "../core/CancelablePromise";
+/* generated using openapi-typescript-codegen -- do not edit */
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
 import type { Webhook } from "../models/Webhook";
-
-import type { BaseHttpRequest } from "../core/BaseHttpRequest";
-import type { CancelablePromise } from "../core/CancelablePromise";
-
 export class WebhookService {
-	constructor(
-		public readonly httpRequest: BaseHttpRequest,
-	) {}
-
+	constructor(public readonly httpRequest: BaseHttpRequest) {}
 	/**
 	 * Create a webhook
+	 * Note that each server can only have 200 webhooks
 	 * @returns any Success
 	 * @throws ApiError
 	 */
@@ -35,19 +31,16 @@ export class WebhookService {
 	}): CancelablePromise<{
 		webhook: Webhook;
 	}> {
-		return this.httpRequest.request(
-			{
-				method: "POST",
-				url: "/servers/{serverId}/webhooks",
-				path: {
-					serverId: serverId,
-				},
-				body: requestBody,
-				mediaType: "application/json",
+		return this.httpRequest.request({
+			method: "POST",
+			url: "/servers/{serverId}/webhooks",
+			path: {
+				serverId: serverId,
 			},
-		);
+			body: requestBody,
+			mediaType: "application/json",
+		});
 	}
-
 	/**
 	 * Get a server's webhooks
 	 * Get a list of webhooks from a server.
@@ -62,24 +55,21 @@ export class WebhookService {
 		/**
 		 * ID of the channel you want to filter for webhooks
 		 */
-		channelId: string;
+		channelId?: string;
 	}): CancelablePromise<{
 		webhooks: Array<Webhook>;
 	}> {
-		return this.httpRequest.request(
-			{
-				method: "GET",
-				url: "/servers/{serverId}/webhooks",
-				path: {
-					serverId: serverId,
-				},
-				query: {
-					channelId: channelId,
-				},
+		return this.httpRequest.request({
+			method: "GET",
+			url: "/servers/{serverId}/webhooks",
+			path: {
+				serverId: serverId,
 			},
-		);
+			query: {
+				channelId: channelId,
+			},
+		});
 	}
-
 	/**
 	 * Get a server's webhook
 	 * @returns any Success
@@ -94,18 +84,15 @@ export class WebhookService {
 	}): CancelablePromise<{
 		webhook: Webhook;
 	}> {
-		return this.httpRequest.request(
-			{
-				method: "GET",
-				url: "/servers/{serverId}/webhooks/{webhookId}",
-				path: {
-					serverId: serverId,
-					webhookId: webhookId,
-				},
+		return this.httpRequest.request({
+			method: "GET",
+			url: "/servers/{serverId}/webhooks/{webhookId}",
+			path: {
+				serverId: serverId,
+				webhookId: webhookId,
 			},
-		);
+		});
 	}
-
 	/**
 	 * Update a webhook
 	 * @returns any Success
@@ -131,20 +118,17 @@ export class WebhookService {
 	}): CancelablePromise<{
 		webhook: Webhook;
 	}> {
-		return this.httpRequest.request(
-			{
-				method: "PUT",
-				url: "/servers/{serverId}/webhooks/{webhookId}",
-				path: {
-					serverId: serverId,
-					webhookId: webhookId,
-				},
-				body: requestBody,
-				mediaType: "application/json",
+		return this.httpRequest.request({
+			method: "PUT",
+			url: "/servers/{serverId}/webhooks/{webhookId}",
+			path: {
+				serverId: serverId,
+				webhookId: webhookId,
 			},
-		);
+			body: requestBody,
+			mediaType: "application/json",
+		});
 	}
-
 	/**
 	 * Delete a server webhook
 	 * @returns void
@@ -157,15 +141,13 @@ export class WebhookService {
 		serverId: string;
 		webhookId: string;
 	}): CancelablePromise<void> {
-		return this.httpRequest.request(
-			{
-				method: "DELETE",
-				url: "/servers/{serverId}/webhooks/{webhookId}",
-				path: {
-					serverId: serverId,
-					webhookId: webhookId,
-				},
+		return this.httpRequest.request({
+			method: "DELETE",
+			url: "/servers/{serverId}/webhooks/{webhookId}",
+			path: {
+				serverId: serverId,
+				webhookId: webhookId,
 			},
-		);
+		});
 	}
 }

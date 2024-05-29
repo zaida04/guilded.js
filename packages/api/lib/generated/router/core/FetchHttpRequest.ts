@@ -13,15 +13,7 @@ export class FetchHttpRequest extends BaseHttpRequest {
 	 * @returns CancelablePromise<T>
 	 * @throws ApiError
 	 */
-	public override request<
-		T,
-	>(
-		options: ApiRequestOptions,
-	): CancelablePromise<T> {
-		return __request(
-			this
-				.rest,
-			options,
-		);
+	public override request<T>(options: ApiRequestOptions): CancelablePromise<T> {
+		return __request(this.rest, options);
 	}
 }

@@ -1,26 +1,12 @@
-/* generated using openapi-typescript-codegen -- do no edit */
+/* generated using openapi-typescript-codegen -- do not edit */
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-
 export type SocialLink = {
 	/**
 	 * The type of social link that Guilded supports. Depending on this value, `handle` or `serviceId` may or may not be present
 	 */
-	type:
-		| "twitch"
-		| "bnet"
-		| "psn"
-		| "xbox"
-		| "steam"
-		| "origin"
-		| "youtube"
-		| "twitter"
-		| "facebook"
-		| "switch"
-		| "patreon"
-		| "roblox"
-		| "epic";
+	type: "twitch" | "bnet" | "psn" | "xbox" | "steam" | "origin" | "youtube" | "twitter" | "facebook" | "switch" | "patreon" | "roblox" | "epic";
 	/**
 	 * The ID of the user that the social link is associated with
 	 */

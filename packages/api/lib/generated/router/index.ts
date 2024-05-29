@@ -1,4 +1,4 @@
-/* generated using openapi-typescript-codegen -- do no edit */
+/* generated using openapi-typescript-codegen -- do not edit */
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
@@ -21,6 +21,10 @@ export type { CalendarEventReaction as CalendarEventReactionPayload } from "./mo
 export type { CalendarEventRsvp as CalendarEventRsvpPayload } from "./models/CalendarEventRsvp";
 export type { CalendarEventSeries as CalendarEventSeriesPayload } from "./models/CalendarEventSeries";
 export type { Category as CategoryPayload } from "./models/Category";
+export type { ChannelCategoryRolePermission as ChannelCategoryRolePermissionPayload } from "./models/ChannelCategoryRolePermission";
+export type { ChannelCategoryUserPermission as ChannelCategoryUserPermissionPayload } from "./models/ChannelCategoryUserPermission";
+export type { ChannelRolePermission as ChannelRolePermissionPayload } from "./models/ChannelRolePermission";
+export type { ChannelUserPermission as ChannelUserPermissionPayload } from "./models/ChannelUserPermission";
 export type { ChatEmbed as ChatEmbedPayload } from "./models/ChatEmbed";
 export type { ChatMessage as ChatMessagePayload } from "./models/ChatMessage";
 export type { ChatMessageReaction as ChatMessageReactionPayload } from "./models/ChatMessageReaction";
@@ -47,6 +51,7 @@ export type { ServerMemberPermissions as ServerMemberPermissionsPayload } from "
 export type { ServerMemberSummary as ServerMemberSummaryPayload } from "./models/ServerMemberSummary";
 export type { ServerSubscriptionTier as ServerSubscriptionTierPayload } from "./models/ServerSubscriptionTier";
 export type { SocialLink as SocialLinkPayload } from "./models/SocialLink";
+export type { UrlSignature as UrlSignaturePayload } from "./models/UrlSignature";
 export type { User as UserPayload } from "./models/User";
 export type { UserStatus as UserStatusPayload } from "./models/UserStatus";
 export type { UserSummary as UserSummaryPayload } from "./models/UserSummary";
@@ -69,6 +74,7 @@ export { GroupsService } from "./services/GroupsService";
 export { ListItemsService } from "./services/ListItemsService";
 export { MemberBansService } from "./services/MemberBansService";
 export { MembersService } from "./services/MembersService";
+export { PermissionOverrideService } from "./services/PermissionOverrideService";
 export { ReactionsService } from "./services/ReactionsService";
 export { RoleMembershipService } from "./services/RoleMembershipService";
 export { RolesService } from "./services/RolesService";
@@ -76,6 +82,7 @@ export { ServersService } from "./services/ServersService";
 export { ServerSubscriptionService } from "./services/ServerSubscriptionService";
 export { ServerXpService } from "./services/ServerXpService";
 export { SocialLinksService } from "./services/SocialLinksService";
+export { UrlSignatureService } from "./services/UrlSignatureService";
 export { UsersService } from "./services/UsersService";
 export { UserStatusService } from "./services/UserStatusService";
 export { WebhookService } from "./services/WebhookService";

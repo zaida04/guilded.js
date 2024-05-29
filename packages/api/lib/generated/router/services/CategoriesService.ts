@@ -1,17 +1,12 @@
-/* generated using openapi-typescript-codegen -- do no edit */
+import type { BaseHttpRequest } from "../core/BaseHttpRequest";
+import type { CancelablePromise } from "../core/CancelablePromise";
+/* generated using openapi-typescript-codegen -- do not edit */
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
 import type { Category } from "../models/Category";
-
-import type { BaseHttpRequest } from "../core/BaseHttpRequest";
-import type { CancelablePromise } from "../core/CancelablePromise";
-
 export class CategoriesService {
-	constructor(
-		public readonly httpRequest: BaseHttpRequest,
-	) {}
-
+	constructor(public readonly httpRequest: BaseHttpRequest) {}
 	/**
 	 * Create a category
 	 * @returns any Success
@@ -35,19 +30,16 @@ export class CategoriesService {
 	}): CancelablePromise<{
 		category: Category;
 	}> {
-		return this.httpRequest.request(
-			{
-				method: "POST",
-				url: "/servers/{serverId}/categories",
-				path: {
-					serverId: serverId,
-				},
-				body: requestBody,
-				mediaType: "application/json",
+		return this.httpRequest.request({
+			method: "POST",
+			url: "/servers/{serverId}/categories",
+			path: {
+				serverId: serverId,
 			},
-		);
+			body: requestBody,
+			mediaType: "application/json",
+		});
 	}
-
 	/**
 	 * Read a category
 	 * @returns any Success
@@ -62,18 +54,15 @@ export class CategoriesService {
 	}): CancelablePromise<{
 		category: Category;
 	}> {
-		return this.httpRequest.request(
-			{
-				method: "GET",
-				url: "/servers/{serverId}/categories/{categoryId}",
-				path: {
-					serverId: serverId,
-					categoryId: categoryId,
-				},
+		return this.httpRequest.request({
+			method: "GET",
+			url: "/servers/{serverId}/categories/{categoryId}",
+			path: {
+				serverId: serverId,
+				categoryId: categoryId,
 			},
-		);
+		});
 	}
-
 	/**
 	 * Update a category
 	 * @returns any Success
@@ -90,25 +79,26 @@ export class CategoriesService {
 			/**
 			 * Name of the category
 			 */
-			name: string;
+			name?: string;
+			/**
+			 * The priority of the category will determine its position relative to other categories in the group. The higher the value, the higher up it will be displayed in the UI. Returned values can be null, in which case sorting will be done by `createdAt` in descending order. Due to legacy issues, sending a null value is not possible
+			 */
+			priority?: number;
 		};
 	}): CancelablePromise<{
 		category: Category;
 	}> {
-		return this.httpRequest.request(
-			{
-				method: "PATCH",
-				url: "/servers/{serverId}/categories/{categoryId}",
-				path: {
-					serverId: serverId,
-					categoryId: categoryId,
-				},
-				body: requestBody,
-				mediaType: "application/json",
+		return this.httpRequest.request({
+			method: "PATCH",
+			url: "/servers/{serverId}/categories/{categoryId}",
+			path: {
+				serverId: serverId,
+				categoryId: categoryId,
 			},
-		);
+			body: requestBody,
+			mediaType: "application/json",
+		});
 	}
-
 	/**
 	 * Delete a category
 	 * @returns any Success
@@ -123,15 +113,13 @@ export class CategoriesService {
 	}): CancelablePromise<{
 		category: Category;
 	}> {
-		return this.httpRequest.request(
-			{
-				method: "DELETE",
-				url: "/servers/{serverId}/categories/{categoryId}",
-				path: {
-					serverId: serverId,
-					categoryId: categoryId,
-				},
+		return this.httpRequest.request({
+			method: "DELETE",
+			url: "/servers/{serverId}/categories/{categoryId}",
+			path: {
+				serverId: serverId,
+				categoryId: categoryId,
 			},
-		);
+		});
 	}
 }

@@ -63,148 +63,35 @@ export class GuildedRouter {
 
 	public readonly request: BaseHttpRequest;
 
-	constructor(
-		rest: RestManager,
-	) {
-		this.request =
-			new FetchHttpRequest(
-				rest,
-			);
+	constructor(rest: RestManager) {
+		this.request = new FetchHttpRequest(rest);
 
-		this.announcementComments =
-			new AnnouncementCommentsService(
-				this
-					.request,
-			);
-		this.announcements =
-			new AnnouncementsService(
-				this
-					.request,
-			);
-		this.calendarEventComments =
-			new CalendarEventCommentsService(
-				this
-					.request,
-			);
-		this.calendarEvents =
-			new CalendarEventsService(
-				this
-					.request,
-			);
-		this.calendarEventSeries =
-			new CalendarEventSeriesService(
-				this
-					.request,
-			);
-		this.categories =
-			new CategoriesService(
-				this
-					.request,
-			);
-		this.channels =
-			new ChannelsService(
-				this
-					.request,
-			);
-		this.chat =
-			new ChatService(
-				this
-					.request,
-			);
-		this.docComments =
-			new DocCommentsService(
-				this
-					.request,
-			);
-		this.docs =
-			new DocsService(
-				this
-					.request,
-			);
-		this.forumComments =
-			new ForumCommentsService(
-				this
-					.request,
-			);
-		this.forums =
-			new ForumsService(
-				this
-					.request,
-			);
-		this.groupMembership =
-			new GroupMembershipService(
-				this
-					.request,
-			);
-		this.groups =
-			new GroupsService(
-				this
-					.request,
-			);
-		this.listItems =
-			new ListItemsService(
-				this
-					.request,
-			);
-		this.memberBans =
-			new MemberBansService(
-				this
-					.request,
-			);
-		this.members =
-			new MembersService(
-				this
-					.request,
-			);
-		this.reactions =
-			new ReactionsService(
-				this
-					.request,
-			);
-		this.roleMembership =
-			new RoleMembershipService(
-				this
-					.request,
-			);
-		this.roles =
-			new RolesService(
-				this
-					.request,
-			);
-		this.servers =
-			new ServersService(
-				this
-					.request,
-			);
-		this.serverXp =
-			new ServerXpService(
-				this
-					.request,
-			);
-		this.socialLinks =
-			new SocialLinksService(
-				this
-					.request,
-			);
-		this.users =
-			new UsersService(
-				this
-					.request,
-			);
-		this.userStatus =
-			new UserStatusService(
-				this
-					.request,
-			);
-		this.webhook =
-			new WebhookService(
-				this
-					.request,
-			);
-		this.serverSubscriptions =
-			new ServerSubscriptionService(
-				this
-					.request,
-			);
+		this.announcementComments = new AnnouncementCommentsService(this.request);
+		this.announcements = new AnnouncementsService(this.request);
+		this.calendarEventComments = new CalendarEventCommentsService(this.request);
+		this.calendarEvents = new CalendarEventsService(this.request);
+		this.calendarEventSeries = new CalendarEventSeriesService(this.request);
+		this.categories = new CategoriesService(this.request);
+		this.channels = new ChannelsService(this.request);
+		this.chat = new ChatService(this.request);
+		this.docComments = new DocCommentsService(this.request);
+		this.docs = new DocsService(this.request);
+		this.forumComments = new ForumCommentsService(this.request);
+		this.forums = new ForumsService(this.request);
+		this.groupMembership = new GroupMembershipService(this.request);
+		this.groups = new GroupsService(this.request);
+		this.listItems = new ListItemsService(this.request);
+		this.memberBans = new MemberBansService(this.request);
+		this.members = new MembersService(this.request);
+		this.reactions = new ReactionsService(this.request);
+		this.roleMembership = new RoleMembershipService(this.request);
+		this.roles = new RolesService(this.request);
+		this.servers = new ServersService(this.request);
+		this.serverXp = new ServerXpService(this.request);
+		this.socialLinks = new SocialLinksService(this.request);
+		this.users = new UsersService(this.request);
+		this.userStatus = new UserStatusService(this.request);
+		this.webhook = new WebhookService(this.request);
+		this.serverSubscriptions = new ServerSubscriptionService(this.request);
 	}
 }

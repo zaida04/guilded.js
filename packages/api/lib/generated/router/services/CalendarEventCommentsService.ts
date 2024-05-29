@@ -1,19 +1,14 @@
-/* generated using openapi-typescript-codegen -- do no edit */
+import type { BaseHttpRequest } from "../core/BaseHttpRequest";
+import type { CancelablePromise } from "../core/CancelablePromise";
+/* generated using openapi-typescript-codegen -- do not edit */
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
 import type { CalendarEventComment } from "../models/CalendarEventComment";
-
-import type { BaseHttpRequest } from "../core/BaseHttpRequest";
-import type { CancelablePromise } from "../core/CancelablePromise";
-
 export class CalendarEventCommentsService {
-	constructor(
-		public readonly httpRequest: BaseHttpRequest,
-	) {}
-
+	constructor(public readonly httpRequest: BaseHttpRequest) {}
 	/**
-	 * Create a comment on an event
+	 * Create a comment on a calendar event
 	 * @returns any Success
 	 * @throws ApiError
 	 */
@@ -33,20 +28,17 @@ export class CalendarEventCommentsService {
 	}): CancelablePromise<{
 		calendarEventComment: CalendarEventComment;
 	}> {
-		return this.httpRequest.request(
-			{
-				method: "POST",
-				url: "/channels/{channelId}/events/{calendarEventId}/comments",
-				path: {
-					channelId: channelId,
-					calendarEventId: calendarEventId,
-				},
-				body: requestBody,
-				mediaType: "application/json",
+		return this.httpRequest.request({
+			method: "POST",
+			url: "/channels/{channelId}/events/{calendarEventId}/comments",
+			path: {
+				channelId: channelId,
+				calendarEventId: calendarEventId,
 			},
-		);
+			body: requestBody,
+			mediaType: "application/json",
+		});
 	}
-
 	/**
 	 * Get a calendar event's comments
 	 * @returns any Success
@@ -61,18 +53,15 @@ export class CalendarEventCommentsService {
 	}): CancelablePromise<{
 		calendarEventComments: Array<CalendarEventComment>;
 	}> {
-		return this.httpRequest.request(
-			{
-				method: "GET",
-				url: "/channels/{channelId}/events/{calendarEventId}/comments",
-				path: {
-					channelId: channelId,
-					calendarEventId: calendarEventId,
-				},
+		return this.httpRequest.request({
+			method: "GET",
+			url: "/channels/{channelId}/events/{calendarEventId}/comments",
+			path: {
+				channelId: channelId,
+				calendarEventId: calendarEventId,
 			},
-		);
+		});
 	}
-
 	/**
 	 * Get a comment on the calendar event
 	 * @returns any Success
@@ -89,19 +78,16 @@ export class CalendarEventCommentsService {
 	}): CancelablePromise<{
 		calendarEventComment: CalendarEventComment;
 	}> {
-		return this.httpRequest.request(
-			{
-				method: "GET",
-				url: "/channels/{channelId}/events/{calendarEventId}/comments/{calendarEventCommentId}",
-				path: {
-					channelId: channelId,
-					calendarEventId: calendarEventId,
-					calendarEventCommentId: calendarEventCommentId,
-				},
+		return this.httpRequest.request({
+			method: "GET",
+			url: "/channels/{channelId}/events/{calendarEventId}/comments/{calendarEventCommentId}",
+			path: {
+				channelId: channelId,
+				calendarEventId: calendarEventId,
+				calendarEventCommentId: calendarEventCommentId,
 			},
-		);
+		});
 	}
-
 	/**
 	 * Update a calendar event comment
 	 * @returns any Success
@@ -125,21 +111,18 @@ export class CalendarEventCommentsService {
 	}): CancelablePromise<{
 		calendarEventComment: CalendarEventComment;
 	}> {
-		return this.httpRequest.request(
-			{
-				method: "PATCH",
-				url: "/channels/{channelId}/events/{calendarEventId}/comments/{calendarEventCommentId}",
-				path: {
-					channelId: channelId,
-					calendarEventId: calendarEventId,
-					calendarEventCommentId: calendarEventCommentId,
-				},
-				body: requestBody,
-				mediaType: "application/json",
+		return this.httpRequest.request({
+			method: "PATCH",
+			url: "/channels/{channelId}/events/{calendarEventId}/comments/{calendarEventCommentId}",
+			path: {
+				channelId: channelId,
+				calendarEventId: calendarEventId,
+				calendarEventCommentId: calendarEventCommentId,
 			},
-		);
+			body: requestBody,
+			mediaType: "application/json",
+		});
 	}
-
 	/**
 	 * Delete a calendar event comment
 	 * @returns void
@@ -154,16 +137,14 @@ export class CalendarEventCommentsService {
 		calendarEventId: number;
 		calendarEventCommentId: number;
 	}): CancelablePromise<void> {
-		return this.httpRequest.request(
-			{
-				method: "DELETE",
-				url: "/channels/{channelId}/events/{calendarEventId}/comments/{calendarEventCommentId}",
-				path: {
-					channelId: channelId,
-					calendarEventId: calendarEventId,
-					calendarEventCommentId: calendarEventCommentId,
-				},
+		return this.httpRequest.request({
+			method: "DELETE",
+			url: "/channels/{channelId}/events/{calendarEventId}/comments/{calendarEventCommentId}",
+			path: {
+				channelId: channelId,
+				calendarEventId: calendarEventId,
+				calendarEventCommentId: calendarEventCommentId,
 			},
-		);
+		});
 	}
 }

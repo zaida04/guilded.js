@@ -1,15 +1,11 @@
 import type { BaseHttpRequest } from "../core/BaseHttpRequest";
-/* generated using openapi-typescript-codegen -- do no edit */
+/* generated using openapi-typescript-codegen -- do not edit */
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
 import type { CancelablePromise } from "../core/CancelablePromise";
-
 export class CalendarEventSeriesService {
-	constructor(
-		public readonly httpRequest: BaseHttpRequest,
-	) {}
-
+	constructor(public readonly httpRequest: BaseHttpRequest) {}
 	/**
 	 * Update a calendar event series
 	 * @returns void
@@ -74,14 +70,9 @@ export class CalendarEventSeriesService {
 			roleIds?: Array<number>;
 			repeatInfo?: {
 				/**
-				 * How often you want your event to repeat (important note: this will repeat for the next 180 days unless custom is defined)
+				 * How often you want your event to repeat (important note: this will repeat for the next 365 days unless custom is defined)
 				 */
-				type:
-					| "once"
-					| "everyDay"
-					| "everyWeek"
-					| "everyMonth"
-					| "custom";
+				type: "once" | "everyDay" | "everyWeek" | "everyMonth" | "custom";
 				/**
 				 * Apply further clarification to your events. This **must** have `type` set to `custom`
 				 */
@@ -93,11 +84,7 @@ export class CalendarEventSeriesService {
 					/**
 					 * Coupled with `count`, this indicates the time range you are repeating your event over
 					 */
-					interval:
-						| "day"
-						| "month"
-						| "year"
-						| "week";
+					interval: "day" | "month" | "year" | "week";
 				};
 				/**
 				 * Used to control the end date of the event repeat (only used when `type` is `custom`; if used with `endDate`, the earliest resultant date of the two will be used)
@@ -110,15 +97,7 @@ export class CalendarEventSeriesService {
 				/**
 				 * Used to control the day of the week that the event should repeat on (only used when `type` is `custom` and when `every.interval` is `week`)
 				 */
-				on?: Array<
-					| "sunday"
-					| "monday"
-					| "tuesday"
-					| "wednesday"
-					| "thursday"
-					| "friday"
-					| "saturday"
-				>;
+				on?: Array<"sunday" | "monday" | "tuesday" | "wednesday" | "thursday" | "friday" | "saturday">;
 			};
 			/**
 			 * Control the updating of the series from the `calendarEventId` forward. If not defined, it will edit all events
@@ -126,20 +105,17 @@ export class CalendarEventSeriesService {
 			calendarEventId?: number;
 		};
 	}): CancelablePromise<void> {
-		return this.httpRequest.request(
-			{
-				method: "PATCH",
-				url: "/channels/{channelId}/event_series/{calendarEventSeriesId}",
-				path: {
-					channelId: channelId,
-					calendarEventSeriesId: calendarEventSeriesId,
-				},
-				body: requestBody,
-				mediaType: "application/json",
+		return this.httpRequest.request({
+			method: "PATCH",
+			url: "/channels/{channelId}/event_series/{calendarEventSeriesId}",
+			path: {
+				channelId: channelId,
+				calendarEventSeriesId: calendarEventSeriesId,
 			},
-		);
+			body: requestBody,
+			mediaType: "application/json",
+		});
 	}
-
 	/**
 	 * Delete a calendar event series
 	 * @returns void
@@ -159,17 +135,15 @@ export class CalendarEventSeriesService {
 			calendarEventId?: number;
 		};
 	}): CancelablePromise<void> {
-		return this.httpRequest.request(
-			{
-				method: "DELETE",
-				url: "/channels/{channelId}/event_series/{calendarEventSeriesId}",
-				path: {
-					channelId: channelId,
-					calendarEventSeriesId: calendarEventSeriesId,
-				},
-				body: requestBody,
-				mediaType: "application/json",
+		return this.httpRequest.request({
+			method: "DELETE",
+			url: "/channels/{channelId}/event_series/{calendarEventSeriesId}",
+			path: {
+				channelId: channelId,
+				calendarEventSeriesId: calendarEventSeriesId,
 			},
-		);
+			body: requestBody,
+			mediaType: "application/json",
+		});
 	}
 }

@@ -1,15 +1,11 @@
 import type { BaseHttpRequest } from "../core/BaseHttpRequest";
-/* generated using openapi-typescript-codegen -- do no edit */
+/* generated using openapi-typescript-codegen -- do not edit */
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
 import type { CancelablePromise } from "../core/CancelablePromise";
-
 export class ServerXpService {
-	constructor(
-		public readonly httpRequest: BaseHttpRequest,
-	) {}
-
+	constructor(public readonly httpRequest: BaseHttpRequest) {}
 	/**
 	 * Award XP to a member
 	 * @returns any Success
@@ -24,9 +20,7 @@ export class ServerXpService {
 		/**
 		 * Member ID to award XP to
 		 */
-		userId:
-			| string
-			| "@me";
+		userId: string | "@me";
 		requestBody: {
 			/**
 			 * The amount of XP to award
@@ -39,20 +33,17 @@ export class ServerXpService {
 		 */
 		total: number;
 	}> {
-		return this.httpRequest.request(
-			{
-				method: "POST",
-				url: "/servers/{serverId}/members/{userId}/xp",
-				path: {
-					serverId: serverId,
-					userId: userId,
-				},
-				body: requestBody,
-				mediaType: "application/json",
+		return this.httpRequest.request({
+			method: "POST",
+			url: "/servers/{serverId}/members/{userId}/xp",
+			path: {
+				serverId: serverId,
+				userId: userId,
 			},
-		);
+			body: requestBody,
+			mediaType: "application/json",
+		});
 	}
-
 	/**
 	 * Set a member's XP
 	 * @returns any Success
@@ -67,9 +58,7 @@ export class ServerXpService {
 		/**
 		 * Member ID to set XP to
 		 */
-		userId:
-			| string
-			| "@me";
+		userId: string | "@me";
 		requestBody: {
 			/**
 			 * The total XP to set on the user
@@ -82,20 +71,17 @@ export class ServerXpService {
 		 */
 		total: number;
 	}> {
-		return this.httpRequest.request(
-			{
-				method: "PUT",
-				url: "/servers/{serverId}/members/{userId}/xp",
-				path: {
-					serverId: serverId,
-					userId: userId,
-				},
-				body: requestBody,
-				mediaType: "application/json",
+		return this.httpRequest.request({
+			method: "PUT",
+			url: "/servers/{serverId}/members/{userId}/xp",
+			path: {
+				serverId: serverId,
+				userId: userId,
 			},
-		);
+			body: requestBody,
+			mediaType: "application/json",
+		});
 	}
-
 	/**
 	 * Bulk award XP to members
 	 * Take note of the max number of `userIds` that can be submitted on each request. If you require more, please batch your requests
@@ -112,33 +98,24 @@ export class ServerXpService {
 			 * The amount of XP to award
 			 */
 			amount: number;
-			userIds: Array<
-				| string
-				| "@me"
-			>;
+			userIds: Array<string | "@me">;
 		};
 	}): CancelablePromise<{
 		/**
 		 * Each key of the object will be a user ID, and its value will be the total for that user after this operation
 		 */
-		totalsByUserId: Record<
-			string,
-			number
-		>;
+		totalsByUserId: Record<string, number>;
 	}> {
-		return this.httpRequest.request(
-			{
-				method: "POST",
-				url: "/servers/{serverId}/xp",
-				path: {
-					serverId: serverId,
-				},
-				body: requestBody,
-				mediaType: "application/json",
+		return this.httpRequest.request({
+			method: "POST",
+			url: "/servers/{serverId}/xp",
+			path: {
+				serverId: serverId,
 			},
-		);
+			body: requestBody,
+			mediaType: "application/json",
+		});
 	}
-
 	/**
 	 * Bulk set members' XP
 	 * Take note of the max number of `userIds` that can be submitted on each request. If you require more, please batch your requests
@@ -154,34 +131,25 @@ export class ServerXpService {
 			/**
 			 * The total XP to set on each user
 			 */
-			total?: number;
-			userIds: Array<
-				| string
-				| "@me"
-			>;
+			amount: number;
+			userIds: Array<string | "@me">;
 		};
 	}): CancelablePromise<{
 		/**
 		 * Each key of the object will be a user ID, and its value will be the total for that user after this operation
 		 */
-		totalsByUserId: Record<
-			string,
-			number
-		>;
+		totalsByUserId: Record<string, number>;
 	}> {
-		return this.httpRequest.request(
-			{
-				method: "PUT",
-				url: "/servers/{serverId}/xp",
-				path: {
-					serverId: serverId,
-				},
-				body: requestBody,
-				mediaType: "application/json",
+		return this.httpRequest.request({
+			method: "PUT",
+			url: "/servers/{serverId}/xp",
+			path: {
+				serverId: serverId,
 			},
-		);
+			body: requestBody,
+			mediaType: "application/json",
+		});
 	}
-
 	/**
 	 * Award XP to role
 	 * Award XP to all members with a particular role.
@@ -205,17 +173,15 @@ export class ServerXpService {
 			amount: number;
 		};
 	}): CancelablePromise<void> {
-		return this.httpRequest.request(
-			{
-				method: "POST",
-				url: "/servers/{serverId}/roles/{roleId}/xp",
-				path: {
-					serverId: serverId,
-					roleId: roleId,
-				},
-				body: requestBody,
-				mediaType: "application/json",
+		return this.httpRequest.request({
+			method: "POST",
+			url: "/servers/{serverId}/roles/{roleId}/xp",
+			path: {
+				serverId: serverId,
+				roleId: roleId,
 			},
-		);
+			body: requestBody,
+			mediaType: "application/json",
+		});
 	}
 }

@@ -1,17 +1,12 @@
-/* generated using openapi-typescript-codegen -- do no edit */
+import type { BaseHttpRequest } from "../core/BaseHttpRequest";
+import type { CancelablePromise } from "../core/CancelablePromise";
+/* generated using openapi-typescript-codegen -- do not edit */
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
 import type { AnnouncementComment } from "../models/AnnouncementComment";
-
-import type { BaseHttpRequest } from "../core/BaseHttpRequest";
-import type { CancelablePromise } from "../core/CancelablePromise";
-
 export class AnnouncementCommentsService {
-	constructor(
-		public readonly httpRequest: BaseHttpRequest,
-	) {}
-
+	constructor(public readonly httpRequest: BaseHttpRequest) {}
 	/**
 	 * Create a comment on an announcement
 	 * @returns any Success
@@ -33,20 +28,17 @@ export class AnnouncementCommentsService {
 	}): CancelablePromise<{
 		announcementComment: AnnouncementComment;
 	}> {
-		return this.httpRequest.request(
-			{
-				method: "POST",
-				url: "/channels/{channelId}/announcements/{announcementId}/comments",
-				path: {
-					channelId: channelId,
-					announcementId: announcementId,
-				},
-				body: requestBody,
-				mediaType: "application/json",
+		return this.httpRequest.request({
+			method: "POST",
+			url: "/channels/{channelId}/announcements/{announcementId}/comments",
+			path: {
+				channelId: channelId,
+				announcementId: announcementId,
 			},
-		);
+			body: requestBody,
+			mediaType: "application/json",
+		});
 	}
-
 	/**
 	 * Get an announcement's comments
 	 * @returns any Success
@@ -61,18 +53,15 @@ export class AnnouncementCommentsService {
 	}): CancelablePromise<{
 		announcementComments: Array<AnnouncementComment>;
 	}> {
-		return this.httpRequest.request(
-			{
-				method: "GET",
-				url: "/channels/{channelId}/announcements/{announcementId}/comments",
-				path: {
-					channelId: channelId,
-					announcementId: announcementId,
-				},
+		return this.httpRequest.request({
+			method: "GET",
+			url: "/channels/{channelId}/announcements/{announcementId}/comments",
+			path: {
+				channelId: channelId,
+				announcementId: announcementId,
 			},
-		);
+		});
 	}
-
 	/**
 	 * Get a comment on the announcement
 	 * @returns any Success
@@ -89,19 +78,16 @@ export class AnnouncementCommentsService {
 	}): CancelablePromise<{
 		announcementComment: AnnouncementComment;
 	}> {
-		return this.httpRequest.request(
-			{
-				method: "GET",
-				url: "/channels/{channelId}/announcements/{announcementId}/comments/{announcementCommentId}",
-				path: {
-					channelId: channelId,
-					announcementId: announcementId,
-					announcementCommentId: announcementCommentId,
-				},
+		return this.httpRequest.request({
+			method: "GET",
+			url: "/channels/{channelId}/announcements/{announcementId}/comments/{announcementCommentId}",
+			path: {
+				channelId: channelId,
+				announcementId: announcementId,
+				announcementCommentId: announcementCommentId,
 			},
-		);
+		});
 	}
-
 	/**
 	 * Update an announcement comment
 	 * @returns any Success
@@ -125,21 +111,18 @@ export class AnnouncementCommentsService {
 	}): CancelablePromise<{
 		announcementComment: AnnouncementComment;
 	}> {
-		return this.httpRequest.request(
-			{
-				method: "PATCH",
-				url: "/channels/{channelId}/announcements/{announcementId}/comments/{announcementCommentId}",
-				path: {
-					channelId: channelId,
-					announcementId: announcementId,
-					announcementCommentId: announcementCommentId,
-				},
-				body: requestBody,
-				mediaType: "application/json",
+		return this.httpRequest.request({
+			method: "PATCH",
+			url: "/channels/{channelId}/announcements/{announcementId}/comments/{announcementCommentId}",
+			path: {
+				channelId: channelId,
+				announcementId: announcementId,
+				announcementCommentId: announcementCommentId,
 			},
-		);
+			body: requestBody,
+			mediaType: "application/json",
+		});
 	}
-
 	/**
 	 * Delete an announcement comment
 	 * @returns void
@@ -154,16 +137,14 @@ export class AnnouncementCommentsService {
 		announcementId: string;
 		announcementCommentId: number;
 	}): CancelablePromise<void> {
-		return this.httpRequest.request(
-			{
-				method: "DELETE",
-				url: "/channels/{channelId}/announcements/{announcementId}/comments/{announcementCommentId}",
-				path: {
-					channelId: channelId,
-					announcementId: announcementId,
-					announcementCommentId: announcementCommentId,
-				},
+		return this.httpRequest.request({
+			method: "DELETE",
+			url: "/channels/{channelId}/announcements/{announcementId}/comments/{announcementCommentId}",
+			path: {
+				channelId: channelId,
+				announcementId: announcementId,
+				announcementCommentId: announcementCommentId,
 			},
-		);
+		});
 	}
 }

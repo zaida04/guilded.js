@@ -11,11 +11,11 @@
         "build:typecheck": "tsc --noEmit",
         "prepublishOnly": "rimraf dist/ && rimraf types/ && pnpm run build",
         "release": "npm publish",
-        "router:preserve": "ts-node scripts/pre-gen-router.ts",
-        "router:restore": "ts-node scripts/post-gen-router.ts",
-        "generate:ws": "openapi-typescript \"https://www.guilded.gg/api/v1/socket-open-api-schema.json\" --output lib/generated/api-typings/v1/ws.ts",
-        "generate:long:router": "pnpx openapi-typescript-codegen --input \"https://www.guilded.gg/api/v1/open-api-schema.json\" --output lib/generated/router --name GuildedRouter --useOptions --postfixModels Payload --useUnionTypes",
-        "generate:router": "bun run router:preserve && bun run generate:long:router && biome check --apply-unsafe lib/generated/router/**/*.ts && pnpm router:restore"
+        "router:preserve": "cd scripts && bun pre-gen-router.ts",
+        "router:restore": "cd scripts && bun post-gen-router.ts",
+        "generate:ws": "bunx openapi-typescript \"https://www.guilded.gg/api/v1/socket-open-api-schema.json\" --output lib/generated/api-typings/v1/ws.ts",
+        "generate:long:router": "bunx openapi-typescript-codegen --input \"https://www.guilded.gg/api/v1/open-api-schema.json\" --output lib/generated/router --name GuildedRouter --useOptions --postfixModels Payload --useUnionTypes",
+        "generate:router": "bun run router:preserve && bun run generate:long:router && biome check --apply-unsafe lib/generated/router/**/*.ts && bun run router:restore"
     },
     "devDependencies": {
         "@types/fs-extra": "^11.0.1",
@@ -23,9 +23,8 @@
         "@types/qs": "^6.9.7",
         "@types/ws": "8.5.4",
         "fs-extra": "^11.1.1",
-        "openapi-typescript": "^6.2.4",
-        "openapi-typescript-codegen": "^0.24.0",
-        "ts-node": "10.9.1",
+        "openapi-typescript": "6.2.4",
+        "openapi-typescript-codegen": "0.24.0",
         "typescript": "5.0.4"
     },
     "dependencies": {

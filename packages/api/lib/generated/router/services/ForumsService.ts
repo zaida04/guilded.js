@@ -1,18 +1,13 @@
-/* generated using openapi-typescript-codegen -- do no edit */
+import type { BaseHttpRequest } from "../core/BaseHttpRequest";
+import type { CancelablePromise } from "../core/CancelablePromise";
+/* generated using openapi-typescript-codegen -- do not edit */
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
 import type { ForumTopic } from "../models/ForumTopic";
 import type { ForumTopicSummary } from "../models/ForumTopicSummary";
-
-import type { BaseHttpRequest } from "../core/BaseHttpRequest";
-import type { CancelablePromise } from "../core/CancelablePromise";
-
 export class ForumsService {
-	constructor(
-		public readonly httpRequest: BaseHttpRequest,
-	) {}
-
+	constructor(public readonly httpRequest: BaseHttpRequest) {}
 	/**
 	 * Create a topic in a forum
 	 * @returns any Success
@@ -31,29 +26,21 @@ export class ForumsService {
 			/**
 			 * The content of the forum topic
 			 */
-			content:
-				| Record<
-						string,
-						any
-				  >
-				| string;
+			content: Record<string, any> | string;
 		};
 	}): CancelablePromise<{
 		forumTopic: ForumTopic;
 	}> {
-		return this.httpRequest.request(
-			{
-				method: "POST",
-				url: "/channels/{channelId}/topics",
-				path: {
-					channelId: channelId,
-				},
-				body: requestBody,
-				mediaType: "application/json",
+		return this.httpRequest.request({
+			method: "POST",
+			url: "/channels/{channelId}/topics",
+			path: {
+				channelId: channelId,
 			},
-		);
+			body: requestBody,
+			mediaType: "application/json",
+		});
 	}
-
 	/**
 	 * Get forum topics
 	 * @returns any Success
@@ -70,21 +57,18 @@ export class ForumsService {
 	}): CancelablePromise<{
 		forumTopics: Array<ForumTopicSummary>;
 	}> {
-		return this.httpRequest.request(
-			{
-				method: "GET",
-				url: "/channels/{channelId}/topics",
-				path: {
-					channelId: channelId,
-				},
-				query: {
-					before: before,
-					limit: limit,
-				},
+		return this.httpRequest.request({
+			method: "GET",
+			url: "/channels/{channelId}/topics",
+			path: {
+				channelId: channelId,
 			},
-		);
+			query: {
+				before: before,
+				limit: limit,
+			},
+		});
 	}
-
 	/**
 	 * Get a forum topic
 	 * @returns any Success
@@ -99,18 +83,15 @@ export class ForumsService {
 	}): CancelablePromise<{
 		forumTopic: ForumTopic;
 	}> {
-		return this.httpRequest.request(
-			{
-				method: "GET",
-				url: "/channels/{channelId}/topics/{forumTopicId}",
-				path: {
-					channelId: channelId,
-					forumTopicId: forumTopicId,
-				},
+		return this.httpRequest.request({
+			method: "GET",
+			url: "/channels/{channelId}/topics/{forumTopicId}",
+			path: {
+				channelId: channelId,
+				forumTopicId: forumTopicId,
 			},
-		);
+		});
 	}
-
 	/**
 	 * Update a forum topic
 	 * @returns any Success
@@ -136,20 +117,17 @@ export class ForumsService {
 	}): CancelablePromise<{
 		forumTopic: ForumTopic;
 	}> {
-		return this.httpRequest.request(
-			{
-				method: "PATCH",
-				url: "/channels/{channelId}/topics/{forumTopicId}",
-				path: {
-					channelId: channelId,
-					forumTopicId: forumTopicId,
-				},
-				body: requestBody,
-				mediaType: "application/json",
+		return this.httpRequest.request({
+			method: "PATCH",
+			url: "/channels/{channelId}/topics/{forumTopicId}",
+			path: {
+				channelId: channelId,
+				forumTopicId: forumTopicId,
 			},
-		);
+			body: requestBody,
+			mediaType: "application/json",
+		});
 	}
-
 	/**
 	 * Delete a forum topic
 	 * @returns void
@@ -162,18 +140,15 @@ export class ForumsService {
 		channelId: string;
 		forumTopicId: number;
 	}): CancelablePromise<void> {
-		return this.httpRequest.request(
-			{
-				method: "DELETE",
-				url: "/channels/{channelId}/topics/{forumTopicId}",
-				path: {
-					channelId: channelId,
-					forumTopicId: forumTopicId,
-				},
+		return this.httpRequest.request({
+			method: "DELETE",
+			url: "/channels/{channelId}/topics/{forumTopicId}",
+			path: {
+				channelId: channelId,
+				forumTopicId: forumTopicId,
 			},
-		);
+		});
 	}
-
 	/**
 	 * Pin a forum topic
 	 * @returns void
@@ -186,18 +161,15 @@ export class ForumsService {
 		channelId: string;
 		forumTopicId: number;
 	}): CancelablePromise<void> {
-		return this.httpRequest.request(
-			{
-				method: "PUT",
-				url: "/channels/{channelId}/topics/{forumTopicId}/pin",
-				path: {
-					channelId: channelId,
-					forumTopicId: forumTopicId,
-				},
+		return this.httpRequest.request({
+			method: "PUT",
+			url: "/channels/{channelId}/topics/{forumTopicId}/pin",
+			path: {
+				channelId: channelId,
+				forumTopicId: forumTopicId,
 			},
-		);
+		});
 	}
-
 	/**
 	 * Unpin a forum topic
 	 * @returns void
@@ -210,18 +182,15 @@ export class ForumsService {
 		channelId: string;
 		forumTopicId: number;
 	}): CancelablePromise<void> {
-		return this.httpRequest.request(
-			{
-				method: "DELETE",
-				url: "/channels/{channelId}/topics/{forumTopicId}/pin",
-				path: {
-					channelId: channelId,
-					forumTopicId: forumTopicId,
-				},
+		return this.httpRequest.request({
+			method: "DELETE",
+			url: "/channels/{channelId}/topics/{forumTopicId}/pin",
+			path: {
+				channelId: channelId,
+				forumTopicId: forumTopicId,
 			},
-		);
+		});
 	}
-
 	/**
 	 * Lock a forum topic
 	 * @returns void
@@ -234,18 +203,15 @@ export class ForumsService {
 		channelId: string;
 		forumTopicId: number;
 	}): CancelablePromise<void> {
-		return this.httpRequest.request(
-			{
-				method: "PUT",
-				url: "/channels/{channelId}/topics/{forumTopicId}/lock",
-				path: {
-					channelId: channelId,
-					forumTopicId: forumTopicId,
-				},
+		return this.httpRequest.request({
+			method: "PUT",
+			url: "/channels/{channelId}/topics/{forumTopicId}/lock",
+			path: {
+				channelId: channelId,
+				forumTopicId: forumTopicId,
 			},
-		);
+		});
 	}
-
 	/**
 	 * Unlock a forum topic
 	 * @returns void
@@ -258,15 +224,13 @@ export class ForumsService {
 		channelId: string;
 		forumTopicId: number;
 	}): CancelablePromise<void> {
-		return this.httpRequest.request(
-			{
-				method: "DELETE",
-				url: "/channels/{channelId}/topics/{forumTopicId}/lock",
-				path: {
-					channelId: channelId,
-					forumTopicId: forumTopicId,
-				},
+		return this.httpRequest.request({
+			method: "DELETE",
+			url: "/channels/{channelId}/topics/{forumTopicId}/lock",
+			path: {
+				channelId: channelId,
+				forumTopicId: forumTopicId,
 			},
-		);
+		});
 	}
 }

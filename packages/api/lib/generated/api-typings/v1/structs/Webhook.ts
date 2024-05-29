@@ -1,7 +1,5 @@
 export type WebhookContentPayload = {
-	botId:
-		| string
-		| null;
+	botId: string | null;
 	channelId: string;
 	content: APIContent;
 	createdAt: string;
@@ -18,9 +16,7 @@ export type APIContent = {
 
 type APILeaf = {
 	marks: APIMark[];
-	object:
-		| string
-		| "leaf";
+	object: string | "leaf";
 	text: string;
 };
 

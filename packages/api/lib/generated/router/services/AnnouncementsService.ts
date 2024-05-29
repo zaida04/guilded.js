@@ -1,17 +1,12 @@
-/* generated using openapi-typescript-codegen -- do no edit */
+import type { BaseHttpRequest } from "../core/BaseHttpRequest";
+import type { CancelablePromise } from "../core/CancelablePromise";
+/* generated using openapi-typescript-codegen -- do not edit */
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
 import type { Announcement } from "../models/Announcement";
-
-import type { BaseHttpRequest } from "../core/BaseHttpRequest";
-import type { CancelablePromise } from "../core/CancelablePromise";
-
 export class AnnouncementsService {
-	constructor(
-		public readonly httpRequest: BaseHttpRequest,
-	) {}
-
+	constructor(public readonly httpRequest: BaseHttpRequest) {}
 	/**
 	 * Create an announcement
 	 * @returns any Success
@@ -30,29 +25,21 @@ export class AnnouncementsService {
 			/**
 			 * The content of the announcement
 			 */
-			content:
-				| Record<
-						string,
-						any
-				  >
-				| string;
+			content: Record<string, any> | string;
 		};
 	}): CancelablePromise<{
 		announcement: Announcement;
 	}> {
-		return this.httpRequest.request(
-			{
-				method: "POST",
-				url: "/channels/{channelId}/announcements",
-				path: {
-					channelId: channelId,
-				},
-				body: requestBody,
-				mediaType: "application/json",
+		return this.httpRequest.request({
+			method: "POST",
+			url: "/channels/{channelId}/announcements",
+			path: {
+				channelId: channelId,
 			},
-		);
+			body: requestBody,
+			mediaType: "application/json",
+		});
 	}
-
 	/**
 	 * Get announcements
 	 * Results returned will be ordered ascending by the announcement's `createdAt`. `before` will filter based on the announcement's `createdAt`
@@ -70,21 +57,18 @@ export class AnnouncementsService {
 	}): CancelablePromise<{
 		announcements: Array<Announcement>;
 	}> {
-		return this.httpRequest.request(
-			{
-				method: "GET",
-				url: "/channels/{channelId}/announcements",
-				path: {
-					channelId: channelId,
-				},
-				query: {
-					before: before,
-					limit: limit,
-				},
+		return this.httpRequest.request({
+			method: "GET",
+			url: "/channels/{channelId}/announcements",
+			path: {
+				channelId: channelId,
 			},
-		);
+			query: {
+				before: before,
+				limit: limit,
+			},
+		});
 	}
-
 	/**
 	 * Read an announcement
 	 * @returns any Success
@@ -99,18 +83,15 @@ export class AnnouncementsService {
 	}): CancelablePromise<{
 		announcement: Announcement;
 	}> {
-		return this.httpRequest.request(
-			{
-				method: "GET",
-				url: "/channels/{channelId}/announcements/{announcementId}",
-				path: {
-					channelId: channelId,
-					announcementId: announcementId,
-				},
+		return this.httpRequest.request({
+			method: "GET",
+			url: "/channels/{channelId}/announcements/{announcementId}",
+			path: {
+				channelId: channelId,
+				announcementId: announcementId,
 			},
-		);
+		});
 	}
-
 	/**
 	 * Update an announcement
 	 * @returns any Success
@@ -131,30 +112,22 @@ export class AnnouncementsService {
 			/**
 			 * The content of the announcement
 			 */
-			content?:
-				| Record<
-						string,
-						any
-				  >
-				| string;
+			content?: Record<string, any> | string;
 		};
 	}): CancelablePromise<{
 		announcement: Announcement;
 	}> {
-		return this.httpRequest.request(
-			{
-				method: "PATCH",
-				url: "/channels/{channelId}/announcements/{announcementId}",
-				path: {
-					channelId: channelId,
-					announcementId: announcementId,
-				},
-				body: requestBody,
-				mediaType: "application/json",
+		return this.httpRequest.request({
+			method: "PATCH",
+			url: "/channels/{channelId}/announcements/{announcementId}",
+			path: {
+				channelId: channelId,
+				announcementId: announcementId,
 			},
-		);
+			body: requestBody,
+			mediaType: "application/json",
+		});
 	}
-
 	/**
 	 * Delete an announcement
 	 * @returns void
@@ -167,15 +140,13 @@ export class AnnouncementsService {
 		channelId: string;
 		announcementId: string;
 	}): CancelablePromise<void> {
-		return this.httpRequest.request(
-			{
-				method: "DELETE",
-				url: "/channels/{channelId}/announcements/{announcementId}",
-				path: {
-					channelId: channelId,
-					announcementId: announcementId,
-				},
+		return this.httpRequest.request({
+			method: "DELETE",
+			url: "/channels/{channelId}/announcements/{announcementId}",
+			path: {
+				channelId: channelId,
+				announcementId: announcementId,
 			},
-		);
+		});
 	}
 }

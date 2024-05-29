@@ -1,8 +1,7 @@
-/* generated using openapi-typescript-codegen -- do no edit */
+/* generated using openapi-typescript-codegen -- do not edit */
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-
 export type Role = {
 	/**
 	 * The ID of the role
@@ -49,9 +48,9 @@ export type Role = {
 	 */
 	icon?: string;
 	/**
-	 * The position the role will be in relation to the roles in the server
+	 * The priority the role will be in relation to other roles in the server. The higher the value, the more precedence the role has over lower priority roles, and the higher up it will be displayed in the UI. Values can be zero or negative!
 	 */
-	position: number;
+	priority?: number;
 	/**
 	 * The default role users are given when joining the server. Base roles are tied directly to the server and cannot be created or deleted
 	 */

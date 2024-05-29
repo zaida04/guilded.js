@@ -1,8 +1,7 @@
-/* generated using openapi-typescript-codegen -- do no edit */
+/* generated using openapi-typescript-codegen -- do not edit */
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-
 export type Server = {
 	/**
 	 * The ID of the server
@@ -15,15 +14,7 @@ export type Server = {
 	/**
 	 * The type of server designated from the server's settings page
 	 */
-	type?:
-		| "team"
-		| "organization"
-		| "community"
-		| "clan"
-		| "guild"
-		| "friends"
-		| "streaming"
-		| "other";
+	type?: "team" | "organization" | "community" | "clan" | "guild" | "friends" | "streaming" | "other";
 	/**
 	 * The name given to the server
 	 */

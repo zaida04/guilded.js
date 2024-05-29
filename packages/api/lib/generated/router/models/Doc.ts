@@ -1,10 +1,8 @@
-/* generated using openapi-typescript-codegen -- do no edit */
+/* generated using openapi-typescript-codegen -- do not edit */
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-
 import type { Mentions } from "./Mentions";
-
 export type Doc = {
 	/**
 	 * The ID of the doc
@@ -14,6 +12,10 @@ export type Doc = {
 	 * The ID of the server
 	 */
 	serverId: string;
+	/**
+	 * The ID of the group
+	 */
+	groupId: string;
 	/**
 	 * The ID of the channel
 	 */

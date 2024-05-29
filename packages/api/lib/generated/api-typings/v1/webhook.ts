@@ -9,13 +9,7 @@ export type RESTPostWebhookBody = {
 	avatar_url?: string;
 	content?: string;
 	embeds?: APIEmbed[];
-	payload_json?: Pick<
-		RESTPostWebhookBody,
-		| "avatar_url"
-		| "content"
-		| "embeds"
-		| "username"
-	>;
+	payload_json?: Pick<RESTPostWebhookBody, "avatar_url" | "content" | "embeds" | "username">;
 	username?: string;
 };
 

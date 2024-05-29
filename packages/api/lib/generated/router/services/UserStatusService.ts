@@ -1,18 +1,14 @@
 import type { BaseHttpRequest } from "../core/BaseHttpRequest";
-/* generated using openapi-typescript-codegen -- do no edit */
+/* generated using openapi-typescript-codegen -- do not edit */
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
 import type { CancelablePromise } from "../core/CancelablePromise";
-
 export class UserStatusService {
-	constructor(
-		public readonly httpRequest: BaseHttpRequest,
-	) {}
-
+	constructor(public readonly httpRequest: BaseHttpRequest) {}
 	/**
 	 * Update your status
-	 * This value can be a max of 24 hours into the futre. If you are wanting a longer expiration, set this value to null so that it never expires. **Note** - at this time, you can only set a status on your own user
+	 * This value can be a max of 24 hours into the future. If you are wanting a longer expiration, set this value to null so that it never expires. **Note** - at this time, you can only set a status on your own user
 	 * @returns void
 	 * @throws ApiError
 	 */
@@ -20,9 +16,7 @@ export class UserStatusService {
 		userId,
 		requestBody,
 	}: {
-		userId:
-			| string
-			| "@me";
+		userId: string | "@me";
 		requestBody: {
 			/**
 			 * The content of the user status. The supported markdown for this content only includes reactions and plaintext for now
@@ -38,19 +32,16 @@ export class UserStatusService {
 			expiresAt?: string;
 		};
 	}): CancelablePromise<void> {
-		return this.httpRequest.request(
-			{
-				method: "PUT",
-				url: "/users/{userId}/status",
-				path: {
-					userId: userId,
-				},
-				body: requestBody,
-				mediaType: "application/json",
+		return this.httpRequest.request({
+			method: "PUT",
+			url: "/users/{userId}/status",
+			path: {
+				userId: userId,
 			},
-		);
+			body: requestBody,
+			mediaType: "application/json",
+		});
 	}
-
 	/**
 	 * Delete your status
 	 * **Note** - at this time, you can only set a status on your own user
@@ -60,18 +51,14 @@ export class UserStatusService {
 	public userStatusDelete({
 		userId,
 	}: {
-		userId:
-			| string
-			| "@me";
+		userId: string | "@me";
 	}): CancelablePromise<void> {
-		return this.httpRequest.request(
-			{
-				method: "DELETE",
-				url: "/users/{userId}/status",
-				path: {
-					userId: userId,
-				},
+		return this.httpRequest.request({
+			method: "DELETE",
+			url: "/users/{userId}/status",
+			path: {
+				userId: userId,
 			},
-		);
+		});
 	}
 }

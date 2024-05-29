@@ -1,18 +1,13 @@
-/* generated using openapi-typescript-codegen -- do no edit */
+import type { BaseHttpRequest } from "../core/BaseHttpRequest";
+import type { CancelablePromise } from "../core/CancelablePromise";
+/* generated using openapi-typescript-codegen -- do not edit */
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
 import type { CalendarEvent } from "../models/CalendarEvent";
 import type { CalendarEventRsvp } from "../models/CalendarEventRsvp";
-
-import type { BaseHttpRequest } from "../core/BaseHttpRequest";
-import type { CancelablePromise } from "../core/CancelablePromise";
-
 export class CalendarEventsService {
-	constructor(
-		public readonly httpRequest: BaseHttpRequest,
-	) {}
-
+	constructor(public readonly httpRequest: BaseHttpRequest) {}
 	/**
 	 * Create a calendar event
 	 * We currently do not have a way to surface the `repeatInfo` after event series are updated. Stay tuned!
@@ -79,14 +74,9 @@ export class CalendarEventsService {
 			roleIds?: Array<number>;
 			repeatInfo?: {
 				/**
-				 * How often you want your event to repeat (important note: this will repeat for the next 180 days unless custom is defined)
+				 * How often you want your event to repeat (important note: this will repeat for the next 365 days unless custom is defined)
 				 */
-				type:
-					| "once"
-					| "everyDay"
-					| "everyWeek"
-					| "everyMonth"
-					| "custom";
+				type: "once" | "everyDay" | "everyWeek" | "everyMonth" | "custom";
 				/**
 				 * Apply further clarification to your events. This **must** have `type` set to `custom`
 				 */
@@ -98,11 +88,7 @@ export class CalendarEventsService {
 					/**
 					 * Coupled with `count`, this indicates the time range you are repeating your event over
 					 */
-					interval:
-						| "day"
-						| "month"
-						| "year"
-						| "week";
+					interval: "day" | "month" | "year" | "week";
 				};
 				/**
 				 * Used to control the end date of the event repeat (only used when `type` is `custom`; if used with `endDate`, the earliest resultant date of the two will be used)
@@ -115,33 +101,22 @@ export class CalendarEventsService {
 				/**
 				 * Used to control the day of the week that the event should repeat on (only used when `type` is `custom` and when `every.interval` is `week`)
 				 */
-				on?: Array<
-					| "sunday"
-					| "monday"
-					| "tuesday"
-					| "wednesday"
-					| "thursday"
-					| "friday"
-					| "saturday"
-				>;
+				on?: Array<"sunday" | "monday" | "tuesday" | "wednesday" | "thursday" | "friday" | "saturday">;
 			};
 		};
 	}): CancelablePromise<{
 		calendarEvent: CalendarEvent;
 	}> {
-		return this.httpRequest.request(
-			{
-				method: "POST",
-				url: "/channels/{channelId}/events",
-				path: {
-					channelId: channelId,
-				},
-				body: requestBody,
-				mediaType: "application/json",
+		return this.httpRequest.request({
+			method: "POST",
+			url: "/channels/{channelId}/events",
+			path: {
+				channelId: channelId,
 			},
-		);
+			body: requestBody,
+			mediaType: "application/json",
+		});
 	}
-
 	/**
 	 * Get calendar events
 	 * Results returned will be ordered ascending by the event's `startsAt`. `before` and `after` will filter based on the event's `startsAt`
@@ -161,22 +136,19 @@ export class CalendarEventsService {
 	}): CancelablePromise<{
 		calendarEvents: Array<CalendarEvent>;
 	}> {
-		return this.httpRequest.request(
-			{
-				method: "GET",
-				url: "/channels/{channelId}/events",
-				path: {
-					channelId: channelId,
-				},
-				query: {
-					before: before,
-					after: after,
-					limit: limit,
-				},
+		return this.httpRequest.request({
+			method: "GET",
+			url: "/channels/{channelId}/events",
+			path: {
+				channelId: channelId,
 			},
-		);
+			query: {
+				before: before,
+				after: after,
+				limit: limit,
+			},
+		});
 	}
-
 	/**
 	 * Get a calendar event
 	 * @returns any Success
@@ -191,18 +163,15 @@ export class CalendarEventsService {
 	}): CancelablePromise<{
 		calendarEvent: CalendarEvent;
 	}> {
-		return this.httpRequest.request(
-			{
-				method: "GET",
-				url: "/channels/{channelId}/events/{calendarEventId}",
-				path: {
-					channelId: channelId,
-					calendarEventId: calendarEventId,
-				},
+		return this.httpRequest.request({
+			method: "GET",
+			url: "/channels/{channelId}/events/{calendarEventId}",
+			path: {
+				channelId: channelId,
+				calendarEventId: calendarEventId,
 			},
-		);
+		});
 	}
-
 	/**
 	 * Update a calendar event
 	 * We currently do not have a way to surface the `repeatInfo` after event series are updated. Stay tuned!
@@ -276,20 +245,17 @@ export class CalendarEventsService {
 	}): CancelablePromise<{
 		calendarEvent: CalendarEvent;
 	}> {
-		return this.httpRequest.request(
-			{
-				method: "PATCH",
-				url: "/channels/{channelId}/events/{calendarEventId}",
-				path: {
-					channelId: channelId,
-					calendarEventId: calendarEventId,
-				},
-				body: requestBody,
-				mediaType: "application/json",
+		return this.httpRequest.request({
+			method: "PATCH",
+			url: "/channels/{channelId}/events/{calendarEventId}",
+			path: {
+				channelId: channelId,
+				calendarEventId: calendarEventId,
 			},
-		);
+			body: requestBody,
+			mediaType: "application/json",
+		});
 	}
-
 	/**
 	 * Delete a calendar event
 	 * @returns void
@@ -302,18 +268,15 @@ export class CalendarEventsService {
 		channelId: string;
 		calendarEventId: number;
 	}): CancelablePromise<void> {
-		return this.httpRequest.request(
-			{
-				method: "DELETE",
-				url: "/channels/{channelId}/events/{calendarEventId}",
-				path: {
-					channelId: channelId,
-					calendarEventId: calendarEventId,
-				},
+		return this.httpRequest.request({
+			method: "DELETE",
+			url: "/channels/{channelId}/events/{calendarEventId}",
+			path: {
+				channelId: channelId,
+				calendarEventId: calendarEventId,
 			},
-		);
+		});
 	}
-
 	/**
 	 * Get a calendar event RSVP
 	 * @returns any Success
@@ -326,25 +289,20 @@ export class CalendarEventsService {
 	}: {
 		channelId: string;
 		calendarEventId: number;
-		userId:
-			| string
-			| "@me";
+		userId: string | "@me";
 	}): CancelablePromise<{
 		calendarEventRsvp: CalendarEventRsvp;
 	}> {
-		return this.httpRequest.request(
-			{
-				method: "GET",
-				url: "/channels/{channelId}/events/{calendarEventId}/rsvps/{userId}",
-				path: {
-					channelId: channelId,
-					calendarEventId: calendarEventId,
-					userId: userId,
-				},
+		return this.httpRequest.request({
+			method: "GET",
+			url: "/channels/{channelId}/events/{calendarEventId}/rsvps/{userId}",
+			path: {
+				channelId: channelId,
+				calendarEventId: calendarEventId,
+				userId: userId,
 			},
-		);
+		});
 	}
-
 	/**
 	 * Create or update a calendar event RSVP
 	 * @returns any Success
@@ -358,37 +316,28 @@ export class CalendarEventsService {
 	}: {
 		channelId: string;
 		calendarEventId: number;
-		userId:
-			| string
-			| "@me";
+		userId: string | "@me";
 		requestBody: {
 			/**
 			 * The status of the RSVP
 			 */
-			status:
-				| "going"
-				| "maybe"
-				| "declined"
-				| "invited";
+			status: "going" | "maybe" | "declined" | "invited";
 		};
 	}): CancelablePromise<{
 		calendarEventRsvp: CalendarEventRsvp;
 	}> {
-		return this.httpRequest.request(
-			{
-				method: "PUT",
-				url: "/channels/{channelId}/events/{calendarEventId}/rsvps/{userId}",
-				path: {
-					channelId: channelId,
-					calendarEventId: calendarEventId,
-					userId: userId,
-				},
-				body: requestBody,
-				mediaType: "application/json",
+		return this.httpRequest.request({
+			method: "PUT",
+			url: "/channels/{channelId}/events/{calendarEventId}/rsvps/{userId}",
+			path: {
+				channelId: channelId,
+				calendarEventId: calendarEventId,
+				userId: userId,
 			},
-		);
+			body: requestBody,
+			mediaType: "application/json",
+		});
 	}
-
 	/**
 	 * Delete a calendar event RSVP
 	 * @returns void
@@ -401,23 +350,18 @@ export class CalendarEventsService {
 	}: {
 		channelId: string;
 		calendarEventId: number;
-		userId:
-			| string
-			| "@me";
+		userId: string | "@me";
 	}): CancelablePromise<void> {
-		return this.httpRequest.request(
-			{
-				method: "DELETE",
-				url: "/channels/{channelId}/events/{calendarEventId}/rsvps/{userId}",
-				path: {
-					channelId: channelId,
-					calendarEventId: calendarEventId,
-					userId: userId,
-				},
+		return this.httpRequest.request({
+			method: "DELETE",
+			url: "/channels/{channelId}/events/{calendarEventId}/rsvps/{userId}",
+			path: {
+				channelId: channelId,
+				calendarEventId: calendarEventId,
+				userId: userId,
 			},
-		);
+		});
 	}
-
 	/**
 	 * Get calendar event RSVPs
 	 * @returns any Success
@@ -432,18 +376,15 @@ export class CalendarEventsService {
 	}): CancelablePromise<{
 		calendarEventRsvps: Array<CalendarEventRsvp>;
 	}> {
-		return this.httpRequest.request(
-			{
-				method: "GET",
-				url: "/channels/{channelId}/events/{calendarEventId}/rsvps",
-				path: {
-					channelId: channelId,
-					calendarEventId: calendarEventId,
-				},
+		return this.httpRequest.request({
+			method: "GET",
+			url: "/channels/{channelId}/events/{calendarEventId}/rsvps",
+			path: {
+				channelId: channelId,
+				calendarEventId: calendarEventId,
 			},
-		);
+		});
 	}
-
 	/**
 	 * Create or update a calendar event RSVP for multiple users
 	 * @returns void
@@ -457,31 +398,22 @@ export class CalendarEventsService {
 		channelId: string;
 		calendarEventId: number;
 		requestBody: {
-			userIds: Array<
-				| string
-				| "@me"
-			>;
+			userIds: Array<string | "@me">;
 			/**
 			 * The status of the RSVP
 			 */
-			status:
-				| "going"
-				| "maybe"
-				| "declined"
-				| "invited";
+			status: "going" | "maybe" | "declined" | "invited";
 		};
 	}): CancelablePromise<void> {
-		return this.httpRequest.request(
-			{
-				method: "PUT",
-				url: "/channels/{channelId}/events/{calendarEventId}/rsvps",
-				path: {
-					channelId: channelId,
-					calendarEventId: calendarEventId,
-				},
-				body: requestBody,
-				mediaType: "application/json",
+		return this.httpRequest.request({
+			method: "PUT",
+			url: "/channels/{channelId}/events/{calendarEventId}/rsvps",
+			path: {
+				channelId: channelId,
+				calendarEventId: calendarEventId,
 			},
-		);
+			body: requestBody,
+			mediaType: "application/json",
+		});
 	}
 }

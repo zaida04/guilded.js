@@ -1,18 +1,13 @@
-/* generated using openapi-typescript-codegen -- do no edit */
+import type { BaseHttpRequest } from "../core/BaseHttpRequest";
+import type { CancelablePromise } from "../core/CancelablePromise";
+/* generated using openapi-typescript-codegen -- do not edit */
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
 import type { ListItem } from "../models/ListItem";
 import type { ListItemSummary } from "../models/ListItemSummary";
-
-import type { BaseHttpRequest } from "../core/BaseHttpRequest";
-import type { CancelablePromise } from "../core/CancelablePromise";
-
 export class ListItemsService {
-	constructor(
-		public readonly httpRequest: BaseHttpRequest,
-	) {}
-
+	constructor(public readonly httpRequest: BaseHttpRequest) {}
 	/**
 	 * Create a list item
 	 * @returns any Success
@@ -27,40 +22,27 @@ export class ListItemsService {
 			/**
 			 * The message of the list item
 			 */
-			message:
-				| Record<
-						string,
-						any
-				  >
-				| string;
+			message: Record<string, any> | string;
 			note?: {
 				/**
 				 * The note of the list item
 				 */
-				content:
-					| Record<
-							string,
-							any
-					  >
-					| string;
+				content: Record<string, any> | string;
 			};
 		};
 	}): CancelablePromise<{
 		listItem: ListItem;
 	}> {
-		return this.httpRequest.request(
-			{
-				method: "POST",
-				url: "/channels/{channelId}/items",
-				path: {
-					channelId: channelId,
-				},
-				body: requestBody,
-				mediaType: "application/json",
+		return this.httpRequest.request({
+			method: "POST",
+			url: "/channels/{channelId}/items",
+			path: {
+				channelId: channelId,
 			},
-		);
+			body: requestBody,
+			mediaType: "application/json",
+		});
 	}
-
 	/**
 	 * Get list items within a channel
 	 * @returns any Success
@@ -73,17 +55,14 @@ export class ListItemsService {
 	}): CancelablePromise<{
 		listItems: Array<ListItemSummary>;
 	}> {
-		return this.httpRequest.request(
-			{
-				method: "GET",
-				url: "/channels/{channelId}/items",
-				path: {
-					channelId: channelId,
-				},
+		return this.httpRequest.request({
+			method: "GET",
+			url: "/channels/{channelId}/items",
+			path: {
+				channelId: channelId,
 			},
-		);
+		});
 	}
-
 	/**
 	 * Get a list item
 	 * @returns any Success
@@ -98,18 +77,15 @@ export class ListItemsService {
 	}): CancelablePromise<{
 		listItem: ListItem;
 	}> {
-		return this.httpRequest.request(
-			{
-				method: "GET",
-				url: "/channels/{channelId}/items/{listItemId}",
-				path: {
-					channelId: channelId,
-					listItemId: listItemId,
-				},
+		return this.httpRequest.request({
+			method: "GET",
+			url: "/channels/{channelId}/items/{listItemId}",
+			path: {
+				channelId: channelId,
+				listItemId: listItemId,
 			},
-		);
+		});
 	}
-
 	/**
 	 * Update a list item
 	 * @returns any Success
@@ -137,20 +113,17 @@ export class ListItemsService {
 	}): CancelablePromise<{
 		listItem: ListItem;
 	}> {
-		return this.httpRequest.request(
-			{
-				method: "PATCH",
-				url: "/channels/{channelId}/items/{listItemId}",
-				path: {
-					channelId: channelId,
-					listItemId: listItemId,
-				},
-				body: requestBody,
-				mediaType: "application/json",
+		return this.httpRequest.request({
+			method: "PATCH",
+			url: "/channels/{channelId}/items/{listItemId}",
+			path: {
+				channelId: channelId,
+				listItemId: listItemId,
 			},
-		);
+			body: requestBody,
+			mediaType: "application/json",
+		});
 	}
-
 	/**
 	 * Delete a list item
 	 * @returns void
@@ -163,18 +136,15 @@ export class ListItemsService {
 		channelId: string;
 		listItemId: string;
 	}): CancelablePromise<void> {
-		return this.httpRequest.request(
-			{
-				method: "DELETE",
-				url: "/channels/{channelId}/items/{listItemId}",
-				path: {
-					channelId: channelId,
-					listItemId: listItemId,
-				},
+		return this.httpRequest.request({
+			method: "DELETE",
+			url: "/channels/{channelId}/items/{listItemId}",
+			path: {
+				channelId: channelId,
+				listItemId: listItemId,
 			},
-		);
+		});
 	}
-
 	/**
 	 * Complete a list item
 	 * @returns void
@@ -187,18 +157,15 @@ export class ListItemsService {
 		channelId: string;
 		listItemId: string;
 	}): CancelablePromise<void> {
-		return this.httpRequest.request(
-			{
-				method: "POST",
-				url: "/channels/{channelId}/items/{listItemId}/complete",
-				path: {
-					channelId: channelId,
-					listItemId: listItemId,
-				},
+		return this.httpRequest.request({
+			method: "POST",
+			url: "/channels/{channelId}/items/{listItemId}/complete",
+			path: {
+				channelId: channelId,
+				listItemId: listItemId,
 			},
-		);
+		});
 	}
-
 	/**
 	 * Uncomplete a list item
 	 * @returns void
@@ -211,15 +178,13 @@ export class ListItemsService {
 		channelId: string;
 		listItemId: string;
 	}): CancelablePromise<void> {
-		return this.httpRequest.request(
-			{
-				method: "DELETE",
-				url: "/channels/{channelId}/items/{listItemId}/complete",
-				path: {
-					channelId: channelId,
-					listItemId: listItemId,
-				},
+		return this.httpRequest.request({
+			method: "DELETE",
+			url: "/channels/{channelId}/items/{listItemId}/complete",
+			path: {
+				channelId: channelId,
+				listItemId: listItemId,
 			},
-		);
+		});
 	}
 }

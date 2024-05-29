@@ -1,17 +1,12 @@
-/* generated using openapi-typescript-codegen -- do no edit */
+import type { BaseHttpRequest } from "../core/BaseHttpRequest";
+import type { CancelablePromise } from "../core/CancelablePromise";
+/* generated using openapi-typescript-codegen -- do not edit */
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
 import type { SocialLink } from "../models/SocialLink";
-
-import type { BaseHttpRequest } from "../core/BaseHttpRequest";
-import type { CancelablePromise } from "../core/CancelablePromise";
-
 export class SocialLinksService {
-	constructor(
-		public readonly httpRequest: BaseHttpRequest,
-	) {}
-
+	constructor(public readonly httpRequest: BaseHttpRequest) {}
 	/**
 	 * Retrieves a member's public social links
 	 * @returns any Success
@@ -23,39 +18,22 @@ export class SocialLinksService {
 		socialLinkType,
 	}: {
 		serverId: string;
-		userId:
-			| string
-			| "@me";
+		userId: string | "@me";
 		/**
 		 * The type of social link to retrieve
 		 */
-		socialLinkType:
-			| "twitch"
-			| "bnet"
-			| "psn"
-			| "xbox"
-			| "steam"
-			| "origin"
-			| "youtube"
-			| "twitter"
-			| "facebook"
-			| "switch"
-			| "patreon"
-			| "roblox"
-			| "epic";
+		socialLinkType: "twitch" | "bnet" | "psn" | "xbox" | "steam" | "origin" | "youtube" | "twitter" | "facebook" | "switch" | "patreon" | "roblox" | "epic";
 	}): CancelablePromise<{
 		socialLink: SocialLink;
 	}> {
-		return this.httpRequest.request(
-			{
-				method: "GET",
-				url: "/servers/{serverId}/members/{userId}/social-links/{socialLinkType}",
-				path: {
-					serverId: serverId,
-					userId: userId,
-					socialLinkType: socialLinkType,
-				},
+		return this.httpRequest.request({
+			method: "GET",
+			url: "/servers/{serverId}/members/{userId}/social-links/{socialLinkType}",
+			path: {
+				serverId: serverId,
+				userId: userId,
+				socialLinkType: socialLinkType,
 			},
-		);
+		});
 	}
 }

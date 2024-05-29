@@ -1,17 +1,12 @@
-/* generated using openapi-typescript-codegen -- do no edit */
+import type { BaseHttpRequest } from "../core/BaseHttpRequest";
+import type { CancelablePromise } from "../core/CancelablePromise";
+/* generated using openapi-typescript-codegen -- do not edit */
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
 import type { Group } from "../models/Group";
-
-import type { BaseHttpRequest } from "../core/BaseHttpRequest";
-import type { CancelablePromise } from "../core/CancelablePromise";
-
 export class GroupsService {
-	constructor(
-		public readonly httpRequest: BaseHttpRequest,
-	) {}
-
+	constructor(public readonly httpRequest: BaseHttpRequest) {}
 	/**
 	 * Create a group
 	 * Note: only 100 unarchived groups can exist on a server at any time
@@ -44,19 +39,16 @@ export class GroupsService {
 	}): CancelablePromise<{
 		group: Group;
 	}> {
-		return this.httpRequest.request(
-			{
-				method: "POST",
-				url: "/servers/{serverId}/groups",
-				path: {
-					serverId: serverId,
-				},
-				body: requestBody,
-				mediaType: "application/json",
+		return this.httpRequest.request({
+			method: "POST",
+			url: "/servers/{serverId}/groups",
+			path: {
+				serverId: serverId,
 			},
-		);
+			body: requestBody,
+			mediaType: "application/json",
+		});
 	}
-
 	/**
 	 * Get groups
 	 * @returns any Success
@@ -69,17 +61,14 @@ export class GroupsService {
 	}): CancelablePromise<{
 		groups: Array<Group>;
 	}> {
-		return this.httpRequest.request(
-			{
-				method: "GET",
-				url: "/servers/{serverId}/groups",
-				path: {
-					serverId: serverId,
-				},
+		return this.httpRequest.request({
+			method: "GET",
+			url: "/servers/{serverId}/groups",
+			path: {
+				serverId: serverId,
 			},
-		);
+		});
 	}
-
 	/**
 	 * Get a group
 	 * @returns any Success
@@ -94,18 +83,15 @@ export class GroupsService {
 	}): CancelablePromise<{
 		group: Group;
 	}> {
-		return this.httpRequest.request(
-			{
-				method: "GET",
-				url: "/servers/{serverId}/groups/{groupId}",
-				path: {
-					serverId: serverId,
-					groupId: groupId,
-				},
+		return this.httpRequest.request({
+			method: "GET",
+			url: "/servers/{serverId}/groups/{groupId}",
+			path: {
+				serverId: serverId,
+				groupId: groupId,
 			},
-		);
+		});
 	}
-
 	/**
 	 * Update a group
 	 * @returns any Success
@@ -141,20 +127,17 @@ export class GroupsService {
 	}): CancelablePromise<{
 		group: Group;
 	}> {
-		return this.httpRequest.request(
-			{
-				method: "PATCH",
-				url: "/servers/{serverId}/groups/{groupId}",
-				path: {
-					serverId: serverId,
-					groupId: groupId,
-				},
-				body: requestBody,
-				mediaType: "application/json",
+		return this.httpRequest.request({
+			method: "PATCH",
+			url: "/servers/{serverId}/groups/{groupId}",
+			path: {
+				serverId: serverId,
+				groupId: groupId,
 			},
-		);
+			body: requestBody,
+			mediaType: "application/json",
+		});
 	}
-
 	/**
 	 * Delete a group
 	 * Note: you cannot delete the home group
@@ -168,15 +151,13 @@ export class GroupsService {
 		serverId: string;
 		groupId: string;
 	}): CancelablePromise<void> {
-		return this.httpRequest.request(
-			{
-				method: "DELETE",
-				url: "/servers/{serverId}/groups/{groupId}",
-				path: {
-					serverId: serverId,
-					groupId: groupId,
-				},
+		return this.httpRequest.request({
+			method: "DELETE",
+			url: "/servers/{serverId}/groups/{groupId}",
+			path: {
+				serverId: serverId,
+				groupId: groupId,
 			},
-		);
+		});
 	}
 }

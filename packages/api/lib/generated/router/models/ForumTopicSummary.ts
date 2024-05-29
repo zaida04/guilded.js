@@ -1,8 +1,7 @@
-/* generated using openapi-typescript-codegen -- do no edit */
+/* generated using openapi-typescript-codegen -- do not edit */
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-
 export type ForumTopicSummary = {
 	/**
 	 * The ID of the forum topic
@@ -12,6 +11,10 @@ export type ForumTopicSummary = {
 	 * The ID of the server
 	 */
 	serverId: string;
+	/**
+	 * The ID of the group
+	 */
+	groupId: string;
 	/**
 	 * The ID of the channel
 	 */

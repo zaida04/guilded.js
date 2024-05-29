@@ -1,16 +1,12 @@
-/* generated using openapi-typescript-codegen -- do no edit */
+/* generated using openapi-typescript-codegen -- do not edit */
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-
 export type ServerSubscriptionTier = {
 	/**
 	 * The type of the server subscription tier. This field is case sensitive!!
 	 */
-	type:
-		| "Gold"
-		| "Silver"
-		| "Copper";
+	type: "Gold" | "Silver" | "Copper";
 	/**
 	 * The ID of the server
 	 */

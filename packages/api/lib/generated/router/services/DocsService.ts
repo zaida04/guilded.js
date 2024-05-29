@@ -1,17 +1,12 @@
-/* generated using openapi-typescript-codegen -- do no edit */
+import type { BaseHttpRequest } from "../core/BaseHttpRequest";
+import type { CancelablePromise } from "../core/CancelablePromise";
+/* generated using openapi-typescript-codegen -- do not edit */
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
 import type { Doc } from "../models/Doc";
-
-import type { BaseHttpRequest } from "../core/BaseHttpRequest";
-import type { CancelablePromise } from "../core/CancelablePromise";
-
 export class DocsService {
-	constructor(
-		public readonly httpRequest: BaseHttpRequest,
-	) {}
-
+	constructor(public readonly httpRequest: BaseHttpRequest) {}
 	/**
 	 * Create a doc
 	 * @returns any Success
@@ -30,29 +25,21 @@ export class DocsService {
 			/**
 			 * The content of the doc
 			 */
-			content:
-				| Record<
-						string,
-						any
-				  >
-				| string;
+			content: Record<string, any> | string;
 		};
 	}): CancelablePromise<{
 		doc: Doc;
 	}> {
-		return this.httpRequest.request(
-			{
-				method: "POST",
-				url: "/channels/{channelId}/docs",
-				path: {
-					channelId: channelId,
-				},
-				body: requestBody,
-				mediaType: "application/json",
+		return this.httpRequest.request({
+			method: "POST",
+			url: "/channels/{channelId}/docs",
+			path: {
+				channelId: channelId,
 			},
-		);
+			body: requestBody,
+			mediaType: "application/json",
+		});
 	}
-
 	/**
 	 * Get docs
 	 * Results returned will be ordered descending by the doc's `updatedAt`. `before` will filter based on the doc's `updatedAt`
@@ -70,21 +57,18 @@ export class DocsService {
 	}): CancelablePromise<{
 		docs: Array<Doc>;
 	}> {
-		return this.httpRequest.request(
-			{
-				method: "GET",
-				url: "/channels/{channelId}/docs",
-				path: {
-					channelId: channelId,
-				},
-				query: {
-					before: before,
-					limit: limit,
-				},
+		return this.httpRequest.request({
+			method: "GET",
+			url: "/channels/{channelId}/docs",
+			path: {
+				channelId: channelId,
 			},
-		);
+			query: {
+				before: before,
+				limit: limit,
+			},
+		});
 	}
-
 	/**
 	 * Get a doc
 	 * @returns any Success
@@ -99,18 +83,15 @@ export class DocsService {
 	}): CancelablePromise<{
 		doc: Doc;
 	}> {
-		return this.httpRequest.request(
-			{
-				method: "GET",
-				url: "/channels/{channelId}/docs/{docId}",
-				path: {
-					channelId: channelId,
-					docId: docId,
-				},
+		return this.httpRequest.request({
+			method: "GET",
+			url: "/channels/{channelId}/docs/{docId}",
+			path: {
+				channelId: channelId,
+				docId: docId,
 			},
-		);
+		});
 	}
-
 	/**
 	 * Update a doc
 	 * @returns any Success
@@ -136,20 +117,17 @@ export class DocsService {
 	}): CancelablePromise<{
 		doc: Doc;
 	}> {
-		return this.httpRequest.request(
-			{
-				method: "PUT",
-				url: "/channels/{channelId}/docs/{docId}",
-				path: {
-					channelId: channelId,
-					docId: docId,
-				},
-				body: requestBody,
-				mediaType: "application/json",
+		return this.httpRequest.request({
+			method: "PUT",
+			url: "/channels/{channelId}/docs/{docId}",
+			path: {
+				channelId: channelId,
+				docId: docId,
 			},
-		);
+			body: requestBody,
+			mediaType: "application/json",
+		});
 	}
-
 	/**
 	 * Delete a doc
 	 * @returns void
@@ -162,15 +140,13 @@ export class DocsService {
 		channelId: string;
 		docId: number;
 	}): CancelablePromise<void> {
-		return this.httpRequest.request(
-			{
-				method: "DELETE",
-				url: "/channels/{channelId}/docs/{docId}",
-				path: {
-					channelId: channelId,
-					docId: docId,
-				},
+		return this.httpRequest.request({
+			method: "DELETE",
+			url: "/channels/{channelId}/docs/{docId}",
+			path: {
+				channelId: channelId,
+				docId: docId,
 			},
-		);
+		});
 	}
 }

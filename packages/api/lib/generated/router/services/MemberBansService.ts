@@ -1,17 +1,12 @@
-/* generated using openapi-typescript-codegen -- do no edit */
+import type { BaseHttpRequest } from "../core/BaseHttpRequest";
+import type { CancelablePromise } from "../core/CancelablePromise";
+/* generated using openapi-typescript-codegen -- do not edit */
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
 import type { ServerMemberBan } from "../models/ServerMemberBan";
-
-import type { BaseHttpRequest } from "../core/BaseHttpRequest";
-import type { CancelablePromise } from "../core/CancelablePromise";
-
 export class MemberBansService {
-	constructor(
-		public readonly httpRequest: BaseHttpRequest,
-	) {}
-
+	constructor(public readonly httpRequest: BaseHttpRequest) {}
 	/**
 	 * Create a server ban
 	 * Also known as banning a server member
@@ -27,9 +22,7 @@ export class MemberBansService {
 		/**
 		 * The ID of the user to ban from this server
 		 */
-		userId:
-			| string
-			| "@me";
+		userId: string | "@me";
 		requestBody?: {
 			/**
 			 * The reason for the ban
@@ -39,20 +32,17 @@ export class MemberBansService {
 	}): CancelablePromise<{
 		serverMemberBan: ServerMemberBan;
 	}> {
-		return this.httpRequest.request(
-			{
-				method: "POST",
-				url: "/servers/{serverId}/bans/{userId}",
-				path: {
-					serverId: serverId,
-					userId: userId,
-				},
-				body: requestBody,
-				mediaType: "application/json",
+		return this.httpRequest.request({
+			method: "POST",
+			url: "/servers/{serverId}/bans/{userId}",
+			path: {
+				serverId: serverId,
+				userId: userId,
 			},
-		);
+			body: requestBody,
+			mediaType: "application/json",
+		});
 	}
-
 	/**
 	 * Get a server ban
 	 * @returns any Success
@@ -66,24 +56,19 @@ export class MemberBansService {
 		/**
 		 * The ID of the user to get a server ban for
 		 */
-		userId:
-			| string
-			| "@me";
+		userId: string | "@me";
 	}): CancelablePromise<{
 		serverMemberBan: ServerMemberBan;
 	}> {
-		return this.httpRequest.request(
-			{
-				method: "GET",
-				url: "/servers/{serverId}/bans/{userId}",
-				path: {
-					serverId: serverId,
-					userId: userId,
-				},
+		return this.httpRequest.request({
+			method: "GET",
+			url: "/servers/{serverId}/bans/{userId}",
+			path: {
+				serverId: serverId,
+				userId: userId,
 			},
-		);
+		});
 	}
-
 	/**
 	 * Delete a server ban
 	 * Also known as unbanning a server member
@@ -98,22 +83,17 @@ export class MemberBansService {
 		/**
 		 * The ID of the user to unban from this server
 		 */
-		userId:
-			| string
-			| "@me";
+		userId: string | "@me";
 	}): CancelablePromise<void> {
-		return this.httpRequest.request(
-			{
-				method: "DELETE",
-				url: "/servers/{serverId}/bans/{userId}",
-				path: {
-					serverId: serverId,
-					userId: userId,
-				},
+		return this.httpRequest.request({
+			method: "DELETE",
+			url: "/servers/{serverId}/bans/{userId}",
+			path: {
+				serverId: serverId,
+				userId: userId,
 			},
-		);
+		});
 	}
-
 	/**
 	 * Get server bans
 	 * @returns any Success
@@ -126,14 +106,12 @@ export class MemberBansService {
 	}): CancelablePromise<{
 		serverMemberBans: Array<ServerMemberBan>;
 	}> {
-		return this.httpRequest.request(
-			{
-				method: "GET",
-				url: "/servers/{serverId}/bans",
-				path: {
-					serverId: serverId,
-				},
+		return this.httpRequest.request({
+			method: "GET",
+			url: "/servers/{serverId}/bans",
+			path: {
+				serverId: serverId,
 			},
-		);
+		});
 	}
 }

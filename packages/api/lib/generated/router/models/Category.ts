@@ -1,8 +1,7 @@
-/* generated using openapi-typescript-codegen -- do no edit */
+/* generated using openapi-typescript-codegen -- do not edit */
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-
 export type Category = {
 	/**
 	 * The ID of the category
@@ -28,4 +27,8 @@ export type Category = {
 	 * Name of the category
 	 */
 	name: string;
+	/**
+	 * The priority of the category will determine its position relative to other categories in the group. The higher the value, the higher up it will be displayed in the UI. Returned values can be null, in which case sorting will be done by `createdAt` in descending order. Due to legacy issues, sending a null value is not possible
+	 */
+	priority?: number;
 };

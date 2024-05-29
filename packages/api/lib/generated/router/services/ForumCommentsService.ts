@@ -1,17 +1,12 @@
-/* generated using openapi-typescript-codegen -- do no edit */
+import type { BaseHttpRequest } from "../core/BaseHttpRequest";
+import type { CancelablePromise } from "../core/CancelablePromise";
+/* generated using openapi-typescript-codegen -- do not edit */
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
 import type { ForumTopicComment } from "../models/ForumTopicComment";
-
-import type { BaseHttpRequest } from "../core/BaseHttpRequest";
-import type { CancelablePromise } from "../core/CancelablePromise";
-
 export class ForumCommentsService {
-	constructor(
-		public readonly httpRequest: BaseHttpRequest,
-	) {}
-
+	constructor(public readonly httpRequest: BaseHttpRequest) {}
 	/**
 	 * Create a forum topic comment
 	 * @returns any Success
@@ -33,20 +28,17 @@ export class ForumCommentsService {
 	}): CancelablePromise<{
 		forumTopicComment: ForumTopicComment;
 	}> {
-		return this.httpRequest.request(
-			{
-				method: "POST",
-				url: "/channels/{channelId}/topics/{forumTopicId}/comments",
-				path: {
-					channelId: channelId,
-					forumTopicId: forumTopicId,
-				},
-				body: requestBody,
-				mediaType: "application/json",
+		return this.httpRequest.request({
+			method: "POST",
+			url: "/channels/{channelId}/topics/{forumTopicId}/comments",
+			path: {
+				channelId: channelId,
+				forumTopicId: forumTopicId,
 			},
-		);
+			body: requestBody,
+			mediaType: "application/json",
+		});
 	}
-
 	/**
 	 * Get a forum topic's comments
 	 * @returns any Success
@@ -61,18 +53,15 @@ export class ForumCommentsService {
 	}): CancelablePromise<{
 		forumTopicComments: Array<ForumTopicComment>;
 	}> {
-		return this.httpRequest.request(
-			{
-				method: "GET",
-				url: "/channels/{channelId}/topics/{forumTopicId}/comments",
-				path: {
-					channelId: channelId,
-					forumTopicId: forumTopicId,
-				},
+		return this.httpRequest.request({
+			method: "GET",
+			url: "/channels/{channelId}/topics/{forumTopicId}/comments",
+			path: {
+				channelId: channelId,
+				forumTopicId: forumTopicId,
 			},
-		);
+		});
 	}
-
 	/**
 	 * Get a comment on a forum topic
 	 * @returns any Success
@@ -89,19 +78,16 @@ export class ForumCommentsService {
 	}): CancelablePromise<{
 		forumTopicComment: ForumTopicComment;
 	}> {
-		return this.httpRequest.request(
-			{
-				method: "GET",
-				url: "/channels/{channelId}/topics/{forumTopicId}/comments/{forumTopicCommentId}",
-				path: {
-					channelId: channelId,
-					forumTopicId: forumTopicId,
-					forumTopicCommentId: forumTopicCommentId,
-				},
+		return this.httpRequest.request({
+			method: "GET",
+			url: "/channels/{channelId}/topics/{forumTopicId}/comments/{forumTopicCommentId}",
+			path: {
+				channelId: channelId,
+				forumTopicId: forumTopicId,
+				forumTopicCommentId: forumTopicCommentId,
 			},
-		);
+		});
 	}
-
 	/**
 	 * Update a forum topic comment
 	 * @returns any Success
@@ -125,21 +111,18 @@ export class ForumCommentsService {
 	}): CancelablePromise<{
 		forumTopicComment: ForumTopicComment;
 	}> {
-		return this.httpRequest.request(
-			{
-				method: "PATCH",
-				url: "/channels/{channelId}/topics/{forumTopicId}/comments/{forumTopicCommentId}",
-				path: {
-					channelId: channelId,
-					forumTopicId: forumTopicId,
-					forumTopicCommentId: forumTopicCommentId,
-				},
-				body: requestBody,
-				mediaType: "application/json",
+		return this.httpRequest.request({
+			method: "PATCH",
+			url: "/channels/{channelId}/topics/{forumTopicId}/comments/{forumTopicCommentId}",
+			path: {
+				channelId: channelId,
+				forumTopicId: forumTopicId,
+				forumTopicCommentId: forumTopicCommentId,
 			},
-		);
+			body: requestBody,
+			mediaType: "application/json",
+		});
 	}
-
 	/**
 	 * Delete a forum topic comment
 	 * @returns void
@@ -154,16 +137,14 @@ export class ForumCommentsService {
 		forumTopicId: number;
 		forumTopicCommentId: number;
 	}): CancelablePromise<void> {
-		return this.httpRequest.request(
-			{
-				method: "DELETE",
-				url: "/channels/{channelId}/topics/{forumTopicId}/comments/{forumTopicCommentId}",
-				path: {
-					channelId: channelId,
-					forumTopicId: forumTopicId,
-					forumTopicCommentId: forumTopicCommentId,
-				},
+		return this.httpRequest.request({
+			method: "DELETE",
+			url: "/channels/{channelId}/topics/{forumTopicId}/comments/{forumTopicCommentId}",
+			path: {
+				channelId: channelId,
+				forumTopicId: forumTopicId,
+				forumTopicCommentId: forumTopicCommentId,
 			},
-		);
+		});
 	}
 }
