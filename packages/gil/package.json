@@ -1,6 +1,6 @@
 {
   "name": "@guildedjs/gil",
-  "version": "0.6.1",
+  "version": "0.6.2",
   "description": "Framework for guilded.js that allows you to build bots with ease.",
   "author": "Zaid \"Nico\" <contact@nico.engineer>",
   "license": "MIT",
@@ -57,7 +57,8 @@
   "exports": {
     ".": {
       "require": "./dist/index.js",
-      "import": "./dist/index.mjs"
+      "import": "./dist/index.mjs",
+      "types": "./types/index.d.ts"
     },
     "./": "./"
   },
