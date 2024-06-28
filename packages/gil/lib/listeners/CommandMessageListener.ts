@@ -84,9 +84,9 @@ export default class CommandMessageListener extends Listener {
 
 		const context = this.gil.options?.contexts?.command
 			? await this.gil.options.contexts.command({
-					server: params.server,
-					message: params.message,
-			  })
+				server: params.server,
+				message: params.message,
+			})
 			: {};
 
 		this.gil.emitter.emit("commandRan", {
@@ -100,6 +100,7 @@ export default class CommandMessageListener extends Listener {
 			await command.execute({
 				message: params.message,
 				args: attemptConvertArguments.arguments,
+				server: params.server,
 				...context,
 			});
 		} catch (e) {

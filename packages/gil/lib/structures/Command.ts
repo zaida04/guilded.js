@@ -2,7 +2,7 @@ import { Collection } from "@discordjs/collection";
 import glob from "fast-glob";
 import { Message } from "guilded.js";
 import { GilClient } from "../GilClient";
-import { StoredRoleType } from "../adapters/db/DatabaseAdapter";
+import { StoredRoleType, StoredServer } from "../adapters/db/DatabaseAdapter";
 import { CommandArgument, CommandArgumentType } from "../arguments/ArgumentParser";
 import { CommandMessageParams } from "../events";
 import { Manager } from "./Manager";
@@ -43,7 +43,7 @@ export abstract class Command {
 	public constructor(
 		public readonly gil: GilClient,
 		public readonly options: CommandOptions,
-	) {}
+	) { }
 
 	public abstract execute(commandContext: CommandContext<unknown, unknown>): unknown | Promise<unknown>;
 }
@@ -51,6 +51,7 @@ export abstract class Command {
 export interface CommandExecuteContext<Args = Record<string, CommandArgument>> {
 	message: Message;
 	args: Args;
+	server: StoredServer;
 }
 
 export type CommandContext<T, Args = Record<string, CommandArgument>> = T & CommandExecuteContext<Args>;
