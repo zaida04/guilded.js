@@ -1,6 +1,6 @@
 {
   "name": "@guildedjs/gil",
-  "version": "0.6.3",
+  "version": "0.6.4",
   "description": "Framework for guilded.js that allows you to build bots with ease.",
   "author": "Zaid \"Nico\" <contact@nico.engineer>",
   "license": "MIT",
@@ -16,6 +16,7 @@
   "devDependencies": {
     "@types/better-sqlite3": "^7.6.9",
     "@types/mongoose": "^5.11.97",
+    "@types/node-cron": "^3.0.11",
     "better-sqlite3": "^9.4.3",
     "dotenv": "^16.0.3",
     "mongoose": "^8.2.3",
@@ -30,6 +31,7 @@
     "fast-glob": "^3.3.2",
     "guilded.js": "workspace:*",
     "lexure": "^0.17.0",
+    "node-cron": "^3.0.3",
     "typed-emitter": "^2.1.0"
   },
   "contributors": [

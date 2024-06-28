@@ -2,19 +2,21 @@ import { Collection } from "@discordjs/collection";
 import glob from "fast-glob";
 import { GilClient } from "../GilClient";
 import { Manager } from "./Manager";
+import Cron from "node-cron";
 
 interface TaskOptions {
 	// The internal-safe name of the task
 	name: string;
-	// The interval to run the task. You can put anything that https://github.com/breejs/bree supports.
-	// For example, you can use crons like "0 0 * * *" to run the task every day at midnight.
+	// A cron representing the interval at which the task should run.
 	interval: string;
+	// Whether the task should run immediately upon startup.
+	runImmediately?: boolean;
 }
 export abstract class Task {
 	public constructor(
 		public readonly gil: GilClient,
 		public readonly options: TaskOptions,
-	) {}
+	) { }
 
 	public abstract execute(): unknown | Promise<unknown>;
 }
@@ -48,6 +50,13 @@ export class TaskManager extends Manager {
 			const createdTask: Task = new imported.default(this.gil);
 			this.gil.logger.info(`Task ${createdTask.options.name} loaded.`);
 			this.tasks.set(createdTask.options.name, createdTask);
+
+			if (createdTask.options.runImmediately) {
+				this.gil.logger.info(`Running task ${createdTask.options.name} immediately.`);
+				createdTask.execute();
+			}
+
+			Cron.schedule(createdTask.options.interval, createdTask.execute.bind(createdTask));
 		}
 	}
 }
