@@ -1,6 +1,6 @@
 import { GilClient } from "../GilClient";
 
-interface ListenerOptions {
+export interface ListenerOptions {
 	event: string;
 	emitter: "gjs" | "gil";
 }
@@ -11,7 +11,7 @@ export abstract class Listener {
 	public constructor(
 		public readonly gil: GilClient,
 		public readonly options: ListenerOptions,
-	) {}
+	) { }
 
 	public abstract execute(context: ListenerContext, ...args: unknown[]): unknown | Promise<unknown>;
 }

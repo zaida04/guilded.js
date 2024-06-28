@@ -4,7 +4,7 @@ import { GilClient } from "../GilClient";
 import { Manager } from "./Manager";
 import Cron from "node-cron";
 
-interface TaskOptions {
+export interface TaskOptions {
 	// The internal-safe name of the task
 	name: string;
 	// A cron representing the interval at which the task should run.
